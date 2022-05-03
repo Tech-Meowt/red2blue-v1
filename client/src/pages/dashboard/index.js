@@ -2,10 +2,5 @@ import AddJob from './AddJob'
 import AllJobs from './AllJobs'
 import Profile from './Profile'
 import SharedLayout from './SharedLayout'
-import Databases from './Databases'
-import Admin from './Admin'
-import Notifications from './Notifications'
-import Teams from './Teams'
-import Tasks from './Tasks'
-import Help from './Help'
-export { AllJobs, Profile, SharedLayout, Databases, AddJob, Admin, Notifications, Teams, Tasks, Help }
+import Stats from './Stats'
+export { AllJobs, Profile, SharedLayout, Stats, AddJob }

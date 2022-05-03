@@ -46,6 +46,7 @@ const initialState = {
   editJobId: '',
   position: '',
   company: '',
+  jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   jobType: 'full-time',
   statusOptions: ['interview', 'declined', 'pending'],
