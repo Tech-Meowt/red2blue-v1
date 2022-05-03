@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.main`
   nav {
@@ -18,6 +18,17 @@ const Wrapper = styled.main`
   h1 {
     font-weight: 700;
   }
+  btn {
+    background-color: var(--r2b-blue);
+    border-color: transparent;
+    border-width: 1px;
+    border-radius: 0.375rem;
+    box-shadow: 2px 2px 2px #c8c8c8;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+  }
   .main-img {
     display: none;
   }
@@ -30,5 +41,5 @@ const Wrapper = styled.main`
       display: block;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;

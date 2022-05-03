@@ -3,10 +3,10 @@ import validator from 'validator'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 const UserSchema = new mongoose.Schema({
-  firstName: {
+  name: {
     type: String,
     required: [true, 'Please provide first name'],
-    minlength: 3,
+    minlength: 2,
     maxlength: 20,
     trim: true,
   },
@@ -21,17 +21,47 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide password'],
-    minlength: 6,
+    required: [true, 'Please provide a password'],
+    minlength: 8,
     select: false,
   },
-  lastName: {
-    type: String,
-    required: [true, 'Please provide last name'],
-    minlength: 2,
-    maxlength: 30,
-    trim: true,
+  approved: {
+    type: Boolean,
+    default: false,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  avatarUrl: {
+    type: String,
+    default: '',
+  },
+  usersDb: {
+    type: Boolean,
+    default: false,
+  },
+  volunteersDb: {
+    type: Boolean,
+    default: false,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  lastLoggedIn: {
+  type: Date,
+    default: Date.now,
+  },
+  role: {
+    type: String,
+    enum: ['viewer', 'editor', 'admin'],
+    default: 'viewer'
+  }
 });
 
 UserSchema.pre('save', async function () {

@@ -16,10 +16,9 @@ const Wrapper = styled.main`
   p {
     margin-top: 0;
     margin-bottom: 0.5rem;
-    color: var(--grey-500);
   }
   a {
-    color: var(--primary-500);
+    color: var(--r2b-red);
     text-decoration: underline;
     text-transform: capitalize;
   }
