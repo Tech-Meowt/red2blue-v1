@@ -1,58 +1,58 @@
-import { useState, useEffect } from 'react'
-import { Logo, FormRow, Alert } from '../components'
-import Wrapper from '../assets/wrappers/RegisterPage'
-import { useAppContext } from '../context/appContext'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Logo, FormRow, Alert } from '../components';
+import Wrapper from '../assets/wrappers/RegisterPage';
+import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 const initialState = {
   name: '',
   email: '',
   password: '',
   isMember: true,
-}
+};
 
 const Register = () => {
-  const navigate = useNavigate()
-  const [values, setValues] = useState(initialState)
+  const navigate = useNavigate();
+  const [values, setValues] = useState(initialState);
   const { user, isLoading, showAlert, displayAlert, setupUser } =
-    useAppContext()
+    useAppContext();
 
   const toggleMember = () => {
-    setValues({ ...values, isMember: !values.isMember })
-  }
+    setValues({ ...values, isMember: !values.isMember });
+  };
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value })
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
   const onSubmit = (e) => {
-    e.preventDefault()
-    const { firstName, lastName, email, password, isMember } = values
+    e.preventDefault();
+    const { name, email, password, isMember } = values;
     if (!email || !password) {
-      displayAlert()
-      return
+      displayAlert();
+      return;
     }
-    const currentUser = { firstName, lastName, email, password }
+    const currentUser = { name, email, password };
     if (isMember) {
       setupUser({
         currentUser,
         endPoint: 'login',
         alertText: 'Login Successful! Redirecting...',
-      })
+      });
     } else {
       setupUser({
         currentUser,
         endPoint: 'register',
         alertText: 'User Created! Redirecting...',
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate('/')
-      }, 3000)
+        navigate('/');
+      }, 3000);
     }
-  }, [user, navigate])
+  }, [user, navigate]);
 
   return (
     <Wrapper className='full-page'>
@@ -63,27 +63,18 @@ const Register = () => {
         {/* first name input */}
         {!values.isMember && (
           <FormRow
+            placeholder='Enter full name'
             type='text'
-            id="firstName"
-            name='First name'
-            value={values.firstName}
-            handleChange={handleChange}
-          />
-        )}
-
-        {/* last name input */}
-        {!values.isMember && (
-          <FormRow
-            type='text'
-            id='lastName'
-            name='Last name'
-            value={values.lastName}
+            id='name'
+            name='name'
+            value={values.name}
             handleChange={handleChange}
           />
         )}
 
         {/* email input */}
         <FormRow
+          placeholder='jane.doe@gmail.com'
           type='email'
           id='email'
           name='email'
@@ -92,6 +83,7 @@ const Register = () => {
         />
         {/* password input */}
         <FormRow
+          placeholder='********'
           type='password'
           id='password'
           name='password'
@@ -110,5 +102,5 @@ const Register = () => {
       </form>
     </Wrapper>
   );
-}
-export default Register
+};
+export default Register;

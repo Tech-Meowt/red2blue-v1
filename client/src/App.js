@@ -4,13 +4,8 @@ import {
   AllJobs,
   Profile,
   SharedLayout,
-  Databases,
+  Stats,
   AddJob,
-  Admin,
-  Notifications,
-  Teams,
-  Tasks,
-  Help,
 } from './pages/dashboard'
 
 function App() {
@@ -25,12 +20,7 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Databases />} />
-          <Route path='admin' element={<Admin />} />
-          <Route path='notifications' element={<Notifications />} />
-          <Route path='teams' element={<Teams />} />
-          <Route path='tasks' element={<Tasks />} />
-          <Route path='help' element={<Help />} />
+          <Route index element={<Stats />} />
           <Route path='all-jobs' element={<AllJobs />} />
           <Route path='add-job' element={<AddJob />} />
           <Route path='profile' element={<Profile />} />
@@ -40,7 +30,7 @@ function App() {
         <Route path='*' element={<Error />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App
