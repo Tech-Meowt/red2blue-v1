@@ -42,7 +42,7 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token })
 }
 const updateUser = async (req, res) => {
-  const { email, name } = req.body
+  const { email, name, approved, usersDb, volunteersDb, isActive, role } = req.body
   if (!email || !name ) {
     throw new BadRequestError('Please provide all values')
   }
@@ -50,6 +50,11 @@ const updateUser = async (req, res) => {
 
   user.email = email
   user.name = name
+  user.approved = approved
+  user.usersDb = usersDb
+  user.volunteersDb = volunteersDb
+  user.isActive = isActive
+  user.role = role
 
   await user.save()
 

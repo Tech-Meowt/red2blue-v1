@@ -148,6 +148,10 @@ ul {
   width: 40% !important;
 }
 
+.space {
+  margin-top: 1rem !important;
+}
+
 /* buttons */
 
 .btn {

@@ -26,8 +26,9 @@ const UserSchema = new mongoose.Schema({
     select: false,
   },
   approved: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ['approved', 'waiting on approval'],
+    default: 'waiting on approval',
   },
   createdAt: {
     type: Date,
@@ -42,26 +43,29 @@ const UserSchema = new mongoose.Schema({
     default: '',
   },
   usersDb: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ['access', 'no access'],
+    default: 'no access',
   },
   volunteersDb: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ['access', 'no access'],
+    default: 'no access',
   },
   isActive: {
-    type: Boolean,
-    default: true,
+    type: String,
+    enum: ['active', 'deactivated'],
+    default: 'active',
   },
   lastLoggedIn: {
-  type: Date,
+    type: Date,
     default: Date.now,
   },
   role: {
     type: String,
     enum: ['viewer', 'editor', 'admin'],
-    default: 'viewer'
-  }
+    default: 'viewer',
+  },
 });
 
 UserSchema.pre('save', async function () {
