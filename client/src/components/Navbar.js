@@ -6,6 +6,7 @@ import { useState } from 'react'
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false)
   const { toggleSidebar, logoutUser, user } = useAppContext()
+
   return (
     <Wrapper>
       <div className='nav-center'>
@@ -13,8 +14,8 @@ const Navbar = () => {
           <FaAlignLeft />
         </button>
         <div>
-<Logo />
-          <h3 className='logo-text'>dashboard</h3>
+          <Logo />
+          <h3 className='logo-text r2b-blue'>Dashboard</h3>
         </div>
         <div className='btn-container'>
           <button
@@ -23,7 +24,7 @@ const Navbar = () => {
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            {user?.firstName}
+            {user?.name}
             <FaCaretDown />
           </button>
           <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>

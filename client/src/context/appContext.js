@@ -46,6 +46,7 @@ const initialState = {
   editJobId: '',
   position: '',
   company: '',
+  jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   jobType: 'full-time',
   statusOptions: ['interview', 'declined', 'pending'],
@@ -151,13 +152,13 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch.patch('/auth/updateUser', currentUser)
 
-      const { user, token } = data
+      const { user, location, token } = data
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { user, token },
+        payload: { user, location, token },
       })
-      addUserToLocalStorage({ user, token })
+      addUserToLocalStorage({ user, location, token })
     } catch (error) {
       if (error.response.status !== 401) {
         dispatch({

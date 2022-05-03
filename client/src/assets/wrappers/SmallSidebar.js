@@ -37,7 +37,7 @@ const Wrapper = styled.aside`
     background: transparent;
     border-color: transparent;
     font-size: 2rem;
-    color: var(--r2b-red);
+    color: var(--red-dark);
     cursor: pointer;
   }
   .nav-links {
@@ -48,16 +48,16 @@ const Wrapper = styled.aside`
   .nav-link {
     display: flex;
     align-items: center;
-    color: var(--black);
+    color: var(--grey-500);
     padding: 1rem 0;
     text-transform: capitalize;
     transition: var(--transition);
   }
   .nav-link:hover {
-    color: var(--black);
+    color: var(--grey-900);
   }
   .nav-link:hover .icon {
-    color: var(--r2b-blue);
+    color: var(--primary-500);
   }
   .icon {
     font-size: 1.5rem;
@@ -67,10 +67,10 @@ const Wrapper = styled.aside`
     transition: var(--transition);
   }
   .active {
-    color: var(--r2b-blue);
+    color: var(--grey-900);
   }
   .active .icon {
-    color: var(--r2b-blue);
+    color: var(--primary-500);
   }
 `
 export default Wrapper

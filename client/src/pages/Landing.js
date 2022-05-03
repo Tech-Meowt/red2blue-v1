@@ -1,6 +1,6 @@
-import main from '../assets/images/Red2BlueHeader.png'
-import Wrapper from '../assets/wrappers/LandingPage'
-import { Link } from 'react-router-dom'
+import main from '../assets/images/Red2BlueHeader.png';
+import Wrapper from '../assets/wrappers/LandingPage';
+import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <Wrapper>
@@ -18,10 +18,10 @@ const Landing = () => {
             <button className='btn'>Login/Register</button>
           </Link>
         </div>
-        <img src={main} alt='job hunt' className='img main-img' />
+        <img src={main} alt='red 2 blue wording' className='img main-img' />
       </div>
     </Wrapper>
   );
-}
+};
 
-export default Landing
+export default Landing;
