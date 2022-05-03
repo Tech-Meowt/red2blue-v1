@@ -43,6 +43,11 @@ const initialState = {
   token: token,
   showSidebar: false,
   isEditing: false,
+  approvedOptions: ['approved', 'waiting on approval'],
+  usersDatabaseOptions: ['access', 'no access'],
+  volunteersDatabaseOptions: ['access', 'no access'],
+  activeUserOptions: ['active', 'deactivated'],
+  roleOptions: ['viewer', 'editor', 'admin'],
   editJobId: '',
   position: '',
   company: '',
@@ -62,7 +67,7 @@ const initialState = {
   searchType: 'all',
   sort: 'latest',
   sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
-}
+};
 
 const AppContext = React.createContext()
 

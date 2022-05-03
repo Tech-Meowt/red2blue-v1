@@ -12,7 +12,7 @@ const Navbar = () => {
         <button type='button' className='toggle-btn' onClick={toggleSidebar}>
           <FaAlignLeft />
         </button>
-        <div>
+        <div classNAme='center'>
           <Logo />
           <h3 className='logo-text r2b-blue'>Dashboard</h3>
         </div>
