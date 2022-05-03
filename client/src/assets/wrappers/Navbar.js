@@ -21,7 +21,7 @@ const Wrapper = styled.nav`
     background: transparent;
     border-color: transparent;
     font-size: 1.75rem;
-    color: var(--primary-500);
+    color: var(--r2b-blue);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@ const Wrapper = styled.nav`
     top: 40px;
     left: 0;
     width: 100%;
-    background: var(--primary-100);
+    background: var(--r2b-blue);
     box-shadow: var(--shadow-2);
     padding: 0.5rem;
     text-align: center;
@@ -57,7 +57,7 @@ const Wrapper = styled.nav`
   .dropdown-btn {
     background: transparent;
     border-color: transparent;
-    color: var(--primary-500);
+    color: white;
     letter-spacing: var(--letterSpacing);
     text-transform: capitalize;
     cursor: pointer;

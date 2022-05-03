@@ -34,7 +34,7 @@ const Wrapper = styled.aside`
     .nav-link {
       display: flex;
       align-items: center;
-      color: var(--grey-500);
+      color: var(--black);
       padding: 1rem 0;
       padding-left: 2.5rem;
       text-transform: capitalize;
@@ -43,12 +43,13 @@ const Wrapper = styled.aside`
     .nav-link:hover {
       background: var(--grey-50);
       padding-left: 3rem;
-      color: var(--grey-900);
+      color: var(--black);
     }
     .nav-link:hover .icon {
-      color: var(--primary-500);
+      color: var(--black);
     }
     .icon {
+      color: var(--black);
       font-size: 1.5rem;
       margin-right: 1rem;
       display: grid;
@@ -56,10 +57,10 @@ const Wrapper = styled.aside`
       transition: var(--transition);
     }
     .active {
-      color: var(--grey-900);
+      color: var(--r2b-blue);
     }
     .active .icon {
-      color: var(--primary-500);
+      color: var(--r2b-blue);
     }
   }
 `

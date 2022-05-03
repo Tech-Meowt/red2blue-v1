@@ -25,12 +25,12 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const { name, lastName, email, password, isMember } = values;
+    const { name, email, password, isMember } = values;
     if (!email || !password) {
       displayAlert();
       return;
     }
-    const currentUser = { name, lastName, email, password };
+    const currentUser = { name, email, password };
     if (isMember) {
       setupUser({
         currentUser,

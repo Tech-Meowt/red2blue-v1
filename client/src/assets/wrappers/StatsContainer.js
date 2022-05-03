@@ -8,9 +8,8 @@ const Wrapper = styled.section`
     column-gap: 1rem;
   }
   @media (min-width: 1120px) {
-    grid-template-columns: 1fr 1fr 1 fr;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 1rem;
   }
 `
-
 export default Wrapper

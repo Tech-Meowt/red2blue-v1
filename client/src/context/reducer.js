@@ -56,7 +56,6 @@ const reducer = (state, action) => {
       isLoading: true,
       token: action.payload.token,
       user: action.payload.user,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: 'success',
       alertText: action.payload.alertText,
@@ -82,7 +81,6 @@ const reducer = (state, action) => {
       ...initialState,
       user: null,
       token: null,
-      jobLocation: '',
     }
   }
   if (action.type === UPDATE_USER_BEGIN) {
@@ -94,7 +92,6 @@ const reducer = (state, action) => {
       isLoading: false,
       token: action.payload.token,
       user: action.payload.user,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: 'success',
       alertText: 'User Profile Updated!',
@@ -122,7 +119,6 @@ const reducer = (state, action) => {
       editJobId: '',
       position: '',
       company: '',
-      jobLocation: state.userLocation,
       jobType: 'full-time',
       status: 'pending',
     }

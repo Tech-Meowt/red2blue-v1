@@ -152,13 +152,13 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch.patch('/auth/updateUser', currentUser)
 
-      const { user, location, token } = data
+      const { user, token } = data
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        payload: { user, location, token },
+        payload: { user, token },
       })
-      addUserToLocalStorage({ user, location, token })
+      addUserToLocalStorage({ user, token })
     } catch (error) {
       if (error.response.status !== 401) {
         dispatch({
