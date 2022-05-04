@@ -3,6 +3,8 @@ import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
 import { useNavigate } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
+
 const initialState = {
   name: '',
   email: '',
@@ -15,6 +17,29 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
+  
+  const obj = {
+    userName: values.name,
+    userEmail: values.email,
+  };
+  
+  const sendNewAccountEmail = (obj) => {
+    emailjs
+      .send(
+        'service_0u0nhlb',
+        'template_rwbflkg',
+        obj,
+        'gJtJMCXOyZBGs1ZMw'
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -43,6 +68,7 @@ const Register = () => {
         endPoint: 'register',
         alertText: 'User Created! Redirecting...',
       });
+      sendNewAccountEmail();
     }
   };
 
@@ -91,7 +117,7 @@ const Register = () => {
           handleChange={handleChange}
         />
         <button type='submit' className='btn btn-block' disabled={isLoading}>
-          submit
+          Submit
         </button>
         <p>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}

@@ -30,10 +30,10 @@ const Wrapper = styled.nav`
   .btn-container {
     position: relative;
   }
+
   .btn {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0 0.5rem;
     position: relative;
     box-shadow: var(--shadow-2);
@@ -44,13 +44,14 @@ const Wrapper = styled.nav`
     top: 40px;
     left: 0;
     width: 100%;
-    background: var(--r2b-blue);
+    background: var(--r2b-red);
     box-shadow: var(--shadow-2);
     padding: 0.5rem;
     text-align: center;
     visibility: hidden;
     border-radius: var(--borderRadius);
   }
+
   .show-dropdown {
     visibility: visible;
   }
@@ -62,12 +63,13 @@ const Wrapper = styled.nav`
     text-transform: capitalize;
     cursor: pointer;
   }
+
   .logo-text {
     display: none;
     margin: 0;
+    margin-left: 4rem;
   }
   @media (min-width: 992px) {
-    position: sticky;
     top: 0;
 
     .nav-center {
@@ -80,5 +82,5 @@ const Wrapper = styled.nav`
       display: block;
     }
   }
-`
+`;
 export default Wrapper

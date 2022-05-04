@@ -167,6 +167,7 @@ ul {
   text-transform: capitalize;
   display: inline-block;
 }
+
 .btn:hover {
   background: var(--r2b-red);
   color: white;
