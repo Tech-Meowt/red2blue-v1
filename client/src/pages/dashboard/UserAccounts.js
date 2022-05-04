@@ -1,4 +1,4 @@
-export default function Admin() {
+export default function UserAccounts() {
   return (
     <div>hello world</div>
   )

@@ -143,7 +143,7 @@ ul {
   border: 2px solid var(--r2b-blue);
   border-radius: 10px 10px 10px 10px;
   box-shadow: var(--shadow-1);
- margin: 2rem auto;
+  margin: 2rem auto;
   height: 40% !important;
   width: 40% !important;
 }

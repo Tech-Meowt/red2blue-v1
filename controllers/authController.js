@@ -1,6 +1,6 @@
 import User from '../models/User.js'
 import { StatusCodes } from 'http-status-codes'
-import { BadRequestError, UnAuthenticatedError } from '../errors/index.js'
+import { BadRequestError, UnAuthenticatedError, NotFoundError } from '../errors/index.js'
 
 const register = async (req, res) => {
   const { name, email, password } = req.body
@@ -41,6 +41,43 @@ const login = async (req, res) => {
   user.password = undefined
   res.status(StatusCodes.OK).json({ user, token })
 }
+
+const getAllUsers = async (req, res) => {
+
+  const {
+    email,
+    name,
+    approved,
+    usersDb,
+    volunteersDb,
+    isActive,
+    role,
+    avatarUrl,
+    createdAt,
+    updatedAt,
+    lastLoggedIn,
+  } = req.body;
+
+  const user = await User.find({})
+  if (!user) {
+    throw new NotFoundError('No data found')
+  }
+
+  user.email = email;
+  user.name = name;
+  user.approved = approved;
+  user.usersDb = usersDb;
+  user.volunteersDb = volunteersDb;
+  user.isActive = isActive;
+  user.role = role;
+  user.avatarUrl = avatarUrl;
+  user.createdAt = createdAt;
+  user.updatedAt = updatedAt;
+  user.lastLoggedIn = lastLoggedIn;
+
+  res.status(StatusCodes.OK).json({ user });
+}
+
 const updateUser = async (req, res) => {
   const { email, name, approved, usersDb, volunteersDb, isActive, role } = req.body
   if (!email || !name ) {
@@ -63,4 +100,4 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token })
 }
 
-export { register, login, updateUser }
+export { register, login, updateUser, getAllUsers }
