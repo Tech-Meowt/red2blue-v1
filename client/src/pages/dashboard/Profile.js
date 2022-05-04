@@ -67,7 +67,7 @@ const Profile = () => {
           {role != 'admin' && (
             <FormRow
               type='text'
-              name='users database access*'
+              name='volunteers database access*'
               value={usersDb}
               readonly
             />
@@ -78,7 +78,7 @@ const Profile = () => {
               name='volunteers database access'
               value={volunteersDb}
               handleChange={(e) => setVolunteersDb(e.target.value)}
-              list={usersDatabaseOptions}
+              list={volunteersDatabaseOptions}
             />
           )}
 
