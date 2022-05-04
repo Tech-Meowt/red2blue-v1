@@ -11,6 +11,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  GET_USERS_BEGIN,
+  GET_USERS_SUCCESS,
+  GET_USERS_ERROR,
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
@@ -25,7 +28,7 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
-} from './actions'
+} from './actions';
 
 import { initialState } from './appContext'
 
@@ -128,6 +131,29 @@ const reducer = (state, action) => {
       ...initialState,
     }
   }
+
+   if (action.type === GET_USERS_BEGIN) {
+     return { ...state, isLoading: true, showAlert: false };
+   }
+  
+  if (action.type === GET_USERS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      users: action.payload.jobs,
+    };
+  }
+
+  if (action.type === GET_USERS_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+  
   if (action.type === CREATE_JOB_BEGIN) {
     return { ...state, isLoading: true }
   }

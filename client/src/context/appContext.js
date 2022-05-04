@@ -1,5 +1,4 @@
 import React, { useReducer, useContext } from 'react'
-import emailjs from '@emailjs/browser';
 
 import reducer from './reducer'
 import axios from 'axios'
@@ -16,6 +15,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  GET_USERS_BEGIN,
+  GET_USERS_SUCCESS,
+  GET_USERS_ERROR,
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
@@ -49,6 +51,7 @@ const initialState = {
   volunteersDatabaseOptions: ['access', 'no access'],
   activeUserOptions: ['active', 'deactivated'],
   roleOptions: ['viewer', 'editor', 'admin'],
+  users: [],
   editJobId: '',
   position: '',
   company: '',
@@ -153,6 +156,22 @@ const AppProvider = ({ children }) => {
   const logoutUser = () => {
     dispatch({ type: LOGOUT_USER })
     removeUserFromLocalStorage()
+  }
+
+  const getUsers = async ({ endPoint, alertText }) => {
+    dispatch({ type: GET_USERS_BEGIN })
+try {
+  const { data } = await axios.get(`/api/v1/auth/${endPoint}`)
+  const { users } = data
+
+  dispatch({
+    type: GET_USERS_SUCCESS,
+    payload: { users, alertText },
+  })
+} catch (error) {
+  
+}
+
   }
   const updateUser = async (currentUser) => {
     dispatch({ type: UPDATE_USER_BEGIN })
@@ -299,6 +318,7 @@ const AppProvider = ({ children }) => {
         updateUser,
         handleChange,
         clearValues,
+        getUsers,
         createJob,
         getJobs,
         setEditJob,

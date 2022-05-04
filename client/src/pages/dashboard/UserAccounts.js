@@ -1,5 +1,10 @@
+import { SearchContainer, JobsContainer } from '../../components'
+
 export default function UserAccounts() {
   return (
-    <div>hello world</div>
+    <>
+      <SearchContainer />
+      <JobsContainer />
+    </>
   )
 }
