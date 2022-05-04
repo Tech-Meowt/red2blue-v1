@@ -132,11 +132,6 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
 
       const { user, token } = data
-
-      const emailObj = {
-        userName: user.name,
-        userEmail: user.email,
-      };
       
       dispatch({
         type: SETUP_USER_SUCCESS,
