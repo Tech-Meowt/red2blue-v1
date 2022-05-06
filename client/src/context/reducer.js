@@ -25,6 +25,10 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  SET_ADMIN_EDIT_USER,
+  ADMIN_EDIT_USER_BEGIN,
+  ADMIN_EDIT_USER_SUCCESS,
+  ADMIN_EDIT_USER_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
