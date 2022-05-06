@@ -1,10 +1,10 @@
-import { SearchContainer, JobsContainer } from '../../components'
+import { SearchContainer, AllDbUsers } from '../../components'
 
 export default function UserAccounts() {
   return (
     <>
       <SearchContainer />
-      <JobsContainer />
+      <AllDbUsers />
     </>
   )
 }

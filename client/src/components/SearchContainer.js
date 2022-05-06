@@ -1,6 +1,6 @@
-import { FormRow, FormRowSelect } from '.'
-import { useAppContext } from '../context/appContext'
-import Wrapper from '../assets/wrappers/SearchContainer'
+import { FormRow, FormRowSelect } from '.';
+import { useAppContext } from '../context/appContext';
+import Wrapper from '../assets/wrappers/SearchContainer';
 
 const SearchContainer = () => {
   const {
@@ -14,15 +14,15 @@ const SearchContainer = () => {
     clearFilters,
     jobTypeOptions,
     statusOptions,
-  } = useAppContext()
+  } = useAppContext();
   const handleSearch = (e) => {
-    if (isLoading) return
-    handleChange({ name: e.target.name, value: e.target.value })
-  }
+    if (isLoading) return;
+    handleChange({ name: e.target.name, value: e.target.value });
+  };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    clearFilters()
-  }
+    e.preventDefault();
+    clearFilters();
+  };
   return (
     <Wrapper>
       <form className='form'>
@@ -69,7 +69,7 @@ const SearchContainer = () => {
         </div>
       </form>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default SearchContainer
+export default SearchContainer;
