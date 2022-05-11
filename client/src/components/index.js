@@ -12,6 +12,8 @@ import SmallSidebar from './SmallSidebar'
 import StatsContainer from './StatsContainer'
 import Button from './Button'
 import AllDbUsers from './AllDbUsers'
+import DbUser from './DbUser'
+import UsersContainer from './UsersContainer'
 export {
   Logo,
   FormRow,
@@ -27,4 +29,6 @@ export {
   Loading,
   Button,
   AllDbUsers,
+  DbUser,
+  UsersContainer,
 };

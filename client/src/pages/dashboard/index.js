@@ -4,4 +4,6 @@ import Profile from './Profile'
 import SharedLayout from './SharedLayout'
 import Stats from './Stats'
 import UserAccounts from './UserAccounts'
-export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts }
+import AddDbUser from './AddDbUser'
+import EditUser from './EditUser'
+export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts , AddDbUser, EditUser }

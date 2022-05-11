@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FormRow, Alert, FormRowSelect } from '../../components'
 import { useAppContext } from '../../context/appContext'
 import Wrapper from '../../assets/wrappers/DashboardFormPage'
+
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading, approvedOptions, usersDatabaseOptions, volunteersDatabaseOptions, activeUserOptions, roleOptions } =
     useAppContext()

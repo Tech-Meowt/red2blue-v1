@@ -15,6 +15,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_USER_BEGIN,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
@@ -29,14 +32,12 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
-  SET_ADMIN_EDIT_USER,
-  ADMIN_EDIT_USER_BEGIN,
-  ADMIN_EDIT_USER_SUCCESS,
-  ADMIN_EDIT_USER_ERROR,
+  GET_USERS_BEGIN,
 } from './actions';
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
+const newUser = null
 
 const initialState = {
   isLoading: false,
@@ -47,8 +48,8 @@ const initialState = {
   token: token,
   showSidebar: false,
   isEditing: false,
+  editDbUserId: '',
   editJobId: '',
-  editUserId: '',
   position: '',
   name: '',
   email: '',
@@ -57,6 +58,12 @@ const initialState = {
   volunteersDb: '',
   isActive: '',
   role: '',
+  dbUsers: [],
+  newUser: newUser,
+  totalDbUsers: 0,
+  numOfPages: 1,
+  page: 1,
+  password: 'password',
   approvedOptions: ['approved', 'waiting on approval'],
   usersDatabaseOptions: ['access', 'no access'],
   volunteersDatabaseOptions: ['access', 'no access'],
@@ -69,7 +76,6 @@ const initialState = {
   status: 'pending',
   statusOptions: ['interview', 'declined', 'pending'],
   jobs: [],
-  users: [],
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
@@ -199,6 +205,38 @@ const AppProvider = ({ children }) => {
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES });
   };
+
+  const createDbUser = async () => {
+    dispatch({ type: CREATE_USER_BEGIN });
+    try {
+      const { name, email, approved, usersDb, volunteersDb, isActive, role, password } = state
+
+      await axios.post('/auth/addUser', {
+        name, email, approved, usersDb, volunteersDb, isActive, role, password,
+      })
+      dispatch({
+        type: CREATE_USER_SUCCESS,
+      })
+      dispatch({ type: CLEAR_VALUES })
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_USER_ERROR,
+        payload: { msg: error.response.data.msg}
+      })
+    }
+    clearAlert()
+  }
+
+  const getAllDbUsers = async () => {
+    dispatch({ type: GET_USERS_BEGIN })
+    try {
+      const { data } = await axios.get('/user')
+    } catch (error) {
+      
+    }
+  }
+
   const createJob = async () => {
     dispatch({ type: CREATE_JOB_BEGIN });
     try {

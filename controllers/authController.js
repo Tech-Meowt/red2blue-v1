@@ -46,7 +46,14 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-
+const createDbUser = async (req, res) => {
+  const { email, name, approved, usersDb, volunteersDb, isActive, role, password } = req.body
+  if (!email || !name) {
+    throw new BadRequestError('Please provide all values');
+  }
+  const newDbUser = await User.create(req.body);
+  res.status(StatusCodes.CREATED).json({ newDbUser })
+}
 
 const updateUser = async (req, res) => {
   const { email, name, approved, usersDb, volunteersDb, isActive, role } =
@@ -91,4 +98,4 @@ const adminUpdateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ updatedUser });
 }
 
-export { register, login, updateUser, adminUpdateUser };
+export { register, login, updateUser, adminUpdateUser, createDbUser };

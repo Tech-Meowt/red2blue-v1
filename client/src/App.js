@@ -7,6 +7,8 @@ import {
   Stats,
   AddJob,
   UserAccounts,
+  AddDbUser,
+  EditUser
 } from './pages/dashboard'
 
 function App() {
@@ -23,9 +25,10 @@ function App() {
         >
           <Route index element={<Stats />} />
           <Route path='all-jobs' element={<AllJobs />} />
-          <Route path='add-job' element={<AddJob />} />
+          <Route path='edit-user' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
           <Route path='user-accounts' element={<UserAccounts />} />
+          <Route path='add-user' element={<AddDbUser />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />

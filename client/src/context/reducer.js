@@ -11,6 +11,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_USER_BEGIN,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
@@ -25,10 +28,6 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
-  SET_ADMIN_EDIT_USER,
-  ADMIN_EDIT_USER_BEGIN,
-  ADMIN_EDIT_USER_SUCCESS,
-  ADMIN_EDIT_USER_ERROR,
 } from './actions';
 
 import { initialState } from './appContext';
@@ -114,26 +113,47 @@ const reducer = (state, action) => {
       };
     }
     if (action.type === HANDLE_CHANGE) {
-      return {
-        ...state,
-        page: 1,
-        [action.payload.name]: action.payload.value,
-      };
+      return { ...state, [action.payload.name]: action.payload.value };
     }
     if (action.type === CLEAR_VALUES) {
       const initialState = {
         isEditing: false,
-        editJobId: '',
-        position: '',
-        company: '',
-        jobLocation: state.userLocation,
-        jobType: 'full-time',
+        editDbUserId: '',
+        name: '',
+        email: '',
+        approved: '',
+        usersDb: '',
+        volunteersDb: '',
+        isActive: '',
+        password: '',
+        role: '',
         status: 'pending',
       };
 
       return {
         ...state,
         ...initialState,
+      };
+    }
+    if (action.type === CREATE_USER_BEGIN) {
+      return { ...state, isLoading: true }
+    }
+    if (action.type === CREATE_USER_SUCCESS) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'New User Created!',
+      };
+    }
+    if (action.type === CREATE_USER_ERROR) {
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
       };
     }
     if (action.type === CREATE_JOB_BEGIN) {
@@ -168,46 +188,6 @@ const reducer = (state, action) => {
         jobs: action.payload.jobs,
         totalJobs: action.payload.totalJobs,
         numOfPages: action.payload.numOfPages,
-      };
-    }
-    if (action.type === SET_ADMIN_EDIT_USER) {
-      const user = state.users.find((user) => user._id === action.payload.id);
-      const { _id, name, email, approved, usersDb, volunteersDb, isActive, role } = user;
-      return {
-        ...state,
-        isEditing: true,
-        editUserId: _id,
-        name,
-        email,
-        approved,
-        usersDb,
-        volunteersDb,
-        isActive,
-        role,
-      };
-    }
-    if (action.type === ADMIN_EDIT_USER_BEGIN) {
-      return {
-        ...state,
-        isLoading: true,
-      };
-    }
-    if (action.type === ADMIN_EDIT_USER_SUCCESS) {
-      return {
-        ...state,
-        isLoading: false,
-        showAlert: true,
-        alertType: 'success',
-        alertText: 'User Updated!',
-      };
-    }
-    if (action.type === ADMIN_EDIT_USER_ERROR) {
-      return {
-        ...state,
-        isLoading: false,
-        showAlert: true,
-        alertType: 'danger',
-        alertText: action.payload.msg,
       };
     }
     if (action.type === SET_EDIT_JOB) {
