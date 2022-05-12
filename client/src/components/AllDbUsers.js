@@ -5,10 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import { FormRow, Alert, FormRowSelect } from '../components';
 import DbUser from './DbUser';
+import Loading from './Loading';
 
 
 export default function AllDbUsers() {
-  const [dbUsers, setDbUsers] = useState([]);
+  const [dbUsers, setDbUsers] = useState([])
   const { isLoading } = useAppContext();
   
   useEffect(() => {
@@ -21,11 +22,9 @@ export default function AllDbUsers() {
     })
   }, [])
 
-  // const getId = (e) => {
-  //   const id = e.target.name
-  //   console.log(id)
-  //   setClicked(true)
-  // }
+  if (isLoading) {
+    return <Loading center />;
+  }
 
   return (
     <Wrapper>

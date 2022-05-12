@@ -31,9 +31,20 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   } = useAppContext();
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
-  const [updatedUser, setUpdatedUser] = useState();
-  const [findId, setFindId] = useState('');
+  const [deleted, setDeleted] = useState(false);
 
+    // useEffect(() => {
+    //   axios
+    //     .get('http://localhost:8000/api/v1/auth/allUsers')
+    //     .then((res) => {
+    //       setValues(res.data);
+    //       console.log(res.data);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // }, [deleted]);
+  
     const getId = (e) => {
       const id = e.target.name;
       console.log(id);
@@ -47,12 +58,22 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   const updateUser = (_id) => {
     axios.patch(`http://localhost:8000/api/v1/auth/${_id}`)
       .then(res => {
-        setUpdatedUser(res.data);
+        // setUpdatedUser(res.data);
         console.log(res.data)
       }).catch((error) => {
       console.log(error)
     })
   }
+
+  const deleteHandler = (e) => {
+    axios.delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
+      .then(res => {
+        setValues(res.data);
+      }).catch((error) => {
+        console.log(error);
+      });
+    window.location.reload();
+  };
 
   // const handleSubmit = (e) => {
   //   e.preventDefault()
@@ -66,9 +87,6 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   //     role,
   //   });
   // }
-
-
-  
 
   return (
     <Wrapper>
@@ -90,17 +108,22 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
         <footer>
           <div className='actions'>
             {!clicked && (
-              <button className='btn edit-btn' name={_id} onClick={getId}>
-                Edit
-              </button>
+              <>
+                <button className='btn edit-btn' name={_id} onClick={getId}>
+                  Edit
+                </button>
+                <button type='button' className='btn delete-btn' name={_id} onClick={deleteHandler}>
+                  Delete
+                </button>
+              </>
             )}
-            <button type='button' className='btn delete-btn'>
-              Delete
-            </button>
 
             {clicked && (
               <>
-                <form >
+                <button className='btn delete-btn' name={_id} onClick={getId}>
+                  Close
+                </button>
+                <form>
                   <FormRow
                     type='text'
                     name='name'
@@ -129,7 +152,13 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
                     list={activeUserOptions}
                   />
                   <FormRowSelect name='role' value={role} list={roleOptions} />
-                  <button type='button' className='btn edit-btn' onClick={() => {updateUser(_id)}}>
+                  <button
+                    type='button'
+                    className='btn edit-btn'
+                    onClick={() => {
+                      updateUser(_id);
+                    }}
+                  >
                     Submit
                   </button>
                   <button type='button' className='btn delete-btn'>

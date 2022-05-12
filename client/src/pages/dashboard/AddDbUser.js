@@ -49,10 +49,12 @@ export default function AddDbUser() {
     setupUser({
       currentUser,
       endPoint: 'register',
-      alertText: 'User Created!',
+      alertText: 'User Created! Redirecting...',
     });
     setTimeout(() => {
       clearState()
+      navigate('/user-accounts')
+      window.location.reload();
     }, 3000)
 
   }

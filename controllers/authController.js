@@ -78,24 +78,20 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-const adminUpdateUser = async (req, res) => {
-  const { id: userId } = req.params;
-  const { email, name, approved, usersDb, volunteersDb, isActive, role } = req.body
+const deleteUser = async (req, res) => {
+  await User.findByIdAndRemove(req.params.id, req.body)
+    .then((dbUsers) => {
+      res.json({
+        message: `DELETED`,
+        dbUsers,
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `NOT DELETED`,
+        error: err.message,
+      });
+    });
+};
 
-  if (!email || !name) {
-    throw new BadRequestError('Please provide all values');
-  }
-  const user = await User.findOne({ _id: userId });
-
-  if (!user) {
-    throw new NotFoundError(`No user with id :${userId}`);
-  }
-
-  const updatedUser = await User.findOneAndUpdate({ _id: userId }, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  res.status(StatusCodes.OK).json({ updatedUser });
-}
-
-export { register, login, updateUser, adminUpdateUser, createDbUser };
+export { register, login, updateUser, createDbUser, deleteUser };
