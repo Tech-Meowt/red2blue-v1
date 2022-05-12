@@ -27,5 +27,15 @@ router.route('/allUsers').get((req, res) => {
   })
 })
 router.route('/:id').patch(adminUpdateUser)
+router.route('/:id').patch((req, res) => {
+  User.findByIdAndUpdate((error, data) => {
+    if (error) {
+      console.log(error)
+    } else {
+      res.json(data)
+      console.log(data)
+    }
+  })
+})
 
 export default router

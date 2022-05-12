@@ -3,6 +3,11 @@ import links from '../utils/links';
 import { NavLink } from 'react-router-dom'
 
 const NavLinks = ({ toggleSidebar }) => {
+  const [admin, setAdmin] = useState(false)
+
+  const handleClick = () => {
+
+  }
 
   return (
     <div className='nav-links'>

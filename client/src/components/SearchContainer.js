@@ -13,7 +13,6 @@ const SearchContainer = () => {
     handleChange,
     clearFilters,
     jobTypeOptions,
-    statusOptions,
   } = useAppContext();
   const handleSearch = (e) => {
     if (isLoading) return;
@@ -37,13 +36,13 @@ const SearchContainer = () => {
             handleChange={handleSearch}
           />
           {/* search by status */}
-          <FormRowSelect
+          {/* <FormRowSelect
             labelText='status'
             name='searchStatus'
             value={searchStatus}
             handleChange={handleSearch}
             list={['all', ...statusOptions]}
-          />
+          /> */}
           {/* search by type */}
           <FormRowSelect
             labelText='type'

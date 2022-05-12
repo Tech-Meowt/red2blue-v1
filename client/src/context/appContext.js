@@ -13,6 +13,9 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  ADMIN_UPDATE_USER_BEGIN,
+  ADMIN_UPDATE_USER_SUCCESS,
+  ADMIN_UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
   CREATE_USER_BEGIN,
@@ -199,6 +202,43 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const adminUpdateUser = async () => {
+    dispatch({ type: ADMIN_UPDATE_USER_BEGIN })
+
+    try {
+      const {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+        _id
+      } = state;
+
+      await axios.patch(`/auth/${_id}`, {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+      });
+      dispatch({ type: ADMIN_UPDATE_USER_SUCCESS })
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: ADMIN_UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg }
+      });
+        
+    }
+  }
+
   const handleChange = ({ name, value }) => {
     dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
   };
@@ -206,24 +246,22 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
-  const createDbUser = async () => {
+  const createDbUser = async (newUser, alertText) => {
     dispatch({ type: CREATE_USER_BEGIN });
     try {
-      const { name, email, approved, usersDb, volunteersDb, isActive, role, password } = state
-
-      await axios.post('/auth/addUser', {
-        name, email, approved, usersDb, volunteersDb, isActive, role, password,
-      })
+      const { data } = await axios.post(
+        `/api/v1/auth/register`,
+        newUser
+      )
       dispatch({
         type: CREATE_USER_SUCCESS,
+        payload: { alertText },
       })
-      dispatch({ type: CLEAR_VALUES })
     } catch (error) {
-      if (error.response.status === 401) return;
       dispatch({
         type: CREATE_USER_ERROR,
-        payload: { msg: error.response.data.msg}
-      })
+        payload: { msg: error.response.data.msg },
+      });
     }
     clearAlert()
   }
@@ -293,13 +331,16 @@ const AppProvider = ({ children }) => {
     dispatch({ type: EDIT_JOB_BEGIN });
 
     try {
-      const { position, company, jobLocation, name, approved } = state;
-      await authFetch.patch(`/jobs/${state.editJobId}`, {
-        company,
-        position,
-        jobLocation,
+      const { name, email, password, approved, usersDb, volunteersDb, isActive, role } = state;
+      await axios.patch(`/auth/${state.editJobId}`, {
         name,
+        email,
+        password,
         approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
       });
       dispatch({ type: EDIT_JOB_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
@@ -362,6 +403,8 @@ const AppProvider = ({ children }) => {
         showStats,
         clearFilters,
         changePage,
+        createDbUser,
+        adminUpdateUser,
       }}
     >
       {children}

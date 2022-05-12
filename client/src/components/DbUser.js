@@ -6,26 +6,69 @@ import { FormRow, Alert, FormRowSelect } from '../components';
 import { useAppContext } from '../context/appContext'
 
 const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, role}) => {
+  const initialState = {
+    name,
+    email,
+    approved,
+    usersDb,
+    volunteersDb,
+    isActive,
+    role
+  }
   const {
     showAlert,
     displayAlert,
     isLoading,
-    isEditing,
+    setEditJob,
     approvedOptions,
     usersDatabaseOptions,
     volunteersDatabaseOptions,
     activeUserOptions,
     roleOptions,
-    handleChange,
     dbUsers,
+    user,
+    adminUpdateUser,
   } = useAppContext();
   const [clicked, setClicked] = useState(false);
+  const [values, setValues] = useState(initialState);
+  const [updatedUser, setUpdatedUser] = useState();
+  const [findId, setFindId] = useState('');
 
     const getId = (e) => {
       const id = e.target.name;
       console.log(id);
       setClicked(!clicked);
     };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const updateUser = (_id) => {
+    axios.patch(`http://localhost:8000/api/v1/auth/${_id}`)
+      .then(res => {
+        setUpdatedUser(res.data);
+        console.log(res.data)
+      }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   updateUser({
+  //     name,
+  //     email,
+  //     approved,
+  //     usersDb,
+  //     volunteersDb,
+  //     isActive,
+  //     role,
+  //   });
+  // }
+
+
+  
 
   return (
     <Wrapper>
@@ -46,60 +89,55 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
         </div>
         <footer>
           <div className='actions'>
-            <Link to='/add-user'>
+            {!clicked && (
               <button className='btn edit-btn' name={_id} onClick={getId}>
                 Edit
               </button>
-            </Link>
-
-            {/* {clicked && (
-              <>
-                <FormRow
-                  type='text'
-                  name='name'
-                  value={name}
-                />
-                <FormRow
-                  type='text'
-                  name='email'
-                  value={email}
-  
-                />
-                <FormRowSelect
-                  name='approved'
-                  value={approved}
-                  list={approvedOptions}
-  
-                />
-                <FormRowSelect
-                  name='users database access'
-                  value={usersDb}
-                  list={usersDatabaseOptions}
-  
-                />
-                <FormRowSelect
-                  name='volunteers database access'
-                  value={volunteersDb}
-                  list={volunteersDatabaseOptions}
-  
-                />
-                <FormRowSelect
-                  name='active user'
-                  value={isActive}
-                  list={activeUserOptions}
-  
-                />
-                <FormRowSelect
-                  name='role'
-                  value={role}
-                  list={roleOptions}
-  
-                />
-              </>
-            )} */}
+            )}
             <button type='button' className='btn delete-btn'>
               Delete
             </button>
+
+            {clicked && (
+              <>
+                <form >
+                  <FormRow
+                    type='text'
+                    name='name'
+                    value={values.name}
+                    handleChange={handleChange}
+                  />
+                  <FormRow type='text' name='email' value={email} />
+                  <FormRowSelect
+                    name='approved'
+                    value={approved}
+                    list={approvedOptions}
+                  />
+                  <FormRowSelect
+                    name='users database access'
+                    value={usersDb}
+                    list={usersDatabaseOptions}
+                  />
+                  <FormRowSelect
+                    name='volunteers database access'
+                    value={volunteersDb}
+                    list={volunteersDatabaseOptions}
+                  />
+                  <FormRowSelect
+                    name='active user'
+                    value={isActive}
+                    list={activeUserOptions}
+                  />
+                  <FormRowSelect name='role' value={role} list={roleOptions} />
+                  <button type='button' className='btn edit-btn' onClick={() => {updateUser(_id)}}>
+                    Submit
+                  </button>
+                  <button type='button' className='btn delete-btn'>
+                    Delete
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </footer>
       </div>
