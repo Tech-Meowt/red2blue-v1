@@ -46,14 +46,22 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-const createDbUser = async (req, res) => {
-  const { email, name, approved, usersDb, volunteersDb, isActive, role, password } = req.body
-  if (!email || !name) {
-    throw new BadRequestError('Please provide all values');
-  }
-  const newDbUser = await User.create(req.body);
-  res.status(StatusCodes.CREATED).json({ newDbUser })
-}
+const createUser = (req, res) => {
+  User.create(req.body)
+    .then((newUser) => {
+      console.log({ newUser });
+      res.json({
+        message: `Added User`,
+        newUser,
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `Not added`,
+        error: err.message,
+      });
+    });
+};
 
 const updateUser = async (req, res) => {
   const { email, name, approved, usersDb, volunteersDb, isActive, role } =
@@ -94,4 +102,4 @@ const deleteUser = async (req, res) => {
     });
 };
 
-export { register, login, updateUser, createDbUser, deleteUser };
+export { register, login, updateUser, createUser, deleteUser };

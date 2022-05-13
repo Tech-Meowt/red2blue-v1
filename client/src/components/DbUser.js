@@ -112,7 +112,12 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
                 <button className='btn edit-btn' name={_id} onClick={getId}>
                   Edit
                 </button>
-                <button type='button' className='btn delete-btn' name={_id} onClick={deleteHandler}>
+                <button
+                  type='button'
+                  className='btn delete-btn'
+                  name={_id}
+                  onClick={deleteHandler}
+                >
                   Delete
                 </button>
               </>
@@ -135,21 +140,25 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
                     name='approved'
                     value={approved}
                     list={approvedOptions}
+                    handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='users database access'
                     value={usersDb}
                     list={usersDatabaseOptions}
+                    handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='volunteers database access'
                     value={volunteersDb}
                     list={volunteersDatabaseOptions}
+                    handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='active user'
                     value={isActive}
                     list={activeUserOptions}
+                    handleChange={handleChange}
                   />
                   <FormRowSelect name='role' value={role} list={roleOptions} />
                   <button
