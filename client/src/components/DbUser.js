@@ -26,24 +26,19 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
     activeUserOptions,
     roleOptions,
     dbUsers,
-    user,
-    adminUpdateUser,
   } = useAppContext();
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
   const [deleted, setDeleted] = useState(false);
-
-    // useEffect(() => {
-    //   axios
-    //     .get('http://localhost:8000/api/v1/auth/allUsers')
-    //     .then((res) => {
-    //       setValues(res.data);
-    //       console.log(res.data);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }, [deleted]);
+  const [newValues, setNewValues] = useState({
+    name: '',
+    email: '',
+    approved: '',
+    usersDb: '',
+    volunteersDb: '',
+    isActive: '',
+    role: '',
+  })
   
     const getId = (e) => {
       const id = e.target.name;
@@ -56,9 +51,9 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   };
 
   const updateUser = (_id) => {
-    axios.patch(`http://localhost:8000/api/v1/auth/${_id}`)
+    axios.patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
       .then(res => {
-        // setUpdatedUser(res.data);
+        newValues(res.data)
         console.log(res.data)
       }).catch((error) => {
       console.log(error)
@@ -128,45 +123,44 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
                 <button className='btn delete-btn' name={_id} onClick={getId}>
                   Close
                 </button>
-                <form>
+                <form onSubmit={() => {
+                    updateUser(_id);
+                  }}>
                   <FormRow
                     type='text'
                     name='name'
                     value={values.name}
                     handleChange={handleChange}
                   />
-                  <FormRow type='text' name='email' value={email} />
+                  <FormRow type='text' name='email' value={values.email} handleChange={handleChange}/>
                   <FormRowSelect
                     name='approved'
-                    value={approved}
+                    value={values.approved}
                     list={approvedOptions}
                     handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='users database access'
-                    value={usersDb}
+                    value={values.usersDb}
                     list={usersDatabaseOptions}
                     handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='volunteers database access'
-                    value={volunteersDb}
+                    value={values.volunteersDb}
                     list={volunteersDatabaseOptions}
                     handleChange={handleChange}
                   />
                   <FormRowSelect
                     name='active user'
-                    value={isActive}
+                    value={values.isActive}
                     list={activeUserOptions}
                     handleChange={handleChange}
                   />
-                  <FormRowSelect name='role' value={role} list={roleOptions} />
+                  <FormRowSelect name='role' value={values.role} list={roleOptions} />
                   <button
-                    type='button'
+                    type='submit'
                     className='btn edit-btn'
-                    onClick={() => {
-                      updateUser(_id);
-                    }}
                   >
                     Submit
                   </button>

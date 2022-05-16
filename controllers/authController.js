@@ -86,6 +86,22 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
+const updateDbUser = async (req, res) => {
+  await User.findByIdAndUpdate(req.params.id, req.body)
+    .then((dbUsers) => {
+      res.json({
+        message: `updated`,
+        dbUsers,
+    })
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `not deleted`,
+        error: err.message,
+    })
+  })
+}
+
 const deleteUser = async (req, res) => {
   await User.findByIdAndRemove(req.params.id, req.body)
     .then((dbUsers) => {
@@ -102,4 +118,4 @@ const deleteUser = async (req, res) => {
     });
 };
 
-export { register, login, updateUser, createUser, deleteUser };
+export { register, login, updateUser, createUser, deleteUser, updateDbUser };
