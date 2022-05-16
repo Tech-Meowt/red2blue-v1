@@ -11,6 +11,9 @@ import SearchContainer from './SearchContainer'
 import SmallSidebar from './SmallSidebar'
 import StatsContainer from './StatsContainer'
 import Button from './Button'
+import AllDbUsers from './AllDbUsers'
+import DbUser from './DbUser'
+import AddUserForm from './AddUserForm'
 export {
   Logo,
   FormRow,
@@ -24,5 +27,8 @@ export {
   StatsContainer,
   ChartsContainer,
   Loading,
-  Button
-}
+  Button,
+  AllDbUsers,
+  DbUser,
+  AddUserForm,
+};

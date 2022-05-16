@@ -1,7 +1,7 @@
-import React, { useReducer, useContext } from 'react'
+import React, { useReducer, useContext, useEffect } from 'react';
 
-import reducer from './reducer'
-import axios from 'axios'
+import reducer from './reducer';
+import axios from 'axios';
 import {
   DISPLAY_ALERT,
   CLEAR_ALERT,
@@ -13,8 +13,14 @@ import {
   UPDATE_USER_BEGIN,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  ADMIN_UPDATE_USER_BEGIN,
+  ADMIN_UPDATE_USER_SUCCESS,
+  ADMIN_UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_USER_BEGIN,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
@@ -29,10 +35,12 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
-} from './actions'
+  GET_USERS_BEGIN,
+} from './actions';
 
-const token = localStorage.getItem('token')
-const user = localStorage.getItem('user')
+const token = localStorage.getItem('token');
+const user = localStorage.getItem('user');
+const newUser = null
 
 const initialState = {
   isLoading: false,
@@ -43,14 +51,33 @@ const initialState = {
   token: token,
   showSidebar: false,
   isEditing: false,
+  editDbUserId: '',
   editJobId: '',
   position: '',
+  name: '',
+  email: '',
+  approved: '',
+  usersDb: '',
+  volunteersDb: '',
+  isActive: '',
+  role: '',
+  dbUsers: [],
+  newUser: newUser,
+  totalDbUsers: 0,
+  numOfPages: 1,
+  page: 1,
+  password: 'password',
+  approvedOptions: ['approved', 'waiting on approval'],
+  usersDatabaseOptions: ['access', 'no access'],
+  volunteersDatabaseOptions: ['access', 'no access'],
+  activeUserOptions: ['active', 'deactivated'],
+  roleOptions: ['viewer', 'editor', 'admin'],
   company: '',
   jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   jobType: 'full-time',
-  statusOptions: ['interview', 'declined', 'pending'],
   status: 'pending',
+  statusOptions: ['interview', 'declined', 'pending'],
   jobs: [],
   totalJobs: 0,
   numOfPages: 1,
@@ -62,154 +89,226 @@ const initialState = {
   searchType: 'all',
   sort: 'latest',
   sortOptions: ['latest', 'oldest', 'a-z', 'z-a'],
-}
+};
 
-const AppContext = React.createContext()
+const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios
   const authFetch = axios.create({
     baseURL: '/api/v1',
-  })
+  });
   // request
 
   authFetch.interceptors.request.use(
     (config) => {
-      config.headers.common['Authorization'] = `Bearer ${state.token}`
-      return config
+      config.headers.common['Authorization'] = `Bearer ${state.token}`;
+      return config;
     },
     (error) => {
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
+  );
   // response
 
   authFetch.interceptors.response.use(
     (response) => {
-      return response
+      return response;
     },
     (error) => {
       // console.log(error.response)
       if (error.response.status === 401) {
-        logoutUser()
+        logoutUser();
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
+  );
 
   const displayAlert = () => {
-    dispatch({ type: DISPLAY_ALERT })
-    clearAlert()
-  }
+    dispatch({ type: DISPLAY_ALERT });
+    clearAlert();
+  };
 
   const clearAlert = () => {
     setTimeout(() => {
-      dispatch({ type: CLEAR_ALERT })
-    }, 3000)
-  }
+      dispatch({ type: CLEAR_ALERT });
+    }, 3000);
+  };
 
   const addUserToLocalStorage = ({ user, token }) => {
-    localStorage.setItem('user', JSON.stringify(user))
-    localStorage.setItem('token', token)
-  }
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('token', token);
+  };
 
   const removeUserFromLocalStorage = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-  }
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  };
 
   const setupUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN })
+    dispatch({ type: SETUP_USER_BEGIN });
     try {
-      const { data } = await axios.post(`/api/v1/auth/${endPoint}`, currentUser)
+      const { data } = await axios.post(
+        `/api/v1/auth/${endPoint}`,
+        currentUser
+      );
 
-      const { user, token } = data
+      const { user, token } = data;
+
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: { user, token, alertText },
-      })
-      addUserToLocalStorage({ user, token })
+      });
+      addUserToLocalStorage({ user, token });
     } catch (error) {
       dispatch({
         type: SETUP_USER_ERROR,
         payload: { msg: error.response.data.msg },
-      })
+      });
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
   const toggleSidebar = () => {
-    dispatch({ type: TOGGLE_SIDEBAR })
-  }
+    dispatch({ type: TOGGLE_SIDEBAR });
+  };
 
   const logoutUser = () => {
-    dispatch({ type: LOGOUT_USER })
-    removeUserFromLocalStorage()
-  }
-  const updateUser = async (currentUser) => {
-    dispatch({ type: UPDATE_USER_BEGIN })
-    try {
-      const { data } = await authFetch.patch('/auth/updateUser', currentUser)
+    dispatch({ type: LOGOUT_USER });
+    removeUserFromLocalStorage();
+  };
 
-      const { user, token } = data
+  const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+    try {
+      const { data } = await authFetch.patch('/auth/updateUser', currentUser);
+
+      const { user, token } = data;
 
       dispatch({
         type: UPDATE_USER_SUCCESS,
         payload: { user, token },
-      })
-      addUserToLocalStorage({ user, token })
+      });
+      addUserToLocalStorage({ user, token });
     } catch (error) {
       if (error.response.status !== 401) {
         dispatch({
           type: UPDATE_USER_ERROR,
           payload: { msg: error.response.data.msg },
-        })
+        });
       }
+    }
+    clearAlert();
+  };
+
+  const adminUpdateUser = async () => {
+    dispatch({ type: ADMIN_UPDATE_USER_BEGIN })
+
+    try {
+      const {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+        _id
+      } = state;
+
+      await axios.patch(`/auth/${_id}`, {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+      });
+      dispatch({ type: ADMIN_UPDATE_USER_SUCCESS })
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: ADMIN_UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg }
+      });
+        
+    }
+  }
+
+  const handleChange = ({ name, value }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
+  };
+
+  const createDbUser = async (newUser, alertText) => {
+    dispatch({ type: CREATE_USER_BEGIN });
+    try {
+      const { data } = await axios.post(
+        `/api/v1/auth/register`,
+        newUser
+      )
+      dispatch({
+        type: CREATE_USER_SUCCESS,
+        payload: { alertText },
+      })
+    } catch (error) {
+      dispatch({
+        type: CREATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
     }
     clearAlert()
   }
 
-  const handleChange = ({ name, value }) => {
-    dispatch({ type: HANDLE_CHANGE, payload: { name, value } })
-  }
-  const clearValues = () => {
-    dispatch({ type: CLEAR_VALUES })
-  }
-  const createJob = async () => {
-    dispatch({ type: CREATE_JOB_BEGIN })
+  const getAllDbUsers = async () => {
+    dispatch({ type: GET_USERS_BEGIN })
     try {
-      const { position, company, jobLocation, jobType, status } = state
+      const { data } = await axios.get('/user')
+    } catch (error) {
+      
+    }
+  }
+
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN });
+    try {
+      const { position, company, jobLocation, jobType, status } = state;
       await authFetch.post('/jobs', {
         position,
         company,
         jobLocation,
         jobType,
         status,
-      })
-      dispatch({ type: CREATE_JOB_SUCCESS })
-      dispatch({ type: CLEAR_VALUES })
+      });
+      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
     } catch (error) {
-      if (error.response.status === 401) return
+      if (error.response.status === 401) return;
       dispatch({
         type: CREATE_JOB_ERROR,
         payload: { msg: error.response.data.msg },
-      })
+      });
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
 
   const getJobs = async () => {
-    const { page, search, searchStatus, searchType, sort } = state
+    const { page, search, searchStatus, searchType, sort } = state;
 
-    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`
+    let url = `/jobs?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
     if (search) {
-      url = url + `&search=${search}`
+      url = url + `&search=${search}`;
     }
-    dispatch({ type: GET_JOBS_BEGIN })
+    dispatch({ type: GET_JOBS_BEGIN });
     try {
-      const { data } = await authFetch(url)
-      const { jobs, totalJobs, numOfPages } = data
+      const { data } = await authFetch(url);
+      const { jobs, totalJobs, numOfPages } = data;
       dispatch({
         type: GET_JOBS_SUCCESS,
         payload: {
@@ -217,70 +316,74 @@ const AppProvider = ({ children }) => {
           totalJobs,
           numOfPages,
         },
-      })
+      });
     } catch (error) {
-      logoutUser()
+      logoutUser();
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
+
 
   const setEditJob = (id) => {
-    dispatch({ type: SET_EDIT_JOB, payload: { id } })
-  }
+    dispatch({ type: SET_EDIT_JOB, payload: { id } });
+  };
   const editJob = async () => {
-    dispatch({ type: EDIT_JOB_BEGIN })
+    dispatch({ type: EDIT_JOB_BEGIN });
 
     try {
-      const { position, company, jobLocation, jobType, status } = state
-      await authFetch.patch(`/jobs/${state.editJobId}`, {
-        company,
-        position,
-        jobLocation,
-        jobType,
-        status,
-      })
-      dispatch({ type: EDIT_JOB_SUCCESS })
-      dispatch({ type: CLEAR_VALUES })
+      const { name, email, password, approved, usersDb, volunteersDb, isActive, role } = state;
+      await axios.patch(`/auth/${state.editJobId}`, {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+      });
+      dispatch({ type: EDIT_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
     } catch (error) {
-      if (error.response.status === 401) return
+      if (error.response.status === 401) return;
       dispatch({
         type: EDIT_JOB_ERROR,
         payload: { msg: error.response.data.msg },
-      })
+      });
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
   const deleteJob = async (jobId) => {
-    dispatch({ type: DELETE_JOB_BEGIN })
+    dispatch({ type: DELETE_JOB_BEGIN });
     try {
-      await authFetch.delete(`/jobs/${jobId}`)
-      getJobs()
+      await authFetch.delete(`/jobs/${jobId}`);
+      getJobs();
     } catch (error) {
-      logoutUser()
+      logoutUser();
     }
-  }
+  };
   const showStats = async () => {
-    dispatch({ type: SHOW_STATS_BEGIN })
+    dispatch({ type: SHOW_STATS_BEGIN });
     try {
-      const { data } = await authFetch('/jobs/stats')
+      const { data } = await authFetch('/jobs/stats');
       dispatch({
         type: SHOW_STATS_SUCCESS,
         payload: {
           stats: data.defaultStats,
           monthlyApplications: data.monthlyApplications,
         },
-      })
+      });
     } catch (error) {
-      logoutUser()
+      logoutUser();
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
   const clearFilters = () => {
-    dispatch({ type: CLEAR_FILTERS })
-  }
+    dispatch({ type: CLEAR_FILTERS });
+  };
   const changePage = (page) => {
-    dispatch({ type: CHANGE_PAGE, payload: { page } })
-  }
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
   return (
     <AppContext.Provider
       value={{
@@ -300,15 +403,17 @@ const AppProvider = ({ children }) => {
         showStats,
         clearFilters,
         changePage,
+        createDbUser,
+        adminUpdateUser,
       }}
     >
       {children}
     </AppContext.Provider>
-  )
-}
+  );
+};
 
 const useAppContext = () => {
-  return useContext(AppContext)
-}
+  return useContext(AppContext);
+};
 
-export { AppProvider, initialState, useAppContext }
+export { AppProvider, initialState, useAppContext };

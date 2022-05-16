@@ -1,6 +1,6 @@
-import { FormRow, FormRowSelect } from '.'
-import { useAppContext } from '../context/appContext'
-import Wrapper from '../assets/wrappers/SearchContainer'
+import { FormRow, FormRowSelect } from '.';
+import { useAppContext } from '../context/appContext';
+import Wrapper from '../assets/wrappers/SearchContainer';
 
 const SearchContainer = () => {
   const {
@@ -13,20 +13,19 @@ const SearchContainer = () => {
     handleChange,
     clearFilters,
     jobTypeOptions,
-    statusOptions,
-  } = useAppContext()
+  } = useAppContext();
   const handleSearch = (e) => {
-    if (isLoading) return
-    handleChange({ name: e.target.name, value: e.target.value })
-  }
+    if (isLoading) return;
+    handleChange({ name: e.target.name, value: e.target.value });
+  };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    clearFilters()
-  }
+    e.preventDefault();
+    clearFilters();
+  };
   return (
     <Wrapper>
       <form className='form'>
-        <h4>search form</h4>
+        <h4>Search</h4>
         <div className='form-center'>
           {/* search position */}
 
@@ -37,13 +36,13 @@ const SearchContainer = () => {
             handleChange={handleSearch}
           />
           {/* search by status */}
-          <FormRowSelect
+          {/* <FormRowSelect
             labelText='status'
             name='searchStatus'
             value={searchStatus}
             handleChange={handleSearch}
             list={['all', ...statusOptions]}
-          />
+          /> */}
           {/* search by type */}
           <FormRowSelect
             labelText='type'
@@ -69,7 +68,7 @@ const SearchContainer = () => {
         </div>
       </form>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default SearchContainer
+export default SearchContainer;
