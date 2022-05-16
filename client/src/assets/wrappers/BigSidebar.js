@@ -49,8 +49,6 @@ const Wrapper = styled.aside`
       text-decoration: underline;
       text-decoration-color: white !important;
       transition: none;
-      margin: 0 auto;
-      width: 80%;
     }
 
     .icon {
@@ -62,6 +60,7 @@ const Wrapper = styled.aside`
 
     .active .icon {
       color: var(--r2b-blue);
+
     }
   }
 `

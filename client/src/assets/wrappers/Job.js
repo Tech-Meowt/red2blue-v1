@@ -1,7 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Wrapper = styled.article`
-  background: var(--white);
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -9,7 +8,6 @@ const Wrapper = styled.article`
 
   header {
     padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--grey-100);
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
@@ -22,12 +20,12 @@ const Wrapper = styled.article`
     height: 60px;
     display: grid;
     place-items: center;
-    background: var(--primary-500);
+    background: var(--r2b-red);
     border-radius: var(--borderRadius);
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--white);
+    color: white;
     margin-right: 2rem;
   }
   .info {
@@ -36,22 +34,9 @@ const Wrapper = styled.article`
     }
     p {
       margin: 0;
-      text-transform: capitalize;
-      color: var(--grey-400);
+      color: var(--r2b-blue);
       letter-spacing: var(--letterSpacing);
     }
-  }
-  .pending {
-    background: #fcefc7;
-    color: #e9b949;
-  }
-  .interview {
-    background: #e0e8f9;
-    color: #647acb;
-  }
-  .declined {
-    color: #d66a6a;
-    background: #ffeeee;
   }
   .content {
     padding: 1rem 1.5rem;
@@ -69,15 +54,6 @@ const Wrapper = styled.article`
     @media (min-width: 1120px) {
       grid-template-columns: 1fr 1fr;
     }
-  }
-
-  .status {
-    border-radius: var(--borderRadius);
-    text-transform: capitalize;
-    letter-spacing: var(--letterSpacing);
-    text-align: center;
-    width: 100px;
-    height: 30px;
   }
   footer {
     margin-top: 1rem;
@@ -100,6 +76,6 @@ const Wrapper = styled.article`
   &:hover .actions {
     visibility: visible;
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;

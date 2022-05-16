@@ -1,7 +1,14 @@
-import links from '../utils/links'
+import { useState } from 'react';
+import links from '../utils/links';
 import { NavLink } from 'react-router-dom'
 
 const NavLinks = ({ toggleSidebar }) => {
+  const [admin, setAdmin] = useState(false)
+
+  const handleClick = () => {
+
+  }
+
   return (
     <div className='nav-links'>
       {links.map((link) => {
@@ -16,10 +23,12 @@ const NavLinks = ({ toggleSidebar }) => {
               isActive ? 'nav-link active' : 'nav-link'
             }
           >
-            <span className='icon'>{icon}</span>
-            {text}
+            
+           <span className='icon'>{icon}</span>
+
+          {text}
           </NavLink>
-        )
+        );
       })}
     </div>
   )

@@ -1,66 +1,121 @@
-import User from '../models/User.js'
-import { StatusCodes } from 'http-status-codes'
-import { BadRequestError, UnAuthenticatedError } from '../errors/index.js'
+import User from '../models/User.js';
+import { StatusCodes } from 'http-status-codes';
+import {
+  BadRequestError,
+  UnAuthenticatedError,
+  NotFoundError,
+} from '../errors/index.js';
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    throw new BadRequestError('please provide all values')
+    throw new BadRequestError('please provide all values');
   }
-  const userAlreadyExists = await User.findOne({ email })
+  const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
-    throw new BadRequestError('Email already in use')
+    throw new BadRequestError('Email already in use');
   }
-  const user = await User.create({ name, email, password })
+  const user = await User.create({ name, email, password });
 
-  const token = user.createJWT()
+  const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: {
       email: user.email,
       name: user.name,
     },
     token,
+  });
+};
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError('Please provide all values');
+  }
+  const user = await User.findOne({ email }).select('+password');
+  if (!user) {
+    throw new UnAuthenticatedError('Invalid Credentials');
+  }
+
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    throw new UnAuthenticatedError('Invalid Credentials');
+  }
+  const token = user.createJWT();
+  user.password = undefined;
+  res.status(StatusCodes.OK).json({ user, token });
+};
+
+const createUser = (req, res) => {
+  User.create(req.body)
+    .then((newUser) => {
+      console.log({ newUser });
+      res.json({
+        message: `Added User`,
+        newUser,
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `Not added`,
+        error: err.message,
+      });
+    });
+};
+
+const updateUser = async (req, res) => {
+  const { email, name, approved, usersDb, volunteersDb, isActive, role } =
+    req.body;
+  if (!email || !name) {
+    throw new BadRequestError('Please provide all values');
+  }
+  const user = await User.findOne({ _id: req.user.userId });
+
+  user.email = email;
+  user.name = name;
+  user.approved = approved;
+  user.usersDb = usersDb;
+  user.volunteersDb = volunteersDb;
+  user.isActive = isActive;
+  user.role = role;
+
+  await user.save();
+
+  const token = user.createJWT();
+
+  res.status(StatusCodes.OK).json({ user, token });
+};
+
+const updateDbUser = async (req, res) => {
+  await User.findByIdAndUpdate(req.params.id, req.body)
+    .then((dbUsers) => {
+      res.json({
+        message: `updated`,
+        dbUsers,
+    })
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `not deleted`,
+        error: err.message,
+    })
   })
 }
-const login = async (req, res) => {
-  const { email, password } = req.body
-  if (!email || !password) {
-    throw new BadRequestError('Please provide all values')
-  }
-  const user = await User.findOne({ email }).select('+password')
-  if (!user) {
-    throw new UnAuthenticatedError('Invalid Credentials')
-  }
 
-  const isPasswordCorrect = await user.comparePassword(password)
-  if (!isPasswordCorrect) {
-    throw new UnAuthenticatedError('Invalid Credentials')
-  }
-  const token = user.createJWT()
-  user.password = undefined
-  res.status(StatusCodes.OK).json({ user, token })
-}
-const updateUser = async (req, res) => {
-  const { email, name, approved, usersDb, volunteersDb, isActive, role } = req.body
-  if (!email || !name ) {
-    throw new BadRequestError('Please provide all values')
-  }
-  const user = await User.findOne({ _id: req.user.userId })
+const deleteUser = async (req, res) => {
+  await User.findByIdAndRemove(req.params.id, req.body)
+    .then((dbUsers) => {
+      res.json({
+        message: `DELETED`,
+        dbUsers,
+      });
+    })
+    .catch((err) => {
+      res.status(404).json({
+        message: `NOT DELETED`,
+        error: err.message,
+      });
+    });
+};
 
-  user.email = email
-  user.name = name
-  user.approved = approved
-  user.usersDb = usersDb
-  user.volunteersDb = volunteersDb
-  user.isActive = isActive
-  user.role = role
-
-  await user.save()
-
-  const token = user.createJWT()
-
-  res.status(StatusCodes.OK).json({ user, token })
-}
-
-export { register, login, updateUser }
+export { register, login, updateUser, createUser, deleteUser, updateDbUser };
