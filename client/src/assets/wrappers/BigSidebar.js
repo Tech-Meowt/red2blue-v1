@@ -45,10 +45,9 @@ const Wrapper = styled.aside`
       background-color: var(--r2b-blue);
       border-radius: 40px 40px 40px 40px;
       color: white;
-      padding-left: 3rem;
       text-decoration: underline;
       text-decoration-color: white !important;
-      transition: none;
+      margin: 0 1rem;
     }
 
     .icon {
@@ -58,7 +57,7 @@ const Wrapper = styled.aside`
       place-items: center;
     }
 
-    .active .icon {
+    .active {
       color: var(--r2b-blue);
 
     }

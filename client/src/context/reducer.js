@@ -62,8 +62,6 @@ const reducer = (state, action) => {
       isLoading: true,
       token: action.payload.token,
       user: action.payload.user,
-      userLocation: action.payload.location,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: 'success',
       alertText: action.payload.alertText,

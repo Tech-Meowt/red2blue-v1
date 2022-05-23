@@ -3,7 +3,6 @@ import styled from 'styled-components'
 const Wrapper = styled.section`
   border-radius: var(--borderRadius);
   width: 100%;
-  background: var(--white);
   padding: 3rem 2rem 4rem;
   box-shadow: var(--shadow-2);
   h3 {
@@ -39,8 +38,13 @@ const Wrapper = styled.section`
       height: 35px;
     }
   }
+  .no-edit {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0 !important;
+  }
   .clear-btn {
-    background: var(--grey-500);
+    background: var(--r2b-blue);
   }
   .clear-btn:hover {
     background: var(--black);

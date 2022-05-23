@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAppContext } from '../../context/appContext';
 import { StatsContainer, Loading, ChartsContainer } from '../../components';
 import axios from 'axios';
 
 const Stats = () => {
   const [dogImgUrl, setDogImgUrl] = useState('');
-  const { showStats, monthlyApplications } = useAppContext();
 
   const getDog = async () => {
     try {
@@ -15,11 +13,6 @@ const Stats = () => {
       console.log(err.message);
     }
   };
-
-  // useEffect(() => {
-  //   showStats()
-  //   // eslint-disable-next-line
-  // }, [])
 
   useEffect(() => {
     getDog().then(() => {

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Wrapper = styled.section`
+const SearchWrapper = styled.section`
   .form {
     width: 100%;
     max-width: 100%;
@@ -26,6 +26,28 @@ const Wrapper = styled.section`
     align-self: end;
     margin-top: 1rem;
   }
+  .submit-btn,
+  .delete-btn {
+    letter-spacing: var(--letterSpacing);
+    cursor: pointer;
+    height: 30px;
+    margin-top: 1rem;
+  }
+  .lowercase {
+    text-transform: lowercase;
+  }
+  .submit-btn {
+    color: var(--green-dark);
+    background: var(--green-light);
+    margin-right: 0.5rem;
+  }
+  .delete-btn {
+    color: var(--red-dark);
+    background: var(--red-light);
+  }
+  &:hover .actions {
+    visibility: visible;
+  }
   @media (min-width: 768px) {
     .form-center {
       grid-template-columns: 1fr 1fr;
@@ -39,6 +61,6 @@ const Wrapper = styled.section`
       margin-top: 0;
     }
   }
-`
+`;
 
-export default Wrapper
+export default SearchWrapper

@@ -14,6 +14,7 @@ import Button from './Button'
 import AllDbUsers from './AllDbUsers'
 import DbUser from './DbUser'
 import AddUserForm from './AddUserForm'
+import FormCheckbox from './FormCheckbox'
 export {
   Logo,
   FormRow,
@@ -31,4 +32,5 @@ export {
   AllDbUsers,
   DbUser,
   AddUserForm,
+  FormCheckbox,
 };

@@ -8,7 +8,9 @@ import {
   AddJob,
   UserAccounts,
   AddDbUser,
-  EditUser
+  EditUser,
+  Databases,
+  Help
 } from './pages/dashboard'
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
           <Route path='profile' element={<Profile />} />
           <Route path='user-accounts' element={<UserAccounts />} />
           <Route path='add-user' element={<AddDbUser />} />
+          <Route path='databases' element={<Databases />} />
+          <Route path='help' element={<Help />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />

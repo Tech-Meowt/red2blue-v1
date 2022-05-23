@@ -1,20 +1,27 @@
 import { Link } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Job';
+import JobWrapper from '../assets/wrappers/Job';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, Alert, FormRowSelect } from '../components';
-import { useAppContext } from '../context/appContext'
+import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
+import { useAppContext } from '../context/appContext';
+import { Formik, Form, useField, useFormikContext } from 'formik';
+import { FiDatabase } from 'react-icons/fi'
+import { MdOutlineManageAccounts } from 'react-icons/md'
+import { GrUserAdmin } from 'react-icons/gr'
+import { RiAdminLine } from 'react-icons/ri'
 
-const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, role}) => {
+const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, isEditor, isAdmin, isViewer} )=> {
   const initialState = {
-    name,
+    firstName,
+    lastName,
     email,
-    approved,
     usersDb,
     volunteersDb,
     isActive,
-    role
-  }
+    isEditor,
+    isAdmin,
+    isViewer,
+  };
   const {
     showAlert,
     displayAlert,
@@ -31,44 +38,52 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   const [values, setValues] = useState(initialState);
   const [deleted, setDeleted] = useState(false);
   const [newValues, setNewValues] = useState({
-    name: '',
-    email: '',
-    approved: '',
-    usersDb: '',
-    volunteersDb: '',
-    isActive: '',
-    role: '',
-  })
-  
-    const getId = (e) => {
-      const id = e.target.name;
-      console.log(id);
-      setClicked(!clicked);
-    };
+    firstName,
+    lastName,
+    email,
+    approved,
+    usersDb,
+    volunteersDb,
+    isActive,
+    isEditor,
+    isAdmin,
+    isViewer,
+  });
+  const getId = (e) => {
+    const id = e.target.name;
+    console.log(id);
+    setClicked(!clicked)
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const updateUser = (_id) => {
-    axios.patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
-      .then(res => {
-        newValues(res.data)
-        console.log(res.data)
-      }).catch((error) => {
-      console.log(error)
-    })
-  }
+    axios
+      .patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
+      .then((res) => {
+        newValues(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const deleteHandler = (e) => {
-    axios.delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
-      .then(res => {
+    axios
+      .delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
+      .then((res) => {
         setValues(res.data);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
     window.location.reload();
   };
+
+
 
   // const handleSubmit = (e) => {
   //   e.preventDefault()
@@ -84,98 +99,190 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
   // }
 
   return (
-    <Wrapper>
-      <header>
-        <div className='main-icon'>{name.charAt(0)}</div>
-        <div className='info'>
-          <h5>{name}</h5>
-          <p className='lowercase'>{email}</p>
-        </div>
-      </header>
-      <div className='content'>
-        <div className='content-center'>
-          <div>Approval Status: {approved}</div>
-          <div>User Accounts Database: {usersDb}</div>
-          <div>Volunteers Database: {volunteersDb}</div>
-          <div>Account Status: {isActive}</div>
-          <div>Role: {role}</div>
-        </div>
-        <footer>
-          <div className='actions'>
-            {!clicked && (
-              <>
-                <button className='btn edit-btn' name={_id} onClick={getId}>
-                  Edit
-                </button>
-                <button
-                  type='button'
-                  className='btn delete-btn'
-                  name={_id}
-                  onClick={deleteHandler}
-                >
-                  Delete
-                </button>
-              </>
-            )}
-
-            {clicked && (
-              <>
-                <button className='btn delete-btn' name={_id} onClick={getId}>
-                  Close
-                </button>
-                <form onSubmit={() => {
-                    updateUser(_id);
-                  }}>
-                  <FormRow
-                    type='text'
-                    name='name'
-                    value={values.name}
-                    handleChange={handleChange}
-                  />
-                  <FormRow type='text' name='email' value={values.email} handleChange={handleChange}/>
-                  <FormRowSelect
-                    name='approved'
-                    value={values.approved}
-                    list={approvedOptions}
-                    handleChange={handleChange}
-                  />
-                  <FormRowSelect
-                    name='users database access'
-                    value={values.usersDb}
-                    list={usersDatabaseOptions}
-                    handleChange={handleChange}
-                  />
-                  <FormRowSelect
-                    name='volunteers database access'
-                    value={values.volunteersDb}
-                    list={volunteersDatabaseOptions}
-                    handleChange={handleChange}
-                  />
-                  <FormRowSelect
-                    name='active user'
-                    value={values.isActive}
-                    list={activeUserOptions}
-                    handleChange={handleChange}
-                  />
-                  <FormRowSelect name='role' value={values.role} list={roleOptions} />
-                  <button
-                    type='submit'
-                    className='btn edit-btn'
-                  >
-                    Submit
+    <>
+      <JobWrapper>
+        <header>
+          <div className='main-icon'>{firstName.charAt(0)}</div>
+          <div className='info'>
+            <h5>
+              {firstName} {lastName}
+            </h5>
+            <p className='lowercase'>{email}</p>
+          </div>
+        </header>
+        <div className='content'>
+          <div className='content-center'>
+            <div>
+              <FiDatabase className='icon' />
+              User Accounts Database:{' '}
+              <span className='status'>
+                {usersDb === 'yes' ? 'access' : 'no access'}
+              </span>
+            </div>
+            <div>
+              <FiDatabase className='icon' />
+              Volunteers Database:{' '}
+              <span className='status'>
+                {volunteersDb === 'yes' ? 'access' : 'no access'}
+              </span>
+            </div>
+            <div>
+              <MdOutlineManageAccounts className='icon' />
+              Account Status:{' '}
+              <span className='status'>
+                {isActive === 'yes' ? 'active' : 'deactivated'}
+              </span>
+            </div>
+            <div>
+              <RiAdminLine className='icon' />
+              Role: {''}
+              <span className='status'>
+                {isAdmin === 'yes'
+                  ? 'admin'
+                  : isEditor === 'yes'
+                  ? 'editor'
+                  : 'viewer'}
+              </span>
+            </div>
+          </div>
+          <footer>
+            <div className='actions'>
+              {!clicked && (
+                <>
+                  <button className='btn edit-btn' name={_id} onClick={getId}>
+                    Edit
                   </button>
-                  <button type='button' className='btn delete-btn'>
+                  <button
+                    type='button'
+                    className='btn delete-btn'
+                    name={_id}
+                    onClick={deleteHandler}
+                  >
                     Delete
                   </button>
-                </form>
-              </>
-            )}
-          </div>
-        </footer>
-      </div>
-    </Wrapper>
+                </>
+              )}
+
+              {clicked && (
+                <>
+                  <br />
+                  <div className='info'>
+                    <h3>Edit User</h3>
+                    <p className='instructions'>
+                      Update <span className='emphasis'>only</span> the fields
+                      that you wish to change.
+                    </p>
+                  </div>
+
+                  <button className='btn delete-btn' name={_id} onClick={getId}>
+                    Close
+                  </button>
+                  <h1></h1>
+                  <form
+                    onSubmit={() => {
+                      updateUser(_id);
+                    }}
+                  >
+                    <div className='content-centered content-center'>
+                      <FormRow
+                        placeholder='Enter first name'
+                        type='text'
+                        name='firstName'
+                        labelText={'First name'}
+                        value={values.firstName}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter last name'
+                        type='text'
+                        name='lastName'
+                        labelText={'Last name'}
+                        value={values.lastName}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter email'
+                        type='email'
+                        name='email'
+                        labelText={'Email'}
+                        value={values.email}
+                        handleChange={handleChange}
+                      />
+                      <p className='yes-no instructions'>
+                        Enter <span className='emphasis'>'yes'</span> or{' '}
+                        <span className='emphasis'>'no'</span>.
+                      </p>
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='usersDb'
+                        labelText={'Users Database'}
+                        value={values.usersDb}
+                        handleChange={handleChange}
+                      />
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='volunteersDb'
+                        labelText={'Volunteers Database'}
+                        value={values.volunteersDb}
+                        handleChange={handleChange}
+                      />
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='isViewer'
+                        labelText={'Role: Viewer'}
+                        value={values.isViewer}
+                        handleChange={handleChange}
+                      />
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='isEditor'
+                        labelText={'Role: Editor'}
+                        value={values.isEditor}
+                        handleChange={handleChange}
+                      />
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='isAdmin'
+                        labelText={'Role: Admin'}
+                        value={values.isAdmin}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='isActive'
+                        labelText={'Active account'}
+                        value={values.isActive}
+                        handleChange={handleChange}
+                      />
+                    </div>
+
+                    <button type='submit' className='btn edit-btn'>
+                      Submit
+                    </button>
+                    <button type='button' className='btn delete-btn'>
+                      Delete
+                    </button>
+                  </form>
+                </>
+              )}
+            </div>
+          </footer>
+        </div>
+      </JobWrapper>
+    </>
   );
-}
+};
 
 // const DbUser = ({
 //   _id,
@@ -201,8 +308,6 @@ const DbUser = ({_id, name, email, approved, usersDb, volunteersDb, isActive, ro
 //     setClicked(!clicked);
 //   };
 
-
 // };
 
-
-export default DbUser
+export default DbUser;
