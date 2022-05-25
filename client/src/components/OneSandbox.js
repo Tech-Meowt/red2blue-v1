@@ -55,17 +55,17 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
       });
   };
 
-  // const deleteHandler = (e) => {
-  //   axios
-  //     .delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
-  //     .then((res) => {
-  //       setValues(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   window.location.reload();
-  // };
+  const deleteHandler = (e) => {
+    axios
+      .delete(`http://localhost:8000/api/v1/sandbox/${e.target.name}`)
+      .then((res) => {
+        setValues(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    window.location.reload();
+  };
   
   return (
     <>
@@ -107,7 +107,7 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
                   <button className='btn edit-btn' name={_id} onClick={getId}>
                     Edit
                   </button>
-                  <button type='button' className='btn delete-btn' name={_id}>
+                  <button type='button' className='btn delete-btn' name={_id} onClick={deleteHandler}>
                     Delete
                   </button>
                 </>

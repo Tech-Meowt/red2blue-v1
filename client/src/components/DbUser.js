@@ -256,6 +256,14 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                         value={values.isActive}
                         handleChange={handleChange}
                       />
+                      <FormRow
+                        placeholder=''
+                        type='text'
+                        name='isActive'
+                        labelText={'Active account'}
+                        value={values.isActive}
+                        handleChange={handleChange}
+                      />
                     </div>
 
                     <button type='submit' className='btn edit-btn'>

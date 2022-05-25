@@ -62,6 +62,22 @@ const updateSandbox = async (req, res) => {
     
 }
 
+const deleteSandbox = (req, res) => {
+  Sandbox.findById(req.params.id, function(err, deletedSandbox) {
+    if (!deletedSandbox) {
+      res.status(404).send('Record not found')
+    } else {
+      Sandbox.findByIdAndRemove(req.params.id)
+        .then(function() {
+        res.status(200).json('Record deleted!')
+        })
+        .catch(function(err) {
+        res.status(400).send('Delete failed.')
+      })
+    }
+  })
+}
+
 export {
-  create, getAll, updateSandbox
+  create, getAll, updateSandbox, deleteSandbox
 }
