@@ -38,6 +38,7 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     isAdmin,
     isViewer,
   });
+
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);

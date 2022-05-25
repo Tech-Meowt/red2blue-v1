@@ -43,17 +43,17 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // const updateOneSandbox = (_id) => {
-  //   axios
-  //     .patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
-  //     .then((res) => {
-  //       newValues(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const updateSandbox = (_id) => {
+    axios
+      .patch(`http://localhost:8000/api/v1/sandbox/${_id}`, values)
+      .then((res) => {
+        newValues(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // const deleteHandler = (e) => {
   //   axios
@@ -123,11 +123,94 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
                       that you wish to change.
                     </p>
                   </div>
+
                   <button className='btn delete-btn' name={_id} onClick={getId}>
                     Close
                   </button>
                   <h1></h1>
-                  <form action=''></form>
+                  <form
+                    onSubmit={() => {
+                      updateSandbox(_id);
+                    }}
+                  >
+                    <div className='content-centered content-center'>
+                      <FormRow
+                        placeholder='Enter first name'
+                        type='text'
+                        name='firstName'
+                        labelText={'First name'}
+                        value={values.firstName}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter last name'
+                        type='text'
+                        name='lastName'
+                        labelText={'Last name'}
+                        value={values.lastName}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter email'
+                        type='email'
+                        name='email'
+                        labelText={'Email'}
+                        value={values.email}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='15 Yemen Rd'
+                        type='text'
+                        name='street'
+                        labelText={'Street'}
+                        value={values.street}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter city'
+                        type='text'
+                        name='city'
+                        labelText={'City'}
+                        value={values.city}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='NY'
+                        type='text'
+                        name='state'
+                        labelText={'State'}
+                        value={values.state}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter zip code'
+                        type='text'
+                        name='zip'
+                        labelText={'Zip Code'}
+                        value={values.zip}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='555-555-5555'
+                        type='text'
+                        name='phone'
+                        labelText={'Phone'}
+                        value={values.phone}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter interests, separated by commas'
+                        type='text'
+                        name='interests'
+                        labelText={'Interests'}
+                        value={values.interests}
+                        handleChange={handleChange}
+                      />
+                    </div>
+                    <button type='submit' className='btn edit-btn'>
+                      Submit
+                    </button>
+                  </form>
                 </>
               )}
             </div>

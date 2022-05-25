@@ -43,6 +43,25 @@ const getAll = (req, res) => {
   });
 }
 
+const updateSandbox = async (req, res) => {
+  const { id: recordId } = req.params;
+  const { firstName, lastName, email, street, city, state, zip, phone, interests } = req.body;
+
+  const record = await Sandbox.findOne({ _id: recordId });
+
+  if (!record) {
+    throw new NotFoundError(`No record found`);
+  }
+
+  const updatedRecord = await Sandbox.findOneAndUpdate({ _id: recordId }, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(StatusCodes.OK).json({ updatedRecord });
+    
+}
+
 export {
-  create, getAll
+  create, getAll, updateSandbox
 }

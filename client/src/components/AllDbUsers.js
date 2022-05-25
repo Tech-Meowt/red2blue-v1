@@ -20,7 +20,6 @@ export default function AllDbUsers() {
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
         setDbUsers(res.data);
-        // console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -30,7 +29,6 @@ export default function AllDbUsers() {
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
         setUsersList(res.data);
-        // console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -42,7 +40,6 @@ export default function AllDbUsers() {
     e.preventDefault();
 
     setValues({ ...values, [e.target.name]: e.target.value })
-    console.log(values)
   }
 
   const updateUser = (id) => {

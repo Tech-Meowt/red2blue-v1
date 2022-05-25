@@ -19,6 +19,9 @@ export default function AddSandbox() {
     phone: '',
     interests: '',
   });
+  const [alertText, setAlertText] = useState('');
+  const [alertType, setAlertType] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -43,14 +46,19 @@ export default function AddSandbox() {
           interests: '',
         });
         console.log(res.data.message);
+        setShowAlert(true);
+        setAlertText('Record created! Redirecting...')
+        setAlertType('success')
+        setTimeout(() => {
+          navigate('/sandbox-home');
+        }, 3000);
       })
       .catch((error) => {
         console.log(error);
+        setShowAlert(true);
+        setAlertText('There was an error. Please try again...')
+        setAlertType('danger')
       });
-    
-    setTimeout(() => {
-      navigate('/sandbox-home');
-    }, 3000);
   };
 
   return (
@@ -60,6 +68,9 @@ export default function AddSandbox() {
         <br />
         <div className='info actions'>
           <h3>Add Record</h3>
+          {showAlert && (
+            <div className={`alert alert-${alertType}`}>{alertText}</div>
+          )}
           <p className='instructions'>
             Fill out <span className='emphasis'>all</span> fields.
           </p>
