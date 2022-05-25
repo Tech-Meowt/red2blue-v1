@@ -6,6 +6,13 @@ import {
   SharedLayout,
   Stats,
   AddJob,
+  UserAccounts,
+  AddSandbox,
+  EditUser,
+  Databases,
+  Help,
+  Sandbox,
+  SandboxHome,
 } from './pages/dashboard'
 
 function App() {
@@ -22,15 +29,21 @@ function App() {
         >
           <Route index element={<Stats />} />
           <Route path='all-jobs' element={<AllJobs />} />
-          <Route path='add-job' element={<AddJob />} />
+          <Route path='edit-user' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='user-accounts' element={<UserAccounts />} />
+          <Route path='add-sandbox' element={<AddSandbox />} />
+          <Route path='databases' element={<Databases />} />
+          <Route path='help' element={<Help />} />
+          <Route path='sandbox' element={<Sandbox />} />
+          <Route path='sandbox-home' element={<SandboxHome />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App
