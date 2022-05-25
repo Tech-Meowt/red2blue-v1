@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
 import { useAppContext } from '../context/appContext';
-import { Formik, Form, useField, useFormikContext } from 'formik';
 import { FiDatabase } from 'react-icons/fi'
 import { MdOutlineManageAccounts } from 'react-icons/md'
 import { GrUserAdmin } from 'react-icons/gr'
 import { RiAdminLine } from 'react-icons/ri'
+import { AiOutlineCheck } from 'react-icons/ai'
 
 const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, isEditor, isAdmin, isViewer} )=> {
   const initialState = {
@@ -21,19 +21,8 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     isEditor,
     isAdmin,
     isViewer,
+    approved,
   };
-  const {
-    showAlert,
-    displayAlert,
-    isLoading,
-    setEditJob,
-    approvedOptions,
-    usersDatabaseOptions,
-    volunteersDatabaseOptions,
-    activeUserOptions,
-    roleOptions,
-    dbUsers,
-  } = useAppContext();
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
   const [deleted, setDeleted] = useState(false);
@@ -83,21 +72,6 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     window.location.reload();
   };
 
-
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   updateUser({
-  //     name,
-  //     email,
-  //     approved,
-  //     usersDb,
-  //     volunteersDb,
-  //     isActive,
-  //     role,
-  //   });
-  // }
-
   return (
     <>
       <JobWrapper>
@@ -131,6 +105,13 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
               Account Status:{' '}
               <span className='status'>
                 {isActive === 'yes' ? 'active' : 'deactivated'}
+              </span>
+            </div>
+            <div>
+              <AiOutlineCheck className='icon' />
+              Approval Status:{' '}
+              <span className='status'>
+                {approved === 'yes' ? 'approved' : 'waiting on approval'}
               </span>
             </div>
             <div>
@@ -234,6 +215,15 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                       <FormRow
                         placeholder=''
                         type='text'
+                        name='approved'
+                        labelText={'Approval Status'}
+                        value={values.approved}
+                        handleChange={handleChange}
+                      />
+
+                      <FormRow
+                        placeholder=''
+                        type='text'
                         name='isViewer'
                         labelText={'Role: Viewer'}
                         value={values.isViewer}
@@ -283,31 +273,5 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     </>
   );
 };
-
-// const DbUser = ({
-//   _id,
-//   name,
-//   email,
-//   approved,
-//   usersDb,
-//   volunteersDb,
-//   isActive,
-//   role,
-// }) => {
-//   const {
-//     isLoading,
-//     showAlert,
-//     displayAlert,
-
-//   } = useAppContext();
-//   const [clicked, setClicked] = useState(false);
-
-//   const getId = (e) => {
-//     const id = e.target.name;
-//     console.log(id);
-//     setClicked(!clicked);
-//   };
-
-// };
 
 export default DbUser;

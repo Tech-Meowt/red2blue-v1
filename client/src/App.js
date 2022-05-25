@@ -7,10 +7,12 @@ import {
   Stats,
   AddJob,
   UserAccounts,
-  AddDbUser,
+  AddSandbox,
   EditUser,
   Databases,
-  Help
+  Help,
+  Sandbox,
+  SandboxHome,
 } from './pages/dashboard'
 
 function App() {
@@ -30,9 +32,11 @@ function App() {
           <Route path='edit-user' element={<EditUser />} />
           <Route path='profile' element={<Profile />} />
           <Route path='user-accounts' element={<UserAccounts />} />
-          <Route path='add-user' element={<AddDbUser />} />
+          <Route path='add-sandbox' element={<AddSandbox />} />
           <Route path='databases' element={<Databases />} />
           <Route path='help' element={<Help />} />
+          <Route path='sandbox' element={<Sandbox />} />
+          <Route path='sandbox-home' element={<SandboxHome />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />

@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import SearchWrapper from '../assets/wrappers/SearchContainer';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppContext } from '../context/appContext';
 import { FormRow, Alert, FormRowSelect, Search } from '../components';
 import DbUser from './DbUser';
 import PageBtnContainer from './PageBtnContainer';
-import { RiContrastDropLine } from 'react-icons/ri';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
@@ -81,6 +78,7 @@ export default function AllDbUsers() {
 
   return (
     <>
+      <h4>Database: User Accounts</h4>
       <SearchWrapper>
         <form className='form' onSubmit={onSubmit}>
           <h4>Search</h4>

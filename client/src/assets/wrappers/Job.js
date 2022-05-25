@@ -38,6 +38,18 @@ const JobsWrapper = styled.article`
       letter-spacing: var(--letterSpacing);
     }
   }
+  .address {
+    h5 {
+      margin-bottom: 0.25rem;
+    }
+    p {
+      margin: 0 5.5rem;
+    }
+    inline-size: max-content;
+  }
+  .interests {
+    margin: 0 1.75rem;
+  }
   .instructions {
     color: black !important;
     font-size: 1.25rem;
@@ -65,7 +77,9 @@ const JobsWrapper = styled.article`
   .content {
     padding: 1rem 1.5rem;
   }
-
+.content-special {
+  padding: 1rem 0 1rem 1rem;
+}
   .content-centered {
     grid-template-columns: 1fr 1fr 1fr !important;
     column-gap: 20rem !important;
@@ -88,8 +102,8 @@ const JobsWrapper = styled.article`
     margin-top: 1rem;
   }
   .details-btn {
- margin-top: 1rem;
-  } 
+    margin-top: 1rem;
+  }
   .edit-btn,
   .delete-btn {
     letter-spacing: var(--letterSpacing);
