@@ -60,7 +60,7 @@ const NavLinks = ({ toggleSidebar }) => {
         Help
       </NavLink>
       <NavLink
-        to='/'
+        to='/sandbox'
         className={({ isActive }) =>
           isActive ? 'nav-link active' : 'nav-link'
         }

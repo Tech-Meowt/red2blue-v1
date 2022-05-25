@@ -3,25 +3,20 @@ import JobWrapper from '../assets/wrappers/Job';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
-import { useAppContext } from '../context/appContext';
-import { FiDatabase } from 'react-icons/fi'
-import { MdOutlineManageAccounts } from 'react-icons/md'
-import { GrUserAdmin } from 'react-icons/gr'
-import { RiAdminLine } from 'react-icons/ri'
-import { AiOutlineCheck } from 'react-icons/ai'
+import { FaRegAddressCard } from 'react-icons/fa';
+import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
 
-const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, isEditor, isAdmin, isViewer} )=> {
+const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip, phone, interests }) => {
   const initialState = {
     firstName,
     lastName,
     email,
-    usersDb,
-    volunteersDb,
-    isActive,
-    isEditor,
-    isAdmin,
-    isViewer,
-    approved,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    interests,
   };
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
@@ -30,28 +25,27 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     firstName,
     lastName,
     email,
-    approved,
-    usersDb,
-    volunteersDb,
-    isActive,
-    isEditor,
-    isAdmin,
-    isViewer,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    interests,
   });
 
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(!clicked)
+    setClicked(!clicked);
   };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const updateUser = (_id) => {
+  const updateSandbox = (_id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
+      .patch(`http://localhost:8000/api/v1/sandbox/${_id}`, values)
       .then((res) => {
         newValues(res.data);
         console.log(res.data);
@@ -63,7 +57,7 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
 
   const deleteHandler = (e) => {
     axios
-      .delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
+      .delete(`http://localhost:8000/api/v1/sandbox/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
       })
@@ -72,7 +66,7 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
       });
     window.location.reload();
   };
-
+  
   return (
     <>
       <JobWrapper>
@@ -85,46 +79,25 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
             <p className='lowercase'>{email}</p>
           </div>
         </header>
-        <div className='content'>
-          <div className='content-center'>
+        <div className='content-special'>
+          <div className='content-center content-centered'>
             <div>
-              <FiDatabase className='icon' />
-              User Accounts Database:{' '}
-              <span className='status'>
-                {usersDb === 'yes' ? 'access' : 'no access'}
-              </span>
+              <FaRegAddressCard className='icon' />
+              Address: <span className='status'>{street}</span>
+              <div className='address'>
+                <p className='status'>
+                  {city}, {state}
+                </p>
+                <p className='status'>{zip}</p>
+              </div>
             </div>
             <div>
-              <FiDatabase className='icon' />
-              Volunteers Database:{' '}
-              <span className='status'>
-                {volunteersDb === 'yes' ? 'access' : 'no access'}
-              </span>
+              <AiOutlinePhone className='icon' />
+              Phone: <span className='status'>{phone}</span>
             </div>
             <div>
-              <MdOutlineManageAccounts className='icon' />
-              Account Status:{' '}
-              <span className='status'>
-                {isActive === 'yes' ? 'active' : 'deactivated'}
-              </span>
-            </div>
-            <div>
-              <AiOutlineCheck className='icon' />
-              Approval Status:{' '}
-              <span className='status'>
-                {approved === 'yes' ? 'approved' : 'waiting on approval'}
-              </span>
-            </div>
-            <div>
-              <RiAdminLine className='icon' />
-              Role: {''}
-              <span className='status'>
-                {isAdmin === 'yes'
-                  ? 'admin'
-                  : isEditor === 'yes'
-                  ? 'editor'
-                  : 'viewer'}
-              </span>
+              <AiOutlineUnorderedList className='icon' />
+              Interests: <span className='status'>{interests}</span>
             </div>
           </div>
           <footer>
@@ -134,12 +107,7 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                   <button className='btn edit-btn' name={_id} onClick={getId}>
                     Edit
                   </button>
-                  <button
-                    type='button'
-                    className='btn delete-btn'
-                    name={_id}
-                    onClick={deleteHandler}
-                  >
+                  <button type='button' className='btn delete-btn' name={_id} onClick={deleteHandler}>
                     Delete
                   </button>
                 </>
@@ -162,7 +130,7 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                   <h1></h1>
                   <form
                     onSubmit={() => {
-                      updateUser(_id);
+                      updateSandbox(_id);
                     }}
                   >
                     <div className='content-centered content-center'>
@@ -190,87 +158,57 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                         value={values.email}
                         handleChange={handleChange}
                       />
-                      <p className='yes-no instructions'>
-                        Enter <span className='emphasis'>'yes'</span> or{' '}
-                        <span className='emphasis'>'no'</span>.
-                      </p>
-
                       <FormRow
-                        placeholder=''
+                        placeholder='15 Yemen Rd'
                         type='text'
-                        name='usersDb'
-                        labelText={'Users Database'}
-                        value={values.usersDb}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='volunteersDb'
-                        labelText={'Volunteers Database'}
-                        value={values.volunteersDb}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='approved'
-                        labelText={'Approval Status'}
-                        value={values.approved}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isViewer'
-                        labelText={'Role: Viewer'}
-                        value={values.isViewer}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isEditor'
-                        labelText={'Role: Editor'}
-                        value={values.isEditor}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isAdmin'
-                        labelText={'Role: Admin'}
-                        value={values.isAdmin}
+                        name='street'
+                        labelText={'Street'}
+                        value={values.street}
                         handleChange={handleChange}
                       />
                       <FormRow
-                        placeholder=''
+                        placeholder='Enter city'
                         type='text'
-                        name='isActive'
-                        labelText={'Active account'}
-                        value={values.isActive}
+                        name='city'
+                        labelText={'City'}
+                        value={values.city}
                         handleChange={handleChange}
                       />
                       <FormRow
-                        placeholder=''
+                        placeholder='NY'
                         type='text'
-                        name='isActive'
-                        labelText={'Active account'}
-                        value={values.isActive}
+                        name='state'
+                        labelText={'State'}
+                        value={values.state}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter zip code'
+                        type='text'
+                        name='zip'
+                        labelText={'Zip Code'}
+                        value={values.zip}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='555-555-5555'
+                        type='text'
+                        name='phone'
+                        labelText={'Phone'}
+                        value={values.phone}
+                        handleChange={handleChange}
+                      />
+                      <FormRow
+                        placeholder='Enter interests, separated by commas'
+                        type='text'
+                        name='interests'
+                        labelText={'Interests'}
+                        value={values.interests}
                         handleChange={handleChange}
                       />
                     </div>
-
                     <button type='submit' className='btn edit-btn'>
                       Submit
-                    </button>
-                    <button type='button' className='btn delete-btn'>
-                      Delete
                     </button>
                   </form>
                 </>
@@ -281,6 +219,6 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
       </JobWrapper>
     </>
   );
-};
+}
 
-export default DbUser;
+export default OneSandbox;

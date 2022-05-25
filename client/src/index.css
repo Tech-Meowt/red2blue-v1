@@ -45,12 +45,19 @@ html {
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
 .r2b-blue {
   color: var(--r2b-blue);
 }
 
 .r2b-red {
   color: var(--r2b-red);
+}
+
+.black {
+  color: black;
 }
 
 body {
@@ -134,12 +141,12 @@ ul {
   object-fit: cover;
 }
 
-.main-dog-container, .dog-div, .cat-div {
+.main-dog-container, .dog-div, .cat-div, .sandbox-div {
   color: var(--r2b-red);
   text-align: center;
 }
 
-.dog-img {
+.dog-img, .sandbox-img {
   border: 2px solid var(--r2b-blue);
   border-radius: 10px 10px 10px 10px;
   box-shadow: var(--shadow-1);

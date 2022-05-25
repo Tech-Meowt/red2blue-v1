@@ -21,6 +21,7 @@ import connectDB from './db/connect.js';
 // routers
 import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobsRoutes.js';
+import sandboxRouter from './routes/sandboxRoutes.js';
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
@@ -43,6 +44,7 @@ app.use(mongoSanitize());
 app.use(cors());
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/sandbox', sandboxRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 // only when ready to deploy
