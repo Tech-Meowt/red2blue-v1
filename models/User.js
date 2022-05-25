@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
     },
     approved: {
       type: String,
-      default: 'no',
+      default: 'waiting on approval',
     },
     createdAt: {
       type: Date,
@@ -51,31 +51,23 @@ const UserSchema = new mongoose.Schema(
     },
     usersDb: {
       type: String,
-      default: 'no',
+      default: 'no access',
     },
     volunteersDb: {
       type: String,
-      default: 'no',
+      default: 'no access',
     },
     isActive: {
       type: String,
-      default: 'yes',
+      default: 'active',
     },
     lastLoggedIn: {
       type: Date,
       default: Date.now,
     },
-    isViewer: {
+    role: {
       type: String,
-      default: 'yes',
-    },
-    isEditor: {
-      type: String,
-      default: 'no',
-    },
-    isAdmin: {
-      type: String,
-      default: 'no',
+      default: 'viewer',
     },
   },
   { timestamps: true }

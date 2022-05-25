@@ -12,9 +12,7 @@ const Profile = () => {
   const [email, setEmail] = useState(user?.email)
   const [usersDb, setUsersDb] = useState(user?.usersDb)
   const [volunteersDb, setVolunteersDb] = useState(user?.volunteersDb)
-  const [isViewer, setIsViewer] = useState(user?.isViewer);
-  const [isEditor, setIsEditor] = useState(user?.isEditor)
-  const [isAdmin, setIsAdmin] = useState(user?.isAdmin)
+ const [role, setRole] = useState(user?.role)
   
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -22,7 +20,7 @@ const Profile = () => {
       displayAlert()
       return
     }
-    updateUser({ firstName, lastName, email, usersDb, volunteersDb, isViewer, isEditor, isAdmin })
+    updateUser({ firstName, lastName, email, usersDb, volunteersDb, role})
   }
 
   return (
