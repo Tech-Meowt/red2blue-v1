@@ -1,6 +1,6 @@
 import { FormRow, FormRowSelect } from '.';
 import { useAppContext } from '../context/appContext';
-import Wrapper from '../assets/wrappers/SearchContainer';
+import SearchWrapper from '../assets/wrappers/SearchContainer';
 
 const SearchContainer = () => {
   const {
@@ -23,7 +23,7 @@ const SearchContainer = () => {
     clearFilters();
   };
   return (
-    <Wrapper>
+    <SearchWrapper>
       <form className='form'>
         <h4>Search</h4>
         <div className='form-center'>
@@ -67,7 +67,7 @@ const SearchContainer = () => {
           </button>
         </div>
       </form>
-    </Wrapper>
+    </SearchWrapper>
   );
 };
 

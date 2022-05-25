@@ -40,7 +40,6 @@ import {
 
 const token = localStorage.getItem('token');
 const user = localStorage.getItem('user');
-const newUser = null
 
 const initialState = {
   isLoading: false,
@@ -54,24 +53,19 @@ const initialState = {
   editDbUserId: '',
   editJobId: '',
   position: '',
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
-  approved: '',
-  usersDb: '',
-  volunteersDb: '',
-  isActive: '',
-  role: '',
+  approved: false,
+  usersDb: false,
+  volunteersDb: false,
+  isActive: false,
+  isAdmin: false,
+  isEditor: false,
+  isViewer: true,
   dbUsers: [],
-  newUser: newUser,
-  totalDbUsers: 0,
   numOfPages: 1,
   page: 1,
-  password: 'password',
-  approvedOptions: ['approved', 'waiting on approval'],
-  usersDatabaseOptions: ['access', 'no access'],
-  volunteersDatabaseOptions: ['access', 'no access'],
-  activeUserOptions: ['active', 'deactivated'],
-  roleOptions: ['viewer', 'editor', 'admin'],
   company: '',
   jobLocation: '',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.article`
+const JobsWrapper = styled.article`
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -38,8 +38,51 @@ const Wrapper = styled.article`
       letter-spacing: var(--letterSpacing);
     }
   }
+  .address {
+    h5 {
+      margin-bottom: 0.25rem;
+    }
+    p {
+      margin: 0 5.5rem;
+    }
+    inline-size: max-content;
+  }
+  .interests {
+    margin: 0 1.75rem;
+  }
+  .instructions {
+    color: black !important;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    grid-column: span 3;
+  }
+  .icon {
+    color: var(--r2b-red);
+    margin-right: 0.75rem;
+  }
+  .status {
+    color: var(--r2b-blue);
+    font-weight: bold;
+  }
+  .yes-no {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .emphasis {
+    color: var(--r2b-blue);
+    font-size: 1.5rem;
+    text-decoration: underline;
+  }
   .content {
     padding: 1rem 1.5rem;
+  }
+.content-special {
+  padding: 1rem 0 1rem 1rem;
+}
+  .content-centered {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    column-gap: 20rem !important;
   }
   .content-center {
     display: grid;
@@ -56,6 +99,9 @@ const Wrapper = styled.article`
     }
   }
   footer {
+    margin-top: 1rem;
+  }
+  .details-btn {
     margin-top: 1rem;
   }
   .edit-btn,
@@ -78,4 +124,4 @@ const Wrapper = styled.article`
   }
 `;
 
-export default Wrapper;
+export default JobsWrapper;

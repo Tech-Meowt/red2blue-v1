@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 
 const initialState = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   isMember: true,
@@ -19,7 +20,7 @@ const Register = () => {
     useAppContext();
   
   const obj = {
-    userName: values.name,
+    userName: values.firstName,
     userEmail: values.email,
   };
   
@@ -50,23 +51,23 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password, isMember } = values;
+    const { firstName, lastName, email, password, isMember } = values;
     if (!email || !password) {
       displayAlert();
       return;
     }
-    const currentUser = { name, email, password };
+    const currentUser = { firstName, lastName, email, password };
     if (isMember) {
       setupUser({
         currentUser,
         endPoint: 'login',
-        alertText: 'Login Successful! Redirecting...',
+        alertText: 'Login successful! Redirecting...',
       });
     } else {
       setupUser({
         currentUser,
         endPoint: 'register',
-        alertText: 'User Created! Redirecting...',
+        alertText: 'User created! Redirecting...',
       });
       sendNewAccountEmail();
     }
@@ -89,11 +90,22 @@ const Register = () => {
         {/* first name input */}
         {!values.isMember && (
           <FormRow
-            placeholder='Enter full name'
+            placeholder='Enter first name'
             type='text'
-            id='name'
-            name='name'
-            value={values.name}
+            name='firstName'
+            labelText={'First name'}
+            value={values.firstName}
+            handleChange={handleChange}
+          />
+        )}
+
+        {!values.isMember && (
+          <FormRow
+            placeholder='Enter last name'
+            type='text'
+            name='lastName'
+            labelText={'Last name'}
+            value={values.lastName}
             handleChange={handleChange}
           />
         )}
@@ -102,8 +114,8 @@ const Register = () => {
         <FormRow
           placeholder='jane.doe@gmail.com'
           type='email'
-          id='email'
           name='email'
+          labelText={'Email'}
           value={values.email}
           handleChange={handleChange}
         />
@@ -111,7 +123,7 @@ const Register = () => {
         <FormRow
           placeholder='********'
           type='password'
-          id='password'
+          labelText={'Password'}
           name='password'
           value={values.password}
           handleChange={handleChange}

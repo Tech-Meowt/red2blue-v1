@@ -4,6 +4,11 @@ import Profile from './Profile'
 import SharedLayout from './SharedLayout'
 import Stats from './Stats'
 import UserAccounts from './UserAccounts'
-import AddDbUser from './AddDbUser'
+import AddSandbox from './AddSandbox'
 import EditUser from './EditUser'
-export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts , AddDbUser, EditUser }
+import UserDetails from './UserDetails'
+import Databases from './Databases'
+import Help from './Help'
+import Sandbox from './Sandbox'
+import SandboxHome from './SandboxHome'
+export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts , AddSandbox, EditUser, UserDetails , Databases, Help, Sandbox, SandboxHome }

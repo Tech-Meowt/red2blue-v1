@@ -6,8 +6,7 @@ const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false)
   const { toggleSidebar, logoutUser, user } = useAppContext()
 
-  const str = user.name
-  const firstName = str.split(' ', 1)
+  const str = user.firstName
 
   return (
     <Wrapper>
@@ -25,7 +24,7 @@ const Navbar = () => {
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
-            {firstName}
+            {str}
             <FaCaretDown />
           </button>
           <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>

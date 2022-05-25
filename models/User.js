@@ -4,9 +4,16 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
       type: String,
       required: [true, 'Please provide first name'],
+      minlength: 2,
+      maxlength: 20,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Please provide last name'],
       minlength: 2,
       maxlength: 20,
       trim: true,
@@ -28,8 +35,7 @@ const UserSchema = new mongoose.Schema(
     },
     approved: {
       type: String,
-      enum: ['approved', 'waiting on approval'],
-      default: 'waiting on approval',
+      default: 'no',
     },
     createdAt: {
       type: Date,
@@ -45,27 +51,31 @@ const UserSchema = new mongoose.Schema(
     },
     usersDb: {
       type: String,
-      enum: ['access', 'no access'],
-      default: 'no access',
+      default: 'no',
     },
     volunteersDb: {
       type: String,
-      enum: ['access', 'no access'],
-      default: 'no access',
+      default: 'no',
     },
     isActive: {
       type: String,
-      enum: ['active', 'deactivated'],
-      default: 'active',
+      default: 'yes',
     },
     lastLoggedIn: {
       type: Date,
       default: Date.now,
     },
-    role: {
+    isViewer: {
       type: String,
-      enum: ['viewer', 'editor', 'admin'],
-      default: 'viewer',
+      default: 'yes',
+    },
+    isEditor: {
+      type: String,
+      default: 'no',
+    },
+    isAdmin: {
+      type: String,
+      default: 'no',
     },
   },
   { timestamps: true }

@@ -6,23 +6,25 @@ import {
   NotFoundError,
 } from '../errors/index.js';
 
+// user managed data
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
-  if (!name || !email || !password) {
+  if (!firstName || !lastName || !email || !password) {
     throw new BadRequestError('please provide all values');
   }
   const userAlreadyExists = await User.findOne({ email });
   if (userAlreadyExists) {
     throw new BadRequestError('Email already in use');
   }
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ firstName, lastName, email, password });
 
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
     user: {
       email: user.email,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName
     },
     token,
   });
@@ -46,38 +48,23 @@ const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-const createUser = (req, res) => {
-  User.create(req.body)
-    .then((newUser) => {
-      console.log({ newUser });
-      res.json({
-        message: `Added User`,
-        newUser,
-      });
-    })
-    .catch((err) => {
-      res.status(404).json({
-        message: `Not added`,
-        error: err.message,
-      });
-    });
-};
-
 const updateUser = async (req, res) => {
-  const { email, name, approved, usersDb, volunteersDb, isActive, role } =
+  const { email, firstName, lastName, approved, usersDb, volunteersDb, isAdmin, isEditor, isViewer } =
     req.body;
-  if (!email || !name) {
+  if (!email || !firstName || !lastName ) {
     throw new BadRequestError('Please provide all values');
   }
   const user = await User.findOne({ _id: req.user.userId });
 
   user.email = email;
-  user.name = name;
+  user.firstName = firstName;
+  user.lastName = lastName;
   user.approved = approved;
   user.usersDb = usersDb;
   user.volunteersDb = volunteersDb;
-  user.isActive = isActive;
-  user.role = role;
+  user.isViewer = isViewer;
+  user.isEditor = isEditor;
+  user.isAdmin = isAdmin;
 
   await user.save();
 
@@ -86,36 +73,69 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user, token });
 };
 
-const updateDbUser = async (req, res) => {
-  await User.findByIdAndUpdate(req.params.id, req.body)
-    .then((dbUsers) => {
-      res.json({
-        message: `updated`,
-        dbUsers,
-    })
-    })
-    .catch((err) => {
-      res.status(404).json({
-        message: `not deleted`,
-        error: err.message,
-    })
-  })
-}
+// admin managed data
+const getUsers = (req, res) => {
+  User.find(function(err, allUsers) {
+    res.json(allUsers);
+  });
+};
 
-const deleteUser = async (req, res) => {
-  await User.findByIdAndRemove(req.params.id, req.body)
-    .then((dbUsers) => {
-      res.json({
-        message: `DELETED`,
-        dbUsers,
-      });
+const createUser = (req, res) => {
+  let newUser = new User(req.body);
+  newUser
+    .save()
+    .then((newUser) => {
+      res.send(newUser);
     })
-    .catch((err) => {
-      res.status(404).json({
-        message: `NOT DELETED`,
-        error: err.message,
-      });
+    .catch(function (err) {
+      res.status(422).send('User not added!');
     });
 };
 
-export { register, login, updateUser, createUser, deleteUser, updateDbUser };
+const getUserDetails = (req, res) => { 
+  User.findById(req.params.id, function(err, oneUser) {
+    if (!oneUser) {
+      res.status(404).send('No user found')
+    } else {
+      res.json(oneUser)
+    }
+  })
+   
+};
+
+const updateDbUser = (req, res) => {
+  User.findByIdAndUpdate(req.params.id, req.body)
+    .then(function () {
+      res.json('User updated');
+    })
+    .catch(function (err) {
+      res.status(422).send('User update failed.');
+    });
+};
+
+const deleteUser = (req, res) => {
+  User.findById(req.params.id, function (err, deletedUser) {
+    if (!deletedUser) {
+      res.status(404).send('User not found');
+    } else {
+      User.findByIdAndRemove(req.params.id)
+        .then(function () {
+          res.status(200).json('User deleted');
+        })
+        .catch(function (err) {
+          res.status(400).send('User delete failed.');
+        });
+    }
+  });
+};
+
+export {
+  register,
+  login,
+  updateUser,
+  createUser,
+  deleteUser,
+  updateDbUser,
+  getUsers,
+  getUserDetails
+};
