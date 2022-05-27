@@ -18,6 +18,8 @@ import FormCheckbox from './FormCheckbox'
 import Banner from './Banner'
 import AllSandbox from './AllSandbox'
 import OneSandbox from './OneSandbox'
+import SearchBar from './SearchBar'
+import SearchSelect from './SearchSelect'
 export {
   Logo,
   FormRow,
@@ -38,5 +40,7 @@ export {
   FormCheckbox,
   Banner,
   AllSandbox,
-  OneSandbox
+  OneSandbox,
+  SearchBar,
+  SearchSelect
 };

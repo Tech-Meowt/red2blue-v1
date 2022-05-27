@@ -50,12 +50,12 @@ const UserSchema = new mongoose.Schema(
       default: '',
     },
     usersDb: {
-      type: String,
-      default: 'no access',
+      type: Boolean,
+      default: 'false',
     },
     volunteersDb: {
-      type: String,
-      default: 'no access',
+      type: Boolean,
+      default: 'false',
     },
     isActive: {
       type: String,
