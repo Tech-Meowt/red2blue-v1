@@ -1,6 +1,7 @@
 import { FormRow } from '.'
 import SearchWrapper from '../assets/wrappers/SearchContainer';
 import Wrapper from '../assets/wrappers/SearchResults';
+import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
 import { DbUser } from '../components'
 
@@ -22,6 +23,7 @@ const SearchBar = ({
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
+  const [noResults, setNoResults] = useState(false);
 
   const handleFilter = (e) => {
     const searchWord = e.target.value;
@@ -38,6 +40,7 @@ const SearchBar = ({
       setFilteredData([]);
     } else {
       setFilteredData(newFilter);
+      setNoResults(true)
     }
   };
 
@@ -46,14 +49,15 @@ const SearchBar = ({
 
     setWordEntered('')
     setFilteredData([])
+    setNoResults(false)
   }
 
   return (
     <>
-      <SearchWrapper>
-        <form>
-          <h4>Search</h4>
-          <div className='form-row form-center'>
+      <SearchSelectWrapper>
+        <h5 className='r2b-blue'>Search + Filter</h5>
+        <form className='form'>
+          <div className='form-row form-center '>
             <label htmlFor='wordEntered'>
               Search by first name, last name, or email
             </label>
@@ -64,17 +68,20 @@ const SearchBar = ({
               value={wordEntered}
               onChange={handleFilter}
             />
-            <button className='btn btn-block btn-danger' onClick={handleClear}>clear</button>
+            <button className='btn btn-block btn-danger' onClick={handleClear}>
+              clear
+            </button>
           </div>
         </form>
-      </SearchWrapper>
 
-      <Wrapper>
+        {filteredData.length == 0 && noResults && (
+          <h5>Found {filteredData.length} records</h5>
+        )}
         {filteredData.length == 1 && (
-          <h3>Found {filteredData.length} record</h3>
+          <h5>Found {filteredData.length} record</h5>
         )}
         {filteredData.length > 1 && (
-          <h3>Found {filteredData.length} records</h3>
+          <h5>Found {filteredData.length} records</h5>
         )}
         {filteredData.length != 0 &&
           filteredData.slice(0, 15).map((value, key) => {
@@ -97,7 +104,7 @@ const SearchBar = ({
               </>
             );
           })}
-      </Wrapper>
+      </SearchSelectWrapper>
     </>
   );
 };

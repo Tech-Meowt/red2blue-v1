@@ -97,11 +97,11 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
             </div>
             <div>
               <MdOutlineManageAccounts className='icon' />
-              Account Status: <span className='status'>{isActive}</span>
+              Account Status: <span className='status'>{isActive ? 'active' : 'deactivated'}</span>
             </div>
             <div>
               <AiOutlineCheck className='icon' />
-              Approval Status: <span className='status'>{approved}</span>
+              Approval Status: <span className='status'>{approved ? 'approved' : 'waiting on approval'}</span>
             </div>
             <div>
               <RiAdminLine className='icon' />

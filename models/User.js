@@ -34,8 +34,8 @@ const UserSchema = new mongoose.Schema(
       select: false,
     },
     approved: {
-      type: String,
-      default: 'waiting on approval',
+      type: Boolean,
+      default: false,
     },
     createdAt: {
       type: Date,
@@ -51,15 +51,15 @@ const UserSchema = new mongoose.Schema(
     },
     usersDb: {
       type: Boolean,
-      default: 'false',
+      default: false
     },
     volunteersDb: {
       type: Boolean,
-      default: 'false',
+      default: false
     },
     isActive: {
-      type: String,
-      default: 'active',
+      type: Boolean,
+      default: true
     },
     lastLoggedIn: {
       type: Date,
