@@ -1,25 +1,26 @@
-import { FormRow } from '.'
+import { FormRow } from '.';
 import SearchWrapper from '../assets/wrappers/SearchContainer';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { DbUser } from '../components'
+import { OneSandbox } from '../components';
 
-const SearchBar = ({
+const SandboxSearchBar = ({
   placeholder,
   data,
   getId,
   _id,
   deleteHandler,
-  updateUser,
+  updateSandbox,
   firstName,
   lastName,
   email,
-  usersDb,
-  volunteersDb,
-  approved,
-  isActive,
-  role,
+  street,
+  city,
+  state,
+  zip,
+  phone,
+  interests,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -40,17 +41,17 @@ const SearchBar = ({
       setFilteredData([]);
     } else {
       setFilteredData(newFilter);
-      setNoResults(false)
+      setNoResults(false);
     }
   };
 
   const handleClear = (e) => {
     e.preventDefault();
 
-    setWordEntered('')
-    setFilteredData([])
-    setNoResults(true)
-  }
+    setWordEntered('');
+    setFilteredData([]);
+    setNoResults(true);
+  };
 
   return (
     <>
@@ -87,19 +88,20 @@ const SearchBar = ({
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>
-                <DbUser
+                <OneSandbox
                   firstName={value.firstName}
                   lastName={value.lastName}
                   email={value.email}
-                  usersDb={value.usersDb}
-                  volunteersDb={value.volunteersDb}
-                  isActive={value.isActive}
-                  approved={value.approved}
-                  role={value.role}
+                  street={value.street}
+                  city={value.city}
+                  state={value.state}
+                  zip={value.zip}
+                  phone={value.phone}
+                  interests={value.interests}
                   getId={getId}
                   _id={value._id}
                   deleteHandler={deleteHandler}
-                  updateUser={updateUser}
+                  updateSandbox={updateSandbox}
                 />
               </>
             );
@@ -109,5 +111,4 @@ const SearchBar = ({
   );
 };
 
-
-export default SearchBar
+export default SandboxSearchBar;

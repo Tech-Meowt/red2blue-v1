@@ -3,12 +3,12 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import { SearchBar, DbUser, SearchSelect } from '../components';
-import PageBtnContainer from './PageBtnContainer';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [values, setValues] = useState('');
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     axios
@@ -31,6 +31,12 @@ export default function AllDbUsers() {
     
   }, []);
 
+  const toggleSearch = (e) => {
+    e.preventDefault();
+
+    setOpened(!opened);
+  }
+
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -52,63 +58,79 @@ export default function AllDbUsers() {
   return (
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
-      <FilterWrapper>
-        <SearchBar data={usersList} />
-      </FilterWrapper>
+      {!opened && (
+        <button className='btn' onClick={toggleSearch}>
+          Search
+        </button>
+      )}
 
-      <FilterWrapper>
-        <div className='form'>
-          <SearchSelect
-            data={usersList}
-            word={'access'}
-            query={'User Accounts database access'}
-            value1={'access'}
-            value2={'denied'}
-            option1={'access'}
-            option2={'denied'}
-          />
+      {opened && (
+        <>
+          <FilterWrapper>
+            <SearchBar
+              data={usersList}
+              searchText={'Search by first name, last name, or email'}
+            />
+          </FilterWrapper>
 
-          <SearchSelect
-            data={usersList}
-            word={'access'}
-            query={'Volunteers database access'}
-            value1={'access'}
-            value2={'denied'}
-            option1={'access'}
-            option2={'denied'}
-          />
+          <FilterWrapper>
+            <div className='form'>
+              <SearchSelect
+                data={usersList}
+                word={'access'}
+                query={'User Accounts database access'}
+                value1={'access'}
+                value2={'denied'}
+                option1={'access'}
+                option2={'denied'}
+              />
 
-          <SearchSelect
-            data={usersList}
-            word={'active'}
-            query={'account status'}
-            value1={'active'}
-            value2={'deactivated'}
-            option1={'active'}
-            option2={'deactivated'}
-          />
-          <SearchSelect
-            data={usersList}
-            word={'approved'}
-            query={'approval status'}
-            value1={'approved'}
-            value2={'waitingOnApproval'}
-            option1={'approved'}
-            option2={'waiting on approval'}
-          />
-          <SearchSelect
-            data={usersList}
-            word={'role'}
-            query={'role'}
-            value1={'viewer'}
-            value2={'editor'}
-            value3={'admin'}
-            option1={'viewer'}
-            option2={'editor'}
-            option3={'admin'}
-          />
-        </div>
-      </FilterWrapper>
+              <SearchSelect
+                data={usersList}
+                word={'access'}
+                query={'Volunteers database access'}
+                value1={'access'}
+                value2={'denied'}
+                option1={'access'}
+                option2={'denied'}
+              />
+
+              <SearchSelect
+                data={usersList}
+                word={'active'}
+                query={'account status'}
+                value1={'active'}
+                value2={'deactivated'}
+                option1={'active'}
+                option2={'deactivated'}
+              />
+              <SearchSelect
+                data={usersList}
+                word={'approved'}
+                query={'approval status'}
+                value1={'approved'}
+                value2={'waitingOnApproval'}
+                option1={'approved'}
+                option2={'waiting on approval'}
+              />
+              <SearchSelect
+                data={usersList}
+                word={'role'}
+                query={'role'}
+                value1={'viewer'}
+                value2={'editor'}
+                value3={'admin'}
+                option1={'viewer'}
+                option2={'editor'}
+                option3={'admin'}
+              />
+            </div>
+          </FilterWrapper>
+          <button className='btn' onClick={toggleSearch}>
+            Close
+          </button>
+        </>
+      )}
 
       <Wrapper>
         <h4>All Records</h4>
