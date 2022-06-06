@@ -49,7 +49,7 @@ const login = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { email, firstName, lastName, approved, usersDb, volunteersDb, isAdmin, isEditor, isViewer } =
+  const { email, firstName, lastName, approved, usersDb, volunteersDb, role } =
     req.body;
   if (!email || !firstName || !lastName ) {
     throw new BadRequestError('Please provide all values');
@@ -62,9 +62,7 @@ const updateUser = async (req, res) => {
   user.approved = approved;
   user.usersDb = usersDb;
   user.volunteersDb = volunteersDb;
-  user.isViewer = isViewer;
-  user.isEditor = isEditor;
-  user.isAdmin = isAdmin;
+  user.role = role;
 
   await user.save();
 
@@ -100,7 +98,6 @@ const getUserDetails = (req, res) => {
       res.json(oneUser)
     }
   })
-   
 };
 
 const updateDbUser = (req, res) => {

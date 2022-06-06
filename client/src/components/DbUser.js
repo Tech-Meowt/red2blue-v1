@@ -9,8 +9,7 @@ import { MdOutlineManageAccounts } from 'react-icons/md'
 import { GrUserAdmin } from 'react-icons/gr'
 import { RiAdminLine } from 'react-icons/ri'
 import { AiOutlineCheck } from 'react-icons/ai'
-
-const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, isEditor, isAdmin, isViewer} )=> {
+const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, role })=> {
   const initialState = {
     firstName,
     lastName,
@@ -18,10 +17,8 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     usersDb,
     volunteersDb,
     isActive,
-    isEditor,
-    isAdmin,
-    isViewer,
     approved,
+    role,
   };
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
@@ -34,10 +31,10 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
     usersDb,
     volunteersDb,
     isActive,
-    isEditor,
-    isAdmin,
-    isViewer,
+    role,
   });
+
+
 
   const getId = (e) => {
     const id = e.target.name;
@@ -89,42 +86,27 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
           <div className='content-center'>
             <div>
               <FiDatabase className='icon' />
-              User Accounts Database:{' '}
-              <span className='status'>
-                {usersDb === 'yes' ? 'access' : 'no access'}
-              </span>
+              User Accounts Database: <span className='status'>{usersDb ? 'access' : 'no access'}</span>
             </div>
             <div>
               <FiDatabase className='icon' />
               Volunteers Database:{' '}
               <span className='status'>
-                {volunteersDb === 'yes' ? 'access' : 'no access'}
+                {volunteersDb ? 'access' : 'no access'}
               </span>
             </div>
             <div>
               <MdOutlineManageAccounts className='icon' />
-              Account Status:{' '}
-              <span className='status'>
-                {isActive === 'yes' ? 'active' : 'deactivated'}
-              </span>
+              Account Status: <span className='status'>{isActive ? 'active' : 'deactivated'}</span>
             </div>
             <div>
               <AiOutlineCheck className='icon' />
-              Approval Status:{' '}
-              <span className='status'>
-                {approved === 'yes' ? 'approved' : 'waiting on approval'}
-              </span>
+              Approval Status: <span className='status'>{approved ? 'approved' : 'waiting on approval'}</span>
             </div>
             <div>
               <RiAdminLine className='icon' />
               Role: {''}
-              <span className='status'>
-                {isAdmin === 'yes'
-                  ? 'admin'
-                  : isEditor === 'yes'
-                  ? 'editor'
-                  : 'viewer'}
-              </span>
+              <span className='status'>{role}</span>
             </div>
           </div>
           <footer>
@@ -190,80 +172,89 @@ const DbUser = ({_id, firstName, lastName, email, usersDb, volunteersDb, approve
                         value={values.email}
                         handleChange={handleChange}
                       />
-                      <p className='yes-no instructions'>
-                        Enter <span className='emphasis'>'yes'</span> or{' '}
-                        <span className='emphasis'>'no'</span>.
-                      </p>
 
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='usersDb'
-                        labelText={'Users Database'}
-                        value={values.usersDb}
-                        handleChange={handleChange}
-                      />
+                      <div className='form-row'>
+                        <label htmlFor='usersDb' className='form-label'>
+                          User Accounts Database
+                        </label>
+                        <select
+                          name='usersDb'
+                          id='usersDb'
+                          className='form-select'
+                          value={values.usersDb}
+                          onChange={handleChange}
+                        >
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
+                        </select>
+                      </div>
 
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='volunteersDb'
-                        labelText={'Volunteers Database'}
-                        value={values.volunteersDb}
-                        handleChange={handleChange}
-                      />
+                      <div className='form-row'>
+                        <label htmlFor='volunteersDb' className='form-label'>
+                          Volunteers Database
+                        </label>
+                        <select
+                          name='volunteersDb'
+                          id='volunteersDb'
+                          className='form-select'
+                          value={values.volunteersDb}
+                          onChange={handleChange}
+                        >
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
+                        </select>
+                      </div>
 
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='approved'
-                        labelText={'Approval Status'}
-                        value={values.approved}
-                        handleChange={handleChange}
-                      />
+                      <div className='form-row'>
+                        <label htmlFor='approved' className='form-label'>
+                          Approval Status
+                        </label>
+                        <select
+                          name='approved'
+                          id='approved'
+                          className='form-select'
+                          value={values.approved}
+                          onChange={handleChange}
+                        >
+                          <option value='approved'>Approved</option>
+                          <option value='waiting on approval'>
+                            Waiting on approval
+                          </option>
+                        </select>
+                      </div>
 
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isViewer'
-                        labelText={'Role: Viewer'}
-                        value={values.isViewer}
-                        handleChange={handleChange}
-                      />
+                      <div className='form-row'>
+                        <label htmlFor='role' className='form-label'>
+                          Role
+                        </label>
+                        <select
+                          name='role'
+                          id='role'
+                          className='form-select'
+                          value={values.role}
+                          onChange={handleChange}
+                        >
+                          <option value='viewer'>Viewer</option>
+                          <option value='editor'>Editor</option>
+                          <option value='admin'>Admin</option>
+                        </select>
+                      </div>
 
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isEditor'
-                        labelText={'Role: Editor'}
-                        value={values.isEditor}
-                        handleChange={handleChange}
-                      />
-
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isAdmin'
-                        labelText={'Role: Admin'}
-                        value={values.isAdmin}
-                        handleChange={handleChange}
-                      />
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isActive'
-                        labelText={'Active account'}
-                        value={values.isActive}
-                        handleChange={handleChange}
-                      />
-                      <FormRow
-                        placeholder=''
-                        type='text'
-                        name='isActive'
-                        labelText={'Active account'}
-                        value={values.isActive}
-                        handleChange={handleChange}
-                      />
+                      <div className='form-row'>
+                        <label htmlFor='isActive' className='form-label'>
+                          Active Account
+                        </label>
+                        <select
+                          name='isActive'
+                          id='isActive'
+                          className='form-select'
+                          value={values.isActive}
+                          onChange={handleChange}
+                        >
+                          <option value='active'>Active</option>
+                          <option value='deactivated'>Deactivated</option>
+                        </select>
+                      </div>
                     </div>
 
                     <button type='submit' className='btn edit-btn'>
