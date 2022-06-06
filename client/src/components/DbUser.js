@@ -86,22 +86,22 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
           <div className='content-center'>
             <div>
               <FiDatabase className='icon' />
-              User Accounts Database: <span className='status'>{usersDb}</span>
+              User Accounts Database: <span className='status'>{usersDb ? 'access' : 'no access'}</span>
             </div>
             <div>
               <FiDatabase className='icon' />
               Volunteers Database:{' '}
               <span className='status'>
-                {volunteersDb}
+                {volunteersDb ? 'access' : 'no access'}
               </span>
             </div>
             <div>
               <MdOutlineManageAccounts className='icon' />
-              Account Status: <span className='status'>{isActive}</span>
+              Account Status: <span className='status'>{isActive ? 'active' : 'deactivated'}</span>
             </div>
             <div>
               <AiOutlineCheck className='icon' />
-              Approval Status: <span className='status'>{approved}</span>
+              Approval Status: <span className='status'>{approved ? 'approved' : 'waiting on approval'}</span>
             </div>
             <div>
               <RiAdminLine className='icon' />
@@ -184,8 +184,8 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
                           value={values.usersDb}
                           onChange={handleChange}
                         >
-                          <option value='access'>Access</option>
-                          <option value='no access'>No access</option>
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
                         </select>
                       </div>
 
@@ -200,8 +200,8 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
                           value={values.volunteersDb}
                           onChange={handleChange}
                         >
-                          <option value='access'>Access</option>
-                          <option value='no access'>No access</option>
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
                         </select>
                       </div>
 

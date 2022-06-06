@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
-import SearchWrapper from '../assets/wrappers/SearchContainer';
-import { FormRow, Alert, FormRowSelect, Search } from '../components';
-import DbUser from './DbUser';
-import PageBtnContainer from './PageBtnContainer';
+import FilterWrapper from '../assets/wrappers/FilterContainer';
+import { SearchBar, DbUser, SearchSelect } from '../components';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
-  const [search, setSearch] = useState();
   const [usersList, setUsersList] = useState([]);
-  const [item, setItem] = useState('');
-  const [foundItem, setFoundItem] = useState(false);
   const [values, setValues] = useState('');
-  const [id, setId] = useState('');
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     axios
@@ -36,6 +31,12 @@ export default function AllDbUsers() {
     
   }, []);
 
+  const toggleSearch = (e) => {
+    e.preventDefault();
+
+    setOpened(!opened);
+  }
+
   const handleChange = (e) => {
     e.preventDefault();
 
@@ -54,71 +55,91 @@ export default function AllDbUsers() {
       });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    
-    const searchTerm = search.split(' ')
-    const user = usersList.find(({ firstName }) => firstName == searchTerm) || usersList.find(({ lastName }) => lastName == searchTerm) || usersList.find(({ email }) => email == searchTerm )
-    setFoundItem(true)
-    console.log(user)
-    console.log(user.firstName)
-    setId(user._id)
-    console.log(user._id)
-    setItem(user)
-  };
-
-  const handleClear = (e) => {
-    e.preventDefault();
-    setSearch('')
-    setFoundItem(false)
-  }
-
   return (
     <>
-      <h4>Database: User Accounts</h4>
-      <SearchWrapper>
-        <form className='form' onSubmit={onSubmit}>
-          <h4>Search</h4>
-          <div className='form-center'>
-            <div className='form-row'>
-              <label className='form-label lowercase'>
-                Search by first name, last name, or email. Search is case
-                sensitive.
-              </label>
-              <input
-                className='form-input'
-                type='text'
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+      <h3 className='r2b-red'>Database: User Accounts</h3>
+      {!opened && (
+        <button className='btn' onClick={toggleSearch}>
+          Search
+        </button>
+      )}
+
+      {opened && (
+        <>
+          <FilterWrapper>
+            <SearchBar
+              data={usersList}
+              searchText={'Search by first name, last name, or email'}
+            />
+          </FilterWrapper>
+
+          <FilterWrapper>
+            <div className='form'>
+              <SearchSelect
+                data={usersList}
+                word={'access'}
+                query={'User Accounts database access'}
+                value1={'access'}
+                value2={'denied'}
+                option1={'access'}
+                option2={'denied'}
+              />
+
+              <SearchSelect
+                data={usersList}
+                word={'access'}
+                query={'Volunteers database access'}
+                value1={'access'}
+                value2={'denied'}
+                option1={'access'}
+                option2={'denied'}
+              />
+
+              <SearchSelect
+                data={usersList}
+                word={'active'}
+                query={'account status'}
+                value1={'active'}
+                value2={'deactivated'}
+                option1={'active'}
+                option2={'deactivated'}
+              />
+              <SearchSelect
+                data={usersList}
+                word={'approved'}
+                query={'approval status'}
+                value1={'approved'}
+                value2={'waitingOnApproval'}
+                option1={'approved'}
+                option2={'waiting on approval'}
+              />
+              <SearchSelect
+                data={usersList}
+                word={'role'}
+                query={'role'}
+                value1={'viewer'}
+                value2={'editor'}
+                value3={'admin'}
+                option1={'viewer'}
+                option2={'editor'}
+                option3={'admin'}
               />
             </div>
-          </div>
-          <button type='submit' className='btn submit-btn'>
-            submit
+          </FilterWrapper>
+          <button className='btn' onClick={toggleSearch}>
+            Close
           </button>
-          <button type='text' className='btn btn-danger' onClick={handleClear}>
-            clear
-          </button>
-        </form>
-      </SearchWrapper>
-
-      {foundItem && (
-        <Wrapper>
-          <div className='jobs'>
-            <DbUser id={item._id} {...item} />
-          </div>
-        </Wrapper>
+        </>
       )}
 
-      {!foundItem && (
-        <Wrapper>
-          <div className='jobs'>
-            {dbUsers.map((dbUser) => {
-              return <DbUser key={dbUser._id} {...dbUser} />;
-            })}
-          </div>
-        </Wrapper>
-      )}
+      <Wrapper>
+        <h4>All Records</h4>
+        <div className='jobs'>
+          {dbUsers.map((dbUser) => {
+            return <DbUser key={dbUser._id} {...dbUser} />;
+          })}
+        </div>
+      </Wrapper>
     </>
   );
 }

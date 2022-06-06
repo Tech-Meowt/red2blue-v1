@@ -9,7 +9,7 @@ import { SiCodesandbox } from 'react-icons/si';
 
 const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext()
-  const [admin, setAdmin] = useState(user.isAdmin)
+  const [role, setRole] = useState(user.role)
 
   const handleClick = () => {
 
@@ -35,7 +35,7 @@ const NavLinks = ({ toggleSidebar }) => {
           </NavLink>
         );
       })}
-      {admin === 'yes' && (
+      {role === 'admin' && (
         <NavLink
           to='/user-accounts'
           className={({ isActive }) =>
