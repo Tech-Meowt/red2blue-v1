@@ -50,7 +50,7 @@ export default function AddSandbox() {
         setAlertText('Record created! Redirecting...')
         setAlertType('success')
         setTimeout(() => {
-          navigate('/sandbox-home');
+          navigate('/sandbox/home');
         }, 3000);
       })
       .catch((error) => {
@@ -60,6 +60,24 @@ export default function AddSandbox() {
         setAlertType('danger')
       });
   };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+
+    setSandboxInfo({
+      firstName: '',
+      lastName: '',
+      email: '',
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      phone: '',
+      interests: '',
+    });
+    navigate('/sandbox/home')
+
+  }
 
   return (
     <>
@@ -76,7 +94,7 @@ export default function AddSandbox() {
           </p>
         </div>
         <div className='actions'>
-          <button className='btn delete-btn'>Cancel</button>
+          <button className='btn delete-btn' onClick={handleCancel}>Cancel</button>
           <h1></h1>
           <form onSubmit={createRecord}>
             <div className='content-centered content-center'>

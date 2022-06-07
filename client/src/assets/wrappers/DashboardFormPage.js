@@ -39,15 +39,45 @@ const Wrapper = styled.section`
     }
   }
   .no-edit {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 0 !important;
+    font-weight: bold !important;
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .no-top {
+    margin: 0 !important;
+  }
+  .no-cursor {
+    color: transparent;
   }
   .clear-btn {
     background: var(--r2b-blue);
   }
   .clear-btn:hover {
     background: var(--black);
+  }
+  .popular-articles-container {
+    text-align: center;
+  }
+  .article-container {
+    text-align: left;
+  }
+  .more-btn {
+    text-align: right;
+  }
+  .edit-btn,
+  .delete-btn {
+    letter-spacing: var(--letterSpacing);
+    cursor: pointer;
+    height: 30px;
+  }
+  .edit-btn {
+    color: var(--green-dark);
+    background: var(--green-light);
+    margin-right: 0.5rem;
+  }
+  .delete-btn {
+    color: var(--red-dark);
+    background: var(--red-light);
   }
   @media (min-width: 992px) {
     .form-center {

@@ -141,7 +141,7 @@ ul {
   object-fit: cover;
 }
 
-.main-dog-container, .dog-div, .cat-div, .sandbox-div {
+.main-dog-container, .dog-div, .cat-div, .sandbox-div, .help-banner-container, .gif-div {
   color: var(--r2b-red);
   text-align: center;
 }
@@ -157,6 +157,14 @@ ul {
 
 .space {
   margin-top: 1rem !important;
+}
+
+.space-larger {
+  margin-top: 2rem;
+}
+
+.space-largest {
+  margin-top: 3rem;
 }
 
 /* buttons */
@@ -273,6 +281,11 @@ ul {
   letter-spacing: var(--letterSpacing);
   text-transform: capitalize;
 }
+
+.grid {
+  display: grid !important;
+  grid-template-columns: auto auto;
+}
 /* alert */
 
 @keyframes spinner {
@@ -315,25 +328,8 @@ ul {
   min-height: 100vh;
 }
 
-.coffee-info {
-  text-align: center;
-  text-transform: capitalize;
-  margin-bottom: 1rem;
-  letter-spacing: var(--letterSpacing);
-}
-.coffee-info span {
-  display: block;
-}
-.coffee-info a {
-  color: var(--primary-500);
+.inline {
+  display: inline !important;
 }
 
-@media screen and (min-width: 992px) {
-  .coffee-info {
-    text-align: left;
-  }
-  .coffee-info span {
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-}
+

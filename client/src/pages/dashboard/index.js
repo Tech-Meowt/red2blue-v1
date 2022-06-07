@@ -11,4 +11,5 @@ import Databases from './Databases'
 import Help from './Help'
 import Sandbox from './Sandbox'
 import SandboxHome from './SandboxHome'
-export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts , AddSandbox, EditUser, UserDetails , Databases, Help, Sandbox, SandboxHome }
+import HelpGettingStarted from './HelpGettingStarted'
+export { AllJobs, Profile, SharedLayout, Stats, AddJob, UserAccounts , AddSandbox, EditUser, UserDetails , Databases, Help, Sandbox, SandboxHome, HelpGettingStarted }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const JobsWrapper = styled.article`
+const JobWrapper = styled.article`
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -124,4 +124,4 @@ const JobsWrapper = styled.article`
   }
 `;
 
-export default JobsWrapper;
+export default JobWrapper;
