@@ -2,7 +2,7 @@ import { FormRow } from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Banner } from '../../components';
@@ -31,6 +31,12 @@ export default function AddSandbox() {
   const createRecord = (e) => {
     e.preventDefault();
 
+    if (!sandboxInfo.firstName || !sandboxInfo.lastName || !sandboxInfo.email || !sandboxInfo.street || !sandboxInfo.city || !sandboxInfo.state || !sandboxInfo.zip || !sandboxInfo.phone) {
+      setShowAlert(true);
+      setAlertText('Please fill out all fields');
+      setAlertType('danger');
+    }
+
     axios
       .post('http://localhost:8000/api/v1/sandbox/allSandbox', sandboxInfo)
       .then((res) => {
@@ -50,7 +56,7 @@ export default function AddSandbox() {
         setAlertText('Record created! Redirecting...')
         setAlertType('success')
         setTimeout(() => {
-          navigate('/sandbox-home');
+          navigate('/sandbox/home');
         }, 3000);
       })
       .catch((error) => {
@@ -60,6 +66,24 @@ export default function AddSandbox() {
         setAlertType('danger')
       });
   };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+
+    setSandboxInfo({
+      firstName: '',
+      lastName: '',
+      email: '',
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      phone: '',
+      interests: '',
+    });
+    navigate('/sandbox/home')
+
+  }
 
   return (
     <>
@@ -76,7 +100,7 @@ export default function AddSandbox() {
           </p>
         </div>
         <div className='actions'>
-          <button className='btn delete-btn'>Cancel</button>
+          <button className='btn delete-btn' onClick={handleCancel}>Cancel</button>
           <h1></h1>
           <form onSubmit={createRecord}>
             <div className='content-centered content-center'>

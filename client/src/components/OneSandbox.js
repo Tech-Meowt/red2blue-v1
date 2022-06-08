@@ -1,12 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import JobWrapper from '../assets/wrappers/Job';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
+import { FormRow } from '../components';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
+import Modal from 'react-modal';
 
 const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip, phone, interests }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+  
   const initialState = {
     firstName,
     lastName,
@@ -18,9 +23,13 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
     phone,
     interests,
   };
+  const navigate = useNavigate()
+  const [alertText, setAlertText] = useState('');
+  const [alertType, setAlertType] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
-  const [deleted, setDeleted] = useState(false);
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
@@ -54,22 +63,45 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
         console.log(error);
       });
   };
+  
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalIsOpen(false)
+  }
 
   const deleteHandler = (e) => {
     axios
       .delete(`http://localhost:8000/api/v1/sandbox/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
-      })
+      });
+    setShowAlert(true);
+    setAlertText('Delete successful!');
+    setAlertType('success');
+    closeModal(true)
+    
+    setTimeout(() => {
+        window.location.reload();
+      }, 2000)
       .catch((error) => {
         console.log(error);
+        setShowAlert(true);
+        setAlertText('There was an error. Please try again...');
+        setAlertType('danger');
       });
-    window.location.reload();
+
+    
   };
   
   return (
     <>
       <JobWrapper>
+        {showAlert && (
+          <div className={`alert alert-${alertType}`}>{alertText}</div>
+        )}
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
           <div className='info'>
@@ -111,10 +143,59 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
                     type='button'
                     className='btn delete-btn'
                     name={_id}
-                    onClick={deleteHandler}
+                    onClick={openModal}
                   >
                     Delete
                   </button>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    style={{
+                      overlay: {
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(140, 141, 143, .75)',
+                      },
+                      content: {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        border: '1px solid #ccc',
+                        background: '#fff',
+                        overflow: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        borderRadius: '5px',
+                        outline: 'none',
+                        padding: '20px',
+                        width: '500px',
+                        height: '250px',
+                      },
+                    }}
+                  >
+                    <h3 className='modal-header'>
+                      🚨 Heads up! Are you sure you want to{' '}
+                      <span className='r2b-red'>permanently </span>
+                      delete this record?
+                    </h3>
+                    <div className='confirm-btns'>
+                      <button
+                        onClick={closeModal}
+                        className='btn-success height'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={deleteHandler}
+                        className='btn-danger height'
+                        name={_id}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </Modal>
                 </>
               )}
 
@@ -122,7 +203,7 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
                 <>
                   <br />
                   <div className='info'>
-                    <h3>Edit User</h3>
+                    <h3>Edit Record</h3>
                     <p className='instructions'>
                       Update <span className='emphasis'>only</span> the fields
                       that you wish to change.

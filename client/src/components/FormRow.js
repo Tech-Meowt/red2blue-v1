@@ -1,4 +1,3 @@
-
 const FormRow = ({ placeholder, type, name, value, handleChange, labelText }) => {
   return (
     <div className='form-row'>
