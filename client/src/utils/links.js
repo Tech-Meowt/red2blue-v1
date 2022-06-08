@@ -6,7 +6,7 @@ import { SiCodesandbox } from 'react-icons/si'
 const links = [
   { id: 1, text: 'home', path: '/', icon: <AiOutlineHome /> },
   { id: 2, text: 'databases', path: '/databases', icon: <FiDatabase /> },
-  { id: 3, text: 'profile', path: 'profile', icon: <FaRegUserCircle /> },
+  { id: 3, text: 'profile', path: '/profile', icon: <FaRegUserCircle /> },
 ];
 
 export default links

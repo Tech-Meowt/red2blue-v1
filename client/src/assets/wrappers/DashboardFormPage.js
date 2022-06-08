@@ -3,10 +3,14 @@ import styled from 'styled-components'
 const Wrapper = styled.section`
   border-radius: var(--borderRadius);
   width: 100%;
+  height: 100%;
   padding: 3rem 2rem 4rem;
   box-shadow: var(--shadow-2);
   h3 {
     margin-top: 0;
+  }
+  .align-container {
+    padding: 0 !important;
   }
   .form {
     margin: 0;
@@ -39,15 +43,64 @@ const Wrapper = styled.section`
     }
   }
   .no-edit {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 0 !important;
+    font-weight: bold !important;
+    margin: 0;
+    margin-top: 1rem;
+  }
+  .no-top {
+    margin: 0 !important;
+  }
+  .no-cursor {
+    color: transparent;
   }
   .clear-btn {
     background: var(--r2b-blue);
   }
   .clear-btn:hover {
     background: var(--black);
+  }
+  .popular-articles-container {
+    text-align: center;
+  }
+  .article-container {
+    text-align: left;
+    position: relative;
+  }
+  .more-btn {
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    text-align: right;
+  }
+  .more-icon {
+    margin-top: 1.3rem;
+  }
+  .more-text {
+    color: var(--r2b-blue);
+    position: absolute;
+    display: inline-flex;
+    bottom: 0;
+  }
+  .link:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--r2b-red);
+    text-decoration-thickness: .15rem;
+  }
+  .edit-btn,
+  .delete-btn {
+    letter-spacing: var(--letterSpacing);
+    cursor: pointer;
+    height: 30px;
+  }
+  .edit-btn {
+    color: var(--green-dark);
+    background: var(--green-light);
+    margin-right: 0.5rem;
+  }
+  .delete-btn {
+    color: var(--red-dark);
+    background: var(--red-light);
   }
   @media (min-width: 992px) {
     .form-center {

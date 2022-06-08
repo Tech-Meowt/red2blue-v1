@@ -22,6 +22,12 @@ import SearchBar from './SearchBar'
 import SearchSelect from './SearchSelect'
 import SandboxSearchBar from './SandboxSearchBar'
 import StateSearchSelect from './StateSearchSelect'
+import HelpBanner from './HelpBanner'
+import HelpPopularArticles from './HelpPopularArticles'
+import HelpArticles from './HelpArticles'
+import CustomNavbar from './CustomNavbar'
+import ScrollButtonUp from './ScrollButtonUp'
+import ScrollButtonDown from './ScrollButtonDown'
 export {
   Logo,
   FormRow,
@@ -46,5 +52,11 @@ export {
   SearchBar,
   SearchSelect,
   SandboxSearchBar,
-  StateSearchSelect
+  StateSearchSelect,
+  HelpBanner,
+  HelpPopularArticles,
+  HelpArticles,
+  CustomNavbar,
+  ScrollButtonUp,
+  ScrollButtonDown,
 };

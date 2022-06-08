@@ -1,12 +1,13 @@
-import Wrapper from '../assets/wrappers/Navbar'
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
-import { useAppContext } from '../context/appContext'
-import { useState } from 'react'
-const Navbar = () => {
-  const [showLogout, setShowLogout] = useState(false)
-  const { toggleSidebar, logoutUser, user } = useAppContext()
+import Wrapper from '../assets/wrappers/Navbar';
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
+import { useAppContext } from '../context/appContext';
+import { useState } from 'react';
 
-  const str = user.firstName
+const CustomNavbar = ({title}) => {
+  const [showLogout, setShowLogout] = useState(false);
+  const { toggleSidebar, logoutUser, user } = useAppContext();
+
+  const str = user.firstName;
 
   return (
     <Wrapper>
@@ -15,7 +16,7 @@ const Navbar = () => {
           <FaAlignLeft className='toggle-btn' />
         </div>
 
-        <h1 className='logo-text r2b-blue'>Dashboard</h1>
+        <h1 className='logo-text r2b-red'>{title}</h1>
 
         <div className='btn-container'>
           <button
@@ -36,6 +37,6 @@ const Navbar = () => {
       </div>
     </Wrapper>
   );
-}
+};
 
-export default Navbar
+export default CustomNavbar;

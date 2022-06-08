@@ -66,7 +66,7 @@ export default function AllSandbox() {
 
       <SandboxWrapper>
         <div className='actions'>
-          <Link to={'/add-sandbox'}>
+          <Link to={'/sandbox/add'}>
             <button className='btn edit-btn actions'>Add New Record</button>
           </Link>
         </div>
