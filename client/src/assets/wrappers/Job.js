@@ -82,7 +82,6 @@ const JobWrapper = styled.article`
 }
   .content-centered {
     grid-template-columns: 1fr 1fr 1fr !important;
-    column-gap: 20rem !important;
   }
   .content-center {
     display: grid;

@@ -10,7 +10,7 @@ const Wrapper = styled.section`
   }
   .border {
     background: rgb(0,131,202);
-    border-bottom: .25rem solid var(--r2b-blue);
+    border-bottom: 2rem solid var(--r2b-blue);
     margin: 4rem 0;
   }
   }
