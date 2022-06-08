@@ -26,6 +26,8 @@ import HelpBanner from './HelpBanner'
 import HelpPopularArticles from './HelpPopularArticles'
 import HelpArticles from './HelpArticles'
 import CustomNavbar from './CustomNavbar'
+import ScrollButtonUp from './ScrollButtonUp'
+import ScrollButtonDown from './ScrollButtonDown'
 export {
   Logo,
   FormRow,
@@ -55,4 +57,6 @@ export {
   HelpPopularArticles,
   HelpArticles,
   CustomNavbar,
+  ScrollButtonUp,
+  ScrollButtonDown,
 };

@@ -3,10 +3,14 @@ import styled from 'styled-components'
 const Wrapper = styled.section`
   border-radius: var(--borderRadius);
   width: 100%;
+  height: 100%;
   padding: 3rem 2rem 4rem;
   box-shadow: var(--shadow-2);
   h3 {
     margin-top: 0;
+  }
+  .align-container {
+    padding: 0 !important;
   }
   .form {
     margin: 0;
@@ -60,9 +64,28 @@ const Wrapper = styled.section`
   }
   .article-container {
     text-align: left;
+    position: relative;
   }
   .more-btn {
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
     text-align: right;
+  }
+  .more-icon {
+    margin-top: 1.3rem;
+  }
+  .more-text {
+    color: var(--r2b-blue);
+    position: absolute;
+    display: inline-flex;
+    bottom: 0;
+  }
+  .link:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--r2b-red);
+    text-decoration-thickness: .15rem;
   }
   .edit-btn,
   .delete-btn {

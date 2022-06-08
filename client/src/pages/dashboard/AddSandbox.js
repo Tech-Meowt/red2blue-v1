@@ -2,7 +2,7 @@ import { FormRow } from '../../components';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Banner } from '../../components';
@@ -30,6 +30,12 @@ export default function AddSandbox() {
 
   const createRecord = (e) => {
     e.preventDefault();
+
+    if (!sandboxInfo.firstName || !sandboxInfo.lastName || !sandboxInfo.email || !sandboxInfo.street || !sandboxInfo.city || !sandboxInfo.state || !sandboxInfo.zip || !sandboxInfo.phone) {
+      setShowAlert(true);
+      setAlertText('Please fill out all fields');
+      setAlertType('danger');
+    }
 
     axios
       .post('http://localhost:8000/api/v1/sandbox/allSandbox', sandboxInfo)
