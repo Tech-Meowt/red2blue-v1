@@ -143,6 +143,10 @@ ul {
   padding: 0;
 }
 
+select:invalid {
+  color: #757575;
+}
+
 .img {
   width: 100%;
   display: block;
@@ -173,6 +177,16 @@ ul {
 
 .space-largest {
   margin-top: 3rem;
+}
+
+.border, .border-state {
+  border: 1px solid var(--r2b-red);
+  border-radius: var(--borderRadius);
+  transition: var(--transition);
+}
+
+.border:hover, .border-state:hover {
+  box-shadow: var(--shadow-4);
 }
 
 /* buttons */
