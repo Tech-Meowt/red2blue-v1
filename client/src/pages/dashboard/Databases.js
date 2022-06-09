@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { StatsContainer, Loading, ChartsContainer } from '../../components';
 import axios from 'axios';
 
 const Databases = () => {

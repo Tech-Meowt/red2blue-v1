@@ -5,14 +5,7 @@ import Wrapper from '../assets/wrappers/BigSidebar'
 
 const BigSidebar = () => {
   const { showSidebar } = useAppContext()
-
-  const reloadPage = () => {
-    if ('path' === '/user-accounts') {
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000)
-    }
-  }
+  
   return (
     <Wrapper>
       <div

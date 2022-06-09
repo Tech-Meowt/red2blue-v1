@@ -1,15 +1,25 @@
 import { Link } from 'react-router-dom';
-import JobWrapper from '../assets/wrappers/Job';
+import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
 import { useAppContext } from '../context/appContext';
-import { FiDatabase } from 'react-icons/fi'
-import { MdOutlineManageAccounts } from 'react-icons/md'
-import { GrUserAdmin } from 'react-icons/gr'
-import { RiAdminLine } from 'react-icons/ri'
-import { AiOutlineCheck } from 'react-icons/ai'
-const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approved, isActive, role })=> {
+import { FiDatabase } from 'react-icons/fi';
+import { MdOutlineManageAccounts } from 'react-icons/md';
+import { GrUserAdmin } from 'react-icons/gr';
+import { RiAdminLine } from 'react-icons/ri';
+import { AiOutlineCheck } from 'react-icons/ai';
+const DbUser = ({
+  _id,
+  firstName,
+  lastName,
+  email,
+  usersDb,
+  volunteersDb,
+  approved,
+  isActive,
+  role,
+}) => {
   const initialState = {
     firstName,
     lastName,
@@ -34,12 +44,10 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
     role,
   });
 
-
-
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(!clicked)
+    setClicked(!clicked);
   };
 
   const handleChange = (e) => {
@@ -72,7 +80,7 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
 
   return (
     <>
-      <JobWrapper>
+      <OneRecordWrapper>
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
           <div className='info'>
@@ -86,7 +94,8 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
           <div className='content-center'>
             <div>
               <FiDatabase className='icon' />
-              User Accounts Database: <span className='status'>{usersDb ? 'access' : 'no access'}</span>
+              User Accounts Database:{' '}
+              <span className='status'>{usersDb ? 'access' : 'no access'}</span>
             </div>
             <div>
               <FiDatabase className='icon' />
@@ -97,11 +106,17 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
             </div>
             <div>
               <MdOutlineManageAccounts className='icon' />
-              Account Status: <span className='status'>{isActive ? 'active' : 'deactivated'}</span>
+              Account Status:{' '}
+              <span className='status'>
+                {isActive ? 'active' : 'deactivated'}
+              </span>
             </div>
             <div>
               <AiOutlineCheck className='icon' />
-              Approval Status: <span className='status'>{approved ? 'approved' : 'waiting on approval'}</span>
+              Approval Status:{' '}
+              <span className='status'>
+                {approved ? 'approved' : 'waiting on approval'}
+              </span>
             </div>
             <div>
               <RiAdminLine className='icon' />
@@ -269,7 +284,7 @@ const DbUser = ({ _id, firstName, lastName, email, usersDb, volunteersDb, approv
             </div>
           </footer>
         </div>
-      </JobWrapper>
+      </OneRecordWrapper>
     </>
   );
 };

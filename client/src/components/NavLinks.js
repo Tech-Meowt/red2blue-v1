@@ -11,10 +11,6 @@ const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext()
   const [role, setRole] = useState(user.role)
 
-  const handleClick = () => {
-
-  }
-
   return (
     <div className='nav-links'>
       {links.map((link) => {
