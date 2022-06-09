@@ -5,7 +5,6 @@ const OneRecordWrapper = styled.article`
   display: grid;
   grid-template-rows: 1fr auto;
   box-shadow: var(--shadow-2);
-
   header {
     padding: 1rem 1.5rem;
     display: grid;
@@ -81,7 +80,8 @@ const OneRecordWrapper = styled.article`
     padding: 1rem 0 1rem 1rem;
   }
   .content-centered {
-    grid-template-columns: 1fr 1fr 1fr !important;
+    grid-template-columns: 1fr 1fr 1fr 1fr !important;
+    column-gap: 4rem !important;
   }
   .content-center {
     display: grid;

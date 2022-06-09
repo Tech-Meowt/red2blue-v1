@@ -19,7 +19,7 @@ export default function AllDbUsers() {
       .catch((error) => {
         console.log(error);
       });
-    
+
     axios
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
@@ -28,20 +28,19 @@ export default function AllDbUsers() {
       .catch((error) => {
         console.log(error);
       });
-    
   }, []);
 
   const toggleSearch = (e) => {
     e.preventDefault();
 
     setOpened(!opened);
-  }
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
 
-    setValues({ ...values, [e.target.name]: e.target.value })
-  }
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   const updateUser = (id) => {
     axios
@@ -58,11 +57,10 @@ export default function AllDbUsers() {
   return (
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
-      {!opened && (
-        <button className='btn' onClick={toggleSearch}>
-          Search
-        </button>
-      )}
+
+      <button className='btn' onClick={toggleSearch}>
+        {!opened ? 'Search' : 'Close'}
+      </button>
 
       {opened && (
         <>
@@ -126,9 +124,6 @@ export default function AllDbUsers() {
               />
             </div>
           </FilterWrapper>
-          <button className='btn' onClick={toggleSearch}>
-            Close
-          </button>
         </>
       )}
 

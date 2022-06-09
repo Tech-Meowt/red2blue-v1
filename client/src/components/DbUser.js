@@ -9,6 +9,8 @@ import { MdOutlineManageAccounts } from 'react-icons/md';
 import { GrUserAdmin } from 'react-icons/gr';
 import { RiAdminLine } from 'react-icons/ri';
 import { AiOutlineCheck } from 'react-icons/ai';
+import Modal from 'react-modal';
+
 const DbUser = ({
   _id,
   firstName,
@@ -30,8 +32,12 @@ const DbUser = ({
     approved,
     role,
   };
+  const [alertText, setAlertText] = useState('');
+  const [alertType, setAlertType] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [newValues, setNewValues] = useState({
     firstName,
@@ -44,6 +50,10 @@ const DbUser = ({
     role,
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
+
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
@@ -52,6 +62,14 @@ const DbUser = ({
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   const updateUser = (_id) => {
@@ -71,16 +89,28 @@ const DbUser = ({
       .delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
       });
-    window.location.reload();
+    setShowAlert(true);
+    setAlertText('Delete successful!');
+    setAlertType('success');
+    closeModal(true);
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000).catch((error) => {
+      console.log(error);
+      setShowAlert(true);
+      setAlertText('There was an error. Please try again...');
+      setAlertType('danger');
+    });
   };
 
   return (
     <>
       <OneRecordWrapper>
+        {showAlert && (
+          <div className={`alert alert-${alertType}`}>{alertText}</div>
+        )}
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
           <div className='info'>
@@ -135,10 +165,59 @@ const DbUser = ({
                     type='button'
                     className='btn delete-btn'
                     name={_id}
-                    onClick={deleteHandler}
+                    onClick={openModal}
                   >
                     Delete
                   </button>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    style={{
+                      overlay: {
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(140, 141, 143, .75)',
+                      },
+                      content: {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        border: '1px solid #ccc',
+                        background: '#fff',
+                        overflow: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        borderRadius: '5px',
+                        outline: 'none',
+                        padding: '20px',
+                        width: '500px',
+                        height: '250px',
+                      },
+                    }}
+                  >
+                    <h3 className='modal-header'>
+                      🚨 Heads up! Are you sure you want to{' '}
+                      <span className='r2b-red'>permanently </span>
+                      delete this record?
+                    </h3>
+                    <div className='confirm-btns'>
+                      <button
+                        onClick={closeModal}
+                        className='btn-success height'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={deleteHandler}
+                        className='btn-danger height'
+                        name={_id}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </Modal>
                 </>
               )}
 
@@ -275,9 +354,62 @@ const DbUser = ({
                     <button type='submit' className='btn edit-btn'>
                       Submit
                     </button>
-                    <button type='button' className='btn delete-btn'>
+                    <button
+                      type='button'
+                      className='btn delete-btn'
+                      onClick={openModal}
+                    >
                       Delete
                     </button>
+                    <Modal
+                      isOpen={modalIsOpen}
+                      style={{
+                        overlay: {
+                          position: 'fixed',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          backgroundColor: 'rgba(140, 141, 143, .75)',
+                        },
+                        content: {
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          border: '1px solid #ccc',
+                          background: '#fff',
+                          overflow: 'auto',
+                          WebkitOverflowScrolling: 'touch',
+                          borderRadius: '5px',
+                          outline: 'none',
+                          padding: '20px',
+                          width: '500px',
+                          height: '250px',
+                        },
+                      }}
+                    >
+                      <h3 className='modal-header'>
+                        🚨 Heads up! Are you sure you want to{' '}
+                        <span className='r2b-red'>permanently </span>
+                        delete this record?
+                      </h3>
+                      <div className='confirm-btns'>
+                        <button
+                          onClick={closeModal}
+                          className='btn-success height'
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          onClick={deleteHandler}
+                          className='btn-danger height'
+                          name={_id}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </Modal>
                   </form>
                 </>
               )}

@@ -5,15 +5,21 @@ import addRecord from '../../assets/images/add-record.gif';
 import editRecord from '../../assets/images/edit-record.gif';
 import pageScroll from '../../assets/images/scroll.gif';
 import deleteRecord from '../../assets/images/delete-record.gif';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { ScrollButtonUp, ScrollButtonDown } from '../../components';
 
 export default function HelpGettingStarted() {
+  const [targetId, setTargetId] = useState('scroll-up');
+  const [targetIdDown, setTargetIdDown] = useState('scroll-down');
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
   return (
     <>
+      <div id='scroll-up'></div>
+      <ScrollButtonUp targetId={targetId} />
       <Wrapper>
         <h3 className='r2b-blue'>Editing your profile</h3>
         <h5>
@@ -179,6 +185,8 @@ export default function HelpGettingStarted() {
           />
         </div>
       </Wrapper>
+      <ScrollButtonDown targetIdDown={targetIdDown} />
+      <div id='scroll-down'></div>
     </>
   );
 }

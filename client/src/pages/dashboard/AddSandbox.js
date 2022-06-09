@@ -22,6 +22,10 @@ export default function AddSandbox({ label }) {
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, []);
 
   const handleChange = (e) => {
     setSandboxInfo((data) => ({ ...data, [e.target.name]: e.target.value }));

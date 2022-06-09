@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -34,7 +34,6 @@ const OneSandbox = ({
     phone,
     interests,
   };
-  const navigate = useNavigate();
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
@@ -93,7 +92,6 @@ const OneSandbox = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
