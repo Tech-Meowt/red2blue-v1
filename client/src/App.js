@@ -1,20 +1,22 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Register, Landing, Error, ProtectedRoute } from './pages'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Register, Landing, Error, ProtectedRoute } from './pages';
 import {
-  AllJobs,
   Profile,
   SharedLayout,
-  Stats,
-  AddJob,
+  DashboardHome,
   UserAccounts,
   AddSandbox,
-  EditUser,
   Databases,
   Help,
   Sandbox,
   SandboxHome,
   HelpGettingStarted,
-} from './pages/dashboard'
+  SharedLayoutDatabases,
+  SharedLayoutProfile,
+  SharedLayoutUserAccounts,
+  SharedLayoutHelp,
+  SharedLayoutSandbox,
+} from './pages/dashboard';
 
 function App() {
   return (
@@ -28,19 +30,71 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Stats />} />
-          <Route path='all-jobs' element={<AllJobs />} />
-          <Route path='edit-user' element={<EditUser />} />
-          <Route path='profile' element={<Profile />} />
-          <Route path='user-accounts' element={<UserAccounts />} />
-          <Route path='sandbox/add' element={<AddSandbox />} />
-          <Route path='databases' element={<Databases />} />
-          <Route path='help' element={<Help />} />
-
-          <Route path='sandbox' element={<Sandbox />} />
-          <Route path='sandbox/home' element={<SandboxHome />} />
+          <Route index element={<DashboardHome />} />
         </Route>
-        <Route path='help/getting-started' element={<HelpGettingStarted />} />
+        {/* Databases */}
+        <Route
+          path='/databases'
+          element={
+            <ProtectedRoute>
+              <SharedLayoutDatabases />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Databases />} />
+        </Route>
+        {/* Profile */}
+        <Route
+          path='/profile'
+          element={
+            <ProtectedRoute>
+              <SharedLayoutProfile />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Profile />} />
+        </Route>
+        {/* User Accounts Database */}
+        <Route
+          path='/user-accounts'
+          element={
+            <ProtectedRoute>
+              <SharedLayoutUserAccounts />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<UserAccounts />} />
+        </Route>
+        {/* Help */}
+        <Route
+          path='/help'
+          element={
+            <ProtectedRoute>
+              <SharedLayoutHelp />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Help />} />
+          <Route
+            path='/help/getting-started'
+            element={<HelpGettingStarted />}
+          />
+        </Route>
+        {/* Sandbox */}
+        <Route
+          path='/sandbox'
+          element={
+            <ProtectedRoute>
+              <SharedLayoutSandbox />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Sandbox />} />
+          <Route path='/sandbox/home' element={<SandboxHome />} />
+
+          <Route path='/sandbox/add' element={<AddSandbox />} />
+        </Route>
+        {/* Unprotected Routes */}
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
         <Route path='*' element={<Error />} />
@@ -49,4 +103,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

@@ -197,7 +197,7 @@ const AppProvider = ({ children }) => {
   };
 
   const adminUpdateUser = async () => {
-    dispatch({ type: ADMIN_UPDATE_USER_BEGIN })
+    dispatch({ type: ADMIN_UPDATE_USER_BEGIN });
 
     try {
       const {
@@ -209,7 +209,7 @@ const AppProvider = ({ children }) => {
         volunteersDb,
         isActive,
         role,
-        _id
+        _id,
       } = state;
 
       await axios.patch(`/auth/${_id}`, {
@@ -222,16 +222,15 @@ const AppProvider = ({ children }) => {
         isActive,
         role,
       });
-      dispatch({ type: ADMIN_UPDATE_USER_SUCCESS })
+      dispatch({ type: ADMIN_UPDATE_USER_SUCCESS });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
         type: ADMIN_UPDATE_USER_ERROR,
-        payload: { msg: error.response.data.msg }
+        payload: { msg: error.response.data.msg },
       });
-        
     }
-  }
+  };
 
   const handleChange = ({ name, value }) => {
     dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
@@ -243,31 +242,26 @@ const AppProvider = ({ children }) => {
   const createDbUser = async (newUser, alertText) => {
     dispatch({ type: CREATE_USER_BEGIN });
     try {
-      const { data } = await axios.post(
-        `/api/v1/auth/register`,
-        newUser
-      )
+      const { data } = await axios.post(`/api/v1/auth/register`, newUser);
       dispatch({
         type: CREATE_USER_SUCCESS,
         payload: { alertText },
-      })
+      });
     } catch (error) {
       dispatch({
         type: CREATE_USER_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
-    clearAlert()
-  }
+    clearAlert();
+  };
 
   const getAllDbUsers = async () => {
-    dispatch({ type: GET_USERS_BEGIN })
+    dispatch({ type: GET_USERS_BEGIN });
     try {
-      const { data } = await axios.get('/user')
-    } catch (error) {
-      
-    }
-  }
+      const { data } = await axios.get('/user');
+    } catch (error) {}
+  };
 
   const createJob = async () => {
     dispatch({ type: CREATE_JOB_BEGIN });
@@ -317,7 +311,6 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-
   const setEditJob = (id) => {
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
   };
@@ -325,7 +318,16 @@ const AppProvider = ({ children }) => {
     dispatch({ type: EDIT_JOB_BEGIN });
 
     try {
-      const { name, email, password, approved, usersDb, volunteersDb, isActive, role } = state;
+      const {
+        name,
+        email,
+        password,
+        approved,
+        usersDb,
+        volunteersDb,
+        isActive,
+        role,
+      } = state;
       await axios.patch(`/auth/${state.editJobId}`, {
         name,
         email,
@@ -356,14 +358,14 @@ const AppProvider = ({ children }) => {
       logoutUser();
     }
   };
-  const showStats = async () => {
+  const showDashboardHome = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
     try {
       const { data } = await authFetch('/jobs/stats');
       dispatch({
         type: SHOW_STATS_SUCCESS,
         payload: {
-          stats: data.defaultStats,
+          stats: data.defaultDashboardHome,
           monthlyApplications: data.monthlyApplications,
         },
       });
@@ -394,7 +396,7 @@ const AppProvider = ({ children }) => {
         setEditJob,
         deleteJob,
         editJob,
-        showStats,
+        showDashboardHome,
         clearFilters,
         changePage,
         createDbUser,

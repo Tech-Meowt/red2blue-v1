@@ -2,9 +2,9 @@ import { FormRow } from '.';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox } from '../components';
+import { OneSandbox } from '.';
 
-const StateSearchSelect = ({
+const StateSearchSelectWithClear = ({
   placeholder,
   data,
   getId,
@@ -20,6 +20,7 @@ const StateSearchSelect = ({
   zip,
   phone,
   interests,
+  label,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -54,7 +55,7 @@ const StateSearchSelect = ({
       <SearchSelectWrapper>
         <form>
           <div className='form-center form-row'>
-            <label htmlFor='wordEntered'>Filter by state</label>
+            <label htmlFor='wordEntered'>{label}</label>
 
             <select
               name='wordEntered'
@@ -119,6 +120,7 @@ const StateSearchSelect = ({
               <option value='WI'>WI</option>
               <option value='WY'>WY</option>
             </select>
+
             <button className='btn btn-block btn-danger' onClick={handleClear}>
               clear
             </button>
@@ -165,4 +167,4 @@ const StateSearchSelect = ({
   );
 };
 
-export default StateSearchSelect;
+export default StateSearchSelectWithClear;

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { StatsContainer, Loading, ChartsContainer } from '../../components';
 import axios from 'axios';
 
-const Stats = () => {
+const DashboardHome = () => {
   const [dogImgUrl, setDogImgUrl] = useState('');
 
   const getDog = async () => {
@@ -38,4 +37,4 @@ const Stats = () => {
   );
 };
 
-export default Stats;
+export default DashboardHome;

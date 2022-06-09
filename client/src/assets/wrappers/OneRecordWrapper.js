@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const JobWrapper = styled.article`
+const OneRecordWrapper = styled.article`
   border-radius: var(--borderRadius);
   display: grid;
   grid-template-rows: 1fr auto;
@@ -77,9 +77,9 @@ const JobWrapper = styled.article`
   .content {
     padding: 1rem 1.5rem;
   }
-.content-special {
-  padding: 1rem 0 1rem 1rem;
-}
+  .content-special {
+    padding: 1rem 0 1rem 1rem;
+  }
   .content-centered {
     grid-template-columns: 1fr 1fr 1fr !important;
   }
@@ -123,4 +123,4 @@ const JobWrapper = styled.article`
   }
 `;
 
-export default JobWrapper;
+export default OneRecordWrapper;

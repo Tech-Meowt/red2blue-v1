@@ -1,7 +1,7 @@
 export default function HelpBanner() {
   return (
     <div className='help-banner-container'>
-      <h1>🆘 Get Help</h1>
+      <h5>Search for a topic</h5>
       <pre>SEARCH BAR HERE</pre>
       <br />
       <hr />

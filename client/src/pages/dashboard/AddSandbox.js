@@ -4,10 +4,9 @@ import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import Select from 'react-select';
-import { Banner } from '../../components';
+import { Banner, StateSearchSelectWithoutClear } from '../../components';
 
-export default function AddSandbox() {
+export default function AddSandbox({ label }) {
   const [sandboxInfo, setSandboxInfo] = useState({
     firstName: '',
     lastName: '',
@@ -26,12 +25,21 @@ export default function AddSandbox() {
 
   const handleChange = (e) => {
     setSandboxInfo((data) => ({ ...data, [e.target.name]: e.target.value }));
-  }
+  };
 
   const createRecord = (e) => {
     e.preventDefault();
 
-    if (!sandboxInfo.firstName || !sandboxInfo.lastName || !sandboxInfo.email || !sandboxInfo.street || !sandboxInfo.city || !sandboxInfo.state || !sandboxInfo.zip || !sandboxInfo.phone) {
+    if (
+      !sandboxInfo.firstName ||
+      !sandboxInfo.lastName ||
+      !sandboxInfo.email ||
+      !sandboxInfo.street ||
+      !sandboxInfo.city ||
+      !sandboxInfo.state ||
+      !sandboxInfo.zip ||
+      !sandboxInfo.phone
+    ) {
       setShowAlert(true);
       setAlertText('Please fill out all fields');
       setAlertType('danger');
@@ -53,8 +61,8 @@ export default function AddSandbox() {
         });
         console.log(res.data.message);
         setShowAlert(true);
-        setAlertText('Record created! Redirecting...')
-        setAlertType('success')
+        setAlertText('Record created! Redirecting...');
+        setAlertType('success');
         setTimeout(() => {
           navigate('/sandbox/home');
         }, 3000);
@@ -62,8 +70,8 @@ export default function AddSandbox() {
       .catch((error) => {
         console.log(error);
         setShowAlert(true);
-        setAlertText('There was an error. Please try again...')
-        setAlertType('danger')
+        setAlertText('There was an error. Please try again...');
+        setAlertType('danger');
       });
   };
 
@@ -81,9 +89,8 @@ export default function AddSandbox() {
       phone: '',
       interests: '',
     });
-    navigate('/sandbox/home')
-
-  }
+    navigate('/sandbox/home');
+  };
 
   return (
     <>
@@ -100,7 +107,9 @@ export default function AddSandbox() {
           </p>
         </div>
         <div className='actions'>
-          <button className='btn delete-btn' onClick={handleCancel}>Cancel</button>
+          <button className='btn delete-btn' onClick={handleCancel}>
+            Cancel
+          </button>
           <h1></h1>
           <form onSubmit={createRecord}>
             <div className='content-centered content-center'>
@@ -144,9 +153,8 @@ export default function AddSandbox() {
                 value={sandboxInfo.city}
                 handleChange={handleChange}
               />
-
               <div className='form-row'>
-                <label htmlFor='state' classNAme='form-label'>
+                <label htmlFor='state' className='form-label'>
                   State
                 </label>
                 <select
@@ -155,8 +163,9 @@ export default function AddSandbox() {
                   name='state'
                   value={sandboxInfo.state}
                   onChange={handleChange}
+                  required
                 >
-                  <option hidden selected>
+                  <option value='' disabled selected hidden>
                     --Select an option--
                   </option>
                   <option value='AL'>AL</option>
@@ -212,7 +221,6 @@ export default function AddSandbox() {
                   <option value='WY'>WY</option>
                 </select>
               </div>
-
               <FormRow
                 placeholder='Enter zip code'
                 type='text'
