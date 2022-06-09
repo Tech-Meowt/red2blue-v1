@@ -133,7 +133,7 @@ const SearchSelect = ({
               value={wordEntered}
               onChange={handleUsersFilter}
             >
-              <option hidden selected>
+              <option value='' disabled selected hidden>
                 --Select an option--
               </option>
               <option value={value1}>{option1}</option>

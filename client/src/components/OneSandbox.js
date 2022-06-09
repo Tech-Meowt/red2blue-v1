@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import JobWrapper from '../assets/wrappers/Job';
+import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FormRow } from '../components';
@@ -7,11 +7,22 @@ import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
 import Modal from 'react-modal';
 
-const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip, phone, interests }) => {
+const OneSandbox = ({
+  _id,
+  firstName,
+  lastName,
+  email,
+  street,
+  city,
+  state,
+  zip,
+  phone,
+  interests,
+}) => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
-  
+
   const initialState = {
     firstName,
     lastName,
@@ -23,11 +34,11 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
     phone,
     interests,
   };
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
   const [newValues, setNewValues] = useState({
@@ -63,14 +74,14 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
         console.log(error);
       });
   };
-  
+
   const openModal = () => {
-    setModalIsOpen(true)
-  }
+    setModalIsOpen(true);
+  };
 
   const closeModal = () => {
-    setModalIsOpen(false)
-  }
+    setModalIsOpen(false);
+  };
 
   const deleteHandler = (e) => {
     axios
@@ -81,24 +92,21 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
-    closeModal(true)
-    
-    setTimeout(() => {
-        window.location.reload();
-      }, 2000)
-      .catch((error) => {
-        console.log(error);
-        setShowAlert(true);
-        setAlertText('There was an error. Please try again...');
-        setAlertType('danger');
-      });
+    closeModal(true);
 
-    
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000).catch((error) => {
+      console.log(error);
+      setShowAlert(true);
+      setAlertText('There was an error. Please try again...');
+      setAlertType('danger');
+    });
   };
-  
+
   return (
     <>
-      <JobWrapper>
+      <OneRecordWrapper>
         {showAlert && (
           <div className={`alert alert-${alertType}`}>{alertText}</div>
         )}
@@ -357,9 +365,9 @@ const OneSandbox = ({ _id, firstName, lastName, email, street, city, state, zip,
             </div>
           </footer>
         </div>
-      </JobWrapper>
+      </OneRecordWrapper>
     </>
   );
-}
+};
 
 export default OneSandbox;

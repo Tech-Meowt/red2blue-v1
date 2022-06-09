@@ -1,6 +1,4 @@
 import { FormRow } from '.';
-import SearchWrapper from '../assets/wrappers/SearchContainer';
-import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
 import { OneSandbox } from '../components';
@@ -88,21 +86,23 @@ const SandboxSearchBar = ({
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>
-                <OneSandbox
-                  firstName={value.firstName}
-                  lastName={value.lastName}
-                  email={value.email}
-                  street={value.street}
-                  city={value.city}
-                  state={value.state}
-                  zip={value.zip}
-                  phone={value.phone}
-                  interests={value.interests}
-                  getId={getId}
-                  _id={value._id}
-                  deleteHandler={deleteHandler}
-                  updateSandbox={updateSandbox}
-                />
+                <div className='space-larger'>
+                  <OneSandbox
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    street={value.street}
+                    city={value.city}
+                    state={value.state}
+                    zip={value.zip}
+                    phone={value.phone}
+                    interests={value.interests}
+                    getId={getId}
+                    _id={value._id}
+                    deleteHandler={deleteHandler}
+                    updateSandbox={updateSandbox}
+                  />
+                </div>
               </>
             );
           })}

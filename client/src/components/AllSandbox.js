@@ -3,7 +3,11 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import { OneSandbox, SandboxSearchBar, StateSearchSelect } from '../components';
+import {
+  OneSandbox,
+  SandboxSearchBar,
+  StateSearchSelectWithClear
+} from '../components';
 import { Link } from 'react-router-dom';
 
 export default function AllSandbox() {
@@ -60,7 +64,11 @@ export default function AllSandbox() {
 
       <FilterWrapper>
         <div className='form'>
-          <StateSearchSelect data={sandboxList} />
+          <StateSearchSelectWithClear
+            data={sandboxList}
+            label={'Filter by state'}
+            clearBtn={'show'}
+          />
         </div>
       </FilterWrapper>
 

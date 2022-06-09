@@ -3,7 +3,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
 import { useAppContext } from '../context/appContext';
 import { useState } from 'react';
 
-const CustomNavbar = ({title}) => {
+const DatabasesNavbar = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { toggleSidebar, logoutUser, user } = useAppContext();
 
@@ -16,7 +16,7 @@ const CustomNavbar = ({title}) => {
           <FaAlignLeft className='toggle-btn' />
         </div>
 
-        <h1 className='logo-text r2b-red'>{title}</h1>
+        <h1 className='logo-text r2b-blue'>📊 Your Databases</h1>
 
         <div className='btn-container'>
           <button
@@ -39,4 +39,4 @@ const CustomNavbar = ({title}) => {
   );
 };
 
-export default CustomNavbar;
+export default DatabasesNavbar;

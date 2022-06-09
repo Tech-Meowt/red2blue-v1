@@ -2,9 +2,9 @@ import { FormRow } from '.';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox } from '../components';
+import { OneSandbox } from '.';
 
-const StateSearchSelect = ({
+const StateSearchSelectWithClear = ({
   placeholder,
   data,
   getId,
@@ -20,6 +20,7 @@ const StateSearchSelect = ({
   zip,
   phone,
   interests,
+  label,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -54,7 +55,7 @@ const StateSearchSelect = ({
       <SearchSelectWrapper>
         <form>
           <div className='form-center form-row'>
-            <label htmlFor='wordEntered'>Filter by state</label>
+            <label htmlFor='wordEntered'>{label}</label>
 
             <select
               name='wordEntered'
@@ -62,8 +63,9 @@ const StateSearchSelect = ({
               className='form-select'
               value={wordEntered}
               onChange={handleUsersFilter}
+              required
             >
-              <option hidden selected>
+              <option value='' disabled selected hidden>
                 --Select an option--
               </option>
               <option value='AL'>AL</option>
@@ -118,6 +120,7 @@ const StateSearchSelect = ({
               <option value='WI'>WI</option>
               <option value='WY'>WY</option>
             </select>
+
             <button className='btn btn-block btn-danger' onClick={handleClear}>
               clear
             </button>
@@ -139,21 +142,23 @@ const StateSearchSelect = ({
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>
-                <OneSandbox
-                  firstName={value.firstName}
-                  lastName={value.lastName}
-                  email={value.email}
-                  street={value.street}
-                  city={value.city}
-                  state={value.state}
-                  zip={value.zip}
-                  phone={value.phone}
-                  interests={value.interests}
-                  getId={getId}
-                  _id={value._id}
-                  deleteHandler={deleteHandler}
-                  updateSandbox={updateSandbox}
-                />
+                <div className='space-larger border-state'>
+                  <OneSandbox
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    street={value.street}
+                    city={value.city}
+                    state={value.state}
+                    zip={value.zip}
+                    phone={value.phone}
+                    interests={value.interests}
+                    getId={getId}
+                    _id={value._id}
+                    deleteHandler={deleteHandler}
+                    updateSandbox={updateSandbox}
+                  />
+                </div>
               </>
             );
           })}
@@ -162,4 +167,4 @@ const StateSearchSelect = ({
   );
 };
 
-export default StateSearchSelect;
+export default StateSearchSelectWithClear;
