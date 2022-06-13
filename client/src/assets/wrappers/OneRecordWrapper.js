@@ -81,6 +81,7 @@ const OneRecordWrapper = styled.article`
   }
   .content-centered {
     grid-template-columns: 1fr 1fr 1fr !important;
+    column-gap: 10rem;
   }
   .content-center {
     display: grid;

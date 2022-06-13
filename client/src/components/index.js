@@ -27,6 +27,7 @@ import DatabasesNavbar from './DatabasesNavbar';
 import ProfileNavbar from './ProfileNavbar';
 import UserAccountsNavbar from './UserAccountsNavbar';
 import SandboxNavbar from './SandboxNavbar';
+import StateSelect from './StateSelect';
 export {
   Logo,
   FormRow,
@@ -55,6 +56,7 @@ export {
   ProfileNavbar,
   UserAccountsNavbar,
   SandboxNavbar,
+  StateSelect,
   ScrollButtonUp,
   ScrollButtonDown,
 };
