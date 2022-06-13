@@ -5,17 +5,9 @@ import { Banner, ScrollButtonDown, ScrollButtonUp } from '../../components';
 import { useState, useEffect } from 'react';
 
 export default function Sandbox() {
-  const[targetId, setTargetId] = useState('scroll-up');
-  const [targetIdDown, setTargetIdDown] = useState('scroll-down');
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [])
 
   return (
     <>
-      <div id='scroll-up'></div>
-      <ScrollButtonUp targetId={targetId} />
       <Banner />
       <div className='sandbox-div'>
         <h3>👋 Welcome to the sandbox!</h3>
@@ -38,8 +30,6 @@ export default function Sandbox() {
           <img src={enter} alt="green enter sign" />
         </Link>
       </div>
-      <ScrollButtonDown targetIdDown={targetIdDown} />
-      <div id='scroll-down'></div>
     </>
   );
 }

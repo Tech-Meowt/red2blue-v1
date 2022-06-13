@@ -131,7 +131,7 @@ const OneSandbox = ({
             </div>
             <div>
               <AiOutlinePhone className='icon' />
-              Phone: <span className='status'>{phone}</span>
+                Phone: <span className='status'>{phone}</span>
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />

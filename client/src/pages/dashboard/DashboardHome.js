@@ -1,19 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  ScrollButtonUp,
-  ScrollButtonDown,
-} from '../../components';
 
 const DashboardHome = () => {
   const [dogImgUrl, setDogImgUrl] = useState('');
-  const [targetId, setTargetId] = useState('scroll-up');
-  const [targetIdDown, setTargetIdDown] = useState('scroll-down');
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
-
+  
   const getDog = async () => {
     try {
       const dogPic = await axios.get('https://dog.ceo/api/breeds/image/random');
@@ -34,8 +24,6 @@ const DashboardHome = () => {
 
   return (
     <>
-      <div id='scroll-up'></div>
-      <ScrollButtonUp targetId={targetId} />
       <div className='dog-div'>
         <h3>Here are some dogs! 🐶</h3>
       </div>
@@ -43,8 +31,6 @@ const DashboardHome = () => {
       <div className='cat-div'>
         <h3>Coming soon... cats! 😼</h3>
       </div>
-      <ScrollButtonDown targetIdDown={targetIdDown} />
-      <div id='scroll-down'></div>
     </>
   );
 };

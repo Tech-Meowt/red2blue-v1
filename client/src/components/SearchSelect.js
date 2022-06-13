@@ -125,13 +125,13 @@ const SearchSelect = ({
         <form>
           <div className='form-center form-row'>
             <label htmlFor='wordEntered'>Filter by {query}</label>
-
             <select
               name='wordEntered'
               id='wordEntered'
               className='form-select'
               value={wordEntered}
               onChange={handleUsersFilter}
+              required
             >
               <option value='' disabled selected hidden>
                 --Select an option--

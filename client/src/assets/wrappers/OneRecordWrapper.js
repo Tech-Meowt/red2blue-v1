@@ -80,8 +80,7 @@ const OneRecordWrapper = styled.article`
     padding: 1rem 0 1rem 1rem;
   }
   .content-centered {
-    grid-template-columns: 1fr 1fr 1fr 1fr !important;
-    column-gap: 4rem !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
   }
   .content-center {
     display: grid;
