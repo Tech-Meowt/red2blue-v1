@@ -86,7 +86,7 @@ const SandboxSearchBar = ({
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>
-                <div className='space-larger'>
+                <div className='space-larger border-state'>
                   <OneSandbox
                     firstName={value.firstName}
                     lastName={value.lastName}

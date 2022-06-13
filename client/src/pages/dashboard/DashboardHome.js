@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const DashboardHome = () => {
   const [dogImgUrl, setDogImgUrl] = useState('');
-
+  
   const getDog = async () => {
     try {
       const dogPic = await axios.get('https://dog.ceo/api/breeds/image/random');
@@ -24,15 +24,13 @@ const DashboardHome = () => {
 
   return (
     <>
-      
-        <div className='dog-div'>
-          <h3>Here are some dogs! 🐶</h3>
-        </div>
-        <img src={dogImgUrl} alt='dog' className='img dog-img' />
-        <div className='cat-div'>
-          <h3>Coming soon... cats! 😼</h3>
-        </div>
-      
+      <div className='dog-div'>
+        <h3>Here are some dogs! 🐶</h3>
+      </div>
+      <img src={dogImgUrl} alt='dog' className='img dog-img' />
+      <div className='cat-div'>
+        <h3>Coming soon... cats! 😼</h3>
+      </div>
     </>
   );
 };
