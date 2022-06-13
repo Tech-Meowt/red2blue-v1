@@ -34,7 +34,7 @@ const Profile = () => {
       <form className='form' onSubmit={handleSubmit}>
         <h3>Profile</h3>
         {showAlert && <Alert />}
-        <div className='form-center'>
+        <div className='form-center extra-gap'>
           <FormRow
             type='text'
             labelText={'First name'}
@@ -72,7 +72,7 @@ const Profile = () => {
               className='form-input no-cursor'
             />
           </div>
-          <div className='btn-container'>
+          <div className='btn-container add-span'>
             <>
               <button
                 className='edit-btn btn'

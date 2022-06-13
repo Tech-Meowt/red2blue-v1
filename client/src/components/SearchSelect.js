@@ -125,13 +125,13 @@ const SearchSelect = ({
         <form>
           <div className='form-center form-row'>
             <label htmlFor='wordEntered'>Filter by {query}</label>
-
             <select
               name='wordEntered'
               id='wordEntered'
               className='form-select'
               value={wordEntered}
               onChange={handleUsersFilter}
+              required
             >
               <option value='' disabled selected hidden>
                 --Select an option--
@@ -161,20 +161,22 @@ const SearchSelect = ({
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>
-                <DbUser
-                  firstName={value.firstName}
-                  lastName={value.lastName}
-                  email={value.email}
-                  usersDb={value.usersDb}
-                  volunteersDb={value.volunteersDb}
-                  isActive={value.isActive}
-                  approved={value.approved}
-                  role={value.role}
-                  getId={getId}
-                  _id={value._id}
-                  deleteHandler={deleteHandler}
-                  updateUser={updateUser}
-                />
+                <div className='space-larger border-state'>
+                  <DbUser
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    usersDb={value.usersDb}
+                    volunteersDb={value.volunteersDb}
+                    isActive={value.isActive}
+                    approved={value.approved}
+                    role={value.role}
+                    getId={getId}
+                    _id={value._id}
+                    deleteHandler={deleteHandler}
+                    updateUser={updateUser}
+                  />
+                </div>
               </>
             );
           })}

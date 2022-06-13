@@ -53,6 +53,10 @@ const SearchSelectWrapper = styled.section`
     .form-center {
       grid-template-columns: 1fr 1fr 1fr;
     }
+    .main {
+      display: flex;
+      width: 25%;
+    }
     .btn-block {
       margin-top: 0;
     }
