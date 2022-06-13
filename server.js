@@ -22,6 +22,7 @@ import connectDB from './db/connect.js';
 import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobsRoutes.js';
 import sandboxRouter from './routes/sandboxRoutes.js';
+import phonebankingMasterRouter from './routes/phonebankingMasterRoutes.js'
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
@@ -45,6 +46,7 @@ app.use(cors());
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/sandbox', sandboxRouter);
+app.use('/api/v1/phonebankingMaster', phonebankingMasterRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 // only when ready to deploy

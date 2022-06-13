@@ -16,6 +16,7 @@ import {
   SharedLayoutUserAccounts,
   SharedLayoutHelp,
   SharedLayoutSandbox,
+  Phonebanking,
 } from './pages/dashboard';
 
 function App() {
@@ -42,6 +43,10 @@ function App() {
           }
         >
           <Route index element={<Databases />} />
+          <Route
+            path='/databases/phonebanking'
+            element={<Phonebanking />}
+          />
         </Route>
         {/* Profile */}
         <Route
