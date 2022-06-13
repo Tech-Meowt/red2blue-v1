@@ -13,6 +13,5 @@ const Wrapper = styled.section`
     border-bottom: 2rem solid var(--r2b-blue);
     margin: 4rem 0;
   }
-  }
 `;
 export default Wrapper;

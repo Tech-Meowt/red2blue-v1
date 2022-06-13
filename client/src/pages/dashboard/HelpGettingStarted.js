@@ -5,12 +5,8 @@ import addRecord from '../../assets/images/add-record.gif';
 import editRecord from '../../assets/images/edit-record.gif';
 import pageScroll from '../../assets/images/scroll.gif';
 import deleteRecord from '../../assets/images/delete-record.gif';
-import { useEffect } from 'react';
 
 export default function HelpGettingStarted() {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
 
   return (
     <>

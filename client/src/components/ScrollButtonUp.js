@@ -108,12 +108,12 @@ ScrollButtonUp.propTypes = {
 };
 
 ScrollButtonUp.defaultProps = {
-  behavior: 'auto',
-  buttonBackgroundColor: 'green',
-  buttonColor: 'white',
+  behavior: 'smooth',
+  buttonBackgroundColor: '#ed1c24',
+  buttonColor: '#fff',
   iconType: 'chevron-up',
   targetId: '',
-  scrollSpeed: '1s',
+  scrollSpeed: '0.5s',
   style: {},
 };
 
