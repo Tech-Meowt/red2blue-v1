@@ -67,24 +67,23 @@ export default function AllDbUsers() {
           <FilterWrapper>
             <SearchBar
               data={usersList}
-              searchText={'Search by first name, last name, or email'}
+              searchText={
+                'Search by first name, last name, email, role, account status, or approval status'
+              }
             />
           </FilterWrapper>
 
           <FilterWrapper>
             <div className='form'>
-
-                <SearchSelect
-                  data={usersList}
-                  word={'access'}
-                  query={'User Accounts database access'}
-                  value1={'access'}
-                  value2={'denied'}
-                  option1={'access'}
-                  option2={'denied'}
-                />
-
-              
+              <SearchSelect
+                data={usersList}
+                word={'access'}
+                query={'User Accounts database access'}
+                value1={'access'}
+                value2={'denied'}
+                option1={'access'}
+                option2={'denied'}
+              />
 
               <SearchSelect
                 data={usersList}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormRow, Alert, FormRowSelect } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
+import Helmet from 'react-helmet';
 
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } =
@@ -30,78 +31,81 @@ const Profile = () => {
   };
 
   return (
-    <Wrapper>
-      <form className='form' onSubmit={handleSubmit}>
-        <h3>Profile</h3>
-        {showAlert && <Alert />}
-        <div className='form-center extra-gap'>
-          <FormRow
-            type='text'
-            labelText={'First name'}
-            name='firstName'
-            value={firstName}
-            handleChange={(e) => setFirstName(e.target.value)}
-          />
-          <FormRow
-            type='text'
-            labelText={'Last name'}
-            name='lastName'
-            value={lastName}
-            handleChange={(e) => setLastName(e.target.value)}
-          />
-          <div className='form-row'>
-            <label htmlFor='email' className='form-label r2b-red'>
-              email*
-            </label>
-            <input
-              type='email'
-              value={email}
-              handleChange={(e) => setEmail(e.target.value)}
-              name='email'
-              className='form-input'
-            />
-          </div>
-          <div className='form-row'>
-            <label htmlFor='role' className='form-label r2b-red'>
-              role**
-            </label>
-            <input
+    <>
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
+      <Wrapper>
+        <form className='form' onSubmit={handleSubmit}>
+          <h3>Profile</h3>
+          {showAlert && <Alert />}
+          <div className='form-center extra-gap'>
+            <FormRow
               type='text'
-              placeholder={role}
-              name='role'
-              className='form-input no-cursor'
+              labelText={'First name'}
+              name='firstName'
+              value={firstName}
+              handleChange={(e) => setFirstName(e.target.value)}
             />
+            <FormRow
+              type='text'
+              labelText={'Last name'}
+              name='lastName'
+              value={lastName}
+              handleChange={(e) => setLastName(e.target.value)}
+            />
+            <div className='form-row'>
+              <label htmlFor='email' className='form-label r2b-red'>
+                email*
+              </label>
+              <input
+                type='email'
+                value={email}
+                handleChange={(e) => setEmail(e.target.value)}
+                name='email'
+                className='form-input'
+              />
+            </div>
+            <div className='form-row'>
+              <label htmlFor='role' className='form-label r2b-red'>
+                role**
+              </label>
+              <input
+                type='text'
+                placeholder={role}
+                name='role'
+                className='form-input no-cursor'
+              />
+            </div>
+              <>
+                <button
+                  className='edit-btn btn btn-block'
+                  type='submit'
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Please Wait...' : 'save changes'}
+                </button>
+                <button
+                  className='delete-btn btn'
+                  type='submit'
+                  disabled={isLoading}
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+              </>
           </div>
-          <div className='btn-container add-span'>
-            <>
-              <button
-                className='edit-btn btn'
-                type='submit'
-                disabled={isLoading}
-              >
-                {isLoading ? 'Please Wait...' : 'save changes'}
-              </button>
-              <button
-                className='delete-btn btn'
-                type='submit'
-                disabled={isLoading}
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </>
-          </div>
-        </div>
-      </form>
+        </form>
 
-      <p className='r2b-red no-edit'>
-        *If you edit your email address, make sure to log in with the new one.
-      </p>
-      <p className='r2b-red no-edit no-top'>
-        **Your role can't be edited. Please contact an admin if you think you
-        need different permissions.
-      </p>
-    </Wrapper>
+        <p className='r2b-red no-edit'>
+          *If you edit your email address, make sure to log in with the new one.
+        </p>
+        <p className='r2b-red no-edit no-top'>
+          **Your role can't be edited. Please contact an admin if you think you
+          need different permissions.
+        </p>
+      </Wrapper>
+    </>
   );
 };
 

@@ -20,6 +20,7 @@ const SearchBar = ({
   approved,
   isActive,
   role,
+  searchText,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -32,7 +33,10 @@ const SearchBar = ({
       return (
         value.firstName.toLowerCase().includes(searchWord.toLowerCase()),
         value.lastName.toLowerCase().includes(searchWord.toLowerCase()),
-        value.email.toLowerCase().includes(searchWord.toLowerCase())
+        value.email.toLowerCase().includes(searchWord.toLowerCase()),
+        value.role.toLowerCase().includes(searchWord.toLowerCase()),
+        value.isActive.toLowerCase().includes(searchWord.toLowerCase()),
+        value.approved.toLowerCase().includes(searchWord.toLowerCase())
       );
     });
 
@@ -59,12 +63,12 @@ const SearchBar = ({
         <form className='form'>
           <div className='form-row form-center '>
             <label htmlFor='wordEntered'>
-              Search by first name, last name, or email
+              {searchText}
             </label>
             <input
               className='form-input'
               type='text'
-              placeholder='Enter first name, last name, or email'
+              placeholder='Enter search term'
               value={wordEntered}
               onChange={handleFilter}
             />
