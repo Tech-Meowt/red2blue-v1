@@ -39,44 +39,16 @@ const Databases = () => {
               </div>
             ) : (
               <div>
-                <Link to={'/'}>
-                  <h5>Volunteers</h5>
+                <Link to={'/databases/volunteers'}>
+                  <h5>Volunteers | All</h5>
                 </Link>
               </div>
             )}
 
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/'}>
-                  <h5>Volunteers</h5>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <Link to={'/databases/volunteers-2017'}>
-                  <h5>Volunteers | 2017</h5>
-                </Link>
-              </div>
-            )}
-
-            {user.role === 'admin' ? (
-              <div>
-                <Link to={'/databases/volunteers-2017'}>
-                  <h5>Volunteers | 2017</h5>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | 2018</h5>
-                </Link>
-              </div>
-            )}
-
-            {user.role === 'admin' ? (
-              <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | 2018</h5>
+                <Link to={'/databases/volunteers'}>
+                  <h5>Volunteers | All</h5>
                 </Link>
               </div>
             ) : (
@@ -89,14 +61,16 @@ const Databases = () => {
 
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/'}>
+                <Link to={'/databases/volunteers-2017'}>
                   <h5>Volunteers | 2019</h5>
                 </Link>
               </div>
             ) : (
-              <Link to={'/'}>
-                <h5>Volunteers | 2020</h5>
-              </Link>
+              <div>
+                <Link to={'/'}>
+                  <h5>Volunteers | 2020</h5>
+                </Link>
+              </div>
             )}
 
             {user.role === 'admin' ? (
@@ -106,9 +80,11 @@ const Databases = () => {
                 </Link>
               </div>
             ) : (
-              <Link to={'/'}>
-                <h5>Volunteers | 2021</h5>
-              </Link>
+              <div>
+                <Link to={'/'}>
+                  <h5>Volunteers | 2021</h5>
+                </Link>
+              </div>
             )}
 
             {user.role === 'admin' ? (

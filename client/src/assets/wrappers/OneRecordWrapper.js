@@ -49,6 +49,9 @@ const OneRecordWrapper = styled.article`
   .interests {
     margin: 0 1.75rem;
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .instructions {
     color: black !important;
     font-size: 1.25rem;

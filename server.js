@@ -23,6 +23,7 @@ import authRouter from './routes/authRoutes.js';
 import jobsRouter from './routes/jobsRoutes.js';
 import sandboxRouter from './routes/sandboxRoutes.js';
 import volunteerRouter from './routes/volunteerRoutes.js';
+import eventRouter from './routes/eventRoutes.js'
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
@@ -47,6 +48,7 @@ app.use(cors());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/sandbox', sandboxRouter);
 app.use('/api/v1/volunteer', volunteerRouter);
+app.use('/api/v1/event', eventRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter);
 
 // only when ready to deploy

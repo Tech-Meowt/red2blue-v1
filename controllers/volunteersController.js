@@ -12,8 +12,6 @@ const create = async (req, res) => {
     state,
     zip,
     phone,
-    eventWithDate,
-    date,
   } = req.body;
   try {
     let volunteer = new Volunteer({
@@ -25,8 +23,6 @@ const create = async (req, res) => {
       state,
       zip,
       phone,
-      eventWithDate,
-      date,
     });
     let newVolunteer = await volunteer.save();
     res.status(200).json({
@@ -55,8 +51,6 @@ const updateVolunteer = async (req, res) => {
     state,
     zip,
     phone,
-    eventWithDate,
-    date,
   } = req.body;
 
   const record = await Volunteer.findOne({ _id: recordId });

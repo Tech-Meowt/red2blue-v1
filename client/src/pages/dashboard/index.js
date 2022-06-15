@@ -13,6 +13,8 @@ import SharedLayoutProfile from './SharedLayoutProfile';
 import SharedLayoutUserAccounts from './SharedLayoutUserAccounts';
 import SharedLayoutHelp from './SharedLayoutHelp';
 import SharedLayoutSandbox from './SharedLayoutSandbox';
+import Volunteers from './Volunteers';
+
 export {
   Profile,
   SharedLayout,
@@ -29,4 +31,5 @@ export {
   SharedLayoutUserAccounts,
   SharedLayoutHelp,
   SharedLayoutSandbox,
+  Volunteers,
 };

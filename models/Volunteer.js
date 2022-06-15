@@ -36,12 +36,6 @@ const VolunteerSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
-  eventWithDate: {
-    type: String,
-},
-  date: {
-    type: String,
-  },
 },
 { timestamps: true }
 );
