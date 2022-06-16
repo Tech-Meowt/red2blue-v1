@@ -16,6 +16,8 @@ import {
   SharedLayoutUserAccounts,
   SharedLayoutHelp,
   SharedLayoutSandbox,
+  Volunteers,
+  Events
 } from './pages/dashboard';
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
           }
         >
           <Route index element={<Databases />} />
+          <Route path='/databases/volunteers' element={<Volunteers />} />
+          <Route path='/databases/events' element={<Events />} />
         </Route>
         {/* Profile */}
         <Route

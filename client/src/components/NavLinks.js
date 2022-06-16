@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import links from '../utils/links';
 import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ import { SiCodesandbox } from 'react-icons/si';
 
 const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext()
-  const [role, setRole] = useState(user.role)
+  const role = user.role
 
   return (
     <div className='nav-links'>

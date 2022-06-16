@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Helmet from 'react-helmet';
 
 const DashboardHome = () => {
   const [dogImgUrl, setDogImgUrl] = useState('');
@@ -24,6 +25,9 @@ const DashboardHome = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <div className='dog-div'>
         <h3>Here are some dogs! 🐶</h3>
       </div>

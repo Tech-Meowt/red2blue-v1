@@ -26,7 +26,11 @@ const SearchSelect = ({
   option1,
   option2,
   value3,
-  option3
+  option3,
+  option4,
+  value4,
+  option5,
+  value5,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -40,12 +44,12 @@ const SearchSelect = ({
         let option = [true];
         let newFilter = data.filter((value) => option.includes(value.usersDb));
         setFilteredData(newFilter);
-        setNoResults(false)
+        setNoResults(false);
       } else {
         let option = [false];
         let newFilter = data.filter((value) => option.includes(value.usersDb));
         setFilteredData(newFilter);
-        setNoResults(false)
+        setNoResults(false);
       }
     } else if (query === 'Volunteers database access') {
       const searchWord = e.target.value;
@@ -70,16 +74,12 @@ const SearchSelect = ({
       setWordEntered(searchWord);
       if (searchWord === word) {
         let option = [true];
-        let newFilter = data.filter((value) =>
-          option.includes(value.isActive)
-        );
+        let newFilter = data.filter((value) => option.includes(value.isActive));
         setFilteredData(newFilter);
         setNoResults(false);
       } else {
         let option = [false];
-        let newFilter = data.filter((value) =>
-          option.includes(value.isActive)
-        );
+        let newFilter = data.filter((value) => option.includes(value.isActive));
         setFilteredData(newFilter);
         setNoResults(false);
       }
@@ -102,13 +102,11 @@ const SearchSelect = ({
       setWordEntered(searchWord);
       let option = searchWord;
       const newFilter = data.filter((value) => {
-        return (
-          value.role.toLowerCase().includes(searchWord.toLowerCase())
-        );
+        return value.role.toLowerCase().includes(searchWord.toLowerCase());
       });
-      setFilteredData(newFilter)
+      setFilteredData(newFilter);
       setNoResults(false);
-    }
+    } 
   };
 
   const handleClear = (e) => {
@@ -138,7 +136,7 @@ const SearchSelect = ({
               </option>
               <option value={value1}>{option1}</option>
               <option value={value2}>{option2}</option>
-              {query === 'role' && <option value={value3}>{option3}</option>}
+              {query === 'role' && (<option value={value3}>{option3}</option>)}
             </select>
             <button className='btn btn-block btn-danger' onClick={handleClear}>
               clear
