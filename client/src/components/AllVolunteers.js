@@ -14,8 +14,6 @@ import ReactPaginate from 'react-paginate';
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
-  const [eventData, setEventData] = useState([]);
   const [data, setData] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
@@ -45,18 +43,8 @@ export default function AllVolunteers() {
       .catch((error) => {
         console.log(error);
       });
+    
     getData();
-
-    axios.get('http://localhost:8000/api/v1/event')
-      .then((res) => {
-        setAllEvents(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    allEvents.map((event) => {
-      return <p key={event._id}>{event.eventName}</p>
-    })
 
   }, [offset]);
 

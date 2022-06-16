@@ -40,7 +40,7 @@ const Databases = () => {
             ) : (
               <div>
                 <Link to={'/databases/volunteers'}>
-                  <h5>Volunteers | All</h5>
+                  <h5>Volunteers | All Volunteers</h5>
                 </Link>
               </div>
             )}
@@ -48,41 +48,27 @@ const Databases = () => {
             {user.role === 'admin' ? (
               <div>
                 <Link to={'/databases/volunteers'}>
-                  <h5>Volunteers | All</h5>
+                  <h5>Volunteers | All Volunteers</h5>
                 </Link>
               </div>
             ) : (
               <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | 2019</h5>
+                <Link to={'/databases/events'}>
+                  <h5>Events | All Years</h5>
                 </Link>
               </div>
             )}
 
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/databases/volunteers-2017'}>
-                  <h5>Volunteers | 2019</h5>
+                <Link to={'/databases/events'}>
+                  <h5>Events | All Years</h5>
                 </Link>
               </div>
             ) : (
               <div>
                 <Link to={'/'}>
-                  <h5>Volunteers | 2020</h5>
-                </Link>
-              </div>
-            )}
-
-            {user.role === 'admin' ? (
-              <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | 2020</h5>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | 2021</h5>
+                  <h5>Events | 2021</h5>
                 </Link>
               </div>
             )}
@@ -90,19 +76,33 @@ const Databases = () => {
             {user.role === 'admin' ? (
               <div>
                 <Link to={'/'}>
-                  <h5>Volunteers | 2021</h5>
+                  <h5>Events | 2021</h5>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to={'/'}>
+                  <h5>Events | 2020</h5>
+                </Link>
+              </div>
+            )}
+
+            {user.role === 'admin' ? (
+              <div>
+                <Link to={'/'}>
+                  <h5>Events | 2020</h5>
                 </Link>
               </div>
             ) : (
               <Link to={'/'}>
-                <h5>Volunteers | 2022</h5>
+                <h5>Events | 2019</h5>
               </Link>
             )}
 
             {user.role === 'admin' ? (
               <div>
                 <Link to={'/'}>
-                  <h5>Volunteers | 2022</h5>
+                  <h5>Events | 2019</h5>
                 </Link>
               </div>
             ) : (

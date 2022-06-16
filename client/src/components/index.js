@@ -31,6 +31,8 @@ import StateSelect from './StateSelect';
 import AllVolunteers from './AllVolunteers';
 import OneVolunteer from './OneVolunteer';
 import SearchBarAllVols from './SearchBarAllVols';
+import AllEvents from './AllEvents';
+import OneEvent from './OneEvent';
 
 export {
   Logo,
@@ -64,6 +66,8 @@ export {
   AllVolunteers,
   OneVolunteer,
   SearchBarAllVols,
+  AllEvents,
+  OneEvent,
   ScrollButtonUp,
   ScrollButtonDown,
 };

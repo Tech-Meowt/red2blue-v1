@@ -232,6 +232,16 @@ select:invalid {
   font-size: 1.25rem;
   padding: 0.5rem 1.25rem;
 }
+.details-btn {
+  background: #f2e5ff;
+  color: #480071;
+  cursor: pointer;
+  border: none;
+}
+.details-btn:hover {
+  background: #480071;
+  color: #f2e5ff;
+}
 .btn-success {
   background: var(--green-light);
   color: var(--green-dark);

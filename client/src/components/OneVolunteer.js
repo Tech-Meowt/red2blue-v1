@@ -35,7 +35,6 @@ const OneVolunteer = ({
   const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleted, setDeleted] = useState(false);
-  const [getStreet, setGetStreet] = useState('')
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
