@@ -23,7 +23,8 @@ const Wrapper = styled.section`
   .form-row {
     margin-bottom: 0;
   }
-  .form-center, .extra-gap {
+  .form-center,
+  .extra-gap {
     display: grid;
     row-gap: 0.5rem;
   }
@@ -46,10 +47,6 @@ const Wrapper = styled.section`
     font-weight: bold !important;
     margin: 0;
     margin-top: 1rem;
-  }
-  .add-span {
-    grid-column: 1 / span 2;
-    width: 50%;
   }
   .no-top {
     margin: 0 !important;
@@ -89,7 +86,7 @@ const Wrapper = styled.section`
   .link:hover {
     text-decoration: underline;
     text-decoration-color: var(--r2b-red);
-    text-decoration-thickness: .15rem;
+    text-decoration-thickness: 0.15rem;
   }
   .edit-btn,
   .delete-btn {

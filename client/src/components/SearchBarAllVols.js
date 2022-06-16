@@ -1,12 +1,11 @@
-import { FormRow } from '.'
+import { FormRow } from '.';
 import SearchWrapper from '../assets/wrappers/SearchContainer';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { DbUser } from '../components'
+import { OneVolunteer } from '../components';
 
-const SearchBar = ({
-  placeholder,
+const SearchBarAllVols = ({
   data,
   getId,
   _id,
@@ -15,11 +14,11 @@ const SearchBar = ({
   firstName,
   lastName,
   email,
-  usersDb,
-  volunteersDb,
-  approved,
-  isActive,
-  role,
+  street,
+  city,
+  state,
+  zip,
+  phone,
   searchText,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
@@ -72,6 +71,7 @@ const SearchBar = ({
             </button>
           </div>
         </form>
+
         {filteredData.length == 0 && !noResults && (
           <h5>Found {filteredData.length} records</h5>
         )}
@@ -86,20 +86,20 @@ const SearchBar = ({
             return (
               <>
                 <div className='space-larger border-state'>
-                    <DbUser
-                      firstName={value.firstName}
-                      lastName={value.lastName}
-                      email={value.email}
-                      usersDb={value.usersDb}
-                      volunteersDb={value.volunteersDb}
-                      isActive={value.isActive}
-                      approved={value.approved}
-                      role={value.role}
-                      getId={getId}
-                      _id={value._id}
-                      deleteHandler={deleteHandler}
-                      updateUser={updateUser}
-                    />
+                  <OneVolunteer
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    street={value.street}
+                    city={value.city}
+                    state={value.state}
+                    zip={value.zip}
+                    phone={value.phone}
+                    getId={getId}
+                    _id={value._id}
+                    deleteHandler={deleteHandler}
+                    updateUser={updateUser}
+                  />
                 </div>
               </>
             );
@@ -109,5 +109,4 @@ const SearchBar = ({
   );
 };
 
-
-export default SearchBar
+export default SearchBarAllVols;

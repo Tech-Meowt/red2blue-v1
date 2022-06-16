@@ -1,7 +1,7 @@
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { FormRow, OneSandbox, StateSelect } from '../components'
+import { FormRow, OneSandbox, OneVolunteer } from '../components'
 
 const StateSearchSelectWithClear = ({
   placeholder,
@@ -10,6 +10,7 @@ const StateSearchSelectWithClear = ({
   _id,
   deleteHandler,
   updateSandbox,
+  updateUser,
   firstName,
   lastName,
   email,
@@ -20,6 +21,7 @@ const StateSearchSelectWithClear = ({
   phone,
   interests,
   label,
+  type,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
@@ -127,41 +129,80 @@ const StateSearchSelectWithClear = ({
         </form>
       </SearchSelectWrapper>
 
-      <Wrapper>
-        {filteredData.length == 0 && !noResults && (
-          <h5>Found {filteredData.length} records</h5>
-        )}
-        {filteredData.length == 1 && (
-          <h5>Found {filteredData.length} record</h5>
-        )}
-        {filteredData.length > 1 && (
-          <h5>Found {filteredData.length} records</h5>
-        )}
-        {filteredData.length != 0 &&
-          filteredData.slice(0, 15).map((value, key) => {
-            return (
-              <>
-                <div className='space-larger border-state'>
-                  <OneSandbox
-                    firstName={value.firstName}
-                    lastName={value.lastName}
-                    email={value.email}
-                    street={value.street}
-                    city={value.city}
-                    state={value.state}
-                    zip={value.zip}
-                    phone={value.phone}
-                    interests={value.interests}
-                    getId={getId}
-                    _id={value._id}
-                    deleteHandler={deleteHandler}
-                    updateSandbox={updateSandbox}
-                  />
-                </div>
-              </>
-            );
-          })}
-      </Wrapper>
+      {type === 'sandbox' && (
+        <Wrapper>
+          {filteredData.length == 0 && !noResults && (
+            <h5>Found {filteredData.length} records</h5>
+          )}
+          {filteredData.length == 1 && (
+            <h5>Found {filteredData.length} record</h5>
+          )}
+          {filteredData.length > 1 && (
+            <h5>Found {filteredData.length} records</h5>
+          )}
+          {filteredData.length != 0 &&
+            filteredData.slice(0, 15).map((value, key) => {
+              return (
+                <>
+                  <div className='space-larger border-state'>
+                    <OneSandbox
+                      firstName={value.firstName}
+                      lastName={value.lastName}
+                      email={value.email}
+                      street={value.street}
+                      city={value.city}
+                      state={value.state}
+                      zip={value.zip}
+                      phone={value.phone}
+                      interests={value.interests}
+                      getId={getId}
+                      _id={value._id}
+                      deleteHandler={deleteHandler}
+                      updateSandbox={updateSandbox}
+                    />
+                  </div>
+                </>
+              );
+            })}
+        </Wrapper>
+      )}
+
+      {type === 'volunteers' && (
+        <Wrapper>
+          {filteredData.length == 0 && !noResults && (
+            <h5>Found {filteredData.length} records</h5>
+          )}
+          {filteredData.length == 1 && (
+            <h5>Found {filteredData.length} record</h5>
+          )}
+          {filteredData.length > 1 && (
+            <h5>Found {filteredData.length} records</h5>
+          )}
+          {filteredData.length != 0 &&
+            filteredData.slice(0, 15).map((value, key) => {
+              return (
+                <>
+                  <div className='space-larger border-state'>
+                    <OneVolunteer
+                      firstName={value.firstName}
+                      lastName={value.lastName}
+                      email={value.email}
+                      street={value.street}
+                      city={value.city}
+                      state={value.state}
+                      zip={value.zip}
+                      phone={value.phone}
+                      getId={getId}
+                      _id={value._id}
+                      deleteHandler={deleteHandler}
+                      updateUser={updateUser}
+                    />
+                  </div>
+                </>
+              );
+            })}
+        </Wrapper>
+      )}
     </>
   );
 };
