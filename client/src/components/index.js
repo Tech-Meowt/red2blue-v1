@@ -30,6 +30,8 @@ import SandboxNavbar from './SandboxNavbar';
 import StateSelect from './StateSelect';
 import AllVolunteers from './AllVolunteers';
 import OneVolunteer from './OneVolunteer';
+import SearchBarAllVols from './SearchBarAllVols';
+
 export {
   Logo,
   FormRow,
@@ -61,6 +63,7 @@ export {
   StateSelect,
   AllVolunteers,
   OneVolunteer,
+  SearchBarAllVols,
   ScrollButtonUp,
   ScrollButtonDown,
 };

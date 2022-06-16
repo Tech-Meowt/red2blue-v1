@@ -6,7 +6,6 @@ import { FormRow, Alert } from '../components';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone } from 'react-icons/ai';
-import { MdEventAvailable } from 'react-icons/md';
 
 const OneVolunteer = ({
   _id,
@@ -18,10 +17,6 @@ const OneVolunteer = ({
   state,
   zip,
   phone,
-  eventWithDate,
-  eventType,
-  date,
-  year,
 }) => {
   const initialState = {
     firstName,
@@ -32,10 +27,6 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
-    eventWithDate,
-    eventType,
-    date,
-    year,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -54,10 +45,6 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
-    eventWithDate,
-    eventType,
-    date,
-    year,
   });
 
   const getId = (e) => {
@@ -159,6 +146,8 @@ const OneVolunteer = ({
                 <span className='status'>{' '}{phone}</span>
             ) : <span className='status'>{' '}Phone not provided</span>}
             </div>
+
+          
           </div>
         </div>
       </OneRecordWrapper>

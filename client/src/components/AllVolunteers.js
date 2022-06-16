@@ -4,19 +4,30 @@ import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
 import {
-  SearchBar,
+  SearchBarAllVols,
   OneVolunteer,
   StateSearchSelectWithClear,
 } from '../components';
 import { Link } from 'react-router-dom';
+import ReactPaginate from 'react-paginate';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+  const [eventData, setEventData] = useState([]);
+  const [data, setData] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
-  
+  const [offset, setOffset] = useState(0);
+  const [perPage] = useState(20);
+  const [pageCount, setPageCount] = useState(0);
+  const [start, setStart] = useState(1);
+  const [end, setEnd] = useState(20);
+
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
@@ -34,7 +45,43 @@ export default function AllVolunteers() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+    getData();
+
+    axios.get('http://localhost:8000/api/v1/event')
+      .then((res) => {
+        setAllEvents(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    allEvents.map((event) => {
+      return <p key={event._id}>{event.eventName}</p>
+    })
+
+  }, [offset]);
+
+  const getData = async () => {
+    const res = await axios.get('http://localhost:8000/api/v1/volunteer');
+    const data = res.data;
+    const slice = data.slice(offset, offset + perPage)
+    const volData = slice.map((volunteer) => {
+      return <OneVolunteer key={volunteer._id} {...volunteer} />;
+    });
+    setData(volData);
+    setPageCount(Math.ceil(data.length / perPage))
+    if (offset === 0) {
+      setEnd(end);
+      setStart(start);
+    } else {
+      setStart(offset * 20 - 19);
+      setEnd(offset * 20);
+    } 
+  }
+
+  const handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    setOffset(selectedPage + 1)
+  }
 
   const toggleSearch = (e) => {
     e.preventDefault();
@@ -72,9 +119,11 @@ export default function AllVolunteers() {
       {opened && (
         <>
           <FilterWrapper>
-            <SearchBar
+            <SearchBarAllVols
               data={volunteersList}
-              searchText={'Search by first name, last name, email, or event category'}
+              searchText={
+                'Search by first name, last name, email, or event category'
+              }
             />
           </FilterWrapper>
 
@@ -84,6 +133,7 @@ export default function AllVolunteers() {
                 data={volunteersList}
                 label={'Filter by state'}
                 clearBtn={'show'}
+                type={'volunteers'}
               />
             </div>
           </FilterWrapper>
@@ -93,20 +143,41 @@ export default function AllVolunteers() {
       <VolunteersWrapper>
         <div className='actions'>
           <Link to={''}>
-            <button className='btn edit-btn actions space'>Add New Record</button>
+            <button className='btn edit-btn actions space'>
+              Add New Record
+            </button>
           </Link>
         </div>
       </VolunteersWrapper>
 
       <Wrapper>
-        <h4>All Volunteers</h4>
+        {end < allVolunteers.length ? (
+          <h4>
+            Viewing {start} - {end} of {allVolunteers.length} records
+          </h4>
+        ) : (
+          <h4>
+            Viewing {start} - {allVolunteers.length} of {allVolunteers.length}{' '}
+            records
+          </h4>
+        )}
+
         <div className='jobs'>
-          {volunteersList.map((volunteer) => {
-            return <OneVolunteer key={volunteer._id} {...volunteer} />
-          })}
+          {data}
+          <ReactPaginate
+            previousLabel={'<< prev'}
+            nextLabel={'next >>'}
+            breakLabel={'...'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
         </div>
       </Wrapper>
     </>
-    
   );
 }
