@@ -29,6 +29,15 @@ const getAll = (req, res) => {
   });
 };
 
+const getOne = async (req, res) => {
+  Event.findById(req.params.id, function(err, foundRecord) {
+    if (!foundRecord) {
+      res.status(404).send('Record not found')
+    }
+    res.status(200).json('Record found')
+  })
+}
+
 const updateEvent = async (req, res) => {
   const { id: recordId } = req.params;
   const { eventName, eventType, eventDate, eventYear, volunteers } = req.body;
@@ -67,4 +76,4 @@ const deleteEvent = (req, res) => {
   });
 };
 
-export { create, getAll, updateEvent, deleteEvent };
+export { create, getAll, updateEvent, deleteEvent, getOne };

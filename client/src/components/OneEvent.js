@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -38,12 +38,18 @@ const OneEvent = ({
     eventYear,
     volunteers,
   });
+  const navigate = useNavigate();
 
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
     setClicked(!clicked);
   };
+
+  const getIdRedirect = (e) => {
+    const id = e.target.name;
+    navigate(`/databases/events/${e.target.name}`)
+  }
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -127,7 +133,7 @@ const OneEvent = ({
           <footer>
             <div className='actions'>
               <>
-                <button className='details-btn btn'>
+                <button className='details-btn btn' name={_id} onClick={getIdRedirect}>
                   Details
                 </button>
                 <button className='btn edit-btn' name={_id} onClick={getId}>
