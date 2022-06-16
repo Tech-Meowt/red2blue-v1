@@ -67,7 +67,7 @@ const buttonAnimate = keyframes`
       right: 0px;
     }
     100% {
-      right: 2%;
+      right: 1%;
     }
 `;
 

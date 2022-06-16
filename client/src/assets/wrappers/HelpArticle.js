@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
+h2 {
+  text-align: center;
+}
   .gif {
     border: 2px solid var(--r2b-red);
     border-radius: 10px 10px 10px 10px;

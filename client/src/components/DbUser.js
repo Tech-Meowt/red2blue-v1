@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, Alert, FormRowSelect, FormCheckbox } from '../components';
-import { useAppContext } from '../context/appContext';
+import { FormRow, Alert } from '../components';
 import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
 import { GrUserAdmin } from 'react-icons/gr';
@@ -49,10 +48,6 @@ const DbUser = ({
     isActive,
     role,
   });
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
 
   const getId = (e) => {
     const id = e.target.name;

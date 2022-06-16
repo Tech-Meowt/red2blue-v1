@@ -5,12 +5,15 @@ import addRecord from '../../assets/images/add-record.gif';
 import editRecord from '../../assets/images/edit-record.gif';
 import pageScroll from '../../assets/images/scroll.gif';
 import deleteRecord from '../../assets/images/delete-record.gif';
+import Helmet from 'react-helmet';
 
 export default function HelpGettingStarted() {
 
   return (
     <>
+      <Helmet><title>Getting Started</title></Helmet>
       <Wrapper>
+        <h2 className='r2b-red'>Getting Started</h2>
         <h3 className='r2b-blue'>Editing your profile</h3>
         <h5>
           After you log in to the database for the first time, you should visit

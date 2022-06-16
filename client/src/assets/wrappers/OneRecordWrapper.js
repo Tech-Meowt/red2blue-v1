@@ -49,6 +49,9 @@ const OneRecordWrapper = styled.article`
   .interests {
     margin: 0 1.75rem;
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .instructions {
     color: black !important;
     font-size: 1.25rem;
@@ -64,10 +67,6 @@ const OneRecordWrapper = styled.article`
     color: var(--r2b-blue);
     font-weight: bold;
   }
-  .yes-no {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
   .emphasis {
     color: var(--r2b-blue);
     font-size: 1.5rem;
@@ -82,6 +81,20 @@ const OneRecordWrapper = styled.article`
   .content-centered {
     grid-template-columns: 1fr 1fr 1fr !important;
     column-gap: 10rem;
+  }
+  .event-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.5rem;
+    @media (min-width: 576px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1120px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
   }
   .content-center {
     display: grid;
@@ -102,17 +115,22 @@ const OneRecordWrapper = styled.article`
   }
   .details-btn {
     margin-top: 1rem;
+    z-index: 100;
   }
   .edit-btn,
-  .delete-btn {
+  .delete-btn,
+  .details-btn {
     letter-spacing: var(--letterSpacing);
     cursor: pointer;
     height: 30px;
   }
+  .details-btn,
+  .edit-btn {
+    margin-right: 0.5rem;
+  }
   .edit-btn {
     color: var(--green-dark);
     background: var(--green-light);
-    margin-right: 0.5rem;
   }
   .delete-btn {
     color: var(--red-dark);
