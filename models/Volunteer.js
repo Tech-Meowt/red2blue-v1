@@ -24,7 +24,7 @@ const VolunteerSchema = new mongoose.Schema(
     },
     street: {
       type: String,
-    }
+    },
     city: {
       type: String,
     },
