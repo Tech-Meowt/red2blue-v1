@@ -5,6 +5,7 @@ import EventsWrapper from '../assets/wrappers/EventsWrapper';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from 'react';
+import { Volunteers } from '../pages/dashboard';
 
 export default function AllEvents() {
   const [allEvents, setAllEvents] = useState([]);
@@ -17,6 +18,15 @@ export default function AllEvents() {
   const [pageCount, setPageCount] = useState(0);
   const [start, setStart] = useState(1);
   const [end, setEnd] = useState(20);
+  
+  // for (let i = 0; i < allEvents.length; i++) {
+  //   const test = allEvents[i].volunteers
+  //   for (let j = 0; j < test.length; j++) {
+  //     const firstName = test[j].volFirstName
+  //     const lastName = test[j].volLastName
+  //     const full = firstName + lastName
+  //   }
+  // }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -38,6 +48,7 @@ export default function AllEvents() {
       .catch((error) => {
         console.log(error);
       });
+
     
     getData();
 

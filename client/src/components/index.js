@@ -33,6 +33,7 @@ import OneVolunteer from './OneVolunteer';
 import SearchBarAllVols from './SearchBarAllVols';
 import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
+import EventDetails from './EventDetails';
 
 export {
   Logo,
@@ -68,6 +69,7 @@ export {
   SearchBarAllVols,
   AllEvents,
   OneEvent,
+  EventDetails,
   ScrollButtonUp,
   ScrollButtonDown,
 };
