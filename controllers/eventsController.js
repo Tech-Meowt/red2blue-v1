@@ -1,9 +1,10 @@
 import Event from '../models/Event.js';
+// import Volunteer from '../models/Volunteer.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  let { eventName, eventType, eventDate, eventYear, volunteers } =
+  let { eventName, eventType, eventDate, eventYear } =
     req.body;
   try {
     let event= new Event({
@@ -11,7 +12,7 @@ const create = async (req, res) => {
       eventType,
       eventDate,
       eventYear,
-      volunteers,
+      // volunteers,
     });
     let newEvent= await event.save();
     res.status(200).json({
@@ -40,7 +41,7 @@ const getOne = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   const { id: recordId } = req.params;
-  const { eventName, eventType, eventDate, eventYear, volunteers } = req.body;
+  const { eventName, eventType, eventDate, eventYear } = req.body;
 
   const record = await Event.findOne({ _id: recordId });
 

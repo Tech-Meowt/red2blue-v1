@@ -1,8 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, Alert } from '../components';
+import { FormRow, Alert, EventDetails } from '../components';
 import Modal from 'react-modal';
 import { HiUserGroup } from 'react-icons/hi';
 import { BiCategory } from 'react-icons/bi';
@@ -15,19 +14,20 @@ const OneEvent = ({
   eventType,
   eventDate,
   eventYear,
-  volunteers,
+  // volunteers,
 }) => {
   const initialState = {
     eventName,
     eventType,
     eventDate,
     eventYear,
-    volunteers,
+    // volunteers,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [detailClicked, setDetailClicked] = useState(false);
   const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleted, setDeleted] = useState(false);
@@ -36,9 +36,9 @@ const OneEvent = ({
     eventType,
     eventDate,
     eventYear,
-    volunteers,
+    // volunteers,
   });
-  const navigate = useNavigate();
+
 
   const getId = (e) => {
     const id = e.target.name;
@@ -46,9 +46,9 @@ const OneEvent = ({
     setClicked(!clicked);
   };
 
-  const getIdRedirect = (e) => {
+  const getIdDetails = (e) => {
     const id = e.target.name;
-    navigate(`/databases/events/${e.target.name}`)
+    setDetailClicked(!detailClicked)
   }
 
   const handleChange = (e) => {
@@ -112,10 +112,10 @@ const OneEvent = ({
         </header>
         <div className='content'>
           <div className='event-content'>
-            <div>
+            {/* <div>
               <HiUserGroup className='icon' />
               Volunteers: <span className='status'>{volunteers.length}</span>
-            </div>
+            </div> */}
             <div>
               <BiCategory className='icon' />
               Event Type: <span className='status'>{eventType}</span>
@@ -132,68 +132,84 @@ const OneEvent = ({
           </div>
           <footer>
             <div className='actions'>
-              <>
-                <button className='details-btn btn' name={_id} onClick={getIdRedirect}>
-                  Details
-                </button>
-                <button className='btn edit-btn' name={_id} onClick={getId}>
-                  Edit
-                </button>
-                <button
-                  type='button'
-                  className='btn delete-btn'
-                  name={_id}
-                  onClick={openModal}
-                >
-                  Delete
-                </button>
-                <Modal
-                  isOpen={modalIsOpen}
-                  style={{
-                    overlay: {
-                      position: 'fixed',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      backgroundColor: 'rgba(140, 141, 143, .75)',
-                    },
-                    content: {
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      border: '1px solid #ccc',
-                      background: '#fff',
-                      overflow: 'auto',
-                      WebkitOverflowScrolling: 'touch',
-                      borderRadius: '5px',
-                      outline: 'none',
-                      padding: '20px',
-                      width: '500px',
-                      height: '250px',
-                    },
-                  }}
-                >
-                  <h3 className='modal-header'>
-                    🚨 Heads up! Are you sure you want to{' '}
-                    <span className='r2b-red'>permanently </span>
-                    delete this record?
-                  </h3>
-                  <div className='confirm-btns'>
-                    <button onClick={closeModal} className='btn-success height'>
-                      Cancel
-                    </button>
-                    <button
-                      onClick={deleteHandler}
-                      className='btn-danger height'
-                      name={_id}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </Modal>
-              </>
+              {!detailClicked && (
+                <>
+                  <button
+                    className='details-btn btn'
+                    name={_id}
+                    onClick={getIdDetails}
+                  >
+                    Details
+                  </button>
+                  <button className='btn edit-btn' name={_id} onClick={getId}>
+                    Edit
+                  </button>
+                  <button
+                    type='button'
+                    className='btn delete-btn'
+                    name={_id}
+                    onClick={openModal}
+                  >
+                    Delete
+                  </button>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    style={{
+                      overlay: {
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(140, 141, 143, .75)',
+                      },
+                      content: {
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        border: '1px solid #ccc',
+                        background: '#fff',
+                        overflow: 'auto',
+                        WebkitOverflowScrolling: 'touch',
+                        borderRadius: '5px',
+                        outline: 'none',
+                        padding: '20px',
+                        width: '500px',
+                        height: '250px',
+                      },
+                    }}
+                  >
+                    <h3 className='modal-header'>
+                      🚨 Heads up! Are you sure you want to{' '}
+                      <span className='r2b-red'>permanently </span>
+                      delete this record?
+                    </h3>
+                    <div className='confirm-btns'>
+                      <button
+                        onClick={closeModal}
+                        className='btn-success height'
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={deleteHandler}
+                        className='btn-danger height'
+                        name={_id}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </Modal>
+                </>
+              )}
+              <EventDetails
+                eventName={eventName}
+                eventType={eventType}
+                eventDate={eventDate}
+                eventYear={eventYear}
+                // volunteers={volunteers}
+              />
             </div>
           </footer>
         </div>

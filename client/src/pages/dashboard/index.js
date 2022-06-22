@@ -15,7 +15,6 @@ import SharedLayoutHelp from './SharedLayoutHelp';
 import SharedLayoutSandbox from './SharedLayoutSandbox';
 import Volunteers from './Volunteers';
 import Events from './Events';
-import ShowEvent from './ShowEvent';
 
 export {
   Profile,
@@ -35,5 +34,4 @@ export {
   SharedLayoutSandbox,
   Volunteers,
   Events,
-  ShowEvent,
 };
