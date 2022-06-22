@@ -17,7 +17,7 @@ import {
   SharedLayoutHelp,
   SharedLayoutSandbox,
   Volunteers,
-  Events
+  Events,
 } from './pages/dashboard';
 
 function App() {
