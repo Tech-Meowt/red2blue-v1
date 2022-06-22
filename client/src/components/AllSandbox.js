@@ -29,7 +29,8 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setAllSandbox(res.data);
+        setAllSandbox(res.data.sandbox);
+        console.log(res.data.sandbox)
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +39,7 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setSandboxList(res.data);
+        setSandboxList(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -48,7 +49,7 @@ export default function AllSandbox() {
 
   const getData = async () => {
     const res = await axios.get('http://localhost:8000/api/v1/sandbox');
-    const data = res.data;
+    const data = res.data.sandbox;
     const slice = data.slice(offset, offset + perPage)
     const sandData = slice.map((record) => {
       return <OneSandbox key={record._id} {...record} />;
@@ -138,9 +139,6 @@ export default function AllSandbox() {
             subContainerClassName={'pages pagination'}
             activeClassName={'active'}
           />
-          {/* {allSandbox.map((record) => {
-            return <OneSandbox key={record._id} {...record} />;
-          })} */}
         </div>
       </Wrapper>
     </>
