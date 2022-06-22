@@ -1,22 +1,22 @@
-import Sandbox from '../models/Sandbox.js';
+import prisma from '../lib/prisma.js';
 import { StatusCodes } from 'http-status-codes';
-import {
-  BadRequestError,
-  NotFoundError,
-} from '../errors/index.js';
+import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  let { firstName,
-  lastName,
-  email,
-  street,
-  city,
-  state,
-  zip,
-  phone,
-  interests } = req.body
-  try {
-    let sandbox = new Sandbox({
+  const {
+    firstName,
+    lastName,
+    email,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    interests,
+  } = req.body;
+
+  const sandbox = await prisma.sandbox.create({
+    data: {
       firstName,
       lastName,
       email,
@@ -26,58 +26,58 @@ const create = async (req, res) => {
       zip,
       phone,
       interests,
-    })
-    let newSandbox = await sandbox.save()
-    res.status(200).json({
-      status: 'Success',
-      data: sandbox
-    })
-  } catch (err) {
-    console.log(err)
-  }
+    },
+  });
+  res.status(200).json({ sandbox });
 };
 
-const getAll = (req, res) => {
-  Sandbox.find(function(err, records) {
-    res.json(records);
-  });
-}
+const getAll = async (req, res) => {
+  const sandbox = await prisma.sandbox.findMany();
+  res.status(200).json({ sandbox });
+};
 
 const updateSandbox = async (req, res) => {
-  const { id: recordId } = req.params;
-  const { firstName, lastName, email, street, city, state, zip, phone, interests } = req.body;
+  const { id } = req.params;
+  const {
+    firstName,
+    lastName,
+    email,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    interests,
+  } = req.body;
 
-  const record = await Sandbox.findOne({ _id: recordId });
-
-  if (!record) {
-    throw new NotFoundError(`No record found`);
-  }
-
-  const updatedRecord = await Sandbox.findOneAndUpdate({ _id: recordId }, req.body, {
-    new: true,
-    runValidators: true,
+  const sandbox = await prisma.sandbox.update({
+    where: {
+      id,
+    },
+    data: {
+      firstName,
+      lastName,
+      email,
+      street,
+      city,
+      state,
+      zip,
+      phone,
+      interests,
+    },
   });
+  res.status(200).json({ sandbox });
+};
 
-  res.status(StatusCodes.OK).json({ updatedRecord });
-    
-}
+const deleteSandbox = async (req, res) => {
+  const { id } = req.params;
 
-const deleteSandbox = (req, res) => {
-  Sandbox.findById(req.params.id, function(err, deletedSandbox) {
-    if (!deletedSandbox) {
-      res.status(404).send('Record not found')
-    } else {
-      Sandbox.findByIdAndRemove(req.params.id)
-        .then(function() {
-        res.status(200).json('Record deleted!')
-        })
-        .catch(function(err) {
-        res.status(400).send('Delete failed.')
-      })
-    }
-  })
-}
+  await prisma.sandbox.delete({
+    where: {
+      id,
+    },
+  });
+  res.status(200).json({});
+};
 
-export {
-  create, getAll, updateSandbox, deleteSandbox
-}
+export { create, getAll, updateSandbox, deleteSandbox };
