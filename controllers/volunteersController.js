@@ -61,7 +61,8 @@ const create = async (req, res) => {
   webDesign,
   webMgmt,
   anythingElse,
-  events,
+    events,
+  updatedAt
   } = req.body
 
   const volunteer = await prisma.volunteer.create({
@@ -125,27 +126,32 @@ const create = async (req, res) => {
       webMgmt,
       anythingElse,
       events: {
-        connectOrCreate: {
+        connectOrCreate: events.map((event) => ({
           where: {
-            eventName: events
+            eventName: event,
           },
           create: {
-            eventName: events
+            eventName: event
           }
-        }
-      }
+        }))
+      },
+      updatedAt
     },
   });
   res.status(200).json({ volunteer })
 };
 
 const getAll = async (req, res) => {
-  const volunteer = await prisma.volunteer.findMany();
+  const volunteer = await prisma.volunteer.findMany({
+    orderBy: {
+      updatedAt: 'desc'
+    }
+  });
   res.status(200).json({ volunteer })
 };
 
 const updateVolunteer = async (req, res) => {
-  const { id: recordId } = req.params;
+  const { id } = req.params;
   const {
     firstName,
     lastName,
@@ -206,40 +212,97 @@ const updateVolunteer = async (req, res) => {
     webMgmt,
     anythingElse,
     events,
+    updatedAt
   } = req.body;
 
-  const record = await Volunteer.findOne({ _id: recordId });
-
-  if (!record) {
-    throw new NotFoundError(`No record found`);
-  }
-
-  const updatedRecord = await Volunteer.findOneAndUpdate(
-    { _id: recordId },
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  res.status(StatusCodes.OK).json({ updatedRecord });
+  const volunteer = await prisma.volunteer.update({
+    where: {
+      id,
+    },
+    data: {
+      firstName,
+      lastName,
+      email,
+      city,
+      state,
+      zip,
+      prevExp,
+      polExp,
+      other,
+      foundR2b,
+      campaignMgmt,
+      canvassing,
+      commOrganizing,
+      electedOffCurr,
+      electedOffPast,
+      p2pTxtMgmt,
+      p2pTxtVol,
+      phoneBanking,
+      pollWorker,
+      postcardPlanningMgmt,
+      postcardWriting,
+      txtPhoneBankScriptEdit,
+      txtPhoneBankScriptWrite,
+      vanVoteBuildExp,
+      voterReg,
+      actor,
+      artist,
+      boardOfDir,
+      dataScience,
+      dbMgmt,
+      editor,
+      teacherProf,
+      trainer,
+      fundraising,
+      graphicDesign,
+      hr,
+      it,
+      legal,
+      linguist,
+      msgComms,
+      musician,
+      newsletterCreateDesign,
+      newsletterWrite,
+      nonprofMgmt,
+      pr,
+      publicSpeak,
+      recruitment,
+      research,
+      otherLanguage,
+      socialMediaContentCreate,
+      socialMediaMgmt,
+      speechWriter,
+      strategicPlanning,
+      videoEditCreate,
+      volMgmt,
+      webDesign,
+      webMgmt,
+      anythingElse,
+      events: {
+        connectOrCreate: events.map((event) => ({
+          where: {
+            eventName: event,
+          },
+          create: {
+            eventName: event,
+          },
+        })),
+      },
+      updatedAt,
+    },
+  });
+  res.status(200).json({ volunteer })
 };
 
-const deleteVolunteer= (req, res) => {
-  Volunteer.findById(req.params.id, function (err, deletedRecord) {
-    if (!deletedRecord) {
-      res.status(404).send('Record not found');
-    } else {
-      Volunteer.findByIdAndRemove(req.params.id)
-        .then(function () {
-          res.status(200).json('Record deleted!');
-        })
-        .catch(function (err) {
-          res.status(400).send('Delete failed.');
-        });
-    }
+const deleteVolunteer = async (req, res) => {
+  const { id } = req.params;
+
+  await prisma.volunteer.delete({
+    where: {
+      id,
+    },
   });
+  res.status(200).json({});
 };
 
 export { create, getAll, updateVolunteer, deleteVolunteer };
