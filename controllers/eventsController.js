@@ -3,16 +3,15 @@ import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  const { eventName, eventDate, eventType, eventYear, volunteers } = req.body;
-
+  const { eventName, eventDate, eventType, eventYear } = req.body;
+  
   const event = await prisma.event.create({
     data: {
       eventName,
       eventDate,
       eventType,
       eventYear,
-      volunteers,
-    },
+    }
   });
   res.status(200).json({ event });
 };
@@ -24,7 +23,7 @@ const getAll = async (req, res) => {
 
 const getOne = async (req, res) => {
   const { id } = req.params;
-  const { eventName, eventDate, eventType, eventYear, volunteers } = req.body;
+  const { eventName, eventDate, eventType, eventYear } = req.body;
 
   const event = await prisma.event.findUnique({
     where: {
@@ -41,7 +40,7 @@ const getOne = async (req, res) => {
 
 const updateEvent = async (req, res) => {
   const { id } = req.params;
-  const { eventName, eventType, eventDate, eventYear, volunteers } = req.body;
+  const { eventName, eventType, eventDate, eventYear } = req.body;
 
   const event = await prisma.event.update({
     where: {
@@ -52,7 +51,6 @@ const updateEvent = async (req, res) => {
       eventDate,
       eventType,
       eventYear,
-      volunteers,
     },
   });
   res.status(200).json({ event });

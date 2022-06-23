@@ -1,71 +1,71 @@
+import prisma from '../lib/prisma.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  let {
-    firstName,
-    lastName,
-    email,
-    city,
-    state,
-    zip,
-    prevExp,
-    polExp,
-    other,
-    foundR2b,
-    campaignMgmt,
-    canvassing,
-    commOrganizing,
-    electedOffCurr,
-    electedOffPast,
-    p2pTxtMgmt,
-    p2pTxtVol,
-    phoneBanking,
-    pollWorker,
-    postcardPlanningMgmt,
-    postcardWriting,
-    txtPhoneBankScriptEdit,
-    txtPhoneBankScriptWrite,
-    vanVoteBuildExp,
-    voterReg,
-    actor,
-    artist,
-    boardOfDir,
-    dataScience,
-    dbMgmt,
-    editor,
-    teacherProf,
-    trainer,
-    fundraising,
-    graphicDesign,
-    hr,
-    it,
-    legal,
-    linguist,
-    msgComms,
-    musician,
-    newsletterCreateDesign,
-    newsletterWrite,
-    nonprofMgmt,
-    pr,
-    publicSpeak,
-    recruitment,
-    research,
-    otherLanguage,
-    socialMediaContentCreate,
-    socialMediaMgmt,
-    speechWriter,
-    strategicPlanning,
-    videoEditCreate,
-    volMgmt,
-    webDesign,
-    webMgmt,
-    anythingElse,
-    events
-  } = req.body;
+  const { firstName,
+  lastName,
+  email,
+  city,
+  state,
+  zip,
+  prevExp,
+  polExp,
+  other,
+  foundR2b,
+  campaignMgmt,
+  canvassing,
+  communityOrganizing,
+  electedOfficialCurr,
+  electedOfficialPast,
+  p2pTextingMgmt,
+  p2pTextingVol,
+  phonebanking,
+  pollWorker,
+  postcardMgmt,
+  postcardWriting,
+  txtPhoneScriptEdit,
+  txtPhoneScriptWrite,
+  vanVoteBuildExp,
+  voterReg,
+  actor,
+  artist,
+  boardOfDirectors,
+  dataScience,
+  dbMgmt,
+  editor,
+  professor,
+  trainer,
+  fundraising,
+  graphicDesign,
+  hr,
+  it,
+  legal,
+  linguist,
+  msgComms,
+  musician,
+  newsletterCreateDesign,
+  newsletterWrite,
+  nonprofMgmt,
+  pr,
+  publicSpeak,
+  recruitment,
+  research,
+  otherLanguage,
+  socialMediaContentCreate,
+  socialMediaMgmt,
+  speechWriter,
+  strategicPlanning,
+  videoEditCreate,
+  volMgmt,
+  webDesign,
+  webMgmt,
+  anythingElse,
+  events,
+  } = req.body
 
-  try {
-    let volunteer = new Volunteer({
+  const volunteer = await prisma.volunteer.create({
+    data: {
       firstName,
       lastName,
       email,
@@ -78,26 +78,26 @@ const create = async (req, res) => {
       foundR2b,
       campaignMgmt,
       canvassing,
-      commOrganizing,
-      electedOffCurr,
-      electedOffPast,
-      p2pTxtMgmt,
-      p2pTxtVol,
-      phoneBanking,
+      communityOrganizing,
+      electedOfficialCurr,
+      electedOfficialPast,
+      p2pTextingMgmt,
+      p2pTextingVol,
+      phonebanking,
       pollWorker,
-      postcardPlanningMgmt,
+      postcardMgmt,
       postcardWriting,
-      txtPhoneBankScriptEdit,
-      txtPhoneBankScriptWrite,
+      txtPhoneScriptEdit,
+      txtPhoneScriptWrite,
       vanVoteBuildExp,
       voterReg,
       actor,
       artist,
-      boardOfDir,
+      boardOfDirectors,
       dataScience,
       dbMgmt,
       editor,
-      teacherProf,
+      professor,
       trainer,
       fundraising,
       graphicDesign,
@@ -124,28 +124,25 @@ const create = async (req, res) => {
       webDesign,
       webMgmt,
       anythingElse,
-      events,
-    });
-    let newVolunteer = await volunteer.save();
-    res.status(200).json({
-      status: 'Record created!',
-      data: volunteer,
-    });
-  } catch (err) {
-    console.log(err);
-  }
+      events: {
+        connectOrCreate: {
+          where: {
+            eventName: events
+          },
+          create: {
+            eventName: events
+          }
+        }
+      }
+    },
+  });
+  res.status(200).json({ volunteer })
 };
 
-const getAll = (req, res) => {
-  Volunteer.find(function (err, records) {
-    res.json(records);
-  });
+const getAll = async (req, res) => {
+  const volunteer = await prisma.volunteer.findMany();
+  res.status(200).json({ volunteer })
 };
-// const getAll = (req, res) => {
-//   Volunteer.find({}).populate('events').exec(function(err, records) {
-//     res.json(records);
-//   })
-// }
 
 const updateVolunteer = async (req, res) => {
   const { id: recordId } = req.params;

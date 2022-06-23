@@ -12,17 +12,18 @@ datasource db {
 }
 
 model Event {
-  id         String      @id @default(uuid())
+  id        String      @id @default(uuid())
+  eventName String      @unique
+  eventType String?
+  eventDate String?
+  eventYear String?
   volunteers Volunteer[]
-  eventName  String
-  eventType  String
-  eventDate  String?
-  eventYear  String
 }
 
 model Volunteer {
   id                       String  @id @default(uuid())
   events                   Event[]
+  eventId String?
   firstName                String?
   lastName                 String?
   email                    String?

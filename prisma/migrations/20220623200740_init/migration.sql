@@ -2,9 +2,9 @@
 CREATE TABLE "Event" (
     "id" TEXT NOT NULL,
     "eventName" TEXT NOT NULL,
-    "eventType" TEXT NOT NULL,
+    "eventType" TEXT,
     "eventDate" TEXT,
-    "eventYear" TEXT NOT NULL,
+    "eventYear" TEXT,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
@@ -12,6 +12,7 @@ CREATE TABLE "Event" (
 -- CreateTable
 CREATE TABLE "Volunteer" (
     "id" TEXT NOT NULL,
+    "eventId" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
     "email" TEXT,
@@ -26,7 +27,7 @@ CREATE TABLE "Volunteer" (
     "electedOfficialCurr" TEXT,
     "electedOfficialPast" TEXT,
     "p2pTextingMgmt" TEXT,
-    "ptpTextingVol" TEXT,
+    "p2pTextingVol" TEXT,
     "phonebanking" TEXT,
     "pollWorker" TEXT,
     "postcardMgmt" TEXT,
@@ -93,6 +94,9 @@ CREATE TABLE "_EventToVolunteer" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_eventName_key" ON "Event"("eventName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Sandbox_email_key" ON "Sandbox"("email");
