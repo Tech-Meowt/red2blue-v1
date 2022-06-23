@@ -60,10 +60,13 @@ export default function AllVolunteers() {
     if (offset === 0) {
       setEnd(end);
       setStart(start);
+    } else if (!data) {
+      setEnd(0);
+      setStart(0);
     } else {
       setStart(offset * 20 - 19);
       setEnd(offset * 20);
-    } 
+    }
   }
 
   const handlePageClick = (e) => {

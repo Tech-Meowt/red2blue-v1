@@ -63,6 +63,10 @@ export default function AllSandbox() {
       setStart(offset * 20 - 19);
       setEnd(offset * 20);
     }
+    if (data.length === 0) {
+      setEnd(0);
+      setStart(0);
+    }
   }
 
   const handlePageClick = (e) => {
@@ -81,8 +85,8 @@ export default function AllSandbox() {
     axios
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
-        values(res.data);
-        console.log(res.data);
+        values(res.data.sandbox);
+        console.log(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);

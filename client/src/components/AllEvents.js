@@ -19,14 +19,6 @@ export default function AllEvents() {
   const [start, setStart] = useState(1);
   const [end, setEnd] = useState(20);
   
-  // for (let i = 0; i < allEvents.length; i++) {
-  //   const test = allEvents[i].volunteers
-  //   for (let j = 0; j < test.length; j++) {
-  //     const firstName = test[j].volFirstName
-  //     const lastName = test[j].volLastName
-  //     const full = firstName + lastName
-  //   }
-  // }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -34,7 +26,7 @@ export default function AllEvents() {
     axios
       .get('http://localhost:8000/api/v1/event')
       .then((res) => {
-        setAllEvents(res.data);
+        setAllEvents(res.data.event);
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +35,7 @@ export default function AllEvents() {
     axios
       .get('http://localhost:8000/api/v1/event')
       .then((res) => {
-        setEventsList(res.data);
+        setEventsList(res.data.event);
       })
       .catch((error) => {
         console.log(error);
@@ -56,7 +48,7 @@ export default function AllEvents() {
 
   const getData = async () => {
     const res = await axios.get('http://localhost:8000/api/v1/event');
-    const data = res.data;
+    const data = res.data.event;
     const slice = data.slice(offset, offset + perPage);
     const eventData = slice.map((event) => {
       return <OneEvent key={event._id} {...event} />;

@@ -93,11 +93,3 @@ model Sandbox {
   phone     String?
   interests String?
 }
-
-// model User {
-//   id  String  @id @default(uuid())
-//   name  String
-//   createdAt DateTime  @default(now())
-//   updatedAt DateTime @updatedAt
-//   games Game[]
-// }
