@@ -61,7 +61,7 @@ const create = async (req, res) => {
   webDesign,
   webMgmt,
   anythingElse,
-    events,
+  events,
   updatedAt
   } = req.body
 
@@ -137,6 +137,9 @@ const create = async (req, res) => {
       },
       updatedAt
     },
+    include: {
+      events: true
+    },
   });
   res.status(200).json({ volunteer })
 };
@@ -145,6 +148,9 @@ const getAll = async (req, res) => {
   const volunteer = await prisma.volunteer.findMany({
     orderBy: {
       updatedAt: 'desc'
+    },
+    include: {
+      events: true
     }
   });
   res.status(200).json({ volunteer })

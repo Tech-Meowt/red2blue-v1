@@ -8,7 +8,7 @@ import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone } from 'react-icons/ai';
 
 const OneVolunteer = ({
-  _id,
+  id,
   firstName,
   lastName,
   email,
@@ -17,6 +17,7 @@ const OneVolunteer = ({
   state,
   zip,
   phone,
+  events
 }) => {
   const initialState = {
     firstName,
@@ -27,6 +28,7 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
+    events
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -44,6 +46,7 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
+    events
   });
 
   const getId = (e) => {
@@ -64,12 +67,12 @@ const OneVolunteer = ({
     setModalIsOpen(false);
   };
 
-  const updateVolunteer = (_id) => {
+  const updateVolunteer = (id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/volunteer/${_id}`, values)
+      .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
       .then((res) => {
-        newValues(res.data);
-        console.log(res.data);
+        newValues(res.data.volunteer);
+        console.log(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
@@ -80,7 +83,7 @@ const OneVolunteer = ({
     axios
       .delete(`http://localhost:8000/api/v1/volunteer/${e.target.name}`)
       .then((res) => {
-        setValues(res.data);
+        setValues(res.data.volunteer);
       });
     setShowAlert(true);
     setAlertText('Delete successful!');
@@ -111,6 +114,9 @@ const OneVolunteer = ({
               {firstName} {lastName}
             </h5>
             <p className='lowercase'>{email}</p>
+            {/* {events.map((event) => {
+              return <p>{event.eventName}</p>
+            })} */}
           </div>
         </header>
         <div className='content'>

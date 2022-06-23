@@ -29,7 +29,8 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setAllVolunteers(res.data);
+        setAllVolunteers(res.data.volunteer);
+        console.log(res.data.volunteer)
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +39,7 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setVolunteersList(res.data);
+        setVolunteersList(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
@@ -50,10 +51,10 @@ export default function AllVolunteers() {
 
   const getData = async () => {
     const res = await axios.get('http://localhost:8000/api/v1/volunteer');
-    const data = res.data;
+    const data = res.data.volunteer;
     const slice = data.slice(offset, offset + perPage)
     const volData = slice.map((volunteer) => {
-      return <OneVolunteer key={volunteer._id} {...volunteer} />;
+      return <OneVolunteer key={volunteer.id} {...volunteer} />;
     });
     setData(volData);
     setPageCount(Math.ceil(data.length / perPage))
