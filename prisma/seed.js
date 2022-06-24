@@ -1,249 +1,176 @@
-// "prisma": {
-//   "seed": "node prisma/seed.js"
-// }
-
 import prisma from '../lib/prisma.js';
 
 async function main() {
-  const event = await prisma.event.createMany({
+  const sandbox = await prisma.sandbox.createMany({
     data: [
       {
-        eventName: 'Community Meeting 4/12/21',
-        eventType: 'Community Meeting',
-        eventDate: '4/21/21',
-        eventYear: "2021"
+        firstName: 'Nancy',
+        lastName: 'Allen',
+        email: 'nancy.allen@mac.com',
+        street: '4 Low street',
+        city: 'Minneapolis',
+        state: 'MN',
+        zip: '55401',
+        phone: '555-555-5555',
+        interests: 'Social Media',
       },
       {
-        eventName: 'Community Meeting 7/20/21',
-        eventType: 'Community Meeting',
-        eventDate: '7/20/21',
-        eventYear: "2021"
+        firstName: 'Kwame',
+        lastName: 'Anthony',
+        email: 'kanthonyorg@gmail.com',
+        street: '6 High street',
+        city: 'Philadelphia',
+        state: 'PA',
+        zip: '19131',
+        phone: '555-555-5556',
+        interests: 'Data',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 10/14/2021',
-        eventType: 'Phonebanking',
-        eventDate: '10/14/21',
-        eventYear: "2021"
+        firstName: 'Robin',
+        lastName: 'Aronson',
+        email: 'robin.aronson@gmail.com',
+        street: '21 1st Ave',
+        city: 'Baltimore',
+        state: 'MD',
+        zip: '21298',
+        phone: '555-555-5557',
+        interests: 'Leadership, phone banking',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 10/21/2021',
-        eventType: 'Phonebanking',
-        eventDate: '10/21/21',
-        eventYear: "2021"
+        firstName: 'Isabel',
+        lastName: 'Byron',
+        email: 'isabelbyron1@gmail.com',
+        street: '696 Main St',
+        city: 'New York',
+        state: 'NY',
+        zip: '10452',
+        phone: '555-555-5558',
+        interests: 'Leadership, phone banking',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 10/28/2021',
-        eventType: 'Phonebanking',
-        eventDate: '10/28/21',
-        eventYear: "2021"
+        firstName: 'Peg',
+        lastName: 'Byron',
+        email: 'pegbyron1@gmail.com',
+        street: '2348 W .Center St',
+        city: 'Westchester',
+        state: 'NY',
+        zip: '10545',
+        phone: '555-555-5559',
+        interests: 'None',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 10/7/2021',
-        eventType: 'Phonebanking',
-        eventDate: '10/7/21',
-        eventYear: "2021"
+        firstName: 'Ronda',
+        lastName: 'Channing',
+        email: 'ronda_channing@yahoo.com',
+        street: '90 Cramer-Challenge Road',
+        city: 'Sacramento',
+        state: 'CA',
+        zip: '95660',
+        phone: '555-555-5550',
+        interests: 'None',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 8/26/2021',
-        eventType: 'Phonebanking',
-        eventDate: '8/26/21',
-        eventYear: "2021"
+        firstName: 'Genevieve',
+        lastName: 'Christy',
+        email: 'genevieve.christy@gmail.com',
+        street: '89 West St',
+        city: 'Beverly Hills',
+        state: 'CA',
+        zip: '90210',
+        phone: '555-555-5551',
+        interests: 'Campaign Liason',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 9/19/2021',
-        eventType: 'Phonebanking',
-        eventDate: '9/19/21',
-        eventYear: "2021"
+        firstName: 'Shawky',
+        lastName: 'Darwish',
+        email: 'Shawky@claudette4pa176.org',
+        street: '8 Center St',
+        city: 'Beverly Hills',
+        state: 'CA',
+        zip: '10940',
+        phone: '555-555-5552',
+        interests: 'Texting',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 9/2/2021',
-        eventType: 'Phonebanking',
-        eventDate: '9/2/21',
-        eventYear: "2021"
+        firstName: 'Ava',
+        lastName: 'Eisenson',
+        email: 'avaeisenson@gmail.com',
+        street: '654 W. 41st St',
+        city: 'Portland',
+        state: 'OR',
+        zip: '97236',
+        phone: '555-555-5553',
+        interests: 'phone banking, social media, outreach',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 9/23/2021',
-        eventType: 'Phonebanking',
-        eventDate: '9/23/21',
-        eventYear: "2021"
+        firstName: 'Megan',
+        lastName: 'Hackett',
+        email: 'meanmegan@hotmail.com',
+        street: '123 W. 41st St',
+        city: 'New York',
+        state: 'NY',
+        zip: '12721',
+        phone: '555-555-5554',
+        interests: 'Texting',
       },
       {
-        eventName: 'Phone Bank Kelly Fowler 9/9/2021',
-        eventType: 'Phonebanking',
-        eventDate: '9/9/21',
-        eventYear: "2021"
+        firstName: 'Fran',
+        lastName: 'Hawthorne',
+        email: 'fran.n.hawthorne@gmail.com',
+        street: '125 W. 41st St',
+        city: 'Milford',
+        state: 'CT',
+        zip: '12729',
+        phone: '655-555-5550',
+        interests: 'Canvassing, phone banking, texting',
       },
       {
-        eventName: 'Postcards PA Special Election 2021',
-        eventType: 'Postcards',
-        eventDate: '',
-        eventYear: "2021"
+        firstName: 'Justine',
+        lastName: 'Henniing',
+        email: 'jhh1822@gmail.com',
+        street: '12 W. 41st St',
+        city: 'Milltown',
+        state: 'NJ',
+        zip: '12345',
+        phone: '655-555-5551',
+        interests: 'phone banking, training',
       },
       {
-        eventName: 'Postcards SD/VA Research and SI 2021',
-        eventType: 'Postcards',
-        eventDate: '',
-        eventYear: "2021"
+        firstName: 'Landon',
+        lastName: 'Kissell',
+        email: 'landonkissell23@gmail.com',
+        street: '13 W. 41st St',
+        city: 'Brooklyn',
+        state: 'NY',
+        zip: '12345',
+        phone: '655-555-5552',
+        interests: 'None',
       },
       {
-        eventName: 'Texting Bryan Amezquita Early Voting 3/20/21',
-        eventType: 'Texting',
-        eventDate: '3/20/21',
-        eventYear: "2021"
+        firstName: 'Mark',
+        lastName: 'Kleiman',
+        email: 'markikleiman@gmail.com',
+        street: '9 W. 41st St',
+        city: 'New York',
+        state: 'NY',
+        zip: '12345',
+        phone: '655-555-5553',
+        interests: 'phone banking',
       },
       {
-        eventName: 'Texting Bryan Amezquita Event Invite 2/24/21',
-        eventType: 'Texting',
-        eventDate: '2/24/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Carlos Burgos GOTV 6/21/21',
-        eventType: 'Texting',
-        eventDate: '6/21/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Carlos Burgos Support ID 6/1/21',
-        eventType: 'Texting',
-        eventDate: '6/1/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Debra Gardner Early Vote 10/17/2021',
-        eventType: 'Texting',
-        eventDate: '10/17/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Debra Gardner Early Vote 10/24/2021',
-        eventType: 'Texting',
-        eventDate: '10/24/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Debra Gardner VBM 9/26/2021',
-        eventType: 'Texting',
-        eventDate: '9/26/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Diana Saleh Early Vote 5/26/2021',
-        eventType: 'Texting',
-        eventDate: '5/26/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Diana Saleh GOTV 4/30/2021',
-        eventType: 'Texting',
-        eventDate: '4/30/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Diana Saleh GOTV 6/4/2021',
-        eventType: 'Texting',
-        eventDate: '6/4/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Diana Saleh Listening 4/1/2021',
-        eventType: 'Texting',
-        eventDate: '4/1/2021',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Kelly Fowler Support ID 10/1/21',
-        eventType: 'Texting',
-        eventDate: '10/1/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Kelly Fowler Support ID 10/24/21',
-        eventType: 'Texting',
-        eventDate: '10/24/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Kelly Fowler Support ID 10/30/21',
-        eventType: 'Texting',
-        eventDate: '10/30/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Nasra Mohammed GOTV 4/5/21',
-        eventType: 'Texting',
-        eventDate: '4/5/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Nasra Mohammed Support ID 4/1/21',
-        eventType: 'Texting',
-        eventDate: '4/1/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Nick Beaven Support ID 2/19/21',
-        eventType: 'Texting',
-        eventDate: '2/19/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Nick Beaven Support ID 3/20/21',
-        eventType: 'Texting',
-        eventDate: '3/20/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Sheridan Black GOTV 7/11/21',
-        eventType: 'Texting',
-        eventDate: '7/11/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting Sheridan Black Informing 6/26/21',
-        eventType: 'Texting',
-        eventDate: '6/26/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems Early Vote 10/1/2021',
-        eventType: 'Texting',
-        eventDate: '10/1/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems GOTV 10/31/2021',
-        eventType: 'Texting',
-        eventDate: '10/31/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems VBM 10/1/2021',
-        eventType: 'Texting',
-        eventDate: '10/1/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems VBM 10/10/2021',
-        eventType: 'Texting',
-        eventDate: '10/10/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems VBM 9/12/2021',
-        eventType: 'Texting',
-        eventDate: '9/12/21',
-        eventYear: "2021"
-      },
-      {
-        eventName: 'Texting VA Beach Dems VBM part 2 10/1/2021',
-        eventType: 'Texting',
-        eventDate: '10/1/21',
-        eventYear: "2021"
+        firstName: 'Karen',
+        lastName: "Scourby-D\'arc",
+        email: 'darcwriter1@gmail.com',
+        street: '96 W. 41st St',
+        city: 'New York',
+        state: 'NY',
+        zip: '12345',
+        phone: '655-555-5554',
+        interests: 'None',
       },
     ],
   });
-  console.log(event);
+  console.log(sandbox);
 }
 
 main()
