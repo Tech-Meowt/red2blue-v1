@@ -26,7 +26,27 @@ const StateSearchSelectWithClear = ({
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
   const [noResults, setNoResults] = useState(true);
+  const [termEntered, setTermEntered] = useState('')
+  
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setTermEntered(searchTerm)
 
+    const newFilter = data.filter((value) => {
+      return (
+        value.firstName.toLowerCase().includes(searchTerm.toLowerCase()),
+        value.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    })
+
+    if (searchTerm === '') {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+      setNoResults(false);
+    }
+  }
+  
   const handleUsersFilter = (e) => {
     const searchWord = e.target.value;
     setWordEntered(searchWord);
@@ -56,8 +76,19 @@ const StateSearchSelectWithClear = ({
       <SearchSelectWrapper>
         <form>
           <div className='form-center form-row'>
+            <label htmlFor='termEntered'>
+              Search by first name or last name
+            </label>
+            <input
+              type='text'
+              name='termEntered'
+              id='termEntered'
+              className='form-input'
+              value={termEntered}
+              onChange={handleSearch}
+            />
+            <button className='btn btn-block btn-danger'>clear</button>
             <label htmlFor='wordEntered'>{label}</label>
-
             <select
               name='wordEntered'
               id='wordEntered'

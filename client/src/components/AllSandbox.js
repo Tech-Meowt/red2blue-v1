@@ -7,7 +7,8 @@ import {
   AllVolunteers,
   OneSandbox,
   SandboxSearchBar,
-  StateSearchSelectWithClear
+  StateSearchSelectWithClear,
+  Search
 } from '../components';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -30,7 +31,6 @@ export default function AllSandbox() {
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
         setAllSandbox(res.data.sandbox);
-        console.log(res.data.sandbox)
       })
       .catch((error) => {
         console.log(error);
@@ -45,29 +45,31 @@ export default function AllSandbox() {
         console.log(error);
       });
     getData();
-  }, [offset]);
+  },
+    [offset]
+  );
+
 
   const getData = async () => {
     const res = await axios.get('http://localhost:8000/api/v1/sandbox');
     const data = res.data.sandbox;
-    const slice = data.slice(offset, offset + perPage)
+    const slice = data.slice(offset, offset + perPage);
     const sandData = slice.map((record) => {
-      return <OneSandbox key={record._id} {...record} />;
+      return <OneSandbox key={record.id} {...record} />;
     });
     setData(sandData);
-    setPageCount(Math.ceil(data.length / perPage))
+    setPageCount(Math.ceil(data.length / perPage));
     if (offset === 0) {
       setEnd(end);
       setStart(start);
+    } else if (!data) {
+      setEnd(0);
+      setStart(0);
     } else {
       setStart(offset * 20 - 19);
       setEnd(offset * 20);
     }
-    if (data.length === 0) {
-      setEnd(0);
-      setStart(0);
-    }
-  }
+  };
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -96,10 +98,11 @@ export default function AllSandbox() {
   return (
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
+      {/* <Search /> */}
 
-      <FilterWrapper>
+      {/* <FilterWrapper>
         <SandboxSearchBar data={sandboxList} />
-      </FilterWrapper>
+      </FilterWrapper> */}
 
       <FilterWrapper>
         <div className='form'>
@@ -108,6 +111,7 @@ export default function AllSandbox() {
             label={'Filter by state'}
             clearBtn={'show'}
             type={'sandbox'}
+            boxLabel={'Search by first name, last name, or email'}
           />
         </div>
       </FilterWrapper>
@@ -125,10 +129,12 @@ export default function AllSandbox() {
           <h4>
             Viewing {start} - {end} of {allSandbox.length} records
           </h4>
-        ) : <h4>
+        ) : (
+          <h4>
             Viewing {start} - {allSandbox.length} of {allSandbox.length} records
-        </h4>}
-        
+          </h4>
+        )}
+
         <div className='jobs'>
           {data}
           <ReactPaginate

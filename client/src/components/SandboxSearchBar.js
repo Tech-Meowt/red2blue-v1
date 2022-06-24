@@ -7,7 +7,7 @@ const SandboxSearchBar = ({
   placeholder,
   data,
   getId,
-  _id,
+  id,
   deleteHandler,
   updateSandbox,
   firstName,
@@ -28,11 +28,11 @@ const SandboxSearchBar = ({
     const searchWord = e.target.value;
     setWordEntered(searchWord);
     const newFilter = data.filter((value) => {
-      return (
-        value.firstName.toLowerCase().includes(searchWord.toLowerCase()),
-        value.lastName.toLowerCase().includes(searchWord.toLowerCase()),
-        value.email.toLowerCase().includes(searchWord.toLowerCase())
-      );
+      return 
+        value.firstName.toLowerCase().includes(searchWord.toLowerCase());
+        // value.lastName.toLowerCase().includes(searchWord.toLowerCase()),
+        // value.email.toLowerCase().includes(searchWord.toLowerCase())
+      
     });
 
     if (searchWord === '') {
@@ -67,7 +67,7 @@ const SandboxSearchBar = ({
               value={wordEntered}
               onChange={handleFilter}
             />
-            <button className='btn btn-block btn-danger' onClick={handleClear}>
+            <button className='btn btn-block btn-danger'>
               clear
             </button>
           </div>
@@ -98,7 +98,7 @@ const SandboxSearchBar = ({
                     phone={value.phone}
                     interests={value.interests}
                     getId={getId}
-                    _id={value._id}
+                    id={value.id}
                     deleteHandler={deleteHandler}
                     updateSandbox={updateSandbox}
                   />

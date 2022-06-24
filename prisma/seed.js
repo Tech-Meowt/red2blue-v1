@@ -6,7 +6,6 @@ async function main() {
       {
         firstName: 'Nancy',
         lastName: 'Allen',
-        email: 'nancy.allen@mac.com',
         street: '4 Low street',
         city: 'Minneapolis',
         state: 'MN',
@@ -17,7 +16,6 @@ async function main() {
       {
         firstName: 'Kwame',
         lastName: 'Anthony',
-        email: 'kanthonyorg@gmail.com',
         street: '6 High street',
         city: 'Philadelphia',
         state: 'PA',
@@ -28,7 +26,6 @@ async function main() {
       {
         firstName: 'Robin',
         lastName: 'Aronson',
-        email: 'robin.aronson@gmail.com',
         street: '21 1st Ave',
         city: 'Baltimore',
         state: 'MD',
@@ -39,7 +36,6 @@ async function main() {
       {
         firstName: 'Isabel',
         lastName: 'Byron',
-        email: 'isabelbyron1@gmail.com',
         street: '696 Main St',
         city: 'New York',
         state: 'NY',
@@ -50,7 +46,6 @@ async function main() {
       {
         firstName: 'Peg',
         lastName: 'Byron',
-        email: 'pegbyron1@gmail.com',
         street: '2348 W .Center St',
         city: 'Westchester',
         state: 'NY',
@@ -61,7 +56,6 @@ async function main() {
       {
         firstName: 'Ronda',
         lastName: 'Channing',
-        email: 'ronda_channing@yahoo.com',
         street: '90 Cramer-Challenge Road',
         city: 'Sacramento',
         state: 'CA',
@@ -72,7 +66,6 @@ async function main() {
       {
         firstName: 'Genevieve',
         lastName: 'Christy',
-        email: 'genevieve.christy@gmail.com',
         street: '89 West St',
         city: 'Beverly Hills',
         state: 'CA',
@@ -83,7 +76,6 @@ async function main() {
       {
         firstName: 'Shawky',
         lastName: 'Darwish',
-        email: 'Shawky@claudette4pa176.org',
         street: '8 Center St',
         city: 'Beverly Hills',
         state: 'CA',
@@ -94,7 +86,6 @@ async function main() {
       {
         firstName: 'Ava',
         lastName: 'Eisenson',
-        email: 'avaeisenson@gmail.com',
         street: '654 W. 41st St',
         city: 'Portland',
         state: 'OR',
@@ -105,7 +96,6 @@ async function main() {
       {
         firstName: 'Megan',
         lastName: 'Hackett',
-        email: 'meanmegan@hotmail.com',
         street: '123 W. 41st St',
         city: 'New York',
         state: 'NY',
@@ -116,7 +106,6 @@ async function main() {
       {
         firstName: 'Fran',
         lastName: 'Hawthorne',
-        email: 'fran.n.hawthorne@gmail.com',
         street: '125 W. 41st St',
         city: 'Milford',
         state: 'CT',
@@ -127,7 +116,6 @@ async function main() {
       {
         firstName: 'Justine',
         lastName: 'Henniing',
-        email: 'jhh1822@gmail.com',
         street: '12 W. 41st St',
         city: 'Milltown',
         state: 'NJ',
@@ -138,7 +126,6 @@ async function main() {
       {
         firstName: 'Landon',
         lastName: 'Kissell',
-        email: 'landonkissell23@gmail.com',
         street: '13 W. 41st St',
         city: 'Brooklyn',
         state: 'NY',
@@ -149,7 +136,6 @@ async function main() {
       {
         firstName: 'Mark',
         lastName: 'Kleiman',
-        email: 'markikleiman@gmail.com',
         street: '9 W. 41st St',
         city: 'New York',
         state: 'NY',
@@ -160,7 +146,6 @@ async function main() {
       {
         firstName: 'Karen',
         lastName: "Scourby-D\'arc",
-        email: 'darcwriter1@gmail.com',
         street: '96 W. 41st St',
         city: 'New York',
         state: 'NY',
