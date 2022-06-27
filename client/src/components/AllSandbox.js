@@ -7,7 +7,7 @@ import {
   AllVolunteers,
   OneSandbox,
   SandboxSearchBar,
-  StateSearchSelectWithClear,
+  SearchSelectWithClear,
   Search
 } from '../components';
 import { Link } from 'react-router-dom';
@@ -98,23 +98,6 @@ export default function AllSandbox() {
   return (
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
-      {/* <Search /> */}
-
-      {/* <FilterWrapper>
-        <SandboxSearchBar data={sandboxList} />
-      </FilterWrapper> */}
-
-      <FilterWrapper>
-        <div className='form'>
-          <StateSearchSelectWithClear
-            data={sandboxList}
-            label={'Filter by state'}
-            clearBtn={'show'}
-            type={'sandbox'}
-            boxLabel={'Search by first name, last name, or email'}
-          />
-        </div>
-      </FilterWrapper>
 
       <SandboxWrapper>
         <div className='actions'>
@@ -123,34 +106,7 @@ export default function AllSandbox() {
           </Link>
         </div>
       </SandboxWrapper>
-
-      <Wrapper>
-        {end < allSandbox.length ? (
-          <h4>
-            Viewing {start} - {end} of {allSandbox.length} records
-          </h4>
-        ) : (
-          <h4>
-            Viewing {start} - {allSandbox.length} of {allSandbox.length} records
-          </h4>
-        )}
-
-        <div className='jobs'>
-          {data}
-          <ReactPaginate
-            previousLabel={'<< prev'}
-            nextLabel={'next >>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-        </div>
-      </Wrapper>
+      <Search />
     </>
   );
 }

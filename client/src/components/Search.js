@@ -8,27 +8,36 @@ import {
   SortBy,
   Pagination,
   RefinementList,
-  ClearRefinements
+  ClearRefinements,
+  Configure
 } from 'react-instantsearch-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { OneSandbox } from '.';
-
-const searchClient = algoliasearch(
-  'R09QEE164L',
-  '7381ee2bbf457ce7bf24686e1dd38bc2'
-);
+import { OneSandbox } from '../components'
 
 export default function Search() {
+  const searchClient = algoliasearch(
+    'R09QEE164L',
+    '7381ee2bbf457ce7bf24686e1dd38bc2'
+  );
+
   return (
-    <InstantSearch searchClient={searchClient} indexName='sandbox'>
-      <Header />
-      <Content />
-    </InstantSearch>
-  )
+    <>
+      <h5 className='r2b-blue space'>Search</h5>
+      <InstantSearch searchClient={searchClient} indexName='sandbox'>
+        <Configure hitsPerPage={10} />
+        <Header />
+        <h5 className='r2b-blue'>Filter by state</h5>
+        <RefinementList attribute='state' />
+        <RefinementList attribute='lastName' />
+        <ClearRefinements />
+        <Content />
+      </InstantSearch>
+    </>
+  );
 }
 
 const Header = () => (
-  <SearchBox translations={{ placeholder: 'Search' }}/>
+  <SearchBox translations={{ placeholder: 'Enter first name, last name, or email' }}/>
 )
 
 const Hit = ({ hit, updateSandbox }) => (
@@ -49,8 +58,7 @@ const Hit = ({ hit, updateSandbox }) => (
 const Content = () => (
   <div>
     <Stats />
-<RefinementList attribute='state'/>
     <Hits hitComponent={Hit} />
     <Pagination />
   </div>
-)
+);

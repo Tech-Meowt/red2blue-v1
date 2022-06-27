@@ -1,4 +1,5 @@
 import prisma from '../lib/prisma.js';
+import { index } from '../lib/algolia.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
@@ -29,6 +30,29 @@ const create = async (req, res) => {
     },
   });
   res.status(200).json({ sandbox });
+
+  // algolia
+  const api_sandbox = [
+    {
+      firstName: sandbox.firstName,
+      lastName: sandbox.lastName,
+      email: sandbox.email,
+      street: sandbox.street,
+      city: sandbox.city,
+      state: sandbox.state,
+      zip: sandbox.zip,
+      phone: sandbox.phone,
+      interests: sandbox.interests,
+    },
+  ];
+
+  index.saveObjects(api_sandbox, { autoGenerateObjectIDIfNotExist: true })
+    .then(({ objectIds }) => {
+      console.log(objectIds)
+    })
+    .catch(err => {
+    console.log(err)
+    })
 };
 
 const getAll = async (req, res) => {

@@ -29,7 +29,8 @@ const SandboxSearchBar = ({
     setWordEntered(searchWord);
     const newFilter = data.filter((value) => {
       return 
-        value.firstName.toLowerCase().includes(searchWord.toLowerCase());
+      console.log(value)
+        // value.firstName.toLowerCase().includes(searchWord.toLowerCase());
         // value.lastName.toLowerCase().includes(searchWord.toLowerCase()),
         // value.email.toLowerCase().includes(searchWord.toLowerCase())
       

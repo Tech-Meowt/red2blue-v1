@@ -16,7 +16,7 @@ import OneSandbox from './OneSandbox';
 import SearchBar from './SearchBar';
 import SearchSelect from './SearchSelect';
 import SandboxSearchBar from './SandboxSearchBar';
-import StateSearchSelectWithClear from './StateSearchSelectWithClear';
+import StateSearchSelectWithClear from './SearchSelectWithClear';
 import HelpBanner from './HelpBanner';
 import HelpPopularArticles from './HelpPopularArticles';
 import HelpArticles from './HelpArticles';
@@ -35,6 +35,7 @@ import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
 import Search from './Search';
+import SearchSelectWithClear from './SearchSelectWithClear';
 
 export {
   Logo,
@@ -55,7 +56,7 @@ export {
   SearchBar,
   SearchSelect,
   SandboxSearchBar,
-  StateSearchSelectWithClear,
+  SearchSelectWithClear,
   HelpBanner,
   HelpPopularArticles,
   HelpArticles,

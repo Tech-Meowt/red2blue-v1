@@ -6,7 +6,7 @@ import VolunteersWrapper from '../assets/wrappers/Volunteers';
 import {
   SearchBarAllVols,
   OneVolunteer,
-  StateSearchSelectWithClear,
+  SearchSelectWithClear,
 } from '../components';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -121,7 +121,7 @@ export default function AllVolunteers() {
 
           <FilterWrapper>
             <div className='form'>
-              <StateSearchSelectWithClear
+              <SearchSelectWithClear
                 data={volunteersList}
                 label={'Filter by state'}
                 clearBtn={'show'}

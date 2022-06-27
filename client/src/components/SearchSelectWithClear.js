@@ -1,9 +1,9 @@
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { FormRow, OneSandbox, OneVolunteer } from '../components'
+import { FormRow, OneSandbox, OneVolunteer } from '.'
 
-const StateSearchSelectWithClear = ({
+const SearchSelectWithClear = ({
   placeholder,
   data,
   getId,
@@ -34,8 +34,7 @@ const StateSearchSelectWithClear = ({
 
     const newFilter = data.filter((value) => {
       return (
-        value.firstName.toLowerCase().includes(searchTerm.toLowerCase()),
-        value.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+        console.log(value.firstName)
       );
     })
 
@@ -238,4 +237,4 @@ const StateSearchSelectWithClear = ({
   );
 };
 
-export default StateSearchSelectWithClear;
+export default SearchSelectWithClear;
