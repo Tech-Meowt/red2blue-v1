@@ -8,7 +8,7 @@ import {
   OneSandbox,
   SandboxSearchBar,
   SearchSelectWithClear,
-  Search
+  Search,
 } from '../components';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -17,12 +17,6 @@ export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
   const [sandboxList, setSandboxList] = useState([]);
   const [values, setValues] = useState('');
-  const [data, setData] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [perPage] = useState(20);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(1);
-  const [end, setEnd] = useState(20);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -44,37 +38,7 @@ export default function AllSandbox() {
       .catch((error) => {
         console.log(error);
       });
-    getData();
-  },
-    [offset]
-  );
-
-
-  const getData = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/sandbox');
-    const data = res.data.sandbox;
-    const slice = data.slice(offset, offset + perPage);
-    const sandData = slice.map((record) => {
-      return <OneSandbox key={record.id} {...record} />;
-    });
-    setData(sandData);
-    setPageCount(Math.ceil(data.length / perPage));
-    if (offset === 0) {
-      setEnd(end);
-      setStart(start);
-    } else if (!data) {
-      setEnd(0);
-      setStart(0);
-    } else {
-      setStart(offset * 20 - 19);
-      setEnd(offset * 20);
-    }
-  };
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1);
-  };
+  }, []);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -98,7 +62,7 @@ export default function AllSandbox() {
   return (
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
-
+      <h5>{allSandbox.length} records found</h5>
       <SandboxWrapper>
         <div className='actions'>
           <Link to={'/sandbox/add'}>
