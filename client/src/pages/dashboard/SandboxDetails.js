@@ -1,14 +1,13 @@
-import { Link } from 'react-router-dom';
-import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '../components';
+import { FormRow, StateSelect, Banner } from '../../components';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
 import Modal from 'react-modal';
+import OneRecordWrapper from '../../assets/wrappers/OneRecordWrapper';
 
-const OneSandbox = ({
-  id,
+export default function SandboxDetails({
   firstName,
   lastName,
   email,
@@ -18,11 +17,7 @@ const OneSandbox = ({
   zip,
   phone,
   interests,
-}) => {
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
-
+}) {
   const initialState = {
     firstName,
     lastName,
@@ -34,12 +29,15 @@ const OneSandbox = ({
     phone,
     interests,
   };
+  const [values, setValues] = useState(initialState);
+  const params = useParams();
+  const { id } = params;
+  const navigate = useNavigate();
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [values, setValues] = useState(initialState);
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
@@ -52,6 +50,13 @@ const OneSandbox = ({
     interests,
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      axios.get(`http://localhost:8000/api/v1/sandbox/${id}`).then((res) => {
+        setValues(res.data.sandbox);
+      });
+  }, []);
+
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
@@ -59,8 +64,8 @@ const OneSandbox = ({
   };
 
   const consoleId = (e) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -76,6 +81,7 @@ const OneSandbox = ({
       .catch((error) => {
         console.log(error);
       });
+    navigate('/sandbox/home')
   };
 
   const openModal = () => {
@@ -96,9 +102,9 @@ const OneSandbox = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000).catch((error) => {
+    
+      navigate('/sandbox/home')
+    .catch((error) => {
       console.log(error);
       setShowAlert(true);
       setAlertText('There was an error. Please try again...');
@@ -108,46 +114,35 @@ const OneSandbox = ({
 
   return (
     <>
+      <Banner />
       <OneRecordWrapper>
-        {showAlert && (
-          <div className={`alert alert-${alertType}`}>{alertText}</div>
-        )}
         <header>
-          <div className='main-icon'>{firstName.charAt(0)}</div>
           <div className='info'>
-              <h5>
-                {firstName} {lastName}
-              </h5>
-            <p className='lowercase'>{email}</p>
+            <h5 className='r2b-red'>
+              {values.firstName} {values.lastName}
+            </h5>
+            <p className='lowercase'>{values.email}</p>
           </div>
         </header>
-        <footer>
-          <div className='actions padding'>
-            <Link to={`/sandbox/${id}`}>
-              <button className='btn edit-btn'>Details</button>
-            </Link>
-          </div>
-        </footer>
-
-        {/* <div className='content-special'>
+        <div className='content-special'>
           <div className='content-center content-centered'>
             <div>
               <FaRegAddressCard className='icon' />
-              Address: <span className='status'>{street}</span>
+              Address: <span className='status'>{values.street}</span>
               <div className='address'>
                 <p className='status'>
-                  {city}, {state}
+                  {values.city}, {values.state}
                 </p>
-                <p className='status'>{zip}</p>
+                <p className='status'>{values.zip}</p>
               </div>
             </div>
             <div>
               <AiOutlinePhone className='icon' />
-              Phone: <span className='status'>{phone}</span>
+              Phone: <span className='status'>{values.phone}</span>
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />
-              Interests: <span className='status'>{interests}</span>
+              Interests: <span className='status'>{values.interests}</span>
             </div>
           </div>
           <footer>
@@ -165,6 +160,7 @@ const OneSandbox = ({
                   >
                     Delete
                   </button>
+
                   <Modal
                     isOpen={modalIsOpen}
                     style={{
@@ -315,10 +311,9 @@ const OneSandbox = ({
               )}
             </div>
           </footer>
-        </div> */}
+        </div>
       </OneRecordWrapper>
+      <div className={'alert alert-danger space'}>Updated and/or deleted records will be reflected in 24 hours.</div>
     </>
   );
-};
-
-export default OneSandbox;
+}

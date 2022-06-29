@@ -81,13 +81,6 @@ export default function AllVolunteers() {
     setOpened(!opened);
   };
 
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-
   const updateVolunteer = (id) => {
     axios
       .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)

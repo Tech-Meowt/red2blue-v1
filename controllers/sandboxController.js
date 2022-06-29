@@ -14,6 +14,7 @@ const create = async (req, res) => {
     zip,
     phone,
     interests,
+    id
   } = req.body;
 
   const sandbox = await prisma.sandbox.create({
@@ -27,6 +28,7 @@ const create = async (req, res) => {
       zip,
       phone,
       interests,
+      id
     },
   });
   res.status(200).json({ sandbox });
@@ -43,6 +45,7 @@ const create = async (req, res) => {
       zip: sandbox.zip,
       phone: sandbox.phone,
       interests: sandbox.interests,
+      id: sandbox.id
     },
   ];
 
@@ -59,6 +62,28 @@ const getAll = async (req, res) => {
   const sandbox = await prisma.sandbox.findMany();
   res.status(200).json({ sandbox });
 };
+
+const getOne = async (req, res) => {
+  const { id } = req.params;
+  const {
+    firstName,
+    lastName,
+    email,
+    street,
+    city,
+    state,
+    zip,
+    phone,
+    interests,
+  } = req.body;
+
+  const sandbox = await prisma.sandbox.findUnique({
+    where: {
+      id,
+    }
+  });
+  res.status(200).json({ sandbox });
+}
 
 const updateSandbox = async (req, res) => {
   const { id } = req.params;
@@ -89,8 +114,31 @@ const updateSandbox = async (req, res) => {
       phone,
       interests,
     },
-  });
-  res.status(200).json({ sandbox });
+  })
+    
+  res.status(200).json({ sandbox })
+   
+    const api_sandbox = {
+      firstName: sandbox.firstName,
+      lastName: sandbox.lastName,
+      email: sandbox.email,
+      street: sandbox.street,
+      city: sandbox.city,
+      state: sandbox.state,
+      zip: sandbox.zip,
+      phone: sandbox.phone,
+      interests: sandbox.interests,
+      id: sandbox.id,
+      objectID: sandbox.objectID,
+    };
+
+    index
+      .partialUpdateObject(api_sandbox, {
+        createIfNotExists: true,
+      })
+      .catch(err => {
+    console.log(err)
+  })
 };
 
 const deleteSandbox = async (req, res) => {
@@ -104,4 +152,4 @@ const deleteSandbox = async (req, res) => {
   res.status(200).json({});
 };
 
-export { create, getAll, updateSandbox, deleteSandbox };
+export { create, getAll, updateSandbox, deleteSandbox, getOne };
