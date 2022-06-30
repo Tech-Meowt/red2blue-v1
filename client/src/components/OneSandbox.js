@@ -58,10 +58,6 @@ const OneSandbox = ({
     setClicked(!clicked);
   };
 
-  const consoleId = (e) => {
-    console.log(id)
-  }
-
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -115,21 +111,13 @@ const OneSandbox = ({
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
           <div className='info'>
-              <h5>
-                {firstName} {lastName}
-              </h5>
+            <h5>
+              {firstName} {lastName}
+            </h5>
             <p className='lowercase'>{email}</p>
           </div>
         </header>
-        <footer>
-          <div className='actions padding'>
-            <Link to={`/sandbox/${id}`}>
-              <button className='btn edit-btn'>Details</button>
-            </Link>
-          </div>
-        </footer>
-
-        {/* <div className='content-special'>
+        <div className='content-special'>
           <div className='content-center content-centered'>
             <div>
               <FaRegAddressCard className='icon' />
@@ -315,7 +303,7 @@ const OneSandbox = ({
               )}
             </div>
           </footer>
-        </div> */}
+        </div>
       </OneRecordWrapper>
     </>
   );

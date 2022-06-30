@@ -6,12 +6,10 @@ import {
   getAll,
   updateSandbox,
   deleteSandbox,
-  getOne
 } from '../controllers/sandboxController.js';
 
 router.route('/').get(getAll);
 router.route('/create').post(create);
-router.route('/:id').get(getOne);
 router.route('/:id').patch(updateSandbox);
 router.route('/:id').delete(deleteSandbox);
 
