@@ -95,8 +95,8 @@ function App() {
         >
           <Route index element={<Sandbox />} />
           <Route path='/sandbox/home' element={<SandboxHome />} />
-
           <Route path='/sandbox/add' element={<AddSandbox />} />
+          {/* <Route path='/sandbox/:id' element={<SandboxDetails />} /> */}
         </Route>
         {/* Unprotected Routes */}
         <Route path='/register' element={<Register />} />
