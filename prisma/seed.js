@@ -1,7 +1,11 @@
+// "prisma": {
+//   "seed": "node prisma/seed.js"
+// }
+
 import prisma from '../lib/prisma.js';
 
 async function main() {
-  const sandbox = await prisma.sandbox.createMany({
+  const event = await prisma.event.createMany({
     data: [
       {
         firstName: 'Nancy',
@@ -155,7 +159,7 @@ async function main() {
       },
     ],
   });
-  console.log(sandbox);
+  console.log(event);
 }
 
 main()
