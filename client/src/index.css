@@ -19,7 +19,6 @@ html {
   --green-dark: #0f5132;
   --r2b-red: #ed1c24;
   --r2b-blue: #0083ca;
-  --r2b-blue-light: rgba(0, 131, 202, .4);
 
   /* fonts  */
   --headingFont: 'Roboto Condensed', Sans-Serif;
@@ -309,7 +308,7 @@ select:invalid {
   margin: 3rem auto;
   transition: var(--transition);
 }
-.form:hover, .ais-SearchBox-form:hover, .search-container:hover {
+.form:hover, .ais-SearchBox-form:hover {
   box-shadow: var(--shadow-4);
 }
 .form-label {
@@ -386,10 +385,6 @@ select:invalid {
   margin-top: -1rem;
 }
 
-.space-top {
-  padding-top: 1.5rem;
-}
-
 .container {
   width: var(--fluid-width);
   max-width: var(--max-width);
@@ -439,27 +434,16 @@ select:invalid {
 /* algolia */
 
 .ais-SearchBox-form {
-  background: white;
   padding-bottom: 4rem;
-}
-
-.ais-SearchBox-submitIcon {
-  path {
-    fill: var(--r2b-red);
-  }
 }
 
 .ais-Stats-text {
   color: black;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .ais-RefinementList {
   display: flex;
-}
-
-.ais-RefinementList-count {
-  background: transparent;
 }
 
 .ais-RefinementList-list {
@@ -513,32 +497,6 @@ select:invalid {
 input[type=checkbox]:checked {
   border: 1px solid var(--r2b-blue);
   color: var(--r2b-blue);
-}
-
-.ais-RefinementList-count, .ais-RefinementList-checkbox {
-  border-radius: var(--borderRadius);
-  box-shadow: var(--shadow-2);
-}
-
-.search-container {
-  max-width: 100%;
-  background: var(--white);
-  border-radius: var(--borderRadius);
-  box-shadow: var(--shadow-2);
-  padding: 2rem 2.5rem;
-  margin: 3rem auto;
-  transition: var(--transition);
-}
-
-.search-container-child {
-  background: var(--r2b-blue-light);
-  border-color: transparent;
-  border-radius: var(--borderRadius);
-  box-shadow: var(--shadow-2);
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 0;
-  transition: var(--transition);
-  z-index: 100;
 }
 
 @media (min-width: 768px) {
