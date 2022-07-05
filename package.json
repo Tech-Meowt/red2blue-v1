@@ -1,9 +1,12 @@
 {
-  "name": "Red2Blue Database",
+  "name": "red2bluedatabase",
   "version": "1.0.0",
   "description": "Database and CRM",
   "main": "index.js",
   "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "install-server": "npm install",
     "install-dependencies": " npm run install-client && npm run install-server ",
@@ -23,6 +26,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.6.2",
+    "@prisma/client": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -36,6 +40,7 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.13",
     "morgan": "^1.10.0",
+    "prisma": "^4.0.0",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },

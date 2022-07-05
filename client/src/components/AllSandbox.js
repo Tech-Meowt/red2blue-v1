@@ -16,12 +16,6 @@ export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
   const [sandboxList, setSandboxList] = useState([]);
   const [values, setValues] = useState('');
-  const [data, setData] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [perPage] = useState(20);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(1);
-  const [end, setEnd] = useState(20);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -43,31 +37,8 @@ export default function AllSandbox() {
       .catch((error) => {
         console.log(error);
       });
-    getData();
-  }, [offset]);
+  }, []);
 
-  const getData = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/sandbox');
-    const data = res.data;
-    const slice = data.slice(offset, offset + perPage)
-    const sandData = slice.map((record) => {
-      return <OneSandbox key={record._id} {...record} />;
-    });
-    setData(sandData);
-    setPageCount(Math.ceil(data.length / perPage))
-    if (offset === 0) {
-      setEnd(end);
-      setStart(start);
-    } else {
-      setStart(offset * 20 - 19);
-      setEnd(offset * 20);
-    }
-  }
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1);
-  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -116,31 +87,14 @@ export default function AllSandbox() {
       </SandboxWrapper>
 
       <Wrapper>
-        {end < allSandbox.length ? (
-          <h4>
-            Viewing {start} - {end} of {allSandbox.length} records
-          </h4>
-        ) : <h4>
-            Viewing {start} - {allSandbox.length} of {allSandbox.length} records
-        </h4>}
-        
+        {allSandbox.length === 0 && <h4>No data found</h4>}
+        {allSandbox.length === 1 && <h4>Found 1 record</h4>}
+        {allSandbox.length > 1 && <h4>Found {allSandbox.length} records</h4>}
+
         <div className='jobs'>
-          {data}
-          <ReactPaginate
-            previousLabel={'<< prev'}
-            nextLabel={'next >>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-          {/* {allSandbox.map((record) => {
+          {allSandbox.map((record) => {
             return <OneSandbox key={record._id} {...record} />;
-          })} */}
+          })}
         </div>
       </Wrapper>
     </>
