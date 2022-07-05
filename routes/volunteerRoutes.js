@@ -1,8 +1,12 @@
 import express from 'express';
 const router = express.Router();
-import Volunteer from '../models/Volunteer.js';
 
-import { create, getAll, updateVolunteer, deleteVolunteer } from '../controllers/volunteersController.js';
+import {
+  create,
+  getAll,
+  updateVolunteer,
+  deleteVolunteer,
+} from '../controllers/volunteersController.js';
 
 router.route('/').get(getAll);
 router.route('/addVolunteer').post(create);

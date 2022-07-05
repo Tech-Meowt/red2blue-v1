@@ -13,19 +13,20 @@ datasource db {
 
 model Event {
   id         String      @id @default(uuid())
-  volunteers Volunteer[]
-  eventName  String
-  eventType  String
+  eventName  String      @unique
+  eventType  String?
   eventDate  String?
-  eventYear  String
+  eventYear  String?
+  volunteers Volunteer[]
 }
 
 model Volunteer {
-  id                       String  @id @default(uuid())
+  id                       String   @id @default(uuid())
   events                   Event[]
+  eventId                  String?
   firstName                String?
   lastName                 String?
-  email                    String?
+  email                    String?  @unique
   street                   String?
   city                     String?
   state                    String?
@@ -79,6 +80,7 @@ model Volunteer {
   webDesign                String?
   webMgmt                  String?
   anythingElse             String?
+  updatedAt                DateTime @default(now())
 }
 
 model Sandbox {
@@ -93,11 +95,3 @@ model Sandbox {
   phone     String?
   interests String?
 }
-
-// model User {
-//   id  String  @id @default(uuid())
-//   name  String
-//   createdAt DateTime  @default(now())
-//   updatedAt DateTime @updatedAt
-//   games Game[]
-// }
