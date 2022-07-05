@@ -7,10 +7,9 @@ import {
   AllVolunteers,
   OneSandbox,
   SandboxSearchBar,
-  StateSearchSelectWithClear
+  StateSearchSelectWithClear,
 } from '../components';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
 
 export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
@@ -23,7 +22,7 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setAllSandbox(res.data);
+        setAllSandbox(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -32,13 +31,12 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setSandboxList(res.data);
+        setSandboxList(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -51,8 +49,8 @@ export default function AllSandbox() {
     axios
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
-        values(res.data);
-        console.log(res.data);
+        values(res.data.sandbox);
+        console.log(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +60,6 @@ export default function AllSandbox() {
   return (
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
-
       <FilterWrapper>
         <SandboxSearchBar data={sandboxList} />
       </FilterWrapper>
@@ -87,13 +84,9 @@ export default function AllSandbox() {
       </SandboxWrapper>
 
       <Wrapper>
-        {allSandbox.length === 0 && <h4>No data found</h4>}
-        {allSandbox.length === 1 && <h4>Found 1 record</h4>}
-        {allSandbox.length > 1 && <h4>Found {allSandbox.length} records</h4>}
-
         <div className='jobs'>
           {allSandbox.map((record) => {
-            return <OneSandbox key={record._id} {...record} />;
+            return <OneSandbox key={record.id} {...record} />;
           })}
         </div>
       </Wrapper>
