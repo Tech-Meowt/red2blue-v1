@@ -126,17 +126,28 @@ const create = async (req, res) => {
       webDesign,
       webMgmt,
       anythingElse,
+      // events: {
+      //   connectOrCreate: [
+      //     {
+      //       create: {
+      //         eventName: events,
+      //       },
+      //       where: {
+      //         eventName: events
+      //       },
+      //     }
+      //   ],
+      // },
       events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
+        connectOrCreate: 
+          events.map((event) => ({
             where: {
-              eventName: events
+                eventName: event,
             },
-          }
-        ],
+            create: {
+              eventName: event
+            }
+            }))
       },
       updatedAt,
     },

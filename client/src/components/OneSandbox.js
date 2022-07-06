@@ -8,7 +8,7 @@ import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
 import Modal from 'react-modal';
 
 const OneSandbox = ({
-  _id,
+  id,
   firstName,
   lastName,
   email,
@@ -62,12 +62,12 @@ const OneSandbox = ({
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const updateSandbox = (_id) => {
+  const updateSandbox = (id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/sandbox/${_id}`, values)
+      .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
-        newValues(res.data);
-        console.log(res.data);
+        newValues(res.data.sandbox);
+        console.log(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -142,13 +142,13 @@ const OneSandbox = ({
             <div className='actions'>
               {!clicked && (
                 <>
-                  <button className='btn edit-btn' name={_id} onClick={getId}>
+                  <button className='btn edit-btn' name={id} onClick={getId}>
                     Edit
                   </button>
                   <button
                     type='button'
                     className='btn delete-btn'
-                    name={_id}
+                    name={id}
                     onClick={openModal}
                   >
                     Delete
@@ -196,7 +196,7 @@ const OneSandbox = ({
                       <button
                         onClick={deleteHandler}
                         className='btn-danger height'
-                        name={_id}
+                        name={id}
                       >
                         Delete
                       </button>
@@ -216,13 +216,13 @@ const OneSandbox = ({
                     </p>
                   </div>
 
-                  <button className='btn delete-btn' name={_id} onClick={getId}>
+                  <button className='btn delete-btn' name={id} onClick={getId}>
                     Close
                   </button>
                   <h1></h1>
                   <form
                     onSubmit={() => {
-                      updateSandbox(_id);
+                      updateSandbox(id);
                     }}
                   >
                     <div className='content-centered content-center'>
