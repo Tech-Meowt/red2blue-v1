@@ -106,7 +106,7 @@ const updateSandbox = async (req, res) => {
     phone: sandbox.phone,
     interests: sandbox.interests,
     id: sandbox.id,
-    objectID: sandbox.id,
+    objectID: sandbox.objectID,
   };
 
   index
@@ -122,12 +122,17 @@ const updateSandbox = async (req, res) => {
 const deleteSandbox = async (req, res) => {
   const { id } = req.params;
 
-  await prisma.sandbox.delete({
+  const sandbox = await prisma.sandbox.delete({
     where: {
       id,
     },
   });
   res.status(200).json({});
+
+  // algolia
+  index.deleteObject(req.params.id).then(() => {
+    console.log('removed')
+  })
 };
 
 export { create, getAll, updateSandbox, deleteSandbox };

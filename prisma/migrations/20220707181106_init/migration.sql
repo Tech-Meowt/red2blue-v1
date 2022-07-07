@@ -10,22 +10,6 @@ CREATE TABLE "Event" (
 );
 
 -- CreateTable
-CREATE TABLE "Sandbox" (
-    "id" TEXT NOT NULL,
-    "firstName" TEXT,
-    "lastName" TEXT,
-    "email" TEXT,
-    "street" TEXT,
-    "city" TEXT,
-    "state" TEXT,
-    "zip" TEXT,
-    "phone" TEXT,
-    "interests" TEXT,
-
-    CONSTRAINT "Sandbox_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Volunteer" (
     "id" TEXT NOT NULL,
     "eventId" TEXT,
@@ -91,6 +75,23 @@ CREATE TABLE "Volunteer" (
 );
 
 -- CreateTable
+CREATE TABLE "Sandbox" (
+    "id" TEXT NOT NULL,
+    "objectID" TEXT NOT NULL,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "email" TEXT,
+    "street" TEXT,
+    "city" TEXT,
+    "state" TEXT,
+    "zip" TEXT,
+    "phone" TEXT,
+    "interests" TEXT,
+
+    CONSTRAINT "Sandbox_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_EventToVolunteer" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -100,10 +101,10 @@ CREATE TABLE "_EventToVolunteer" (
 CREATE UNIQUE INDEX "Event_eventName_key" ON "Event"("eventName");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Sandbox_email_key" ON "Sandbox"("email");
+CREATE UNIQUE INDEX "Volunteer_email_key" ON "Volunteer"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Volunteer_email_key" ON "Volunteer"("email");
+CREATE UNIQUE INDEX "Sandbox_email_key" ON "Sandbox"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_EventToVolunteer_AB_unique" ON "_EventToVolunteer"("A", "B");

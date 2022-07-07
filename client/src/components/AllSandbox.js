@@ -19,6 +19,7 @@ import {
   Stats,
   RefinementList,
   ClearRefinements,
+  Configure,
 } from 'react-instantsearch-dom';
 
 export default function AllSandbox() {
@@ -76,20 +77,6 @@ export default function AllSandbox() {
   return (
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
-      {/* <FilterWrapper>
-        <SandboxSearchBar data={sandboxList} />
-      </FilterWrapper>
-
-      <FilterWrapper>
-        <div className='form'>
-          <StateSearchSelectWithClear
-            data={sandboxList}
-            label={'Filter by state'}
-            clearBtn={'show'}
-            type={'sandbox'}
-          />
-        </div>
-      </FilterWrapper> */}
 
       <SandboxWrapper>
         <div className='actions'>
@@ -101,6 +88,7 @@ export default function AllSandbox() {
 
       <div className='search-container'>
         <InstantSearch searchClient={searchClient} indexName={index}>
+          <Configure hitsPerPage={10}/>
           <div className='search-container-child'>
             <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
             <SearchBox
@@ -121,14 +109,6 @@ export default function AllSandbox() {
           />
         </InstantSearch>
       </div>
-
-      {/* <Wrapper>
-        <div className='jobs'>
-          {allSandbox.map((record) => {
-            return <OneSandbox key={record.id} {...record} />;
-          })}
-        </div>
-      </Wrapper> */}
     </>
   );
 }
@@ -146,7 +126,8 @@ const Hit = ({
   state,
   zip,
   phone,
-  interests
+  interests,
+  objectID
 }) => (
   <OneSandbox
     firstName={hit.firstName}
