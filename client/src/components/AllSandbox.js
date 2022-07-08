@@ -92,7 +92,7 @@ export default function AllSandbox() {
       </SandboxWrapper>
 
       <div className='search-container'>
-        <InstantSearch searchClient={searchClient} indexName={index}>
+        <InstantSearch searchClient={searchClient} indexName={index} routing={true}>
           <Configure hitsPerPage={10}/>
           <div className='search-container-child'>
             <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
