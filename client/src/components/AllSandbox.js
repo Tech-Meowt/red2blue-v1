@@ -7,21 +7,31 @@ import {
   AllVolunteers,
   OneSandbox,
   SandboxSearchBar,
-  StateSearchSelectWithClear
+  StateSearchSelectWithClear,
 } from '../components';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
+import algoliasearch from 'algoliasearch';
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  Pagination,
+  Stats,
+  RefinementList,
+  ClearRefinements,
+  Configure,
+} from 'react-instantsearch-dom';
 
 export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
   const [sandboxList, setSandboxList] = useState([]);
   const [values, setValues] = useState('');
-  const [data, setData] = useState([]);
-  const [offset, setOffset] = useState(0);
-  const [perPage] = useState(20);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(1);
-  const [end, setEnd] = useState(20);
+  
+  const searchClient = algoliasearch(
+    process.env.REACT_APP_ALGOLIA_ID,
+    process.env.REACT_APP_SEARCH_API
+  );
+  const index = process.env.REACT_APP_ALGOLIA_SANDBOX_INDEX;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -29,7 +39,7 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setAllSandbox(res.data);
+        setAllSandbox(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -38,36 +48,12 @@ export default function AllSandbox() {
     axios
       .get('http://localhost:8000/api/v1/sandbox')
       .then((res) => {
-        setSandboxList(res.data);
+        setSandboxList(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
       });
-    getData();
-  }, [offset]);
-
-  const getData = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/sandbox');
-    const data = res.data;
-    const slice = data.slice(offset, offset + perPage)
-    const sandData = slice.map((record) => {
-      return <OneSandbox key={record._id} {...record} />;
-    });
-    setData(sandData);
-    setPageCount(Math.ceil(data.length / perPage))
-    if (offset === 0) {
-      setEnd(end);
-      setStart(start);
-    } else {
-      setStart(offset * 20 - 19);
-      setEnd(offset * 20);
-    }
-  }
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1);
-  };
+  }, []);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -76,12 +62,17 @@ export default function AllSandbox() {
     console.log(values);
   };
 
+  const getId = (e) => {
+    const id = e.target.name;
+    console.log(id);
+  };
+
   const updateSandbox = (id) => {
     axios
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
-        values(res.data);
-        console.log(res.data);
+        values(res.data.sandbox);
+        console.log(res.data.sandbox);
       })
       .catch((error) => {
         console.log(error);
@@ -92,21 +83,6 @@ export default function AllSandbox() {
     <>
       <h4>Database: Volunteers (Dummy Data)</h4>
 
-      <FilterWrapper>
-        <SandboxSearchBar data={sandboxList} />
-      </FilterWrapper>
-
-      <FilterWrapper>
-        <div className='form'>
-          <StateSearchSelectWithClear
-            data={sandboxList}
-            label={'Filter by state'}
-            clearBtn={'show'}
-            type={'sandbox'}
-          />
-        </div>
-      </FilterWrapper>
-
       <SandboxWrapper>
         <div className='actions'>
           <Link to={'/sandbox/add'}>
@@ -115,34 +91,64 @@ export default function AllSandbox() {
         </div>
       </SandboxWrapper>
 
-      <Wrapper>
-        {end < allSandbox.length ? (
-          <h4>
-            Viewing {start} - {end} of {allSandbox.length} records
-          </h4>
-        ) : <h4>
-            Viewing {start} - {allSandbox.length} of {allSandbox.length} records
-        </h4>}
-        
-        <div className='jobs'>
-          {data}
-          <ReactPaginate
-            previousLabel={'<< prev'}
-            nextLabel={'next >>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
+      <div className='search-container'>
+        <InstantSearch searchClient={searchClient} indexName={index}>
+          <Configure hitsPerPage={10}/>
+          <div className='search-container-child'>
+            <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
+            <SearchBox
+              translations={{
+                placeholder: 'Enter first name, last name, or email',
+              }}
+              showLoadingIndicator
+            />
+          </div>
+          <h5 className='r2b-red'>🌎 Filter by state</h5>
+          <RefinementList attribute='state' />
+          <ClearRefinements />
+          <Stats />
+          <Hits hitComponent={Hit} />
+          <Pagination
+            padding={2}
+            showLast={true}
           />
-          {/* {allSandbox.map((record) => {
-            return <OneSandbox key={record._id} {...record} />;
-          })} */}
-        </div>
-      </Wrapper>
+        </InstantSearch>
+      </div>
     </>
   );
 }
+
+const Hit = ({
+  hit,
+  id,
+  updateSandbox,
+  deleteHandler,
+  firstName,
+  lastName,
+  email,
+  street,
+  city,
+  state,
+  zip,
+  phone,
+  interests,
+  objectID,
+  getId
+}) => (
+  <OneSandbox
+    firstName={hit.firstName}
+    lastName={hit.lastName}
+    email={hit.email}
+    street={hit.street}
+    city={hit.city}
+    state={hit.state}
+    zip={hit.zip}
+    phone={hit.phone}
+    interests={hit.interests}
+    id={hit.id}
+    objectID={hit.objectID}
+    deleteHandler={deleteHandler}
+    updateSandbox={updateSandbox}
+    getId={getId}
+  />
+);

@@ -51,7 +51,7 @@ export default function AddSandbox({ label }) {
     }
 
     axios
-      .post('http://localhost:8000/api/v1/sandbox/allSandbox', sandboxInfo)
+      .post('http://localhost:8000/api/v1/sandbox/create', sandboxInfo)
       .then((res) => {
         setSandboxInfo({
           firstName: '',

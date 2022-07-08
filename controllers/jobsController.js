@@ -5,7 +5,7 @@ import {
   NotFoundError,
   UnAuthenticatedError,
 } from '../errors/index.js';
-import checkPermissions from '../utils/checkPermissions.js';
+import checkPermissions from '../lib/checkPermissions.js';
 import mongoose from 'mongoose';
 import moment from 'moment';
 const createJob = async (req, res) => {
