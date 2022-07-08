@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("HEROKU_POSTGRESQL_BLUE_URL")
+}
+
+model Event {
+  id         String      @id @default(uuid())
+  eventName  String      @unique
+  eventType  String?
+  eventDate  String?
+  eventYear  String?
+  volunteers Volunteer[]
+}
+
+model Volunteer {
+  id                       String   @id @default(uuid())
+  events                   Event[]
+  eventId                  String?
+  firstName                String?
+  lastName                 String?
+  email                    String?  @unique
+  street                   String?
+  city                     String?
+  state                    String?
+  zip                      String?
+  phone                    String?
+  campaignMgmt             String?
+  canvassing               String?
+  communityOrganizing      String?
+  electedOfficialCurr      String?
+  electedOfficialPast      String?
+  p2pTextingMgmt           String?
+  p2pTextingVol            String?
+  phonebanking             String?
+  pollWorker               String?
+  postcardMgmt             String?
+  postcardWriting          String?
+  txtPhoneScriptEdit       String?
+  txtPhoneScriptWrite      String?
+  vanVoteBuildExp          String?
+  voterReg                 String?
+  actor                    String?
+  artist                   String?
+  boardOfDirectors         String?
+  dataScience              String?
+  dbMgmt                   String?
+  editor                   String?
+  professor                String?
+  trainer                  String?
+  fundraising              String?
+  graphicDesign            String?
+  hr                       String?
+  it                       String?
+  legal                    String?
+  linguist                 String?
+  msgComms                 String?
+  musician                 String?
+  newsletterCreateDesign   String?
+  newsletterWrite          String?
+  nonprofMgmt              String?
+  pr                       String?
+  publicSpeak              String?
+  recruitment              String?
+  research                 String?
+  otherLanguage            String?
+  socialMediaContentCreate String?
+  socialMediaMgmt          String?
+  speechWriter             String?
+  strategicPlanning        String?
+  videoEditCreate          String?
+  volMgmt                  String?
+  webDesign                String?
+  webMgmt                  String?
+  anythingElse             String?
+  updatedAt                DateTime @default(now())
+}
+
+model Sandbox {
+  id  String @id @default(uuid())
+  objectID String?
+  firstName String?
+  lastName  String?
+  email     String? @unique
+  state     String?
+  phone     String?
+  interests String?
+}
