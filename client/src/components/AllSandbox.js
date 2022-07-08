@@ -62,6 +62,11 @@ export default function AllSandbox() {
     console.log(values);
   };
 
+  const getId = (e) => {
+    const id = e.target.name;
+    console.log(id);
+  };
+
   const updateSandbox = (id) => {
     axios
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
@@ -127,7 +132,8 @@ const Hit = ({
   zip,
   phone,
   interests,
-  objectID
+  objectID,
+  getId
 }) => (
   <OneSandbox
     firstName={hit.firstName}
@@ -140,7 +146,9 @@ const Hit = ({
     phone={hit.phone}
     interests={hit.interests}
     id={hit.id}
+    objectID={hit.objectID}
     deleteHandler={deleteHandler}
     updateSandbox={updateSandbox}
+    getId={getId}
   />
 );

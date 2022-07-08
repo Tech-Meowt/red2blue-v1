@@ -89,10 +89,7 @@ model Sandbox {
   firstName String?
   lastName  String?
   email     String? @unique
-  street    String?
-  city      String?
   state     String?
-  zip       String?
   phone     String?
   interests String?
 }
