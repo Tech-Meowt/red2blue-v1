@@ -7,7 +7,7 @@ const SandboxSearchBar = ({
   placeholder,
   data,
   getId,
-  _id,
+  id,
   deleteHandler,
   updateSandbox,
   firstName,

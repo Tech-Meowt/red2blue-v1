@@ -7,7 +7,7 @@ const StateSearchSelectWithClear = ({
   placeholder,
   data,
   getId,
-  _id,
+  id,
   deleteHandler,
   updateSandbox,
   updateUser,
@@ -30,7 +30,6 @@ const StateSearchSelectWithClear = ({
   const handleUsersFilter = (e) => {
     const searchWord = e.target.value;
     setWordEntered(searchWord);
-
     const newFilter = data.filter((value) => {
       return value.state.toLowerCase().includes(searchWord.toLowerCase());
     });
@@ -156,7 +155,7 @@ const StateSearchSelectWithClear = ({
                       phone={value.phone}
                       interests={value.interests}
                       getId={getId}
-                      _id={value._id}
+                      id={value.id}
                       deleteHandler={deleteHandler}
                       updateSandbox={updateSandbox}
                     />
