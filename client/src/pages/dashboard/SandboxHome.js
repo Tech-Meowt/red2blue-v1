@@ -2,13 +2,17 @@ import {
   Banner,
   AllSandbox,
 } from '../../components';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 export default function SandboxHome() {
 
   return (
     <>
-      <Helmet><title>Sandbox</title></Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Sandbox</title>
+        </Helmet>
+      </HelmetProvider>
       <Banner />
       <AllSandbox />
     </>

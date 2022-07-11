@@ -1,13 +1,15 @@
 import { AllDbUsers } from '../../components';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 export default function UserAccounts() {
 
   return (
     <>
-      <Helmet>
-        <title>User Accounts</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>User Accounts</title>
+        </Helmet>
+      </HelmetProvider>
       <AllDbUsers />
     </>
   );

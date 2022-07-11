@@ -19,8 +19,6 @@ const Register = () => {
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
   
-  
-  
   const sendNewAccountEmail = () => {
     const templateParams = {
       userFirstName: values.firstName,
