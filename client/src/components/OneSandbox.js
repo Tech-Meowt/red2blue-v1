@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, navigate } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -12,10 +12,7 @@ const OneSandbox = ({
   firstName,
   lastName,
   email,
-  street,
-  city,
   state,
-  zip,
   phone,
   interests,
 }) => {
@@ -27,10 +24,7 @@ const OneSandbox = ({
     firstName,
     lastName,
     email,
-    street,
-    city,
     state,
-    zip,
     phone,
     interests,
   };
@@ -44,10 +38,7 @@ const OneSandbox = ({
     firstName,
     lastName,
     email,
-    street,
-    city,
     state,
-    zip,
     phone,
     interests,
   });
@@ -69,9 +60,18 @@ const OneSandbox = ({
         newValues(res.data.sandbox);
         console.log(res.data.sandbox);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+    setShowAlert(true);
+    setAlertText('Update successful!');
+    setAlertType('success');
+    closeModal(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000).catch((error) => {
+      console.log(error);
+      setShowAlert(true);
+      setAlertText('There was an error. Please try again...');
+      setAlertType('danger');
+    });
   };
 
   const openModal = () => {
@@ -121,17 +121,14 @@ const OneSandbox = ({
           <div className='content-center content-centered'>
             <div>
               <FaRegAddressCard className='icon' />
-              Address: <span className='status'>{street}</span>
-              <div className='address'>
-                <p className='status'>
-                  {city}, {state}
-                </p>
-                <p className='status'>{zip}</p>
-              </div>
+              State:{' '}
+              <span className='status'>
+                {state}
+              </span>
             </div>
             <div>
               <AiOutlinePhone className='icon' />
-                Phone: <span className='status'>{phone}</span>
+              Phone: <span className='status'>{phone}</span>
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />
@@ -221,7 +218,11 @@ const OneSandbox = ({
                   </button>
                   <h1></h1>
                   <form
-                    onSubmit={() => {
+                    // onSubmit={() => {
+                    //   updateSandbox(id);
+                    // }}
+                    onSubmit={(e) => {
+                      e.preventDefault();
                       updateSandbox(id);
                     }}
                   >
@@ -250,32 +251,8 @@ const OneSandbox = ({
                         value={values.email}
                         handleChange={handleChange}
                       />
-                      <FormRow
-                        placeholder='15 Yemen Rd'
-                        type='text'
-                        name='street'
-                        labelText={'Street'}
-                        value={values.street}
-                        handleChange={handleChange}
-                      />
-                      <FormRow
-                        placeholder='Enter city'
-                        type='text'
-                        name='city'
-                        labelText={'City'}
-                        value={values.city}
-                        handleChange={handleChange}
-                      />
                       <StateSelect
                         value={values.state}
-                        handleChange={handleChange}
-                      />
-                      <FormRow
-                        placeholder='Enter zip code'
-                        type='text'
-                        name='zip'
-                        labelText={'Zip Code'}
-                        value={values.zip}
                         handleChange={handleChange}
                       />
                       <FormRow

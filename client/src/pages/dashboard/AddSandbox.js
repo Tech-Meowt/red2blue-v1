@@ -4,25 +4,24 @@ import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Banner, StateSelect } from '../../components';
+import { Banner, StateSelect, Alert } from '../../components';
+import { useAppContext } from '../../context/appContext';
 
 export default function AddSandbox({ label }) {
   const [sandboxInfo, setSandboxInfo] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    street: '',
-    city: '',
     state: '',
-    zip: '',
     phone: '',
     interests: '',
   });
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [required, setRequired] = useState(true);
   const navigate = useNavigate();
+  const { displayAlert, showAlert } = useAppContext();
   
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -34,20 +33,15 @@ export default function AddSandbox({ label }) {
 
   const createRecord = (e) => {
     e.preventDefault();
+    const { firstName, lastName, email, state, phone, interests } = sandboxInfo;
 
     if (
-      !sandboxInfo.firstName ||
-      !sandboxInfo.lastName ||
-      !sandboxInfo.email ||
-      !sandboxInfo.street ||
-      !sandboxInfo.city ||
-      !sandboxInfo.state ||
-      !sandboxInfo.zip ||
-      !sandboxInfo.phone
+      !firstName ||
+      !lastName ||
+     ! email
     ) {
-      setShowAlert(true);
-      setAlertText('Please fill out all fields');
-      setAlertType('danger');
+      displayAlert();
+      return;
     }
 
     axios
@@ -57,15 +51,12 @@ export default function AddSandbox({ label }) {
           firstName: '',
           lastName: '',
           email: '',
-          street: '',
-          city: '',
           state: '',
-          zip: '',
           phone: '',
           interests: '',
         });
         console.log(res.data.message);
-        setShowAlert(true);
+        setAlert(true);
         setAlertText('Record created! Redirecting...');
         setAlertType('success');
         setTimeout(() => {
@@ -74,7 +65,7 @@ export default function AddSandbox({ label }) {
       })
       .catch((error) => {
         console.log(error);
-        setShowAlert(true);
+        setAlert(true);
         setAlertText('There was an error. Please try again...');
         setAlertType('danger');
       });
@@ -87,10 +78,7 @@ export default function AddSandbox({ label }) {
       firstName: '',
       lastName: '',
       email: '',
-      street: '',
-      city: '',
       state: '',
-      zip: '',
       phone: '',
       interests: '',
     });
@@ -104,7 +92,8 @@ export default function AddSandbox({ label }) {
         <br />
         <div className='info actions'>
           <h3>Add Record</h3>
-          {showAlert && (
+          {showAlert && <Alert />}
+          {displayAlert && (
             <div className={`alert alert-${alertType}`}>{alertText}</div>
           )}
           <p className='instructions'>
@@ -142,36 +131,11 @@ export default function AddSandbox({ label }) {
                 value={sandboxInfo.email}
                 handleChange={handleChange}
               />
-              <FormRow
-                placeholder='15 Yemen Rd'
-                type='text'
-                name='street'
-                labelText={'Street'}
-                value={sandboxInfo.street}
-                handleChange={handleChange}
-              />
-              <FormRow
-                placeholder='Enter city'
-                type='text'
-                name='city'
-                labelText={'City'}
-                value={sandboxInfo.city}
-                handleChange={handleChange}
-              />
               <StateSelect
                 value={sandboxInfo.state}
                 handleChange={handleChange}
                 required
               />
-              <FormRow
-                placeholder='Enter zip code'
-                type='text'
-                name='zip'
-                labelText={'Zip Code'}
-                value={sandboxInfo.zip}
-                handleChange={handleChange}
-              />
-
               <FormRow
                 placeholder='(555) 555-5555'
                 type='text'
