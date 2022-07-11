@@ -21,7 +21,6 @@ import {
   ClearRefinements,
   Configure,
 } from 'react-instantsearch-dom';
-import qs from 'qs'
 
 export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
