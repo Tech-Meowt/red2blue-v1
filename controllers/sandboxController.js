@@ -11,6 +11,7 @@ const create = async (req, res) => {
     state,
     phone,
     interests,
+    createdAt,
   } = req.body;
 
   const sandbox = await prisma.sandbox.create({
@@ -21,6 +22,7 @@ const create = async (req, res) => {
       state,
       phone,
       interests,
+      createdAt,
     },
   })
     res.status(200).json({ sandbox });
@@ -37,6 +39,7 @@ const create = async (req, res) => {
       interests: sandbox.interests,
       id: sandbox.id,
       objectID: sandbox.id,
+      createdAt: sandbox.createdAt,
     },
   ];
   index
@@ -50,7 +53,11 @@ const create = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const sandbox = await prisma.sandbox.findMany();
+  const sandbox = await prisma.sandbox.findMany({
+    orderBy: {
+      createdAt: 'desc',
+    }
+  });
   res.status(200).json({ sandbox });
 };
 

@@ -19,25 +19,27 @@ const Register = () => {
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
   
-  const obj = {
-    userName: values.firstName,
-    userEmail: values.email,
-  };
-  
-  const sendNewAccountEmail = (obj) => {
+  const sendNewAccountEmail = () => {
+    const templateParams = {
+      userFirstName: values.firstName,
+      userLastName: values.lastName,
+      userEmail: values.email,
+    };
     emailjs
       .send(
-        'service_0u0nhlb',
-        'template_rwbflkg',
-        obj,
-        'gJtJMCXOyZBGs1ZMw'
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_NEW_ACCOUNT_TEMPLATE_ID,
+        templateParams,
+        process.env.REACT_APP_EMAILJS_API
       )
       .then(
         (result) => {
           console.log(result.text);
+          console.log(templateParams);
         },
         (error) => {
           console.log(error.text);
+          console.log(templateParams);
         }
       );
   };

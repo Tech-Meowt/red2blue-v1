@@ -3,13 +3,17 @@ import {
   HelpPopularArticles,
   HelpArticles,
 } from '../../components';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider} from 'react-helmet-async';
 
 const Help = () => {
 
   return (
     <>
-      <Helmet><title>Help</title></Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Help</title>
+        </Helmet>
+      </HelmetProvider>
       <HelpBanner />
       <HelpPopularArticles />
       <HelpArticles />
