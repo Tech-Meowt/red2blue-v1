@@ -105,7 +105,7 @@ export default function IdleTimer() {
   if (!modalIsOpen) {
     return null;
   }
-
+  
   return (
     <Modal
       isOpen={modalIsOpen}
@@ -137,8 +137,8 @@ export default function IdleTimer() {
     >
       <h3 className='modal-header'>
         🚨 Heads up! You will be logged out due to inactivity in{' '}
-        <span className='r2b-red'>{warningInactive} seconds</span>
-        delete this record?
+        <span className='r2b-red'>{second} </span>
+        seconds.
       </h3>
       <div className='confirm-btns'>
         <button onClick={handleClose} className='btn-success height'>

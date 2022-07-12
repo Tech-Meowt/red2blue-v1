@@ -30,15 +30,14 @@ function App() {
     if (user) {
       const interval = setInterval(() => {
         logoutUser();
-      }, 900000);
-      return () => clearInterval(interval)
+      }, 7200000);
+      return () => clearInterval(interval);
     }
 
-    window.addEventListener('beforeunload', function(e) {
-      logoutUser()
-    })
-  }, [user])
-
+    window.addEventListener('beforeunload', function (e) {
+      logoutUser();
+    });
+  }, [user]);
   return (
     <BrowserRouter>
       <Routes>
