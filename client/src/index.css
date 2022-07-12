@@ -504,6 +504,14 @@ input[type=checkbox]:checked {
   color: #fff;
 }
 
+.ais-Pagination-link {
+  color: #fff !important;
+}
+
+.ais-Pagination-item--selected {
+  background-color: var(--r2b-red) !important;
+}
+
 .search-container {
   max-width: 100%;
   background: var(--white);

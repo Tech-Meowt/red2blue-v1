@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Wrapper from '../../assets/wrappers/Databases';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../context/appContext';
@@ -10,9 +10,11 @@ const Databases = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Databases</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Databases</title>
+        </Helmet>
+      </HelmetProvider>
       <Wrapper>
         <div className='main-container'>
           <h3 className='r2b-red'>Access your databases</h3>

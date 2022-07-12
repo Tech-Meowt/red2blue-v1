@@ -9,7 +9,7 @@ import {
   SandboxSearchBar,
   StateSearchSelectWithClear,
 } from '../components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import algoliasearch from 'algoliasearch';
 import {
   InstantSearch,
@@ -26,7 +26,6 @@ export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
   const [sandboxList, setSandboxList] = useState([]);
   const [values, setValues] = useState('');
-  
   const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_ID,
     process.env.REACT_APP_SEARCH_API
@@ -55,28 +54,12 @@ export default function AllSandbox() {
       });
   }, []);
 
+
   const handleChange = (e) => {
     e.preventDefault();
 
     setValues({ ...values, [e.target.name]: e.target.value });
     console.log(values);
-  };
-
-  const getId = (e) => {
-    const id = e.target.name;
-    console.log(id);
-  };
-
-  const updateSandbox = (id) => {
-    axios
-      .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
-      .then((res) => {
-        values(res.data.sandbox);
-        console.log(res.data.sandbox);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
@@ -92,8 +75,11 @@ export default function AllSandbox() {
       </SandboxWrapper>
 
       <div className='search-container'>
-        <InstantSearch searchClient={searchClient} indexName={index}>
-          <Configure hitsPerPage={10}/>
+        <InstantSearch
+          searchClient={searchClient}
+          indexName={index}
+        >
+          <Configure hitsPerPage={10} />
           <div className='search-container-child'>
             <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
             <SearchBox
@@ -108,10 +94,7 @@ export default function AllSandbox() {
           <ClearRefinements />
           <Stats />
           <Hits hitComponent={Hit} />
-          <Pagination
-            padding={2}
-            showLast={true}
-          />
+          <Pagination padding={2} showLast={true} />
         </InstantSearch>
       </div>
     </>
@@ -126,10 +109,7 @@ const Hit = ({
   firstName,
   lastName,
   email,
-  street,
-  city,
   state,
-  zip,
   phone,
   interests,
   objectID,
@@ -139,10 +119,7 @@ const Hit = ({
     firstName={hit.firstName}
     lastName={hit.lastName}
     email={hit.email}
-    street={hit.street}
-    city={hit.city}
     state={hit.state}
-    zip={hit.zip}
     phone={hit.phone}
     interests={hit.interests}
     id={hit.id}

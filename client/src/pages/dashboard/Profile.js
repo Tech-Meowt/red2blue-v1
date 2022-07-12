@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormRow, Alert, FormRowSelect } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
-import Helmet from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } =
@@ -32,9 +32,11 @@ const Profile = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Profile</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Profile</title>
+        </Helmet>
+      </HelmetProvider>
       <Wrapper>
         <form className='form' onSubmit={handleSubmit}>
           <h3>Profile</h3>
@@ -77,23 +79,23 @@ const Profile = () => {
                 className='form-input no-cursor'
               />
             </div>
-              <>
-                <button
-                  className='edit-btn btn btn-block'
-                  type='submit'
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Please Wait...' : 'save changes'}
-                </button>
-                <button
-                  className='delete-btn btn'
-                  type='submit'
-                  disabled={isLoading}
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>
-              </>
+            <>
+              <button
+                className='edit-btn btn btn-block'
+                type='submit'
+                disabled={isLoading}
+              >
+                {isLoading ? 'Please Wait...' : 'save changes'}
+              </button>
+              <button
+                className='delete-btn btn'
+                type='submit'
+                disabled={isLoading}
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </>
           </div>
         </form>
 

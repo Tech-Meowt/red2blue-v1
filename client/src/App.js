@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Register, Landing, Error, ProtectedRoute } from './pages';
 import {
   Profile,
@@ -19,8 +20,24 @@ import {
   Volunteers,
   Events
 } from './pages/dashboard';
+import { IdleTimer } from './components';
+import { useAppContext } from './context/appContext'
 
 function App() {
+  const { user, logoutUser } = useAppContext();
+
+  useEffect(() => {
+    if (user) {
+      const interval = setInterval(() => {
+        logoutUser();
+      }, 7200000);
+      return () => clearInterval(interval);
+    }
+
+    window.addEventListener('beforeunload', function (e) {
+      logoutUser();
+    });
+  }, [user]);
   return (
     <BrowserRouter>
       <Routes>
@@ -103,6 +120,7 @@ function App() {
         <Route path='/landing' element={<Landing />} />
         <Route path='*' element={<Error />} />
       </Routes>
+      <IdleTimer />
     </BrowserRouter>
   );
 }

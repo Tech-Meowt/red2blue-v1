@@ -92,4 +92,5 @@ model Sandbox {
   state     String?
   phone     String?
   interests String?
+  createdAt DateTime @default(now())
 }
