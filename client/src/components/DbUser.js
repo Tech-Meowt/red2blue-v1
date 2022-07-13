@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { FormRow, Alert } from '../components';
 import { FiDatabase } from 'react-icons/fi';
@@ -48,10 +48,6 @@ const DbUser = ({
     isActive,
     role,
   });
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [])
 
   const getId = (e) => {
     const id = e.target.name;
