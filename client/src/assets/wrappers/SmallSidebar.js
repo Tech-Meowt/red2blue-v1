@@ -71,6 +71,11 @@ const Wrapper = styled.aside`
     display: grid;
     place-items: center;
   }
+  .icon-small {
+    margin-left: 1rem;
+    display: grid;
+    place-items: center;
+  }
   .active {
     color: var(--r2b-blue);
   }

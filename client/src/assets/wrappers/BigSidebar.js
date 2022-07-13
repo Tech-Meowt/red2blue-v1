@@ -57,10 +57,15 @@ const Wrapper = styled.aside`
       place-items: center;
     }
 
+    .icon-small {
+      margin-bottom: .75rem;
+      display: grid;
+      place-items: center;
+    }
+    
     .active {
       color: var(--r2b-blue);
-
     }
   }
-`
+`;
 export default Wrapper

@@ -403,6 +403,14 @@ select:invalid {
   display: inline !important;
 }
 
+.center {
+  text-align: center;
+}
+
+.margin-right: {
+  margin-right: 1rem !important;
+}
+
 /* algolia */
 
 .ais-SearchBox-form {

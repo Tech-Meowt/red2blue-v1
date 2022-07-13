@@ -63,7 +63,7 @@ const Profile = () => {
               <input
                 type='email'
                 value={email}
-                handleChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 name='email'
                 className='form-input'
               />
