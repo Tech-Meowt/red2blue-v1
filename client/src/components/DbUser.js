@@ -309,8 +309,8 @@ const DbUser = ({
                           value={values.approved}
                           onChange={handleChange}
                         >
-                          <option value='approved'>Approved</option>
-                          <option value='waiting on approval'>
+                          <option value='true'>Approved</option>
+                          <option value='false'>
                             Waiting on approval
                           </option>
                         </select>

@@ -390,6 +390,10 @@ select:invalid {
   padding-top: 1.5rem;
 }
 
+.margin-top-bottom {
+  margin: 1rem auto;
+}
+
 .container {
   width: var(--fluid-width);
   max-width: var(--max-width);

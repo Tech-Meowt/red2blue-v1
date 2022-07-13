@@ -1,5 +1,5 @@
 import {
-  Banner,
+  BannerWarning,
   AllSandbox,
 } from '../../components';
 import { Helmet, HelmetProvider } from 'react-helmet-async'
@@ -13,7 +13,7 @@ export default function SandboxHome() {
           <title>Sandbox</title>
         </Helmet>
       </HelmetProvider>
-      <Banner />
+      <BannerWarning bannerText={'You are in a sandbox environment'}/>
       <AllSandbox />
     </>
   );

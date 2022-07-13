@@ -10,7 +10,7 @@ import SearchContainer from './SearchContainer';
 import SmallSidebar from './SmallSidebar';
 import AllDbUsers from './AllDbUsers';
 import DbUser from './DbUser';
-import Banner from './Banner';
+import BannerWarning from './BannerWarning';
 import AllSandbox from './AllSandbox';
 import OneSandbox from './OneSandbox';
 import SearchBar from './SearchBar';
@@ -48,7 +48,7 @@ export {
   Loading,
   AllDbUsers,
   DbUser,
-  Banner,
+  BannerWarning,
   AllSandbox,
   OneSandbox,
   SearchBar,
