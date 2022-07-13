@@ -20,7 +20,6 @@ import {
   Volunteers,
   Events
 } from './pages/dashboard';
-import { IdleTimer } from './components';
 import { useAppContext } from './context/appContext'
 
 function App() {
@@ -33,11 +32,7 @@ function App() {
       }, 7200000);
       return () => clearInterval(interval);
     }
-
-    window.addEventListener('beforeunload', function (e) {
-      logoutUser();
-    });
-  }, [user]);
+  }, [user, logoutUser]);
   return (
     <BrowserRouter>
       <Routes>
@@ -120,7 +115,6 @@ function App() {
         <Route path='/landing' element={<Landing />} />
         <Route path='*' element={<Error />} />
       </Routes>
-      <IdleTimer />
     </BrowserRouter>
   );
 }
