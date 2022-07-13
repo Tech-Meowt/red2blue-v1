@@ -4,10 +4,10 @@ import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Banner, StateSelect, Alert } from '../../components';
+import { BannerWarning, StateSelect, Alert } from '../../components';
 import { useAppContext } from '../../context/appContext';
 
-export default function AddSandbox({ label }) {
+export default function AddSandbox() {
   const [sandboxInfo, setSandboxInfo] = useState({
     firstName: '',
     lastName: '',
@@ -87,7 +87,7 @@ export default function AddSandbox({ label }) {
 
   return (
     <>
-      <Banner />
+      <BannerWarning bannerText={'You are in a sandbox environment'} />
       <SandboxWrapper>
         <br />
         <div className='info actions'>
