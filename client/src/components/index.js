@@ -34,6 +34,7 @@ import SearchBarAllVols from './SearchBarAllVols';
 import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
+import IdleTimer from './IdleTimer';
 
 export {
   Logo,
@@ -70,6 +71,7 @@ export {
   AllEvents,
   OneEvent,
   EventDetails,
+  IdleTimer,
   ScrollButtonUp,
   ScrollButtonDown,
 };
