@@ -4,17 +4,6 @@ import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import { SearchBar, DbUser, SearchSelect, BannerWarning } from '../components';
 import { SiTeradata } from 'react-icons/si';
-import algoliasearch from 'algoliasearch';
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Pagination,
-  Stats,
-  RefinementList,
-  ClearRefinements,
-  Configure,
-} from 'react-instantsearch-dom';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
@@ -23,11 +12,6 @@ export default function AllDbUsers() {
   const [opened, setOpened] = useState(false);
   const [showNotificationBanner, setShowNotificationBanner] = useState(false)
   const [filteredData, setFilteredData] = useState([])
-   const searchClient = algoliasearch(
-     process.env.REACT_APP_ALGOLIA_ID,
-     process.env.REACT_APP_SEARCH_API
-   );
-   const index = process.env.REACT_APP_ALGOLIA_USERS_INDEX;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -41,6 +25,7 @@ export default function AllDbUsers() {
           let option = [false];
           let newFilter = dbUsers.filter((value) => option.includes(value.approved));
           setFilteredData(newFilter);
+          console.log(newFilter)
         }
       })
       .catch((error) => {
@@ -55,7 +40,7 @@ export default function AllDbUsers() {
       .catch((error) => {
         console.log(error);
       });
-  }, [setDbUsers, setUsersList]);
+  }, []);
 
   const toggleSearch = (e) => {
     e.preventDefault();
@@ -84,28 +69,30 @@ export default function AllDbUsers() {
   return (
     <>
       {showNotificationBanner && (
-        <BannerWarning bannerText={`You have new accounts waiting on approval`} />
+        <BannerWarning
+          bannerText={`You have new accounts waiting on approval`}
+        />
       )}
 
       {filteredData.slice(0, 15).map((value, key) => {
         return (
           <>
-              <div className='border-state space-largest'>
-                <DbUser
-                  firstName={value.firstName}
-                  lastName={value.lastName}
-                  email={value.email}
-                  usersDb={value.usersDb}
-                  volunteersDb={value.volunteersDb}
-                  isActive={value.isActive}
-                  approved={value.approved}
-                  role={value.role}
-                />
-              </div>
+            <div className='border-state space-largest'>
+              <DbUser
+                firstName={value.firstName}
+                lastName={value.lastName}
+                email={value.email}
+                usersDb={value.usersDb}
+                volunteersDb={value.volunteersDb}
+                isActive={value.isActive}
+                approved={value.approved}
+                role={value.role}
+              />
+            </div>
           </>
         );
       })}
-<h3></h3>
+      <h3></h3>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
       <button className='btn' onClick={toggleSearch}>
@@ -190,34 +177,3 @@ export default function AllDbUsers() {
     </>
   );
 }
-
-const Hit =( {
-  hit,
-  _id,
-  updateUser,
-  deleteHandler,
-  getId,
-  firstName,
-  lastName,
-  email,
-  approved,
-  usersDb,
-  volunteersDb,
-  isActive,
-  role
-}) => (
-  <DbUser
-    firstName={hit.firstName}
-    lastName={hit.lastName}
-    email={hit.email}
-    approved={hit.approved}
-    usersDb={hit.usersDb}
-    volunteersDb={hit.volunteersDb}
-    isActive={hit.isActive}
-    role={hit.role}
-    _id={hit._id}
-    updateUser={updateUser}
-    deleteHandler={deleteHandler}
-    getId={getId}
-  />
-)
