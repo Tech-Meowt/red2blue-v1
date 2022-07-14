@@ -8,7 +8,6 @@ import {
   OneVolunteer,
 } from '../components';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
@@ -149,7 +148,7 @@ export default function AllVolunteers() {
           </h4>
         )}
 
-        <div className='jobs'>
+        {/* <div className='jobs'>
           {data}
           <ReactPaginate
             previousLabel={'<< prev'}
@@ -163,7 +162,7 @@ export default function AllVolunteers() {
             subContainerClassName={'pages pagination'}
             activeClassName={'active'}
           />
-        </div>
+        </div> */}
       </Wrapper>
     </>
   );

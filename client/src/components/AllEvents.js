@@ -3,7 +3,6 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import EventsWrapper from '../assets/wrappers/EventsWrapper';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
 import { useState, useEffect } from 'react';
 import { Volunteers } from '../pages/dashboard';
 
@@ -19,14 +18,7 @@ export default function AllEvents() {
   const [start, setStart] = useState(1);
   const [end, setEnd] = useState(20);
   
-  // for (let i = 0; i < allEvents.length; i++) {
-  //   const test = allEvents[i].volunteers
-  //   for (let j = 0; j < test.length; j++) {
-  //     const firstName = test[j].volFirstName
-  //     const lastName = test[j].volLastName
-  //     const full = firstName + lastName
-  //   }
-  // }
+
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -113,7 +105,7 @@ export default function AllEvents() {
           </h4>
         )}
 
-        <div className='jobs'>
+        {/* <div className='jobs'>
           {data}
           <ReactPaginate
             previousLabel={'<< prev'}
@@ -127,7 +119,7 @@ export default function AllEvents() {
             subContainerClassName={'pages pagination'}
             activeClassName={'active'}
           />
-        </div>
+        </div> */}
       </Wrapper>
     </>
   );

@@ -85,7 +85,6 @@ model Volunteer {
 
 model Sandbox {
   id  String @id @default(uuid())
-  objectID String?
   firstName String?
   lastName  String?
   email     String? @unique
