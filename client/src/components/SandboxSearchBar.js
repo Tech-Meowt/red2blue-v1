@@ -1,7 +1,6 @@
-import { FormRow } from '.';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox } from '../components';
+import { OneSandbox, FormRow } from '../components';
 
 const SandboxSearchBar = ({
   placeholder,

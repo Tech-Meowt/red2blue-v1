@@ -309,6 +309,7 @@ select:invalid {
   margin: 3rem auto;
   transition: var(--transition);
 }
+
 .form:hover, .ais-SearchBox-form:hover, .search-container:hover {
   box-shadow: var(--shadow-4);
 }
@@ -332,6 +333,7 @@ select:invalid {
 .form-input,
 .form-select,
 .btn-block,
+.close-btn,
   .ais-SearchBox-input {
   height: 35px;
   width: 100%;
@@ -545,8 +547,30 @@ input[type=checkbox]:checked {
   z-index: 100;
 }
 
+.search-input-container {
+  align-items: center;
+  background: white;
+  border-radius: var(--borderRadius);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 50%;
+}
+
+.input-container-child {
+  display: flex;
+  width: 100%;
+}
+
 .padding {
   padding: 1rem;
+}
+
+.clear-btn {
+  width: 50%;
 }
 
 @media (min-width: 768px) {
