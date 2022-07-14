@@ -13,8 +13,8 @@ import DbUser from './DbUser';
 import BannerWarning from './BannerWarning';
 import AllSandbox from './AllSandbox';
 import OneSandbox from './OneSandbox';
-import SearchBar from './SearchBar';
-import SearchSelect from './SearchSelect';
+import DbUsersSearchBar from './DbUsersSearchBar';
+import DbUsersFilter from './DbUsersFilter';
 import SandboxSearchBar from './SandboxSearchBar';
 import StateSearchSelectWithClear from './StateSearchSelectWithClear';
 import HelpBanner from './HelpBanner';
@@ -51,8 +51,8 @@ export {
   BannerWarning,
   AllSandbox,
   OneSandbox,
-  SearchBar,
-  SearchSelect,
+  DbUsersSearchBar,
+  DbUsersFilter,
   SandboxSearchBar,
   StateSearchSelectWithClear,
   HelpBanner,

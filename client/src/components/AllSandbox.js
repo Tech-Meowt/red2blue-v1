@@ -6,8 +6,8 @@ import SandboxWrapper from '../assets/wrappers/Sandbox';
 import {
   AllVolunteers,
   OneSandbox,
-  SandboxSearchBar,
   StateSearchSelectWithClear,
+  SearchBar,
 } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
 import algoliasearch from 'algoliasearch';
@@ -73,6 +73,10 @@ export default function AllSandbox() {
           </Link>
         </div>
       </SandboxWrapper>
+
+      {/* <FilterWrapper>
+<SearchBar data={sandboxList} />
+      </FilterWrapper> */}
 
       <div className='search-container'>
         <InstantSearch

@@ -6,9 +6,12 @@ const SearchWrapper = styled.section`
     max-width: 100%;
   }
   .form-input,
-  .form-select,
+.form-select,
   .btn-block {
     height: 35px;
+  }
+  .form-select {
+    width: 75%;
   }
   .form-row {
     margin-bottom: 0;

@@ -2,9 +2,9 @@ import { FormRow } from '.';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { DbUser } from '../components';
+import { DbUser } from '.';
 
-const SearchSelect = ({
+const DbUsersFilter = ({
   placeholder,
   data,
   getId,
@@ -121,39 +121,48 @@ const SearchSelect = ({
     <>
       <SearchSelectWrapper>
         <form>
-          <div className='form-center form-row'>
-            <label htmlFor='wordEntered'>Filter by {query}</label>
-            <select
-              name='wordEntered'
-              id='wordEntered'
-              className='form-select'
-              value={wordEntered}
-              onChange={handleUsersFilter}
-              required
-            >
-              <option value='' disabled selected hidden>
-                --Select an option--
-              </option>
-              <option value={value1}>{option1}</option>
-              <option value={value2}>{option2}</option>
-              {query === 'role' && (<option value={value3}>{option3}</option>)}
-            </select>
-            <button className='btn btn-block btn-danger' onClick={handleClear}>
-              clear
-            </button>
+          <div className='form-center'>
+              <select
+                name='wordEntered'
+                id='wordEntered'
+                className='form-select'
+                value={wordEntered}
+                onChange={handleUsersFilter}
+                required
+              >
+                <option value='' disabled selected hidden>
+                  --{query}--
+                </option>
+                <option value={value1}>{option1}</option>
+                <option value={value2}>{option2}</option>
+                {query === 'role' && <option value={value3}>{option3}</option>}
+              </select>
+              <button
+                className='btn btn-block btn-danger clear-btn'
+                onClick={handleClear}
+              >
+                clear results
+              </button>
+
           </div>
         </form>
       </SearchSelectWrapper>
 
       <Wrapper>
         {filteredData.length == 0 && !noResults && (
-          <h5>Found {filteredData.length} records</h5>
+          <h5>
+            Found {filteredData.length} records: {query}
+          </h5>
         )}
         {filteredData.length == 1 && (
-          <h5>Found {filteredData.length} record</h5>
+          <h5>
+            Found {filteredData.length} record: {query}
+          </h5>
         )}
         {filteredData.length > 1 && (
-          <h5>Found {filteredData.length} records</h5>
+          <h5>
+            Found {filteredData.length} records: {query}
+          </h5>
         )}
         {filteredData.length != 0 &&
           filteredData.slice(0, 15).map((value, key) => {
@@ -183,4 +192,4 @@ const SearchSelect = ({
   );
 };
 
-export default SearchSelect;
+export default DbUsersFilter;

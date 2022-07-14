@@ -1,11 +1,7 @@
-import { FormRow } from '.'
-import SearchWrapper from '../assets/wrappers/SearchContainer';
-import Wrapper from '../assets/wrappers/SearchResults';
-import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { DbUser } from '../components'
+import { DbUser, FormRow } from '.'
 
-const SearchBar = ({
+const DbUsersSearchBar = ({
   placeholder,
   data,
   getId,
@@ -55,23 +51,30 @@ const SearchBar = ({
 
   return (
     <>
-      <SearchSelectWrapper>
-        <h5 className='r2b-blue'>Search + Filter</h5>
-        <form className='form'>
-          <div className='form-row form-center '>
-            <label htmlFor='wordEntered'>{searchText}</label>
-            <input
-              className='form-input'
-              type='text'
-              placeholder='Enter search term'
-              value={wordEntered}
-              onChange={handleFilter}
-            />
-            <button className='btn btn-block btn-danger' onClick={handleClear}>
-              clear
-            </button>
-          </div>
-        </form>
+      <div className='search-container'>
+        <div className='search-container-child'>
+          <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
+          <form>
+            <div className='search-input-container'>
+              <div className='input-container-child'>
+                <input
+                  className='form-input'
+                  type='text'
+                  placeholder='Enter first name, last name, or email'
+                  value={wordEntered}
+                  onChange={handleFilter}
+                />
+                <button
+                  className='btn btn-block btn-danger clear-btn'
+                  onClick={handleClear}
+                >
+                  clear results
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
         {filteredData.length == 0 && !noResults && (
           <h5>Found {filteredData.length} records</h5>
         )}
@@ -86,28 +89,29 @@ const SearchBar = ({
             return (
               <>
                 <div className='space-larger border-state'>
-                    <DbUser
-                      firstName={value.firstName}
-                      lastName={value.lastName}
-                      email={value.email}
-                      usersDb={value.usersDb}
-                      volunteersDb={value.volunteersDb}
-                      isActive={value.isActive}
-                      approved={value.approved}
-                      role={value.role}
-                      getId={getId}
-                      _id={value._id}
-                      deleteHandler={deleteHandler}
-                      updateUser={updateUser}
-                    />
+                  
+                  <DbUser
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    usersDb={value.usersDb}
+                    volunteersDb={value.volunteersDb}
+                    isActive={value.isActive}
+                    approved={value.approved}
+                    role={value.role}
+                    getId={getId}
+                    _id={value._id}
+                    deleteHandler={deleteHandler}
+                    updateUser={updateUser}
+                  />
                 </div>
               </>
             );
           })}
-      </SearchSelectWrapper>
+      </div>
     </>
   );
 };
 
 
-export default SearchBar
+export default DbUsersSearchBar

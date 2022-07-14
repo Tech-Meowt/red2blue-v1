@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { SearchBar, DbUser, SearchSelect, BannerWarning } from '../components';
+import { DbUsersSearchBar, DbUser, DbUsersFilter, BannerWarning } from '../components';
 import { SiTeradata } from 'react-icons/si';
 
 export default function AllDbUsers() {
@@ -102,17 +102,15 @@ export default function AllDbUsers() {
       {opened && (
         <>
           <FilterWrapper>
-            <SearchBar
+            <DbUsersSearchBar
               data={usersList}
-              searchText={
-                'Search by first name, last name, email, role, account status, or approval status'
-              }
             />
           </FilterWrapper>
 
           <FilterWrapper>
+            <h4>Filters</h4>
             <div className='form'>
-              <SearchSelect
+              <DbUsersFilter
                 data={usersList}
                 word={'access'}
                 query={'User Accounts database access'}
@@ -122,7 +120,7 @@ export default function AllDbUsers() {
                 option2={'denied'}
               />
 
-              <SearchSelect
+              <DbUsersFilter
                 data={usersList}
                 word={'access'}
                 query={'Volunteers database access'}
@@ -132,28 +130,28 @@ export default function AllDbUsers() {
                 option2={'denied'}
               />
 
-              <SearchSelect
+              <DbUsersFilter
                 data={usersList}
                 word={'active'}
-                query={'account status'}
+                query={'Account status'}
                 value1={'active'}
                 value2={'deactivated'}
                 option1={'active'}
                 option2={'deactivated'}
               />
-              <SearchSelect
+              <DbUsersFilter
                 data={usersList}
                 word={'approved'}
-                query={'approval status'}
+                query={'Approval status'}
                 value1={'approved'}
                 value2={'waitingOnApproval'}
                 option1={'approved'}
                 option2={'waiting on approval'}
               />
-              <SearchSelect
+              <DbUsersFilter
                 data={usersList}
                 word={'role'}
-                query={'role'}
+                query={'Role'}
                 value1={'viewer'}
                 value2={'editor'}
                 value3={'admin'}
