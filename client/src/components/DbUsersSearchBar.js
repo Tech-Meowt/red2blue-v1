@@ -85,7 +85,7 @@ const DbUsersSearchBar = ({
           <h5>Found {filteredData.length} records</h5>
         )}
         {filteredData.length != 0 &&
-          filteredData.slice(0, 15).map((value, key) => {
+          filteredData.slice(0, 50).map((value, key) => {
             return (
               <>
                 <div className='space-larger border-state'>

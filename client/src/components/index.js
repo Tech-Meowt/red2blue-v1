@@ -16,7 +16,7 @@ import OneSandbox from './OneSandbox';
 import DbUsersSearchBar from './DbUsersSearchBar';
 import DbUsersFilter from './DbUsersFilter';
 import SandboxSearchBar from './SandboxSearchBar';
-import StateSearchSelectWithClear from './StateSearchSelectWithClear';
+import SandboxFilter from './SandboxFilter';
 import HelpBanner from './HelpBanner';
 import HelpPopularArticles from './HelpPopularArticles';
 import HelpArticles from './HelpArticles';
@@ -54,7 +54,7 @@ export {
   DbUsersSearchBar,
   DbUsersFilter,
   SandboxSearchBar,
-  StateSearchSelectWithClear,
+  SandboxFilter,
   HelpBanner,
   HelpPopularArticles,
   HelpArticles,
