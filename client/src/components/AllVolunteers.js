@@ -6,7 +6,6 @@ import VolunteersWrapper from '../assets/wrappers/Volunteers';
 import {
   SearchBarAllVols,
   OneVolunteer,
-  StateSearchSelectWithClear,
 } from '../components';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
@@ -115,7 +114,7 @@ export default function AllVolunteers() {
             />
           </FilterWrapper>
 
-          <FilterWrapper>
+          {/* <FilterWrapper>
             <div className='form'>
               <StateSearchSelectWithClear
                 data={volunteersList}
@@ -124,7 +123,7 @@ export default function AllVolunteers() {
                 type={'volunteers'}
               />
             </div>
-          </FilterWrapper>
+          </FilterWrapper> */}
         </>
       )}
 

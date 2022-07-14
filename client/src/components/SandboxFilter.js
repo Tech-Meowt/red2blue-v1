@@ -1,9 +1,9 @@
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { FormRow, OneSandbox, OneVolunteer } from '../components'
+import { FormRow, OneSandbox } from '.'
 
-const StateSearchSelectWithClear = ({
+const SandboxFilter = ({
   placeholder,
   data,
   getId,
@@ -54,8 +54,7 @@ const StateSearchSelectWithClear = ({
     <>
       <SearchSelectWrapper>
         <form>
-          <div className='form-center form-row'>
-            <label htmlFor='wordEntered'>{label}</label>
+          <div className='form-center'>
 
             <select
               name='wordEntered'
@@ -121,89 +120,51 @@ const StateSearchSelectWithClear = ({
               <option value='WY'>WY</option>
             </select>
 
-            <button className='btn btn-block btn-danger' onClick={handleClear}>
-              clear
+            <button className='btn btn-block btn-danger clear-btn' onClick={handleClear}>
+              clear results
             </button>
           </div>
         </form>
       </SearchSelectWrapper>
 
-      {type === 'sandbox' && (
-        <Wrapper>
-          {filteredData.length == 0 && !noResults && (
-            <h5>Found {filteredData.length} records</h5>
-          )}
-          {filteredData.length == 1 && (
-            <h5>Found {filteredData.length} record</h5>
-          )}
-          {filteredData.length > 1 && (
-            <h5>Found {filteredData.length} records</h5>
-          )}
-          {filteredData.length != 0 &&
-            filteredData.slice(0, 15).map((value, key) => {
-              return (
-                <>
-                  <div className='space-larger border-state'>
-                    <OneSandbox
-                      firstName={value.firstName}
-                      lastName={value.lastName}
-                      email={value.email}
-                      street={value.street}
-                      city={value.city}
-                      state={value.state}
-                      zip={value.zip}
-                      phone={value.phone}
-                      interests={value.interests}
-                      getId={getId}
-                      id={value.id}
-                      deleteHandler={deleteHandler}
-                      updateSandbox={updateSandbox}
-                    />
-                  </div>
-                </>
-              );
-            })}
-        </Wrapper>
-      )}
+      <Wrapper>
+        {filteredData.length == 0 && !noResults && (
+          <h5>Found {filteredData.length} records</h5>
+        )}
+        {filteredData.length == 1 && (
+          <h5>Found {filteredData.length} record</h5>
+        )}
+        {filteredData.length > 1 && (
+          <h5>Found {filteredData.length} records</h5>
+        )}
+        {filteredData.length != 0 &&
+          filteredData.slice(0, 15).map((value, key) => {
+            return (
+              <>
+                <div className='space-larger border-state'>
+                  <OneSandbox
+                    firstName={value.firstName}
+                    lastName={value.lastName}
+                    email={value.email}
+                    street={value.street}
+                    city={value.city}
+                    state={value.state}
+                    zip={value.zip}
+                    phone={value.phone}
+                    interests={value.interests}
+                    getId={getId}
+                    id={value.id}
+                    deleteHandler={deleteHandler}
+                    updateSandbox={updateSandbox}
+                  />
+                </div>
+              </>
+            );
+          })}
+      </Wrapper>
 
-      {type === 'volunteers' && (
-        <Wrapper>
-          {filteredData.length == 0 && !noResults && (
-            <h5>Found {filteredData.length} records</h5>
-          )}
-          {filteredData.length == 1 && (
-            <h5>Found {filteredData.length} record</h5>
-          )}
-          {filteredData.length > 1 && (
-            <h5>Found {filteredData.length} records</h5>
-          )}
-          {filteredData.length != 0 &&
-            filteredData.slice(0, 15).map((value, key) => {
-              return (
-                <>
-                  <div className='space-larger border-state'>
-                    <OneVolunteer
-                      firstName={value.firstName}
-                      lastName={value.lastName}
-                      email={value.email}
-                      street={value.street}
-                      city={value.city}
-                      state={value.state}
-                      zip={value.zip}
-                      phone={value.phone}
-                      getId={getId}
-                      _id={value._id}
-                      deleteHandler={deleteHandler}
-                      updateUser={updateUser}
-                    />
-                  </div>
-                </>
-              );
-            })}
-        </Wrapper>
-      )}
     </>
   );
 };
 
-export default StateSearchSelectWithClear;
+export default SandboxFilter;
