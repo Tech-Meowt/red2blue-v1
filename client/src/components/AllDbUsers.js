@@ -10,7 +10,7 @@ export default function AllDbUsers() {
   const [usersList, setUsersList] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
-  const [showNotificationBanner, setShowNotificationBanner] = useState(false)
+  const [showNotificationBanner, setShowNotificationBanner] = useState()
   const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
@@ -20,13 +20,24 @@ export default function AllDbUsers() {
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
         setDbUsers(res.data);
-        if (!dbUsers.approved) {
-          setShowNotificationBanner(true)
-          let option = [false];
-          let newFilter = dbUsers.filter((value) => option.includes(value.approved));
-          setFilteredData(newFilter);
-          console.log(newFilter)
-        }
+        dbUsers.map((dbUser) => {
+          if (dbUser.approved === false) {
+    setShowNotificationBanner(true);
+    let option = [false];
+    let newFilter = dbUsers.filter((value) => option.includes(value.approved));
+    setFilteredData(newFilter);
+    console.log(newFilter)
+  }
+})
+
+
+        // if (dbUsers.approved = false) {
+        //   setShowNotificationBanner(true)
+        //   let option = [false];
+        //   let newFilter = dbUsers.filter((value) => option.includes(value.approved));
+        //   setFilteredData(newFilter);
+        //   console.log(newFilter)
+        // }
       })
       .catch((error) => {
         console.log(error);
@@ -102,9 +113,7 @@ export default function AllDbUsers() {
       {opened && (
         <>
           <FilterWrapper>
-            <DbUsersSearchBar
-              data={usersList}
-            />
+            <DbUsersSearchBar data={usersList} />
           </FilterWrapper>
 
           <FilterWrapper>

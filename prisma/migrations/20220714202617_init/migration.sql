@@ -5,6 +5,7 @@ CREATE TABLE "Event" (
     "eventType" TEXT,
     "eventDate" TEXT,
     "eventYear" TEXT,
+    "numOfPostcards" TEXT,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
@@ -69,7 +70,7 @@ CREATE TABLE "Volunteer" (
     "webDesign" TEXT,
     "webMgmt" TEXT,
     "anythingElse" TEXT,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Volunteer_pkey" PRIMARY KEY ("id")
 );
@@ -77,16 +78,13 @@ CREATE TABLE "Volunteer" (
 -- CreateTable
 CREATE TABLE "Sandbox" (
     "id" TEXT NOT NULL,
-    "objectID" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,
     "email" TEXT,
-    "street" TEXT,
-    "city" TEXT,
     "state" TEXT,
-    "zip" TEXT,
     "phone" TEXT,
     "interests" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Sandbox_pkey" PRIMARY KEY ("id")
 );
@@ -99,9 +97,6 @@ CREATE TABLE "_EventToVolunteer" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Event_eventName_key" ON "Event"("eventName");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Volunteer_email_key" ON "Volunteer"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Sandbox_email_key" ON "Sandbox"("email");

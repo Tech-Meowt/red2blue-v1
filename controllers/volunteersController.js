@@ -63,7 +63,7 @@ const create = async (req, res) => {
     webMgmt,
     anythingElse,
     events,
-    updatedAt,
+    createdAt,
   } = req.body;
 
   const volunteer = await prisma.volunteer.create({
@@ -149,7 +149,7 @@ const create = async (req, res) => {
             }
             }))
       },
-      updatedAt,
+      createdAt,
     },
     include: {
       events: true,
@@ -161,7 +161,7 @@ const create = async (req, res) => {
 const getAll = async (req, res) => {
   const volunteer = await prisma.volunteer.findMany({
     orderBy: {
-      updatedAt: 'desc',
+      createdAt: 'desc',
     },
     include: {
       events: true,
@@ -232,7 +232,7 @@ const updateVolunteer = async (req, res) => {
     webMgmt,
     anythingElse,
     events,
-    updatedAt,
+    createdAt,
   } = req.body;
 
   const volunteer = await prisma.volunteer.update({
@@ -310,7 +310,7 @@ const updateVolunteer = async (req, res) => {
           },
         ],
       },
-      updatedAt,
+      createdAt,
     },
     include: {
       events: true,

@@ -12,12 +12,40 @@ datasource db {
 }
 
 model Event {
-  id         String      @id @default(uuid())
-  eventName  String      @unique
-  eventType  String?
-  eventDate  String?
-  eventYear  String?
-  volunteers Volunteer[]
+  id             String      @id @default(uuid())
+  eventName      String      @unique
+  eventType      String?
+  eventDate      String?
+  eventYear      String?
+  volunteers     Volunteer[]
+  numOfPostcards String?
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  firstName     String
+  lastName      String
+  approved      Boolean        @default(false)
+  usersDb       Boolean        @default(false)
+  volunteersDb  Boolean        @default(false)
+  password      String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  avatarUrl     String?
+  isActive      Boolean        @default(true)
+  lastLoggedIn  DateTime       @default(now())
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id          String   @id @default(uuid())
+  hashedToken String
+  userId      String
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  revoked     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Volunteer {
@@ -80,14 +108,14 @@ model Volunteer {
   webDesign                String?
   webMgmt                  String?
   anythingElse             String?
-  updatedAt                DateTime @default(now())
+  createdAt                DateTime @default(now())
 }
 
 model Sandbox {
-  id  String @id @default(uuid())
+  id        String   @id @default(uuid())
   firstName String?
   lastName  String?
-  email     String? @unique
+  email     String?  @unique
   state     String?
   phone     String?
   interests String?
