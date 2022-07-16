@@ -20,8 +20,29 @@ model Event {
   volunteers Volunteer[]
 }
 
+model User {
+  id           String      @id
+  email        String      @unique
+  firstName    String
+  lastName     String
+  approved     Boolean     @default(false)
+  usersDb      Boolean     @default(false)
+  volunteersDb Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  avatarUrl    String?     @default("")
+  isActive     Boolean     @default(true)
+  lastLoggedIn DateTime    @default(now())
+  role         String      @default("viewer")
+  volunteer    Volunteer[]
+  volunteerId String?
+}
+
 model Volunteer {
   id                       String   @id @default(uuid())
+  userId                   String?
+  dbUser                   User?     @relation(fields: [userId], references: [id])
+  // dbUser  User[]
   events                   Event[]
   eventId                  String?
   firstName                String?
@@ -84,10 +105,10 @@ model Volunteer {
 }
 
 model Sandbox {
-  id  String @id @default(uuid())
+  id        String   @id @default(uuid())
   firstName String?
   lastName  String?
-  email     String? @unique
+  email     String?  @unique
   state     String?
   phone     String?
   interests String?

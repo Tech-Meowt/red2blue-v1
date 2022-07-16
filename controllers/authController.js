@@ -5,6 +5,7 @@ import {
   UnAuthenticatedError,
   NotFoundError,
 } from '../errors/index.js';
+import prisma from '../lib/prisma.js';
 
 // user managed data
 const register = async (req, res) => {
@@ -17,7 +18,35 @@ const register = async (req, res) => {
   if (userAlreadyExists) {
     throw new BadRequestError('Email already in use');
   }
+
   const user = await User.create({ firstName, lastName, email, password });
+  
+  const id = user._id.toString()
+  const userPrisma = await prisma.user.create({
+    data: {
+      id,
+      firstName,
+      lastName,
+      email,
+      volunteer: {
+        connectOrCreate: [
+          {
+            create: {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+            },
+            where: {
+              email: email,
+            }
+          }
+        ]
+      }
+    },
+    include: {
+      volunteer: true,
+    }
+  });
 
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
@@ -69,6 +98,22 @@ const updateUser = async (req, res) => {
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({ user, token });
+
+  const { id } = req.params;
+  const updateUserPrisma = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      email,
+      firstName,
+      lastName,
+      approved,
+      usersDb,
+      volunteersDb,
+      role,
+    },
+  });
 };
 
 // admin managed data
@@ -100,30 +145,94 @@ const getUserDetails = (req, res) => {
   })
 };
 
-const updateDbUser = (req, res) => {
+const updateDbUser = async (req, res) => {
   User.findByIdAndUpdate(req.params.id, req.body)
-    .then(function () {
-      res.json('User updated');
+    .then(function() {
+      console.log('updated')
+      // res.json('User updated');
     })
-    .catch(function (err) {
-      res.status(422).send('User update failed.');
+    .catch(function(err) {
+      console.log('failed')
+      // res.status(422).send('User update failed.');
     });
+  
+    const { id } = req.params;
+    const {
+      firstName,
+      lastName,
+      email,
+      approved,
+      usersDb,
+      volunteersDb,
+      createdAt,
+      updatedAt,
+      avatarUrl,
+      isActive,
+      lastLoggedIn,
+      role
+    } = req.body
+  
+  const adminUpdateUser = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      firstName,
+      lastName,
+      email,
+      approved,
+      usersDb,
+      volunteersDb,
+      createdAt,
+      updatedAt,
+      avatarUrl,
+      isActive,
+      lastLoggedIn,
+      role,
+      updatedAt,
+      volunteer: {
+        update: {
+          where: {
+            email: email,
+          },
+          data: {
+            firstName: firstName,
+            lastName: lastName,
+            email: email
+          }
+        }
+      }
+    },
+    include: {
+      volunteer: true,
+    },
+  });
+  
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
   User.findById(req.params.id, function (err, deletedUser) {
     if (!deletedUser) {
-      res.status(404).send('User not found');
+      console.log('not found')
+      // res.status(404).send('User not found');
     } else {
       User.findByIdAndRemove(req.params.id)
-        .then(function () {
-          res.status(200).json('User deleted');
+        .then(function() {
+          console.log('deleted')
+          // res.status(200).json('User deleted');
         })
-        .catch(function (err) {
-          res.status(400).send('User delete failed.');
+        .catch(function(err) {
+          console.log(err)
+          // res.status(400).send('User delete failed.');
         });
     }
   });
+  const { id } = req.params
+  await prisma.user.delete({
+    where: {
+      id,
+    }
+  })
 };
 
 export {
