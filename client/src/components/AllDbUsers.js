@@ -10,8 +10,6 @@ export default function AllDbUsers() {
   const [usersList, setUsersList] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
-  const [showNotificationBanner, setShowNotificationBanner] = useState(false)
-  const [filteredData, setFilteredData] = useState([])
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -20,13 +18,6 @@ export default function AllDbUsers() {
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
         setDbUsers(res.data);
-        if (!dbUsers.approved) {
-          setShowNotificationBanner(true)
-          let option = [false];
-          let newFilter = dbUsers.filter((value) => option.includes(value.approved));
-          setFilteredData(newFilter);
-          console.log(newFilter)
-        }
       })
       .catch((error) => {
         console.log(error);
@@ -68,31 +59,6 @@ export default function AllDbUsers() {
 
   return (
     <>
-      {showNotificationBanner && (
-        <BannerWarning
-          bannerText={`You have new accounts waiting on approval`}
-        />
-      )}
-
-      {filteredData.slice(0, 15).map((value, key) => {
-        return (
-          <>
-            <div className='border-state space-largest'>
-              <DbUser
-                firstName={value.firstName}
-                lastName={value.lastName}
-                email={value.email}
-                usersDb={value.usersDb}
-                volunteersDb={value.volunteersDb}
-                isActive={value.isActive}
-                approved={value.approved}
-                role={value.role}
-              />
-            </div>
-          </>
-        );
-      })}
-      <h3></h3>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
       <button className='btn' onClick={toggleSearch}>

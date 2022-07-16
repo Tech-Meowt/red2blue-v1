@@ -10,8 +10,29 @@ CREATE TABLE "Event" (
 );
 
 -- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "mongoId" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "approved" BOOLEAN NOT NULL DEFAULT false,
+    "usersDb" BOOLEAN NOT NULL DEFAULT false,
+    "volunteersDb" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "avatarUrl" TEXT DEFAULT '',
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "lastLoggedIn" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "role" TEXT NOT NULL DEFAULT 'viewer',
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Volunteer" (
     "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "eventId" TEXT,
     "firstName" TEXT,
     "lastName" TEXT,
@@ -77,16 +98,13 @@ CREATE TABLE "Volunteer" (
 -- CreateTable
 CREATE TABLE "Sandbox" (
     "id" TEXT NOT NULL,
-    "objectID" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,
     "email" TEXT,
-    "street" TEXT,
-    "city" TEXT,
     "state" TEXT,
-    "zip" TEXT,
     "phone" TEXT,
     "interests" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Sandbox_pkey" PRIMARY KEY ("id")
 );
@@ -101,6 +119,9 @@ CREATE TABLE "_EventToVolunteer" (
 CREATE UNIQUE INDEX "Event_eventName_key" ON "Event"("eventName");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Volunteer_email_key" ON "Volunteer"("email");
 
 -- CreateIndex
@@ -111,6 +132,9 @@ CREATE UNIQUE INDEX "_EventToVolunteer_AB_unique" ON "_EventToVolunteer"("A", "B
 
 -- CreateIndex
 CREATE INDEX "_EventToVolunteer_B_index" ON "_EventToVolunteer"("B");
+
+-- AddForeignKey
+ALTER TABLE "Volunteer" ADD CONSTRAINT "Volunteer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_EventToVolunteer" ADD CONSTRAINT "_EventToVolunteer_A_fkey" FOREIGN KEY ("A") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
