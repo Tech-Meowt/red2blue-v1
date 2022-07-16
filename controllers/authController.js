@@ -98,22 +98,6 @@ const updateUser = async (req, res) => {
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({ user, token });
-
-  const { id } = req.params;
-  const updateUserPrisma = await prisma.user.update({
-    where: {
-      id,
-    },
-    data: {
-      email,
-      firstName,
-      lastName,
-      approved,
-      usersDb,
-      volunteersDb,
-      role,
-    },
-  });
 };
 
 // admin managed data
