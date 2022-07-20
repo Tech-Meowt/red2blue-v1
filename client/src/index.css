@@ -363,6 +363,10 @@ select:invalid {
   }
 }
 
+.less-filter {
+  margin-bottom: .5rem;
+}
+
 .loading {
   width: 6rem;
   height: 6rem;
@@ -462,6 +466,14 @@ select:invalid {
   width: 100%;
 }
 
+.ais-RangeInput-separator {
+  margin: 0 .5rem;
+}
+
+.ais-RangeInput-submit, .ais-SearchBox-submit {
+  margin: 0 .5rem;
+}
+
 .ais-ClearRefinements-button {
   font-size: 1rem;
   max-width: 25%;
@@ -480,6 +492,16 @@ select:invalid {
 
 .ais-SearchBox-input:focus {
   border: 1px solid var(--r2b-blue);
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-children: {
+  display: flex;
+  flex-direction: column;
 }
 
 input[type=checkbox]:checked {

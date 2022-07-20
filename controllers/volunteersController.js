@@ -66,7 +66,6 @@ const create = async (req, res) => {
     events,
     updatedAt,
     userId,
-    numEventsAttended,
   } = req.body;
 
   const volunteer = await prisma.volunteer.create({
@@ -130,36 +129,36 @@ const create = async (req, res) => {
       webMgmt,
       anythingElse,
       userId,
-      events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
-            where: {
-              eventName: events
-            },
-          }
-        ],
-      },
       // events: {
-      //   connectOrCreate:
-      //     events.map((event) => ({
-      //       where: {
-      //           eventName: event,
-      //       },
+      //   connectOrCreate: [
+      //     {
       //       create: {
-      //         eventName: event
-      //       }
-      //       }))
+      //         eventName: events,
+      //       },
+      //       where: {
+      //         eventName: events
+      //       },
+      //     }
+      //   ],
       // },
-      numEventsAttended: events.length
+      events: {
+        connectOrCreate:
+          events.map((event) => ({
+            where: {
+                eventName: event,
+            },
+            create: {
+              eventName: event
+            }
+            }))
+      },
     },
     include: {
       events: true,
     },
   });
   res.status(200).json({ volunteer });
+
 
   const api_volunteer = [
     {
@@ -172,7 +171,7 @@ const create = async (req, res) => {
       zip: volunteer.zip,
       phone: volunteer.phone,
       userId: volunteer.userId,
-      events: volunteer.events,
+      events: volunteer.events.length,
       id: volunteer.id,
       objectID: volunteer.id,
     },
@@ -329,17 +328,27 @@ const updateVolunteer = async (req, res) => {
       webMgmt,
       anythingElse,
       userId,
+      // events: {
+      //   connectOrCreate: [
+      //     {
+      //       create: {
+      //         eventName: events,
+      //       },
+      //       where: {
+      //         eventName: events,
+      //       },
+      //     },
+      //   ],
+      // },
       events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
-            where: {
-              eventName: events,
-            },
+        connectOrCreate: events.map((event) => ({
+          where: {
+            eventName: event,
           },
-        ],
+          create: {
+            eventName: event,
+          },
+        })),
       },
       updatedAt,
     },
@@ -348,6 +357,31 @@ const updateVolunteer = async (req, res) => {
     },
   });
   res.status(200).json({ volunteer });
+
+  // algolia
+  const api_volunteer = {
+    firstName: volunteer.firstName,
+    lastName: volunteer.lastName,
+    email: volunteer.email,
+    street: volunteer.street,
+    city: volunteer.city,
+    state: volunteer.state,
+    zip: volunteer.zip,
+    phone: volunteer.phone,
+    userId: volunteer.userId,
+    events: volunteer.events.length,
+    id: volunteer.id,
+    objectID: volunteer.id,
+  };
+
+  index
+    .partialUpdateObject(api_volunteer, {
+      createIfNotExists: true,
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log(api_volunteer);
 };
 
 const deleteVolunteer = async (req, res) => {
@@ -359,6 +393,10 @@ const deleteVolunteer = async (req, res) => {
     },
   });
   res.status(200).json({});
+
+  index.deleteObject(req.params.id).then(() => {
+    console.log('removed');
+  });
 };
 
 export { create, getAll, updateVolunteer, deleteVolunteer };

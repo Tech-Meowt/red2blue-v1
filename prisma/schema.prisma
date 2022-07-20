@@ -43,8 +43,6 @@ model Volunteer {
   userId                   String?
   dbUser                   User?    @relation(fields: [userId], references: [id])
   events                   Event[]
-  numEventsAttendedId Int @default(1)
-  
   firstName                String?
   lastName                 String?
   email                    String?  @unique

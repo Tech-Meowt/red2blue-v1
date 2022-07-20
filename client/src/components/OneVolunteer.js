@@ -185,7 +185,7 @@ const OneVolunteer = ({
             </div>
             <div>
               <MdOutlineEventAvailable className='icon' />
-              Events Attended: <span className='status'> {events.length}</span>
+              Events Attended: <span className='status'> {events}</span>
             </div>
           </div>
           <footer>

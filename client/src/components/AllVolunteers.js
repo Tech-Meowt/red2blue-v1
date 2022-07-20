@@ -15,6 +15,7 @@ import {
   RefinementList,
   ClearRefinements,
   Configure,
+  RangeInput
 } from 'react-instantsearch-dom';
 
 export default function AllVolunteers() {
@@ -23,8 +24,6 @@ export default function AllVolunteers() {
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
   const [dbUser, setDbUser] = useState(false);
-  const [eventsAttended, setEventsAttended] = useState(0);
-  const eName = ''
 
   const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_ID,
@@ -85,15 +84,15 @@ export default function AllVolunteers() {
     <>
       <h3 className='r2b-red'>Database: Volunteers</h3>
 
-      <button className='btn' onClick={toggleSearch}>
-        {!opened ? 'Search' : 'Close'}
-      </button>
+      {/* <button className='btn' onClick={toggleSearch}>
+        {!opened ? 'Search by events attended' : 'Close'}
+      </button> */}
 
       {opened && (
         <>
           {/* <FilterWrapper>
             <SearchBarAllVols
-              data={allVolunteers}
+              data={volunteersList}
             />
           </FilterWrapper> */}
 
@@ -132,8 +131,17 @@ export default function AllVolunteers() {
               showLoadingIndicator
             />
           </div>
-          <h5 className='r2b-red'>🌎 Filter by state</h5>
-          <RefinementList attribute='state' />
+          <h5>Filters</h5>
+          <div className='filters'>
+            <div className='filter-children'>
+              <h5 className='r2b-red less-filter'>🌎 State</h5>
+              <RefinementList attribute='state' />
+            </div>
+            <div className='filter-children'>
+              <h5 className='r2b-red'>📅 Events attended</h5>
+              <RangeInput attribute='events' />
+            </div>
+          </div>
           <ClearRefinements />
           <Stats />
           <Hits hitComponent={Hit} />
@@ -170,22 +178,24 @@ const Hit = ({
   phone,
   userId,
   events
-}) => (
-  <OneVolunteer
-    firstName={hit.firstName}
-    lastName={hit.lastName}
-    email={hit.email}
-    street={hit.street}
-    city={hit.city}
-    state={hit.state}
-    zip={hit.zip}
-    phone={hit.phone}
-    userId={hit.userId}
-    events={hit.events}
-    getId={getId}
-    id={hit.id}
-    deleteHandler={deleteHandler}
-    updateVolunteer={updateVolunteer}
-    objectID={hit.objectID}
-  />
-);
+}) => {
+  return (
+    <OneVolunteer
+      firstName={hit.firstName}
+      lastName={hit.lastName}
+      email={hit.email}
+      street={hit.street}
+      city={hit.city}
+      state={hit.state}
+      zip={hit.zip}
+      phone={hit.phone}
+      userId={hit.userId}
+      events={hit.events}
+      getId={getId}
+      id={hit.id}
+      deleteHandler={deleteHandler}
+      updateVolunteer={updateVolunteer}
+      objectID={hit.objectID}
+    />
+  );
+};
