@@ -35,16 +35,16 @@ model User {
   lastLoggedIn DateTime    @default(now())
   role         String      @default("viewer")
   volunteer    Volunteer[]
-  volunteerId String?
+  volunteerId  String?
 }
 
 model Volunteer {
   id                       String   @id @default(uuid())
   userId                   String?
-  dbUser                   User?     @relation(fields: [userId], references: [id])
-  // dbUser  User[]
+  dbUser                   User?    @relation(fields: [userId], references: [id])
   events                   Event[]
-  eventId                  String?
+  numEventsAttendedId Int @default(1)
+  
   firstName                String?
   lastName                 String?
   email                    String?  @unique
@@ -102,6 +102,7 @@ model Volunteer {
   webMgmt                  String?
   anythingElse             String?
   updatedAt                DateTime @default(now())
+  objectID                 String?
 }
 
 model Sandbox {

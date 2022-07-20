@@ -8,7 +8,7 @@ const apiLimiter = rateLimiter({
   message: 'Too many requests from this IP, please try again after 15 minutes',
 })
 
-import { register, login, updateUser, deleteUser, createUser, updateDbUser, getUsers, getUserDetails  } from '../controllers/authController.js'
+import { register, login, updateUser, deleteUser, updateDbUser, getUsers } from '../controllers/authController.js'
 import authenticateUser from '../middleware/auth.js'
 import User from '../models/User.js'
 
@@ -18,9 +18,7 @@ router.route('/login').post(apiLimiter, login)
 router.route('/updateUser').patch(authenticateUser, updateUser);
 
 // admin management of database users
-router.route('/allUsers').get(getUsers);
-router.route('/addUser').post(createUser);
-router.route('/:id').get(getUserDetails)
+router.route('/allUsers').get(getUsers)
 router.route('/:id').patch(updateDbUser)
 router.route('/:id').delete(deleteUser)
 

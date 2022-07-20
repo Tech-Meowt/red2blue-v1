@@ -3,11 +3,7 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import {
-  OneSandbox,
-  SandboxFilter,
-  SandboxSearchBar,
-} from '../components';
+import { OneSandbox, SandboxFilter, SandboxSearchBar } from '../components';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function AllSandbox() {
@@ -43,7 +39,6 @@ export default function AllSandbox() {
 
     setOpened(!opened);
   };
-
 
   const handleChange = (e) => {
     e.preventDefault();

@@ -3,15 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    state,
-    phone,
-    interests,
-    createdAt,
-  } = req.body;
+  const { firstName, lastName, email, state, phone, interests, createdAt } =
+    req.body;
 
   const sandbox = await prisma.sandbox.create({
     data: {
@@ -23,9 +16,10 @@ const create = async (req, res) => {
       interests,
       createdAt,
     },
-  })
-    res.status(200).json({ sandbox });
+  });
+  res.status(200).json({ sandbox });
 };
+
 
 const getAll = async (req, res) => {
   const sandbox = await prisma.sandbox.findMany({
@@ -61,8 +55,10 @@ const updateSandbox = async (req, res) => {
       interests,
     },
   });
-    res.status(200).json({ sandbox });
+  res.status(200).json({ sandbox });
 };
+
+
 
 const deleteSandbox = async (req, res) => {
   const { id } = req.params;

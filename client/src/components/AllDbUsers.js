@@ -10,6 +10,7 @@ export default function AllDbUsers() {
   const [usersList, setUsersList] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
+  const [unapproved, setUnapproved] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -68,9 +69,7 @@ export default function AllDbUsers() {
       {opened && (
         <>
           <FilterWrapper>
-            <DbUsersSearchBar
-              data={usersList}
-            />
+            <DbUsersSearchBar data={usersList} />
           </FilterWrapper>
 
           <FilterWrapper>

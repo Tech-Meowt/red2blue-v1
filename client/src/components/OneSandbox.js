@@ -218,9 +218,6 @@ const OneSandbox = ({
                   </button>
                   <h1></h1>
                   <form
-                    // onSubmit={() => {
-                    //   updateSandbox(id);
-                    // }}
                     onSubmit={(e) => {
                       e.preventDefault();
                       updateSandbox(id);

@@ -107,28 +107,6 @@ const getUsers = (req, res) => {
   });
 };
 
-const createUser = (req, res) => {
-  let newUser = new User(req.body);
-  newUser
-    .save()
-    .then((newUser) => {
-      res.send(newUser);
-    })
-    .catch(function (err) {
-      res.status(422).send('User not added!');
-    });
-};
-
-const getUserDetails = (req, res) => { 
-  User.findById(req.params.id, function(err, oneUser) {
-    if (!oneUser) {
-      res.status(404).send('No user found')
-    } else {
-      res.json(oneUser)
-    }
-  })
-};
-
 const updateDbUser = async (req, res) => {
   User.findByIdAndUpdate(req.params.id, req.body)
     .then(function() {
@@ -223,9 +201,7 @@ export {
   register,
   login,
   updateUser,
-  createUser,
   deleteUser,
   updateDbUser,
   getUsers,
-  getUserDetails
 };

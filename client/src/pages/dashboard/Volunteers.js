@@ -5,7 +5,7 @@ export default function Volunteers() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Volunteers | All</title>
+          <title>Volunteers</title>
         </Helmet>
       </HelmetProvider>
       <AllVolunteers />

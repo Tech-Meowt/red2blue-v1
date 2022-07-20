@@ -3,23 +3,34 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
-import {
-  SearchBarAllVols,
-  OneVolunteer,
-} from '../components';
+import { SearchBarAllVols, OneVolunteer } from '../components';
 import { Link } from 'react-router-dom';
+import algoliasearch from 'algoliasearch';
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  Pagination,
+  Stats,
+  RefinementList,
+  ClearRefinements,
+  Configure,
+} from 'react-instantsearch-dom';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
-  const [data, setData] = useState([]);
   const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [perPage] = useState(20);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(1);
-  const [end, setEnd] = useState(20);
+  const [dbUser, setDbUser] = useState(false);
+  const [eventsAttended, setEventsAttended] = useState(0);
+  const eName = ''
+
+  const searchClient = algoliasearch(
+    process.env.REACT_APP_ALGOLIA_ID,
+    process.env.REACT_APP_ALGOLIA_SEARCH_API
+  );
+  const index = process.env.REACT_APP_ALGOLIA_INDEX;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -27,7 +38,7 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setAllVolunteers(res.data);
+        setAllVolunteers(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
@@ -36,38 +47,12 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setVolunteersList(res.data);
+        setVolunteersList(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
       });
-    
-    getData();
-
-  }, [offset]);
-
-  const getData = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/volunteer');
-    const data = res.data;
-    const slice = data.slice(offset, offset + perPage)
-    const volData = slice.map((volunteer) => {
-      return <OneVolunteer key={volunteer._id} {...volunteer} />;
-    });
-    setData(volData);
-    setPageCount(Math.ceil(data.length / perPage))
-    if (offset === 0) {
-      setEnd(end);
-      setStart(start);
-    } else {
-      setStart(offset * 20 - 19);
-      setEnd(offset * 20);
-    } 
-  }
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1)
-  }
+  }, []);
 
   const toggleSearch = (e) => {
     e.preventDefault();
@@ -86,17 +71,19 @@ export default function AllVolunteers() {
     axios
       .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
       .then((res) => {
-        values(res.data);
-        console.log(res.data);
+        values(res.data.volunteer);
+        console.log(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+
+
   return (
     <>
-      <h3 className='r2b-red'>Database: Volunteers | All</h3>
+      <h3 className='r2b-red'>Database: Volunteers</h3>
 
       <button className='btn' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
@@ -104,25 +91,22 @@ export default function AllVolunteers() {
 
       {opened && (
         <>
-          <FilterWrapper>
-            <SearchBarAllVols
-              data={volunteersList}
-              searchText={
-                'Search by first name, last name, email, or event category'
-              }
-            />
-          </FilterWrapper>
-
           {/* <FilterWrapper>
-            <div className='form'>
+            <SearchBarAllVols
+              data={allVolunteers}
+            />
+          </FilterWrapper> */}
+
+          <FilterWrapper>
+            {/* <div className='form'>
               <StateSearchSelectWithClear
                 data={volunteersList}
                 label={'Filter by state'}
                 clearBtn={'show'}
                 type={'volunteers'}
               />
-            </div>
-          </FilterWrapper> */}
+            </div> */}
+          </FilterWrapper>
         </>
       )}
 
@@ -136,34 +120,72 @@ export default function AllVolunteers() {
         </div>
       </VolunteersWrapper>
 
-      <Wrapper>
-        {end < allVolunteers.length ? (
-          <h4>
-            Viewing {start} - {end} of {allVolunteers.length} records
-          </h4>
-        ) : (
-          <h4>
-            Viewing {start} - {allVolunteers.length} of {allVolunteers.length}{' '}
-            records
-          </h4>
-        )}
+      <div className='search-container'>
+        <InstantSearch searchClient={searchClient} indexName={index}>
+          <Configure hitsPerPage={25} />
+          <div className='search-container-child'>
+            <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
+            <SearchBox
+              translations={{
+                placeholder: 'Enter first name, last name, or email',
+              }}
+              showLoadingIndicator
+            />
+          </div>
+          <h5 className='r2b-red'>🌎 Filter by state</h5>
+          <RefinementList attribute='state' />
+          <ClearRefinements />
+          <Stats />
+          <Hits hitComponent={Hit} />
+          <Pagination padding={2} showLast={true} />
+        </InstantSearch>
+      </div>
 
-        {/* <div className='jobs'>
-          {data}
-          <ReactPaginate
-            previousLabel={'<< prev'}
-            nextLabel={'next >>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-        </div> */}
-      </Wrapper>
+      {/* <Wrapper>
+        <h4>All Records</h4>
+        <div className='jobs'>
+          {allVolunteers.map((volunteer) => {
+            return <OneVolunteer key={volunteer.id} {...volunteer} />;
+          })}
+        </div>
+      </Wrapper> */}
     </>
   );
 }
+
+const Hit = ({
+  hit,
+  getId,
+  id,
+  deleteHandler,
+  updateVolunteer,
+  objectID,
+  firstName,
+  lastName,
+  email,
+  street,
+  city,
+  state,
+  zip,
+  phone,
+  userId,
+  events
+}) => (
+  <OneVolunteer
+    firstName={hit.firstName}
+    lastName={hit.lastName}
+    email={hit.email}
+    street={hit.street}
+    city={hit.city}
+    state={hit.state}
+    zip={hit.zip}
+    phone={hit.phone}
+    userId={hit.userId}
+    events={hit.events}
+    getId={getId}
+    id={hit.id}
+    deleteHandler={deleteHandler}
+    updateVolunteer={updateVolunteer}
+    objectID={hit.objectID}
+  />
+);

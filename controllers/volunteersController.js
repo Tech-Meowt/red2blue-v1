@@ -1,4 +1,5 @@
 import prisma from '../lib/prisma.js';
+import { index } from '../lib/algolia.js'
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
@@ -64,6 +65,8 @@ const create = async (req, res) => {
     anythingElse,
     events,
     updatedAt,
+    userId,
+    numEventsAttended,
   } = req.body;
 
   const volunteer = await prisma.volunteer.create({
@@ -126,36 +129,62 @@ const create = async (req, res) => {
       webDesign,
       webMgmt,
       anythingElse,
-      // events: {
-      //   connectOrCreate: [
-      //     {
-      //       create: {
-      //         eventName: events,
-      //       },
-      //       where: {
-      //         eventName: events
-      //       },
-      //     }
-      //   ],
-      // },
+      userId,
       events: {
-        connectOrCreate: 
-          events.map((event) => ({
-            where: {
-                eventName: event,
-            },
+        connectOrCreate: [
+          {
             create: {
-              eventName: event
-            }
-            }))
+              eventName: events,
+            },
+            where: {
+              eventName: events
+            },
+          }
+        ],
       },
-      updatedAt,
+      // events: {
+      //   connectOrCreate:
+      //     events.map((event) => ({
+      //       where: {
+      //           eventName: event,
+      //       },
+      //       create: {
+      //         eventName: event
+      //       }
+      //       }))
+      // },
+      numEventsAttended: events.length
     },
     include: {
       events: true,
     },
   });
   res.status(200).json({ volunteer });
+
+  const api_volunteer = [
+    {
+      firstName: volunteer.firstName,
+      lastName: volunteer.lastName,
+      email: volunteer.email,
+      street: volunteer.street,
+      city: volunteer.city,
+      state: volunteer.state,
+      zip: volunteer.zip,
+      phone: volunteer.phone,
+      userId: volunteer.userId,
+      events: volunteer.events,
+      id: volunteer.id,
+      objectID: volunteer.id,
+    },
+  ];
+  index
+    .saveObjects(api_volunteer, { autoGenerateObjectIDIfNotExist: true })
+    .then(({ objectIds }) => {
+      console.log(objectIds);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const getAll = async (req, res) => {
@@ -233,6 +262,7 @@ const updateVolunteer = async (req, res) => {
     anythingElse,
     events,
     updatedAt,
+    userId,
   } = req.body;
 
   const volunteer = await prisma.volunteer.update({
@@ -298,6 +328,7 @@ const updateVolunteer = async (req, res) => {
       webDesign,
       webMgmt,
       anythingElse,
+      userId,
       events: {
         connectOrCreate: [
           {
