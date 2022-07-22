@@ -1,10 +1,9 @@
 import links from '../utils/links';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import { ImProfile } from 'react-icons/im';
 import { FiHelpCircle } from 'react-icons/fi';
 import { SiCodesandbox } from 'react-icons/si';
-import { ImNotification } from 'react-icons/im';
 
 const NavLinks = ({ toggleSidebar }) => {
   const { user } = useAppContext();

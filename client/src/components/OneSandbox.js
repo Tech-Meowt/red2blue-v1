@@ -1,4 +1,4 @@
-import { Link, navigate } from 'react-router-dom';
+
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -34,6 +34,7 @@ const OneSandbox = ({
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
+  // eslint-disable-next-line
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
@@ -57,9 +58,9 @@ const OneSandbox = ({
     axios
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
-        newValues(res.data.sandbox);
+        setNewValues(res.data.sandbox);
         console.log(res.data.sandbox);
-      })
+      });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -121,10 +122,7 @@ const OneSandbox = ({
           <div className='content-center content-centered'>
             <div>
               <FaRegAddressCard className='icon' />
-              State:{' '}
-              <span className='status'>
-                {state}
-              </span>
+              State: <span className='status'>{state}</span>
             </div>
             <div>
               <AiOutlinePhone className='icon' />
@@ -216,7 +214,7 @@ const OneSandbox = ({
                   <button className='btn delete-btn' name={id} onClick={getId}>
                     Close
                   </button>
-                  <h1></h1>
+                  <h1>{' '}</h1>
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();

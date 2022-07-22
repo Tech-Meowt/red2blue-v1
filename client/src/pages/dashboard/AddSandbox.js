@@ -1,9 +1,8 @@
 import { FormRow } from '../../components';
-import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import SandboxWrapper from '../../assets/wrappers/Sandbox';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { BannerWarning, StateSelect, Alert } from '../../components';
 import { useAppContext } from '../../context/appContext';
 
@@ -18,11 +17,11 @@ export default function AddSandbox() {
   });
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
+  // eslint-disable-next-line
   const [alert, setAlert] = useState(false);
-  const [required, setRequired] = useState(true);
   const navigate = useNavigate();
   const { displayAlert, showAlert } = useAppContext();
-  
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
@@ -33,13 +32,10 @@ export default function AddSandbox() {
 
   const createRecord = (e) => {
     e.preventDefault();
+    // eslint-disable-next-line
     const { firstName, lastName, email, state, phone, interests } = sandboxInfo;
 
-    if (
-      !firstName ||
-      !lastName ||
-     ! email
-    ) {
+    if (!firstName || !lastName || !email) {
       displayAlert();
       return;
     }
@@ -104,7 +100,7 @@ export default function AddSandbox() {
           <button className='btn delete-btn' onClick={handleCancel}>
             Cancel
           </button>
-          <h1></h1>
+          <h1> </h1>
           <form onSubmit={createRecord}>
             <div className='content-centered content-center'>
               <FormRow

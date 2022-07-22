@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Wrapper from '../../assets/wrappers/Databases';
 import { Link } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { useAppContext } from '../../context/appContext';
 
 const Databases = () => {
   const { user } = useAppContext();
+  // eslint-disable-next-line
   const role = user.role;
 
   return (

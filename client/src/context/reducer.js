@@ -104,6 +104,7 @@ const reducer = (state, action) => {
       alertType: 'success',
       alertText: 'User Profile Updated!',
     };
+    // eslint-disable-next-line
     if (action.type === UPDATE_USER_ERROR) {
       return {
         ...state,
@@ -150,7 +151,6 @@ const reducer = (state, action) => {
           usersDb: '',
           volunteersDb: '',
           isActive: '',
-          password: '',
           role: '',
           status: 'pending',
         };
@@ -216,9 +216,11 @@ const reducer = (state, action) => {
         };
       }
       if (action.type === SET_EDIT_JOB) {
-        const dbUser = state.dbUsers.find((dbUser) => dbUser._id === action.payload.id);
+        const dbUser = state.dbUsers.find(
+          (dbUser) => dbUser._id === action.payload.id
+        );
         const {
-          _id: _id,
+          _id,
           name,
           email,
           password,
@@ -297,7 +299,7 @@ const reducer = (state, action) => {
         return { ...state, page: action.payload.page };
       }
       throw new Error(`no such action : ${action.type}`);
-    };
+    }
   }
 }
 

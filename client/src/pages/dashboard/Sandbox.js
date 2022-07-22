@@ -1,8 +1,7 @@
 import sandbox from '../../assets/images/sandbox.jpeg'
 import enter from '../../assets/images/enter-sign.png'
 import { Link } from 'react-router-dom';
-import { BannerWarning, ScrollButtonDown, ScrollButtonUp } from '../../components';
-import { useState, useEffect } from 'react';
+import { BannerWarning } from '../../components';
 
 export default function Sandbox() {
 

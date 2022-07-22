@@ -1,4 +1,3 @@
-import { FormRow } from '.';
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
@@ -100,6 +99,7 @@ const DbUsersFilter = ({
     } else if (query === 'role') {
       const searchWord = e.target.value;
       setWordEntered(searchWord);
+      // eslint-disable-next-line
       let option = searchWord;
       const newFilter = data.filter((value) => {
         return value.role.toLowerCase().includes(searchWord.toLowerCase());
@@ -149,12 +149,12 @@ const DbUsersFilter = ({
       </SearchSelectWrapper>
 
       <Wrapper>
-        {filteredData.length == 0 && !noResults && (
+        {filteredData.length === 0 && !noResults && (
           <h5>
             Found {filteredData.length} records: {query}
           </h5>
         )}
-        {filteredData.length == 1 && (
+        {filteredData.length === 1 && (
           <h5>
             Found {filteredData.length} record: {query}
           </h5>
@@ -164,7 +164,7 @@ const DbUsersFilter = ({
             Found {filteredData.length} records: {query}
           </h5>
         )}
-        {filteredData.length != 0 &&
+        {filteredData.length !== 0 &&
           filteredData.slice(0, 15).map((value, key) => {
             return (
               <>

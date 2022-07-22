@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Wrapper from '../assets/wrappers/AllDbUsers';
-import FilterWrapper from '../assets/wrappers/FilterContainer';
+import { useEffect } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
-import { SearchBarAllVols, OneVolunteer } from '../components';
+import { OneVolunteer } from '../components';
 import { Link } from 'react-router-dom';
 import algoliasearch from 'algoliasearch';
 import {
@@ -19,11 +16,6 @@ import {
 } from 'react-instantsearch-dom';
 
 export default function AllVolunteers() {
-  const [allVolunteers, setAllVolunteers] = useState([]);
-  const [volunteersList, setVolunteersList] = useState([]);
-  const [values, setValues] = useState('');
-  const [opened, setOpened] = useState(false);
-  const [dbUser, setDbUser] = useState(false);
 
   const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_ID,
@@ -34,81 +26,11 @@ export default function AllVolunteers() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
-    axios
-      .get('http://localhost:8000/api/v1/volunteer')
-      .then((res) => {
-        setAllVolunteers(res.data.volunteer);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axios
-      .get('http://localhost:8000/api/v1/volunteer')
-      .then((res) => {
-        setVolunteersList(res.data.volunteer);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, []);
-
-  const toggleSearch = (e) => {
-    e.preventDefault();
-
-    setOpened(!opened);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-
-  const updateVolunteer = (id) => {
-    axios
-      .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
-      .then((res) => {
-        values(res.data.volunteer);
-        console.log(res.data.volunteer);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-
 
   return (
     <>
       <h3 className='r2b-red'>Database: Volunteers</h3>
-
-      {/* <button className='btn' onClick={toggleSearch}>
-        {!opened ? 'Search by events attended' : 'Close'}
-      </button> */}
-
-      {opened && (
-        <>
-          {/* <FilterWrapper>
-            <SearchBarAllVols
-              data={volunteersList}
-            />
-          </FilterWrapper> */}
-
-          <FilterWrapper>
-            {/* <div className='form'>
-              <StateSearchSelectWithClear
-                data={volunteersList}
-                label={'Filter by state'}
-                clearBtn={'show'}
-                type={'volunteers'}
-              />
-            </div> */}
-          </FilterWrapper>
-        </>
-      )}
-
       <VolunteersWrapper>
         <div className='actions'>
           <Link to={''}>

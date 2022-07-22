@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, Alert, StateSelect } from '../components';
+import { FormRow, StateSelect } from '../components';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
@@ -38,15 +37,12 @@ const OneVolunteer = ({
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
-  const [showBasicEdit, setShowBasicEdit] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [basicClicked, setBasicClicked] = useState(false);
   const [showBasicEditForm, setShowBasicEditForm] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
   const [values, setValues] = useState(initialState);
-  const [details, setDetails] = useState(initialState)
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [deleted, setDeleted] = useState(false);
+  // eslint-disable-next-line
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
@@ -57,39 +53,33 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    events
+    events,
   });
 
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(true)
+    setClicked(true);
     setBasicClicked(true);
   };
 
   const basicHide = (e) => {
-    const id = e.target.name;
     setBasicClicked(false);
     setClicked(false);
-  }
-
-  const basicEdit = (e) => {
-    const id = e.target.name;
-    setShowBasicEdit(true);
-  }
+  };
 
   const showEditFormBasic = (e) => {
     e.preventDefault();
 
-    setShowBasicEditForm(true)
-  }
+    setShowBasicEditForm(true);
+  };
 
   const handleBasicCancel = (e) => {
     e.preventDefault();
 
     setBasicClicked(false);
     setClicked(false);
-  }
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -107,21 +97,21 @@ const OneVolunteer = ({
     axios
       .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
       .then((res) => {
-        newValues(res.data.volunteer);
+        setNewValues(res.data.volunteer);
         console.log(res.data.volunteer);
-      })
-    setShowAlert(true);
-      setAlertText('Update successful!');
-      setAlertType('success');
-      closeModal(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000).catch((error) => {
-        console.log(error);
-        setShowAlert(true);
-        setAlertText('There was an error. Please try again...');
-        setAlertType('danger');
       });
+    setShowAlert(true);
+    setAlertText('Update successful!');
+    setAlertType('success');
+    closeModal(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000).catch((error) => {
+      console.log(error);
+      setShowAlert(true);
+      setAlertText('There was an error. Please try again...');
+      setAlertType('danger');
+    });
   };
 
   const deleteHandler = (e) => {
@@ -144,7 +134,6 @@ const OneVolunteer = ({
       setAlertType('danger');
     });
   };
-
 
   return (
     <>

@@ -4,7 +4,6 @@ import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
 import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
-import axios from 'axios';
 
 const initialState = {
   firstName: '',

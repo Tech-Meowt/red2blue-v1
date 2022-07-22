@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Wrapper from '../assets/wrappers/EventDetails';
 
 export default function EventDetails({
@@ -29,7 +27,7 @@ export default function EventDetails({
 
             <h5>
               Event Date:{' '}
-              {eventDate != '' ? (
+              {eventDate !== '' ? (
                 <span>{eventDate}</span>
               ) : (
                 <span>Date not provided</span>
