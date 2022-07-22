@@ -41,6 +41,8 @@ const OneVolunteer = ({
   const [showBasicEdit, setShowBasicEdit] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [basicClicked, setBasicClicked] = useState(false);
+  const [showBasicEditForm, setShowBasicEditForm] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
   const [values, setValues] = useState(initialState);
   const [details, setDetails] = useState(initialState)
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -68,11 +70,25 @@ const OneVolunteer = ({
   const basicHide = (e) => {
     const id = e.target.name;
     setBasicClicked(false);
+    setClicked(false);
   }
 
   const basicEdit = (e) => {
     const id = e.target.name;
     setShowBasicEdit(true);
+  }
+
+  const showEditFormBasic = (e) => {
+    e.preventDefault();
+
+    setShowBasicEditForm(true)
+  }
+
+  const handleBasicCancel = (e) => {
+    e.preventDefault();
+
+    setBasicClicked(false);
+    setClicked(false);
   }
 
   const handleChange = (e) => {
@@ -185,7 +201,7 @@ const OneVolunteer = ({
             </div>
             <div>
               <MdOutlineEventAvailable className='icon' />
-              Events Attended: <span className='status'> {events}</span>
+              Events Attended: <span className='status'> {events - 1}</span>
             </div>
           </div>
           <footer>
@@ -301,15 +317,13 @@ const OneVolunteer = ({
                   </div>
                   <footer>
                     <div className='actions'>
-                      {!basicEdit && (
-                        <button
-                          className='btn edit-btn'
-                          name={id}
-                          onClick={basicEdit}
-                        >
-                          Edit
-                        </button>
-                      )}
+                      <button
+                        className='btn edit-btn'
+                        name={id}
+                        onClick={showEditFormBasic}
+                      >
+                        Edit
+                      </button>
 
                       <button
                         className='btn delete-btn'
@@ -321,9 +335,9 @@ const OneVolunteer = ({
                     </div>
                   </footer>
 
-                  {basicEdit && (
+                  {showBasicEditForm && (
                     <>
-                      <h3 className='space'>Edit Record</h3>
+                      <h3 className='space'>Edit Basic Information</h3>
                       <p className='instructions'>
                         Update <span className='emphasis'>only</span> the fields
                         that you wish to change.
@@ -359,8 +373,32 @@ const OneVolunteer = ({
                             value={values.email}
                             handleChange={handleChange}
                           />
+                          <FormRow
+                            placeholder='Enter street'
+                            type='text'
+                            name='street'
+                            labelText={'Street'}
+                            value={values.street}
+                            handleChange={handleChange}
+                          />
+                          <FormRow
+                            placeholder='Enter city'
+                            type='text'
+                            name='city'
+                            labelText={'City'}
+                            value={values.city}
+                            handleChange={handleChange}
+                          />
                           <StateSelect
                             value={values.state}
+                            handleChange={handleChange}
+                          />
+                          <FormRow
+                            placeholder='Enter zip'
+                            type='text'
+                            name='zip'
+                            labelText={'Zip'}
+                            value={values.zip}
                             handleChange={handleChange}
                           />
                           <FormRow
@@ -371,9 +409,23 @@ const OneVolunteer = ({
                             value={values.phone}
                             handleChange={handleChange}
                           />
+                          <FormRow
+                            placeholder='Enter event name'
+                            type='text'
+                            name='events'
+                            labelText={'Add new event or type none'}
+                            value={values.events}
+                            handleChange={handleChange}
+                          />
                         </div>
                         <button type='submit' className='btn edit-btn'>
                           Submit
+                        </button>
+                        <button
+                          className='btn delete-btn'
+                          onClick={handleBasicCancel}
+                        >
+                          Cancel
                         </button>
                       </form>
                     </>

@@ -39,13 +39,13 @@ model User {
 }
 
 model Volunteer {
-  id                       String   @id @default(uuid())
+  id                       String                  @id @default(uuid())
   userId                   String?
-  dbUser                   User?    @relation(fields: [userId], references: [id])
+  dbUser                   User?                   @relation(fields: [userId], references: [id])
   events                   Event[]
   firstName                String?
   lastName                 String?
-  email                    String?  @unique
+  email                    String?                 @unique
   street                   String?
   city                     String?
   state                    String?
@@ -99,7 +99,7 @@ model Volunteer {
   webDesign                String?
   webMgmt                  String?
   anythingElse             String?
-  updatedAt                DateTime @default(now())
+  updatedAt                DateTime                @default(now())
   objectID                 String?
 }
 
