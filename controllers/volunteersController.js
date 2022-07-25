@@ -174,7 +174,7 @@ const create = async (req, res) => {
       zip: volunteer.zip,
       phone: volunteer.phone,
       userId: volunteer.userId,
-      events: volunteer.events.length,
+      events: volunteer.events.length - 1,
       id: volunteer.id,
       objectID: volunteer.id,
     },
@@ -375,7 +375,7 @@ const updateVolunteer = async (req, res) => {
     zip: volunteer.zip,
     phone: volunteer.phone,
     userId: volunteer.userId,
-    events: volunteer.events.length,
+    events: volunteer.events.length - 1,
     id: volunteer.id,
     objectID: volunteer.id,
   };

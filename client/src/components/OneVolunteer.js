@@ -32,7 +32,6 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    events,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -98,7 +97,6 @@ const OneVolunteer = ({
       .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
       .then((res) => {
         setNewValues(res.data.volunteer);
-        console.log(res.data.volunteer);
       });
     setShowAlert(true);
     setAlertText('Update successful!');
@@ -124,7 +122,6 @@ const OneVolunteer = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
@@ -190,7 +187,7 @@ const OneVolunteer = ({
             </div>
             <div>
               <MdOutlineEventAvailable className='icon' />
-              Events Attended: <span className='status'> {events - 1}</span>
+              Events Attended: <span className='status'> {events}</span>
             </div>
           </div>
           <footer>
@@ -261,11 +258,6 @@ const OneVolunteer = ({
               )}
               {basicClicked && (
                 <>
-                  {showAlert && (
-                    <div className={`alert alert-${alertType}`}>
-                      {alertText}
-                    </div>
-                  )}
                   <h4 className='space'>Basic Information</h4>
 
                   <div className='content-center'>
@@ -329,15 +321,99 @@ const OneVolunteer = ({
                       <h3 className='space'>Edit Basic Information</h3>
                       <p className='instructions'>
                         Update <span className='emphasis'>only</span> the fields
-                        that you wish to change.
+                        that you wish to change.{' '}
+                        <span className='r2b-red'>**PLEASE NOTE**</span> If you
+                        are <span className='emphasis'>not</span> adding a new
+                        event, you{' '}
+                        <span className='emphasis'>must enter none</span> or the
+                        record <span className='emphasis'>will not update</span>{' '}
+                        in the database.
                       </p>
+                      {showAlert && (
+                        <div className={`alert alert-${alertType}`}>
+                          {alertText}
+                        </div>
+                      )}
+                      <Modal
+                        isOpen={modalIsOpen}
+                        style={{
+                          overlay: {
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'rgba(140, 141, 143, .75)',
+                          },
+                          content: {
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            border: '1px solid #ccc',
+                            background: '#fff',
+                            overflow: 'auto',
+                            WebkitOverflowScrolling: 'touch',
+                            borderRadius: '5px',
+                            outline: 'none',
+                            padding: '20px',
+                            width: '500px',
+                            height: '250px',
+                          },
+                        }}
+                      >
+                        <h3 className='modal-header'>
+                          🚨 Heads up! If you{' '}
+                          <span className='r2b-red'>
+                            did not add a new event
+                          </span>
+                          , make sure to enter{' '}
+                          <span className='r2b-red'>none</span> in the Add New
+                          Event field.
+                        </h3>
+                        <div className='confirm-btns'>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              updateVolunteer(id);
+                            }}
+                            className='btn-success height'
+                            name={id}
+                            type='button'
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={closeModal}
+                            className='btn-danger height'
+                          >
+                            Go back
+                          </button>
+                        </div>
+                      </Modal>
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
-                          updateVolunteer(id);
+                          openModal();
                         }}
                       >
+                        {/* <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            updateVolunteer(id);
+                          }}
+                        > */}
                         <div className='content-centered content-center'>
+                          <div className='r2b-red'>
+                            <FormRow
+                              placeholder='Enter event name OR enter none'
+                              type='text'
+                              name='events'
+                              labelText={'**Add new event**'}
+                              value={values.events}
+                              handleChange={handleChange}
+                            />
+                          </div>
                           <FormRow
                             placeholder='Enter first name'
                             type='text'
@@ -396,14 +472,6 @@ const OneVolunteer = ({
                             name='phone'
                             labelText={'Phone'}
                             value={values.phone}
-                            handleChange={handleChange}
-                          />
-                          <FormRow
-                            placeholder='Enter event name'
-                            type='text'
-                            name='events'
-                            labelText={'Add new event or type none'}
-                            value={values.events}
                             handleChange={handleChange}
                           />
                         </div>

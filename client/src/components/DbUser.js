@@ -75,9 +75,18 @@ const DbUser = ({
       .then((res) => {
         setNewValues(res.data);
         console.log(res.data);
-      })
-      .catch((error) => {
+      });
+    setShowAlert(true);
+      setAlertText('Update successful!');
+      setAlertType('success');
+      closeModal(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000).catch((error) => {
         console.log(error);
+         setShowAlert(true);
+         setAlertText('There was an error. Please try again...');
+         setAlertType('danger');
       });
   };
 
@@ -91,7 +100,6 @@ const DbUser = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
@@ -223,6 +231,11 @@ const DbUser = ({
                   <br />
                   <div className='info'>
                     <h3>Edit User</h3>
+                    {showAlert && (
+                      <div className={`alert alert-${alertType}`}>
+                        {alertText}
+                      </div>
+                    )}
                     <p className='instructions'>
                       Update <span className='emphasis'>only</span> the fields
                       that you wish to change.
@@ -234,7 +247,8 @@ const DbUser = ({
                   </button>
                   <h4>{''}</h4>
                   <form
-                    onSubmit={() => {
+                    onSubmit={(e) => {
+                      e.preventDefault();
                       updateUser(_id);
                     }}
                   >

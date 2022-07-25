@@ -1,4 +1,3 @@
-
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -205,6 +204,11 @@ const OneSandbox = ({
                   <br />
                   <div className='info'>
                     <h3>Edit Record</h3>
+                    {showAlert && (
+                      <div className={`alert alert-${alertType}`}>
+                        {alertText}
+                      </div>
+                    )}
                     <p className='instructions'>
                       Update <span className='emphasis'>only</span> the fields
                       that you wish to change.
@@ -214,7 +218,7 @@ const OneSandbox = ({
                   <button className='btn delete-btn' name={id} onClick={getId}>
                     Close
                   </button>
-                  <h1>{' '}</h1>
+                  <h1> </h1>
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();

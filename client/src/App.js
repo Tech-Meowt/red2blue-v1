@@ -24,7 +24,6 @@ import { useAppContext } from './context/appContext'
 
 function App() {
   const { user, logoutUser } = useAppContext();
-
   useEffect(() => {
     if (user) {
       const interval = setInterval(() => {
