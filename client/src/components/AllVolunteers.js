@@ -1,6 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
-import { OneVolunteer } from '../components';
+import FilterWrapper from '../assets/wrappers/FilterContainer'
+import Wrapper from '../assets/wrappers/AllDbUsers.js'
+import { Hit, SearchBarAllVols, OneVolunteer } from '../components';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
@@ -17,9 +19,16 @@ import {
   RangeInput,
   MenuSelect,
 } from 'react-instantsearch-dom';
-import { RiInputMethodLine } from 'react-icons/ri';
+import { BiHotel } from 'react-icons/bi';
+import { IoConstructOutline } from 'react-icons/io5';
+import axios from 'axios';
+import { CSVLink } from 'react-csv'
+
 
 export default function AllVolunteers() {
+  const [allVolunteers, setAllVolunteers] = useState([])
+  const [volunteersList, setVolunteersList] = useState([])
+  const [events, setEvents] = useState(0)
   const printRef = useRef();
   const searchClient = algoliasearch(
     process.env.REACT_APP_ALGOLIA_ID,
@@ -27,10 +36,24 @@ export default function AllVolunteers() {
   );
   const index = process.env.REACT_APP_ALGOLIA_INDEX;
 
+  const headers = [
+    { label: 'First name', key: 'firstName' },
+    { label: 'Last name', key: 'lastName' },
+    { label: 'Email', key: 'email' }
+  ];
+
+  const data = volunteersList
+
+  const csvReport = {
+    data: data,
+    headers: headers,
+    filename: 'report.csv'
+  }
+
   const handleDownloadPdf = async () => {
     const element = printRef.current
     const canvas = await html2canvas(element)
-    const data = canvas.toDataURL('image/png', 1.0);
+    const data = canvas.toDataURL('image/png', 3.0);
 
     let imgWidth = 210;
     let pageHeight = 296;
@@ -55,6 +78,19 @@ export default function AllVolunteers() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
+    axios.get('http://localhost:8000/api/v1/volunteer')
+      .then((res) => {
+        setAllVolunteers(res.data.volunteer)
+      }).catch((error) => {
+      console.log(error)
+      })
+    
+    axios.get('http://localhost:8000/api/v1/volunteer')
+      .then((res) => {
+      setVolunteersList(res.data.volunteer)
+      }).catch((error) => {
+      console.log(error)
+    })
   }, []);
 
   return (
@@ -70,7 +106,40 @@ export default function AllVolunteers() {
         </div>
       </VolunteersWrapper>
 
-      <div className='search-container'>
+      <FilterWrapper>
+        <SearchBarAllVols description={volunteersList} />
+      </FilterWrapper>
+
+      <Wrapper>
+        <button className='btn btn-success' onClick={handleDownloadPdf}>
+          Download PDF
+        </button>
+        <CSVLink {...csvReport}>
+          <button className='btn btn-success'>Export as CSV</button>
+        </CSVLink>
+
+        <h4>All Records</h4>
+        <div ref={printRef}>
+          <div className='jobs'>
+            {allVolunteers.map((volunteer) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    <OneVolunteer
+                      key={volunteer.id}
+                      {...volunteer}
+                      events={volunteer.events.length}
+                      className='border-state'
+                    />
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </div>
+      </Wrapper>
+
+      {/* <div className='search-container'>
         <InstantSearch searchClient={searchClient} indexName={index}>
           <Configure hitsPerPage={25} />
           <div className='search-container-child'>
@@ -314,142 +383,144 @@ export default function AllVolunteers() {
           </div>
           <Pagination padding={2} showLast={true} />
         </InstantSearch>
-      </div>
+      </div> */}
     </>
   );
 }
-
-const Hit = ({
-  hit,
-  getId,
-  id,
-  deleteHandler,
-  updateVolunteer,
-  objectID,
-  firstName,
-  lastName,
-  email,
-  street,
-  city,
-  state,
-  zip,
-  phone,
-  userId,
-  events,
-  campaignMgmt,
-  canvassing,
-  communityOrganizing,
-  electedOfficialCurr,
-  electedOfficialPast,
-  p2pTextingMgmt,
-  p2pTextingVol,
-  phonebanking,
-  pollWorker,
-  postcardMgmt,
-  postcardWriting,
-  txtPhoneScriptEdit,
-  txtPhoneScriptWrite,
-  vanVoteBuildExp,
-  voterReg,
-  actor,
-  artist,
-  boardOfDirectors,
-  dataScience,
-  dbMgmt,
-  editor,
-  professor,
-  trainer,
-  fundraising,
-  graphicDesign,
-  hr,
-  it,
-  legal,
-  linguist,
-  msgComms,
-  musician,
-  newsletterCreateDesign,
-  newsletterWrite,
-  nonprofMgmt,
-  pr,
-  publicSpeak,
-  recruitment,
-  research,
-  otherLanguage,
-  socialMediaContentCreate,
-  socialMediaMgmt,
-  speechWriter,
-  strategicPlanning,
-  videoEditCreate,
-  volMgmt,
-  webDesign,
-  webMgmt,
-  anythingElse
-}) => {
-  return (
-    <OneVolunteer
-      firstName={hit.firstName}
-      lastName={hit.lastName}
-      email={hit.email}
-      street={hit.street}
-      city={hit.city}
-      state={hit.state}
-      zip={hit.zip}
-      phone={hit.phone}
-      userId={hit.userId}
-      events={hit.events}
-      campaignMgmt={hit.campaignMgmt}
-      getId={getId}
-      id={hit.id}
-      deleteHandler={deleteHandler}
-      updateVolunteer={updateVolunteer}
-      objectID={hit.objectID}
-      canvassing={hit.canvassing}
-      communityOrganizing={hit.communityOrganizing}
-      electedOfficialCurr={hit.electedOfficialCurr}
-      electedOfficialPast={hit.electedOfficialPast}
-      p2pTextingMgmt={hit.p2pTextingMgmt}
-      p2pTextingVol={hit.p2pTextingVol}
-      phonebanking={hit.phonebanking}
-      pollWorker={hit.pollWorker}
-      postcardMgmt={hit.postcardMgmt}
-      postcardWriting={hit.postcardWriting}
-      txtPhoneScriptEdit={hit.txtPhoneScriptEdit}
-      txtPhoneScriptWrite={hit.txtPhoneScriptWrite}
-      vanVoteBuildExp={hit.vanVoteBuildExp}
-      voterReg={hit.voterReg}
-      actor={hit.actor}
-      artist={hit.artist}
-      boardOfDirectors={hit.boardOfDirectors}
-      dataScience={hit.dataScience}
-      dbMgmt={hit.dbMgmt}
-      editor={hit.editor}
-      professor={hit.professor}
-      trainer={hit.trainer}
-      fundraising={hit.fundraising}
-      graphicDesign={hit.graphicDesign}
-      hr={hit.hr}
-      it={hit.it}
-      legal={hit.legal}
-      linguist={hit.linguist}
-      msgComms={hit.msgComms}
-      musician={hit.musician}
-      newsletterCreateDesign={hit.newsletterCreateDesign}
-      newsletterWrite={hit.newsletterWrite}
-      nonprofMgmt={hit.nonprofMgmt}
-      pr={hit.pr}
-      publicSpeak={hit.publicSpeak}
-      recruitment={hit.recruitment}
-      research={hit.research}
-      otherLanguage={hit.otherLanguage}
-      socialMediaContentCreate={hit.socialMediaContentCreate}
-      socialMediaMgmt={hit.socialMediaMgmt}
-      speechWriter={hit.speechWriter}
-      strategicPlanning={hit.strategicPlanning}
-      videoEditCreate={hit.videoEditCreate}
-      volMgmt={hit.volMgmt}
-      webDesign={hit.webDesign}
-      webMgmt={hit.webMmgmt}
-      anythingElse={hit.anythingElse}
-    />
-  );
-};
+// const Hit = ({
+//   hit,
+//   getId,
+//   id,
+//   deleteHandler,
+//   updateVolunteer,
+//   objectID,
+//   firstName,
+//   lastName,
+//   email,
+//   street,
+//   city,
+//   state,
+//   zip,
+//   phone,
+//   userId,
+//   events,
+//   campaignMgmt,
+//   canvassing,
+//   communityOrganizing,
+//   electedOfficialCurr,
+//   electedOfficialPast,
+//   p2pTextingMgmt,
+//   p2pTextingVol,
+//   phonebanking,
+//   pollWorker,
+//   postcardMgmt,
+//   postcardWriting,
+//   txtPhoneScriptEdit,
+//   txtPhoneScriptWrite,
+//   vanVoteBuildExp,
+//   voterReg,
+//   actor,
+//   artist,
+//   boardOfDirectors,
+//   dataScience,
+//   dbMgmt,
+//   editor,
+//   professor,
+//   trainer,
+//   fundraising,
+//   graphicDesign,
+//   hr,
+//   it,
+//   legal,
+//   linguist,
+//   msgComms,
+//   musician,
+//   newsletterCreateDesign,
+//   newsletterWrite,
+//   nonprofMgmt,
+//   pr,
+//   publicSpeak,
+//   recruitment,
+//   research,
+//   otherLanguage,
+//   socialMediaContentCreate,
+//   socialMediaMgmt,
+//   speechWriter,
+//   strategicPlanning,
+//   videoEditCreate,
+//   volMgmt,
+//   webDesign,
+//   webMgmt,
+//   anythingElse,
+// }) => {
+  
+//   return (
+//     <>
+//       <OneVolunteer
+//         firstName={hit.firstName}
+//         lastName={hit.lastName}
+//         email={hit.email}
+//         street={hit.street}
+//         city={hit.city}
+//         state={hit.state}
+//         zip={hit.zip}
+//         phone={hit.phone}
+//         userId={hit.userId}
+//         events={hit.events}
+//         campaignMgmt={hit.campaignMgmt}
+//         getId={getId}
+//         id={hit.id}
+//         deleteHandler={deleteHandler}
+//         updateVolunteer={updateVolunteer}
+//         objectID={hit.objectID}
+//         canvassing={hit.canvassing}
+//         communityOrganizing={hit.communityOrganizing}
+//         electedOfficialCurr={hit.electedOfficialCurr}
+//         electedOfficialPast={hit.electedOfficialPast}
+//         p2pTextingMgmt={hit.p2pTextingMgmt}
+//         p2pTextingVol={hit.p2pTextingVol}
+//         phonebanking={hit.phonebanking}
+//         pollWorker={hit.pollWorker}
+//         postcardMgmt={hit.postcardMgmt}
+//         postcardWriting={hit.postcardWriting}
+//         txtPhoneScriptEdit={hit.txtPhoneScriptEdit}
+//         txtPhoneScriptWrite={hit.txtPhoneScriptWrite}
+//         vanVoteBuildExp={hit.vanVoteBuildExp}
+//         voterReg={hit.voterReg}
+//         actor={hit.actor}
+//         artist={hit.artist}
+//         boardOfDirectors={hit.boardOfDirectors}
+//         dataScience={hit.dataScience}
+//         dbMgmt={hit.dbMgmt}
+//         editor={hit.editor}
+//         professor={hit.professor}
+//         trainer={hit.trainer}
+//         fundraising={hit.fundraising}
+//         graphicDesign={hit.graphicDesign}
+//         hr={hit.hr}
+//         it={hit.it}
+//         legal={hit.legal}
+//         linguist={hit.linguist}
+//         msgComms={hit.msgComms}
+//         musician={hit.musician}
+//         newsletterCreateDesign={hit.newsletterCreateDesign}
+//         newsletterWrite={hit.newsletterWrite}
+//         nonprofMgmt={hit.nonprofMgmt}
+//         pr={hit.pr}
+//         publicSpeak={hit.publicSpeak}
+//         recruitment={hit.recruitment}
+//         research={hit.research}
+//         otherLanguage={hit.otherLanguage}
+//         socialMediaContentCreate={hit.socialMediaContentCreate}
+//         socialMediaMgmt={hit.socialMediaMgmt}
+//         speechWriter={hit.speechWriter}
+//         strategicPlanning={hit.strategicPlanning}
+//         videoEditCreate={hit.videoEditCreate}
+//         volMgmt={hit.volMgmt}
+//         webDesign={hit.webDesign}
+//         webMgmt={hit.webMmgmt}
+//         anythingElse={hit.anythingElse}
+//       />
+//     </>
+//   );
+// };

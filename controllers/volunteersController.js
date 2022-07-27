@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma.js';
-import { index } from '../lib/algolia.js';
+// import { index } from '../lib/algolia.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
@@ -163,36 +163,36 @@ const create = async (req, res) => {
   res.status(200).json({ volunteer });
 
   // algolia
-  const api_volunteer = [
-    {
-      firstName: volunteer.firstName,
-      lastName: volunteer.lastName,
-      email: volunteer.email,
-      street: volunteer.street,
-      city: volunteer.city,
-      state: volunteer.state,
-      zip: volunteer.zip,
-      phone: volunteer.phone,
-      userId: volunteer.userId,
-      events: volunteer.events.length - 1,
-      id: volunteer.id,
-      objectID: volunteer.id,
-    },
-  ];
-  index
-    .saveObjects(api_volunteer, { autoGenerateObjectIDIfNotExist: true })
-    .then(({ objectIds }) => {
-      console.log(objectIds);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // const api_volunteer = [
+  //   {
+  //     firstName: volunteer.firstName,
+  //     lastName: volunteer.lastName,
+  //     email: volunteer.email,
+  //     street: volunteer.street,
+  //     city: volunteer.city,
+  //     state: volunteer.state,
+  //     zip: volunteer.zip,
+  //     phone: volunteer.phone,
+  //     userId: volunteer.userId,
+  //     events: volunteer.events.length - 1,
+  //     id: volunteer.id,
+  //     objectID: volunteer.id,
+  //   },
+  // ];
+  // index
+  //   .saveObjects(api_volunteer, { autoGenerateObjectIDIfNotExist: true })
+  //   .then(({ objectIds }) => {
+  //     console.log(objectIds);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };
 
 const getAll = async (req, res) => {
   const volunteer = await prisma.volunteer.findMany({
     orderBy: {
-      updatedAt: 'desc',
+      lastName: 'asc',
     },
     include: {
       events: true,
@@ -365,29 +365,29 @@ const updateVolunteer = async (req, res) => {
   res.status(200).json({ volunteer });
 
   // algolia
-  const api_volunteer = {
-    firstName: volunteer.firstName,
-    lastName: volunteer.lastName,
-    email: volunteer.email,
-    street: volunteer.street,
-    city: volunteer.city,
-    state: volunteer.state,
-    zip: volunteer.zip,
-    phone: volunteer.phone,
-    userId: volunteer.userId,
-    events: volunteer.events.length - 1,
-    id: volunteer.id,
-    objectID: volunteer.id,
-  };
+  // const api_volunteer = {
+  //   firstName: volunteer.firstName,
+  //   lastName: volunteer.lastName,
+  //   email: volunteer.email,
+  //   street: volunteer.street,
+  //   city: volunteer.city,
+  //   state: volunteer.state,
+  //   zip: volunteer.zip,
+  //   phone: volunteer.phone,
+  //   userId: volunteer.userId,
+  //   events: volunteer.events.length - 1,
+  //   id: volunteer.id,
+  //   objectID: volunteer.id,
+  // };
 
-  index
-    .partialUpdateObject(api_volunteer, {
-      createIfNotExists: true,
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  console.log(api_volunteer);
+  // index
+  //   .partialUpdateObject(api_volunteer, {
+  //     createIfNotExists: true,
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // console.log(api_volunteer);
 };
 
 const deleteVolunteer = async (req, res) => {
@@ -401,9 +401,9 @@ const deleteVolunteer = async (req, res) => {
   res.status(200).json({});
 
   // algolia
-  index.deleteObject(req.params.id).then(() => {
-    console.log('removed');
-  });
+  // index.deleteObject(req.params.id).then(() => {
+  //   console.log('removed');
+  // });
 };
 
 export { create, getAll, updateVolunteer, deleteVolunteer };

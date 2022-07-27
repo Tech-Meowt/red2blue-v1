@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap');
 
 html {
+  background: white;
   font-size: 100%;
 } /*16px*/
 
@@ -577,13 +578,27 @@ input[type=checkbox]:checked {
   transition: var(--transition);
 }
 
+.filter-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.right {
+  padding-right: 1rem;
+}
+
+.left {
+  padding-left: 1rem;
+}
+
 .search-container-child {
   background: var(--r2b-blue-light);
   border-color: transparent;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
   margin-bottom: 1.5rem;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 2.25rem 0;
   transition: var(--transition);
   z-index: 100;
 }

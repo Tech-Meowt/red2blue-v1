@@ -47,6 +47,19 @@ app.use(
 );
 app.use(xss());
 app.use(mongoSanitize());
+
+// const whitelist = [
+//   'http://localhost:3000'
+// ];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('not allowed by CORS'));
+//     }
+//   },
+// };
 app.use(cors());
 
 app.use('/api/v1/auth', authRouter);

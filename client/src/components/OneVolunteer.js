@@ -1,5 +1,5 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FormRow, StateSelect } from '../components';
 import Modal from 'react-modal';
@@ -20,7 +20,7 @@ const OneVolunteer = ({
   zip,
   phone,
   userId,
-  events
+  events,
 }) => {
   const initialState = {
     firstName,
@@ -52,7 +52,7 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    events,
+    events
   });
 
   const getId = (e) => {
@@ -138,7 +138,6 @@ const OneVolunteer = ({
         {showAlert && (
           <div className={`alert alert-${alertType}`}>{alertText}</div>
         )}
-
         <header>
           <div className='main-icon capitalize'>{firstName.charAt(0)}</div>
           <div className='info'>
@@ -187,7 +186,7 @@ const OneVolunteer = ({
             </div>
             <div>
               <MdOutlineEventAvailable className='icon' />
-              Events Attended: <span className='status'> {events}</span>
+              Events Attended: <span className='status'> {events - 1}</span>
             </div>
           </div>
           <footer>

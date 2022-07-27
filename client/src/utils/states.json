@@ -1,0 +1,27 @@
+{
+  "states": [
+    {
+      "id": 1,
+      "optionValue": "",
+      "disabled": "disabled",
+      "selected": "selected",
+      "hidden": "hidden",
+      "name": "--Select an option--"
+    },
+    {
+      "id": 2,
+      "optionValue": "AL",
+      "name": "AL"
+    },
+    {
+      "id": 3,
+      "optionValue": "AK",
+      "name": "AK"
+    },
+    {
+      "id": 4,
+      "optionValue": "AZ",
+      "name": "AZ"
+    }
+  ]
+}
