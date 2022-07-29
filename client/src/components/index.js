@@ -35,6 +35,8 @@ import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
 import Hit from './Hit';
+import RecordTable from './RecordTable';
+import VolunteerFilter from './VolunteerFilter';
 
 export {
   Logo,
@@ -71,6 +73,8 @@ export {
   OneEvent,
   EventDetails,
   Hit,
+  RecordTable,
+  VolunteerFilter,
   ScrollButtonUp,
   ScrollButtonDown,
 };

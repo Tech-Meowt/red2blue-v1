@@ -154,22 +154,22 @@ const OneVolunteer = ({
               <FaRegAddressCard className='icon' />
               Address:{' '}
               <span className='status capitalize'>
-                {street !== null ? ` ${street}` : `Street not provided`}
+                {street !== undefined ? ` ${street}` : `Street not provided`}
               </span>
               <div className='address'>
                 <p className='status'>
-                  {city !== null ? ` ${city},` : `City not provided—`}
-                  {state !== null ? ` ${state}` : `State not provided`}
+                  {city !== undefined ? ` ${city},` : `City not provided—`}
+                  {state !== undefined ? ` ${state}` : `State not provided`}
                 </p>
                 <p className='status'>
-                  {zip !== null ? `${zip}` : `Zip code not provided`}
+                  {zip !== undefined ? `${zip}` : `Zip code not provided`}
                 </p>
               </div>
             </div>
             <div>
               <AiOutlinePhone className='icon' />
               Phone:{' '}
-              {phone !== null ? (
+              {phone !== undefined ? (
                 <span className='status'> {phone}</span>
               ) : (
                 <span className='status'> Phone number not provided</span>
@@ -178,7 +178,7 @@ const OneVolunteer = ({
             <div>
               <FiDatabase className='icon' />
               Database User:{' '}
-              {userId !== null ? (
+              {userId !== undefined ? (
                 <span className='status'> Yes</span>
               ) : (
                 <span className='status'> No</span>
@@ -275,22 +275,22 @@ const OneVolunteer = ({
                       <AiOutlinePhone className='icon' />
                       Phone:{' '}
                       <span className='status'>
-                        {phone !== null ? ` ${phone}` : `Phone not provided`}
+                        {phone !== undefined ? ` ${phone}` : `Phone not provided`}
                       </span>
                     </div>
                     <div>
                       <FaRegAddressCard className='icon' />
                       Address:{' '}
                       <span className='status capitalize'>
-                        {street !== null ? ` ${street}` : `Street not provided`}
+                        {street !== undefined ? ` ${street}` : `Street not provided`}
                       </span>
                       <div className='address'>
                         <p className='status'>
-                          {city !== null ? ` ${city},` : `City not provided—`}
-                          {state !== null ? ` ${state}` : `State not provided`}
+                          {city !== undefined ? ` ${city},` : `City not provided—`}
+                          {state !== undefined ? ` ${state}` : `State not provided`}
                         </p>
                         <p className='status'>
-                          {zip !== null ? `${zip}` : `Zip code not provided`}
+                          {zip !== undefined ? `${zip}` : `Zip code not provided`}
                         </p>
                       </div>
                     </div>

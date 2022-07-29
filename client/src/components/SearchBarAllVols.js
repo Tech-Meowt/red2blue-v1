@@ -1,9 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef , useEffect} from 'react';
 import { OneVolunteer } from '../components';
 import { CSVLink } from 'react-csv'
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import statesData from '.././utils/states.json'
+import axios from 'axios'
 
 const SearchBarAllVols = ({
   placeholder,
@@ -27,7 +28,18 @@ const SearchBarAllVols = ({
   const [wordEntered, setWordEntered] = useState('');
   const [noResults, setNoResults] = useState(true);
   const [optionEntered, setOptionEntered] = useState('');
+  const [clicked, setClicked] = useState(false);
+  const [allResults, setAllResults] = useState([]);
   const printRef = useRef();
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8000/api/v1/volunteer')
+      .then((res) => {
+        setAllResults(res.data.volunteer);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleDownloadPdf = async () => {
     const element = printRef.current;
@@ -68,53 +80,12 @@ const SearchBarAllVols = ({
     filename: 'report.csv',
   };
 
-  const handleVolunteersFilter = (e) => {
-    const optionWord = e.target.value;
-    setOptionEntered(optionWord);
-    const newFilter = data.filter((value) => {
-      return value.state.toLowerCase().includes(optionWord.toLowerCase())
-    })
+  const handleClick = (e) => {
+    e.preventDefault();
 
-    if (optionWord === '') {
-      setFilteredData([]);
-    } else {
-      setFilteredData(newFilter);
-      setNoResults(false)
-    }
-}
+    setClicked(!clicked);
+  };
 
-  // const handleFilter = (e) => {
-  //   const checkbox25 = document.querySelector('#range25')
-  //   const checkbox50 = document.querySelector('#range50')
-  //   const checkbox51 = document.querySelector('#range51')
-  //   if (checkbox25.checked === true) {
-  //     setRange(25)
-  //   } else if (checkbox50.checked === true) {
-  //     setRange(50)
-  //   } else if (checkbox51.checked === true) {
-  //     setRange(51)
-  //   } else {
-  //     setRange(0)
-  //   }
-
-  //   let newFilter;
-  //   let attended = events.length
-  //   if (range <= attended) {
-  //     newFilter = data.filter((value) => {
-  //       return (value.events.length <= range) 
-  //     });
-  //     setFilteredData(newFilter);
-  //     setNoResults(false);
-  //   } else if (range === 51) {
-  //     newFilter = data.filter((value) => {
-  //       return (value.events.length >= range);
-  //     });
-  //     setFilteredData(newFilter);
-  //     setNoResults(false);
-  //   } else {
-  //     setFilteredData([])
-  //   }
-   
   const handleFilter = (e) => {
     const searchWord = e.target.value;
     setWordEntered(searchWord);
@@ -134,7 +105,6 @@ const SearchBarAllVols = ({
     }
   };
 
-
   const handleClear = (e) => {
     e.preventDefault();
 
@@ -142,7 +112,6 @@ const SearchBarAllVols = ({
     setFilteredData([]);
     setNoResults(true);
   };
-
 
   return (
     <>
@@ -170,63 +139,87 @@ const SearchBarAllVols = ({
           </form>
         </div>
 
-        <div className='search-container'>
-          <h5 className='r2b-red'>Filters</h5>
-          <form className='filter-form'>
-            <label htmlFor='state' className='right'>
-              State
-            </label>
-            <select name='optionEntered' id='optionEntered' value={optionEntered} onChange={handleVolunteersFilter}>
-              {statesData.states.map((state) => {
-                const { id, optionValue, name } = state
-                return (
-                  <option key={id} value={optionValue}>{name}</option>
-                )
-              })}
-            </select>
-            <label htmlFor='state' className='right left'>
-              Events attended
-            </label>
-            <select name='' id=''></select>
-          </form>
-        </div>
-
         {filteredData.length === 0 && <h5>Found 0 records</h5>}
 
         {filteredData.length >= 1 && (
           <>
-            <button className='btn btn-success' onClick={handleDownloadPdf}>
-              Download PDF
-            </button>
-            <CSVLink {...csvReport}>
-              <button className='btn btn-success'>Export as CSV</button>
-            </CSVLink>
+            <div className='space'>
+              <button className='btn btn-success no-margin' onClick={handleDownloadPdf}>
+                Download PDF
+              </button>
+              <CSVLink {...csvReport}>
+                <button className='btn btn-success'>Export as CSV</button>
+              </CSVLink>
+              <button className='btn btn-success no-margin' onClick={handleClick}>
+                {clicked ? 'View As List' : 'View As Table'}
+              </button>
+            </div>
           </>
         )}
+
         {filteredData.length === 1 && (
           <h5>Found {filteredData.length} record</h5>
         )}
         {filteredData.length > 1 && (
           <h5>Found {filteredData.length} records</h5>
         )}
-        <div ref={printRef}>
-          {filteredData.length !== 0 &&
-            filteredData.slice(0, 99).map((value, key) => {
-              return (
-                <>
-                  <div className='space-larger border-state'>
-                    <OneVolunteer
-                      id={value.id}
-                      firstName={value.firstName}
-                      lastName={value.lastName}
-                      email={value.email}
-                      events={value.events.length - 1}
-                    />
-                  </div>
-                </>
-              );
-            })}
-        </div>
+
+        {!clicked && (
+          <div ref={printRef}>
+            <div>
+              {filteredData.length !== 0 &&
+                filteredData.slice(0, 99).map((value, key) => {
+                  return (
+                    <>
+                      <div className='space-larger border-state'>
+                        <OneVolunteer
+                          id={value.id}
+                          firstName={value.firstName}
+                          lastName={value.lastName}
+                          email={value.email}
+                          events={value.events.length - 1}
+                          state={value.state}
+                        />
+                      </div>
+                    </>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+
+        {clicked && (
+          <div ref={printRef}>
+            <div>
+              {filteredData.length !== 0 && (
+                <table className='table'>
+                  <thead>
+                    <tr>
+                      <th>First name</th>
+                      <th>Last name</th>
+                      <th>Email</th>
+                      <th>State</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map((data) => {
+                      return (
+                        <>
+                          <tr key={data.id}>
+                            <td>{data.firstName}</td>
+                            <td>{data.lastName}</td>
+                            <td>{data.email}</td>
+                            <td>{data.state}</td>
+                          </tr>
+                        </>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
