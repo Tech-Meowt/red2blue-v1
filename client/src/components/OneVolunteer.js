@@ -8,6 +8,7 @@ import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
 import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineEventAvailable } from 'react-icons/md'
 import { IoPersonOutline } from 'react-icons/io5'
+import { BsCheck2All } from 'react-icons/bs'
 
 const OneVolunteer = ({
   id,
@@ -21,6 +22,54 @@ const OneVolunteer = ({
   phone,
   userId,
   events,
+  campaignMgmt,
+  canvassing,
+  communityOrganizing,
+  electedOfficialCurr,
+  electedOfficialPast,
+  p2pTextingMgmt,
+  p2pTextingVol,
+  phonebanking,
+  pollWorker,
+  postcardMgmt,
+  postcardWriting,
+  txtPhoneScriptEdit,
+  txtPhoneScriptWrite,
+  vanVoteBuildExp,
+  voterReg,
+  actor,
+  artist,
+  boardOfDirectors,
+  dataScience,
+  dbMgmt,
+  editor,
+  professor,
+  trainer,
+  fundraising,
+  graphicDesign,
+  hr,
+  it,
+  legal,
+  linguist,
+  msgComms,
+  musician,
+  newsletterCreateDesign,
+  newsletterWrite,
+  nonprofMgmt,
+  pr,
+  publicSpeak,
+  recruitment,
+  research,
+  otherLanguage,
+  socialMediaContentCreate,
+  socialMediaMgmt,
+  speechWriter,
+  strategicPlanning,
+  videoEditCreate,
+  volMgmt,
+  webDesign,
+  webMgmt,
+  anythingElse,
 }) => {
   const initialState = {
     firstName,
@@ -32,6 +81,54 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
+    campaignMgmt,
+    canvassing,
+    communityOrganizing,
+    electedOfficialCurr,
+    electedOfficialPast,
+    p2pTextingMgmt,
+    p2pTextingVol,
+    phonebanking,
+    pollWorker,
+    postcardMgmt,
+    postcardWriting,
+    txtPhoneScriptEdit,
+    txtPhoneScriptWrite,
+    vanVoteBuildExp,
+    voterReg,
+    actor,
+    artist,
+    boardOfDirectors,
+    dataScience,
+    dbMgmt,
+    editor,
+    professor,
+    trainer,
+    fundraising,
+    graphicDesign,
+    hr,
+    it,
+    legal,
+    linguist,
+    msgComms,
+    musician,
+    newsletterCreateDesign,
+    newsletterWrite,
+    nonprofMgmt,
+    pr,
+    publicSpeak,
+    recruitment,
+    research,
+    otherLanguage,
+    socialMediaContentCreate,
+    socialMediaMgmt,
+    speechWriter,
+    strategicPlanning,
+    videoEditCreate,
+    volMgmt,
+    webDesign,
+    webMgmt,
+    anythingElse,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -52,8 +149,9 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    events
+    events,
   });
+  const icon = <BsCheck2All />
 
   const getId = (e) => {
     const id = e.target.name;
@@ -154,22 +252,22 @@ const OneVolunteer = ({
               <FaRegAddressCard className='icon' />
               Address:{' '}
               <span className='status capitalize'>
-                {street !== undefined ? ` ${street}` : `Street not provided`}
+                {street !== null ? ` ${street}` : `Street not provided`}
               </span>
               <div className='address'>
                 <p className='status'>
-                  {city !== undefined ? ` ${city},` : `City not provided—`}
-                  {state !== undefined ? ` ${state}` : `State not provided`}
+                  {city !== null ? ` ${city},` : `City not provided—`}
+                  {state !== null ? ` ${state}` : `State not provided`}
                 </p>
                 <p className='status'>
-                  {zip !== undefined ? `${zip}` : `Zip code not provided`}
+                  {zip !== null ? `${zip}` : `Zip code not provided`}
                 </p>
               </div>
             </div>
             <div>
               <AiOutlinePhone className='icon' />
               Phone:{' '}
-              {phone !== undefined ? (
+              {phone !== null ? (
                 <span className='status'> {phone}</span>
               ) : (
                 <span className='status'> Phone number not provided</span>
@@ -178,7 +276,7 @@ const OneVolunteer = ({
             <div>
               <FiDatabase className='icon' />
               Database User:{' '}
-              {userId !== undefined ? (
+              {userId !== null ? (
                 <span className='status'> Yes</span>
               ) : (
                 <span className='status'> No</span>
@@ -275,22 +373,22 @@ const OneVolunteer = ({
                       <AiOutlinePhone className='icon' />
                       Phone:{' '}
                       <span className='status'>
-                        {phone !== undefined ? ` ${phone}` : `Phone not provided`}
+                        {phone !== null ? ` ${phone}` : `Phone not provided`}
                       </span>
                     </div>
                     <div>
                       <FaRegAddressCard className='icon' />
                       Address:{' '}
                       <span className='status capitalize'>
-                        {street !== undefined ? ` ${street}` : `Street not provided`}
+                        {street !== null ? ` ${street}` : `Street not provided`}
                       </span>
                       <div className='address'>
                         <p className='status'>
-                          {city !== undefined ? ` ${city},` : `City not provided—`}
-                          {state !== undefined ? ` ${state}` : `State not provided`}
+                          {city !== null ? ` ${city},` : `City not provided—`}
+                          {state !== null ? ` ${state}` : `State not provided`}
                         </p>
                         <p className='status'>
-                          {zip !== undefined ? `${zip}` : `Zip code not provided`}
+                          {zip !== null ? `${zip}` : `Zip code not provided`}
                         </p>
                       </div>
                     </div>
@@ -313,6 +411,165 @@ const OneVolunteer = ({
                         Hide
                       </button>
                     </div>
+                    <>
+                      <h4 className='space'>Political Skills</h4>
+                      <div className='content-center-skills'>
+                        <div>
+                          ✔️ Campaign Management:{' '}
+                          <p className='status no-margin'>{campaignMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Canvassing:{' '}
+                          <p className='status no-margin'>{canvassing}</p>
+                        </div>
+                        <div>
+                          ✔️ Community Organizing:{' '}
+                          <p className='status no-margin'>
+                            {communityOrganizing}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Elected Official (Current):{' '}
+                          <p className='status no-margin'>
+                            {electedOfficialCurr}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Elected Official (Past):{' '}
+                          <p className='status no-margin'>
+                            {electedOfficialPast}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Management:{' '}
+                          <p className='status no-margin'>{p2pTextingMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
+                          <p className='status no-margin'>{p2pTextingVol}</p>
+                        </div>
+                        <div>
+                          ✔️ Phone Banking:{' '}
+                          <p className='status no-margin'>{phonebanking}</p>
+                        </div>
+                        <div>
+                          ✔️ Poll Worker:{' '}
+                          <p className='status no-margin'>{pollWorker}</p>
+                        </div>
+                        <div>
+                          ✔️ Postcard Planning + Management:{' '}
+                          <p className='status no-margin'>{postcardMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Postcard Writing:{' '}
+                          <p className='status no-margin'>{postcardWriting}</p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
+                          <p className='status no-margin'>{p2pTextingVol}</p>
+                        </div>
+                        <div>
+                          ✔️ Texting + Phone Banking Script Editing:{' '}
+                          <p className='status no-margin'>
+                            {txtPhoneScriptEdit}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Texting + Phone Banking Script Writing:{' '}
+                          <p className='status no-margin'>
+                            {txtPhoneScriptWrite}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ VAN/Votebuilder Experience:{' '}
+                          <p className='status no-margin'>{vanVoteBuildExp}</p>
+                        </div>
+                        <div>
+                          ✔️ Voter Registration:{' '}
+                          <p className='status no-margin'>{voterReg}</p>
+                        </div>
+                      </div>
+                    </>
+                    <hr />
+                    <>
+                      <h4 className='space'>Life Skills</h4>
+                      <div className='content-center-skills'>
+                        <div>
+                          ✔️ Campaign Management:{' '}
+                          <p className='status no-margin'>{campaignMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Canvassing:{' '}
+                          <p className='status no-margin'>{canvassing}</p>
+                        </div>
+                        <div>
+                          ✔️ Community Organizing:{' '}
+                          <p className='status no-margin'>
+                            {communityOrganizing}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Elected Official (Current):{' '}
+                          <p className='status no-margin'>
+                            {electedOfficialCurr}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Elected Official (Past):{' '}
+                          <p className='status no-margin'>
+                            {electedOfficialPast}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Management:{' '}
+                          <p className='status no-margin'>{p2pTextingMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
+                          <p className='status no-margin'>{p2pTextingVol}</p>
+                        </div>
+                        <div>
+                          ✔️ Phone Banking:{' '}
+                          <p className='status no-margin'>{phonebanking}</p>
+                        </div>
+                        <div>
+                          ✔️ Poll Worker:{' '}
+                          <p className='status no-margin'>{pollWorker}</p>
+                        </div>
+                        <div>
+                          ✔️ Postcard Planning + Management:{' '}
+                          <p className='status no-margin'>{postcardMgmt}</p>
+                        </div>
+                        <div>
+                          ✔️ Postcard Writing:{' '}
+                          <p className='status no-margin'>{postcardWriting}</p>
+                        </div>
+                        <div>
+                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
+                          <p className='status no-margin'>{p2pTextingVol}</p>
+                        </div>
+                        <div>
+                          ✔️ Texting + Phone Banking Script Editing:{' '}
+                          <p className='status no-margin'>
+                            {txtPhoneScriptEdit}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ Texting + Phone Banking Script Writing:{' '}
+                          <p className='status no-margin'>
+                            {txtPhoneScriptWrite}
+                          </p>
+                        </div>
+                        <div>
+                          ✔️ VAN/Votebuilder Experience:{' '}
+                          <p className='status no-margin'>{vanVoteBuildExp}</p>
+                        </div>
+                        <div>
+                          ✔️ Voter Registration:{' '}
+                          <p className='status no-margin'>{voterReg}</p>
+                        </div>
+                      </div>
+                    </>
                   </footer>
 
                   {showBasicEditForm && (
@@ -396,12 +653,6 @@ const OneVolunteer = ({
                           openModal();
                         }}
                       >
-                        {/* <form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            updateVolunteer(id);
-                          }}
-                        > */}
                         <div className='content-centered content-center'>
                           <div className='r2b-red'>
                             <FormRow
@@ -494,6 +745,6 @@ const OneVolunteer = ({
       </OneRecordWrapper>
     </>
   );
-}
+};
 
 export default OneVolunteer

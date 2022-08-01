@@ -24,22 +24,21 @@ const VolunteerFilter = ({
   phone,
   events,
   userId,
-})=> {
+}) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
-  const [rangeChosen, setRangeChosen] = useState('')
+  const [rangeChosen, setRangeChosen] = useState('');
   const [noResults, setNoResults] = useState(true);
   const [clicked, setClicked] = useState(false);
   const [allResults, setAllResults] = useState([]);
-  const [range, setRange] = useState()
+  const [range, setRange] = useState();
   const printRef = useRef();
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/v1/volunteer')
-      .then((res) => {
-      setAllResults(res.data.volunteer)
-    })
-  }, [])
+    axios.get('http://localhost:8000/api/v1/volunteer').then((res) => {
+      setAllResults(res.data.volunteer);
+    });
+  }, []);
 
   const handleDownloadPdf = async () => {
     const element = printRef.current;
@@ -99,29 +98,38 @@ const VolunteerFilter = ({
       setFilteredData(newFilter);
       setNoResults(false);
     }
-  }
+  };
 
   const handleEventRange = (e) => {
-    const searchWord = parseInt(e.target.value, 10)
-    setRangeChosen(searchWord)
+    const searchWord = parseInt(e.target.value, 10);
+    setRangeChosen(searchWord);
 
-    let newFilter = description.filter((value) => {
+    const newFilter = description.filter((value) => {
       if (searchWord === 5 && value.events.length > 0 && value.events.length <= 5) {
-        return description
-      } else if (searchWord === 10 && value.events.length - 1 > 5 && value.events.length <= 10) {
-        return description
+        return description;
+      } else if (
+        searchWord === 10 &&
+        value.events.length - 1 > 5 &&
+        value.events.length <= 10
+      ) {
+        return description;
       } else if (searchWord === 100 && value.events.length - 1 > 10) {
-        return description
+        return description;
       }
-    })
-    setFilteredData(newFilter)
-    setNoResults(false)
-    console.log(newFilter)
+    });
+
+    if (searchWord === '') {
+      setFilteredData([]);
+    } else {
+      setFilteredData(newFilter);
+      setNoResults(false);
     }
+  };
 
   const handleClear = (e) => {
     e.preventDefault();
 
+    setWordEntered('');
     setRangeChosen('');
     setFilteredData([]);
     setNoResults(true);
@@ -269,7 +277,7 @@ const VolunteerFilter = ({
                         firstName={value.firstName}
                         lastName={value.lastName}
                         email={value.email}
-                        events={value.events.length - 1}
+                        events={value.events.length}
                         state={value.state}
                       />
                     </div>
@@ -314,6 +322,6 @@ const VolunteerFilter = ({
       )}
     </div>
   );
-}
-  
-  export default VolunteerFilter
+};
+
+export default VolunteerFilter;

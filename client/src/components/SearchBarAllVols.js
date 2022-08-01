@@ -3,8 +3,8 @@ import { OneVolunteer } from '../components';
 import { CSVLink } from 'react-csv'
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import statesData from '.././utils/states.json'
 import axios from 'axios'
+import { CLEAR_VALUES } from '../context/actions';
 
 const SearchBarAllVols = ({
   placeholder,
@@ -177,8 +177,12 @@ const SearchBarAllVols = ({
                           firstName={value.firstName}
                           lastName={value.lastName}
                           email={value.email}
-                          events={value.events.length - 1}
+                          events={value.events.length}
                           state={value.state}
+                          street={value.street}
+                          phone={value.phone}
+                          city={value.city}
+                          zip={value.zip}
                         />
                       </div>
                     </>
