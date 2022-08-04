@@ -18,7 +18,7 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
-  
+
   const sendNewAccountEmail = () => {
     const templateParams = {
       userFirstName: values.firstName,
@@ -133,7 +133,7 @@ const Register = () => {
         <button type='submit' className='btn btn-block' disabled={isLoading}>
           Submit
         </button>
-        <p>
+        <p className='no-margin'>
           {values.isMember ? 'Not a member yet?' : 'Already a member?'}
           <button type='button' onClick={toggleMember} className='member-btn'>
             {values.isMember ? 'Register' : 'Login'}

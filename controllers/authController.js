@@ -41,7 +41,7 @@ const register = async (req, res) => {
             }
           }
         ]
-      }
+      },
     },
     include: {
       volunteer: true,
@@ -58,6 +58,14 @@ const register = async (req, res) => {
     token,
   });
 };
+
+const resetPassword = async (req, res) => {
+  const { email } = req.params;
+
+  
+
+}
+
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -98,6 +106,36 @@ const updateUser = async (req, res) => {
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({ user, token });
+
+  const updateUserPrisma = async (req, res) => {
+    const { id } = req.params;
+
+    const {
+      firstName,
+      lastName,
+      email,
+      role,
+      approved,
+      usersDb,
+      volunteersDb,
+    } = req.body
+
+    const updatePrisma = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        firstName,
+        lastName,
+        email,
+        role,
+        approved,
+        usersDb,
+        volunteersDb,
+      },
+    });
+    res.status(200).json({ updatePrisma })
+  }
 };
 
 // admin managed data
@@ -131,7 +169,7 @@ const updateDbUser = async (req, res) => {
       avatarUrl,
       isActive,
       lastLoggedIn,
-      role
+      role,
     } = req.body
   
   const adminUpdateUser = await prisma.user.update({
@@ -163,7 +201,7 @@ const updateDbUser = async (req, res) => {
             email: email
           }
         }
-      }
+      },
     },
     include: {
       volunteer: true,

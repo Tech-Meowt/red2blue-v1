@@ -43,6 +43,10 @@ model Volunteer {
   userId                   String?
   dbUser                   User?                   @relation(fields: [userId], references: [id])
   events                   Event[]
+  politicalSkills PoliticalSkills? @relation(fields: [skillId], references: [id])
+  skillId String?
+  lifeSkills  LifeSkills? @relation(fields: [lifeSkillId], references: [id])
+  lifeSkillId String?
   firstName                String?
   lastName                 String?
   email                    String?                 @unique
@@ -100,7 +104,73 @@ model Volunteer {
   webMgmt                  String?
   anythingElse             String?
   updatedAt                DateTime                @default(now())
-  objectID                 String?
+}
+
+model PoliticalSkills {
+  id  String  @id @default(uuid())
+  firstName String?
+  lastName String?
+  email String? @unique
+  campaignMgmt             String? @default("")
+  canvassing               String? @default("")
+  communityOrganizing      String? @default("")
+  electedOfficialCurr      String? @default("")
+  electedOfficialPast      String? @default("")
+  p2pTextingMgmt           String? @default("")
+  p2pTextingVol            String? @default("")
+  phonebanking             String? @default("")
+  pollWorker               String? @default("")
+  postcardMgmt             String? @default("")
+  postcardWriting          String? @default("")
+  txtPhoneScriptEdit       String? @default("")
+  txtPhoneScriptWrite      String? @default("")
+  vanVoteBuildExp          String? @default("")
+  voterReg                 String? @default("")
+  answers Volunteer[]
+  volunteerId String?
+}
+
+model LifeSkills {
+  id  String  @id @default(uuid())
+  firstName String?
+  lastName String?
+  email String? @unique
+  actor                    String? @default("")
+  artist                   String? @default("")
+  boardOfDirectors         String? @default("")
+  dataScience              String? @default("")
+  dbMgmt                   String? @default("")
+  editor                   String? @default("")
+  professor                String? @default("")
+  trainer                  String? @default("")
+  fundraising              String? @default("")
+  graphicDesign            String? @default("")
+  hr                       String? @default("")
+  it                       String? @default("")
+  legal                    String? @default("")
+  linguist                 String? @default("")
+  msgComms                 String? @default("")
+  musician                 String? @default("")
+  newsletterCreateDesign   String? @default("")
+  newsletterWrite          String? @default("")
+  nonprofMgmt              String? @default("")
+  pr                       String? @default("")
+  publicSpeak              String? @default("")
+  recruitment              String? @default("")
+  research                 String? @default("")
+  otherLanguage            String? @default("")
+  socialMediaContentCreate String? @default("")
+  socialMediaMgmt          String? @default("")
+  speechWriter             String? @default("")
+  strategicPlanning        String? @default("")
+  videoEditCreate          String? @default("")
+  volMgmt                  String? @default("")
+  webDesign                String? @default("")
+  webMgmt                  String? @default("")
+  anythingElse             String? @default("")
+  updatedAt                DateTime                @default(now())
+  answers Volunteer[]
+  volunteerId String?
 }
 
 model Sandbox {

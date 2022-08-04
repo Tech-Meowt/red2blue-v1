@@ -34,7 +34,6 @@ import SearchBarAllVols from './SearchBarAllVols';
 import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
-import RecordTable from './RecordTable';
 import VolunteerFilter from './VolunteerFilter';
 
 export {
@@ -71,7 +70,6 @@ export {
   AllEvents,
   OneEvent,
   EventDetails,
-  RecordTable,
   VolunteerFilter,
   ScrollButtonUp,
   ScrollButtonDown,

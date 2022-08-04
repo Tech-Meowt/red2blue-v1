@@ -24,6 +24,8 @@ import authRouter from './routes/authRoutes.js';
 import sandboxRouter from './routes/sandboxRoutes.js';
 import volunteerRouter from './routes/volunteerRoutes.js';
 import eventRouter from './routes/eventRoutes.js';
+import politicalRouter from './routes/politicalSkillsRoutes.js'
+import lifeRouter from './routes/lifeSkillRoutes.js'
 
 // middleware
 import notFoundMiddleware from './middleware/not-found.js';
@@ -47,25 +49,14 @@ app.use(
 );
 app.use(xss());
 app.use(mongoSanitize());
-
-// const whitelist = [
-//   'http://localhost:3000'
-// ];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('not allowed by CORS'));
-//     }
-//   },
-// };
 app.use(cors());
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/sandbox', sandboxRouter);
 app.use('/api/v1/volunteer', volunteerRouter);
 app.use('/api/v1/event', eventRouter);
+app.use('/api/v1/political', politicalRouter)
+app.use('/api/v1/life', lifeRouter)
 
 // only when ready to deploy
 app.get('*', (req, res) => {

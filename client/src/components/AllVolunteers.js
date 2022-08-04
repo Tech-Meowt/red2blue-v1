@@ -1,28 +1,15 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import Wrapper from '../assets/wrappers/AllDbUsers.js';
 import {
   SearchBarAllVols,
   OneVolunteer,
-  RecordTable,
   VolunteerFilter,
 } from '../components';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Pagination,
-  Stats,
-  RefinementList,
-  ClearRefinements,
-  Configure,
-  RangeInput,
-  MenuSelect,
-} from 'react-instantsearch-dom';
 import { BiHotel } from 'react-icons/bi';
 import { IoConstructOutline } from 'react-icons/io5';
 import axios from 'axios';
@@ -32,14 +19,16 @@ import { MdDisabledVisible } from 'react-icons/md';
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
-  const [events, setEvents] = useState(0);
+  const [allPoliticalSkills, setAllPoliticalSkills] = useState([]);
   const [clicked, setClicked] = useState(false);
   const printRef = useRef();
-
+  
   const headers = [
     { label: 'First name', key: 'firstName' },
     { label: 'Last name', key: 'lastName' },
     { label: 'Email', key: 'email' },
+    { label: 'State', key: 'state' },
+    { label: 'Events attended (subtract 1)', key: 'events.length' }
   ];
 
   const data = volunteersList;
@@ -101,7 +90,42 @@ export default function AllVolunteers() {
       .catch((error) => {
         console.log(error);
       });
+
+    // axios
+    //   .get('http://localhost:8000/api/v1/political')
+    //   .then((res) => {
+    //     setAllPoliticalSkills(res.data.politicalSkills);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }, []);
+   
+  // const polSkills = allPoliticalSkills.map((value) => {
+  //   return (
+  //     <div>
+  //       <table classNAme='table'>
+  //         <thead>
+  //           <tr>
+  //             <th>First name</th>
+  //             <th>Last name</th>
+  //             <th>Email</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+            
+  //                 <tr key={value.id}>
+  //                   <td>{value.firstName}</td>
+  //                   <td>{value.lastName}</td>
+  //                   <td>{value.email}</td>
+  //                 </tr>
+                
+              
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //   );
+  // })
 
   return (
     <>
@@ -162,12 +186,15 @@ export default function AllVolunteers() {
 
         {clicked && (
           <div ref={printRef}>
+            
             <table className='table'>
               <thead>
                 <tr>
                   <th>First name</th>
                   <th>Last name</th>
                   <th>Email</th>
+                  <th>State</th>
+                  <th>Events attended</th>
                 </tr>
               </thead>
               <tbody>
@@ -178,6 +205,12 @@ export default function AllVolunteers() {
                         <td>{volunteer.firstName}</td>
                         <td>{volunteer.lastName}</td>
                         <td>{volunteer.email}</td>
+                        <td>{volunteer.state}</td>
+                        {volunteer.events.length >= 1 ? (
+                          <td>{volunteer.events.length - 1}</td>
+                        ) : (
+                            <td>{0}</td>
+                        )}
                       </tr>
                     </>
                   );

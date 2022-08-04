@@ -66,7 +66,8 @@ const create = async (req, res) => {
     events,
     updatedAt,
     userId,
-    objectID,
+    politicalSkills,
+    skillId,
   } = req.body;
 
   const volunteer = await prisma.volunteer.create({
@@ -131,32 +132,60 @@ const create = async (req, res) => {
       webMgmt,
       anythingElse,
       userId,
-      // events: {
-      //   connectOrCreate: [
-      //     {
-      //       create: {
-      //         eventName: events,
-      //       },
-      //       where: {
-      //         eventName: events,
-      //       },
-      //     },
-      //   ],
-      // },
+      skillId,
       events: {
-        connectOrCreate:
-          events.map((event) => ({
-            where: {
-                eventName: event,
-            },
+        connectOrCreate: [
+          {
             create: {
-              eventName: event
+              eventName: events,
+            },
+            where: {
+              eventName: events,
+            },
+          },
+        ],
+      },
+      // events: {
+      //   connectOrCreate:
+      //     events.map((event) => ({
+      //       where: {
+      //           eventName: event,
+      //       },
+      //       create: {
+      //         eventName: event
+      //       }
+      //       }))
+      // },
+      politicalSkills: {
+        connectOrCreate: [
+          {
+            create: {
+              campaignMgmt: campaignMgmt,
+              canvassing: canvassing,
+              communityOrganizing: communityOrganizing,
+              electedOfficialCurr: electedOfficialCurr,
+              electedOfficialPast: electedOfficialPast,
+              p2pTextingMgmt: p2pTextingMgmt,
+              p2pTextingVol: p2pTextingVol,
+              phonebanking: phonebanking,
+              pollWorker: pollWorker,
+              postcardMgmt: postcardMgmt,
+              postcardWriting: postcardWriting,
+              txtPhoneScriptEdit: txtPhoneScriptEdit,
+              txtPhoneScriptWrite: txtPhoneScriptWrite,
+              vanVoteBuildExp: vanVoteBuildExp,
+              voterReg: voterReg,
+            },
+            where: {
+              email: email,
             }
-            }))
+          },
+        ],
       },
     },
     include: {
       events: true,
+      politicalSkills: true,
     },
   });
   res.status(200).json({ volunteer });
@@ -169,6 +198,7 @@ const getAll = async (req, res) => {
     },
     include: {
       events: true,
+      politicalSkills: true,
     },
   });
   res.status(200).json({ volunteer });
@@ -240,6 +270,8 @@ const updateVolunteer = async (req, res) => {
     events,
     updatedAt,
     userId,
+    politicalSkills,
+    skillId,
   } = req.body;
 
   const volunteer = await prisma.volunteer.update({
@@ -307,6 +339,7 @@ const updateVolunteer = async (req, res) => {
       webMgmt,
       anythingElse,
       userId,
+      skillId,
       events: {
         connectOrCreate: [
           {
@@ -329,10 +362,37 @@ const updateVolunteer = async (req, res) => {
       //     },
       //   })),
       // },
+      politicalSkills: {
+        connectOrCreate: [
+          {
+            create: {
+              campaignMgmt: campaignMgmt,
+              canvassing: canvassing,
+              communityOrganizing: communityOrganizing,
+              electedOfficialCurr: electedOfficialCurr,
+              electedOfficialPast: electedOfficialPast,
+              p2pTextingMgmt: p2pTextingMgmt,
+              p2pTextingVol: p2pTextingVol,
+              phonebanking: phonebanking,
+              pollWorker: pollWorker,
+              postcardMgmt: postcardMgmt,
+              postcardWriting: postcardWriting,
+              txtPhoneScriptEdit: txtPhoneScriptEdit,
+              txtPhoneScriptWrite: txtPhoneScriptWrite,
+              vanVoteBuildExp: vanVoteBuildExp,
+              voterReg: voterReg,
+            },
+            where: {
+              email: email,
+            },
+          },
+        ],
+      },
       updatedAt,
     },
     include: {
       events: true,
+      politicalSkills: true,
     },
   });
   res.status(200).json({ volunteer });

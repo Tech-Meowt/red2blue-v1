@@ -24,10 +24,61 @@ const VolunteerFilter = ({
   phone,
   events,
   userId,
+  campaignMgmt,
+  canvassing,
+  communityOrganizing,
+  electedOfficialCurr,
+  electedOfficialPast,
+  p2pTextingMgmt,
+  p2pTextingVol,
+  phonebanking,
+  pollWorker,
+  postcardMgmt,
+  postcardWriting,
+  txtPhoneScriptEdit,
+  txtPhoneScriptWrite,
+  vanVoteBuildExp,
+  voterReg,
+  actor,
+  artist,
+  boardOfDirectors,
+  dataScience,
+  dbMgmt,
+  editor,
+  professor,
+  trainer,
+  fundraising,
+  graphicDesign,
+  hr,
+  it,
+  legal,
+  linguist,
+  msgComms,
+  musician,
+  newsletterCreateDesign,
+  newsletterWrite,
+  nonprofMgmt,
+  pr,
+  publicSpeak,
+  recruitment,
+  research,
+  otherLanguage,
+  socialMediaContentCreate,
+  socialMediaMgmt,
+  speechWriter,
+  strategicPlanning,
+  videoEditCreate,
+  volMgmt,
+  webDesign,
+  webMgmt,
+  anythingElse,
 }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState('');
   const [rangeChosen, setRangeChosen] = useState('');
+  const [politicalSkill, setPoliticalSkill] = useState('');
+  const [politicalLevel, setPoliticalLevel] = useState('');
+  const [skillsResults, setSkillsResults] = useState([]);
   const [noResults, setNoResults] = useState(true);
   const [clicked, setClicked] = useState(false);
   const [allResults, setAllResults] = useState([]);
@@ -105,7 +156,11 @@ const VolunteerFilter = ({
     setRangeChosen(searchWord);
 
     const newFilter = description.filter((value) => {
-      if (searchWord === 5 && value.events.length > 0 && value.events.length <= 5) {
+      if (
+        searchWord === 5 &&
+        value.events.length > 0 &&
+        value.events.length <= 5
+      ) {
         return description;
       } else if (
         searchWord === 10 &&
@@ -279,6 +334,11 @@ const VolunteerFilter = ({
                         email={value.email}
                         events={value.events.length}
                         state={value.state}
+                        street={value.street}
+                        city={value.city}
+                        zip={value.zip}
+                        phone={value.phone}
+                        campaignMgmt={value.campaignMgmt}
                       />
                     </div>
                   </>
@@ -299,6 +359,7 @@ const VolunteerFilter = ({
                     <th>Last name</th>
                     <th>Email</th>
                     <th>State</th>
+                    <th>Events attended</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -310,6 +371,7 @@ const VolunteerFilter = ({
                           <td>{data.lastName}</td>
                           <td>{data.email}</td>
                           <td>{data.state}</td>
+                          <td>{data.events.length - 1}</td>
                         </tr>
                       </>
                     );

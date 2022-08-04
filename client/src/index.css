@@ -199,6 +199,11 @@ select:invalid {
   margin-top: 1rem !important;
 }
 
+.space-no-bottom {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+
 .space-larger {
   margin-top: 2rem;
 }
