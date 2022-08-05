@@ -6,8 +6,13 @@ import {
   NotFoundError,
 } from '../errors/index.js';
 import prisma from '../lib/prisma.js';
+import crypto from 'crypto';
+import sendEmail from '../lib/sendEmail.js'
 
 // user managed data
+
+// create account
+// mongodb
 const register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -21,6 +26,7 @@ const register = async (req, res) => {
 
   const user = await User.create({ firstName, lastName, email, password });
   
+  // prisma
   const id = user._id.toString()
   const userPrisma = await prisma.user.create({
     data: {
@@ -59,13 +65,7 @@ const register = async (req, res) => {
   });
 };
 
-const resetPassword = async (req, res) => {
-  const { email } = req.params;
-
-  
-
-}
-
+// login
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -80,10 +80,100 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnAuthenticatedError('Invalid Credentials');
   }
-  const token = user.createJWT();
+  const token = sendToken(user, 200, res);
   user.password = undefined;
-  res.status(StatusCodes.OK).json({ user, token });
+  // res.status(StatusCodes.OK).json({ user, token });
 };
+
+// forgot password initialization
+const forgotPassword = async (req, res) => {
+  // check if user exists and then send email to email provided
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      throw new UnAuthenticatedError('Incorrect email');
+    }
+
+    // reset token and add hashed version to db (mongodb only)
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save();
+
+    // create reset url to add to email
+    const resetUrl = `http://localhost:8000/api/v1/auth/passwordReset/${resetToken}`;
+
+    // html message
+    const message = `
+    <h1>You have requested to reset your password.</h1>
+    <p>Click <a href=${resetUrl}>here</a> to reset your password.</p>
+    <br />
+    <p>If you did not request to reset your password, you can ignore this email.</p>
+    `;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Reset Your Password',
+        text: message,
+      });
+
+      res.status(200).json({ success: true, data: 'Email sent' });
+    } catch (err) {
+      console.log(err);
+
+      user.getResetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+
+      await user.save();
+
+      throw new BadRequestError('Email could not be sent');
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const resetPassword = async (req, res) => {
+  // compare token in url params to hashed token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.resetToken)
+    .digest('hex');
+  
+  try {
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      throw new UnAuthenticatedError('Invalid Token');
+    }
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.status(201).json({
+      success: true,
+      data: 'Password updated successfully',
+      token: user.getSignedJwtToken(),
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const sendToken = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
+  res.status(StatusCodes.OK).json({ user, token });
+}
 
 const updateUser = async (req, res) => {
   const { email, firstName, lastName, approved, usersDb, volunteersDb, role } =
@@ -242,4 +332,7 @@ export {
   deleteUser,
   updateDbUser,
   getUsers,
+  forgotPassword,
+  resetPassword,
+  sendToken,
 };
