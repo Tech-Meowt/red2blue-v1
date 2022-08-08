@@ -32,6 +32,7 @@ function App() {
       return () => clearInterval(interval);
     }
   }, [user, logoutUser]);
+  
   return (
     <BrowserRouter>
       <Routes>
