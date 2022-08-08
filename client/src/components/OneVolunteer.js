@@ -249,7 +249,6 @@ const OneVolunteer = ({
             <p className='lowercase'>{email}</p>
           </div>
         </header>
-
         <div className='content'>
           <div className='content-center'>
             <div>

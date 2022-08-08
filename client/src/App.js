@@ -31,11 +31,8 @@ function App() {
       }, 7200000);
       return () => clearInterval(interval);
     }
-
-    window.addEventListener('beforeunload', function (e) {
-      logoutUser();
-    });
   }, [user]);
+  
   return (
     <BrowserRouter>
       <Routes>
