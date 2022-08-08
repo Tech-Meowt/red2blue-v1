@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Register, Landing, Error, ProtectedRoute, ForgotPassword } from './pages';
+import { Register, Landing, Error, ProtectedRoute, ForgotPassword, ResetPassword } from './pages';
 import {
   Profile,
   SharedLayout,
@@ -113,6 +113,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </BrowserRouter>

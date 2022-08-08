@@ -1,54 +1,37 @@
-import { useState, useEffect } from 'react';
-import { Logo, FormRow, Alert } from '../components';
+import { useState } from 'react';
+import { Logo, FormRow } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
-import { useNavigate } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-  const [dbUsers, setDbUsers] = useState([])
-  const [searchEmail, setSearchEmail] = useState('')
+  const [email, setEmail] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
-  // eslint-disable-next-line
-  const [alert, setAlert] = useState(false);
 
+const forgotPasswordHandler = async (e) => {
+  e.preventDefault();
 
-   useEffect(() => {
-     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-     
-    axios
-      .get('http://localhost:8000/api/v1/auth/allUsers')
-      .then((res) => {
-        setDbUsers(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-   }, []);
-  
-  const sendPasswordResetEmail = () => {
-    console.log('sent')
+  try {
+    const { data } = await axios.post('http://localhost:8000/api/v1/auth/forgotPassword', { email });
+    setShowAlert(true);
+    setAlertText(`Password reset email sent to ${email}`)
+    setAlertType('success');
+    setEmail('')
+    setTimeout(() => {
+      navigate('/')
+    }, 3000);
+  } catch (error) {
+    console.log(error.response.data.error);
+    setEmail('');
+    setShowAlert(true);
+    setAlertText('There was an error. Please try again...')
+    setAlertType('danger')
   }
-
-  const handleChange = (e) => {
-    setSearchEmail(e.target.value)
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const emails = dbUsers.map((dbUser) => {
-      return dbUser.email
-    })
-    const foundEmail = emails.filter((value) => {
-     console.log(value)
-      
-    })
-   
-  }
+}
 
   return (
     <>
@@ -57,19 +40,24 @@ export default function ForgotPassword() {
           <title>Forgot Password</title>
         </Helmet>
       </HelmetProvider>
-      <form className='form' onSubmit={onSubmit}>
-        <FormRow
-          placeholder='jane.doe@gmail.com'
-          type='email'
-          name='searchEmail'
-          labelText={'Email'}
-          value={searchEmail}
-          handleChange={handleChange}
-        />
-        <button type='submit'>
-          Submit
-        </button>
-      </form>
+      <Wrapper classNAme='full-page'>
+        <form className='form' onSubmit={forgotPasswordHandler}>
+          <Logo />
+          {showAlert && (
+            <div className={`alert alert-${alertType}`}>{alertText}</div>
+          )}
+          <h5>Enter the email address associated with your account</h5>
+          <FormRow
+            placeholder='jane.doe@gmail.com'
+            type='email'
+            value={email}
+            handleChange={(e) => setEmail(e.target.value)}
+          />
+          <button type='submit' className='btn btn-block'>
+            Submit
+          </button>
+        </form>
+      </Wrapper>
     </>
   );
 }

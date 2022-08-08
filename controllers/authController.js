@@ -103,7 +103,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // create reset url to add to email
-    const resetUrl = `http://localhost:8000/api/v1/auth/passwordReset/${resetToken}`;
+    const resetUrl = `https://r2bdb.herokuapp.com/reset-password/${resetToken}`;
 
     // html message
     const message = `
