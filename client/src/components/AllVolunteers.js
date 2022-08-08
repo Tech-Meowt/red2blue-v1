@@ -1,27 +1,74 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import Wrapper from '../assets/wrappers/AllDbUsers';
-import FilterWrapper from '../assets/wrappers/FilterContainer';
+import { useEffect, useRef, useState } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
+import FilterWrapper from '../assets/wrappers/FilterContainer';
+import Wrapper from '../assets/wrappers/AllDbUsers.js';
 import {
   SearchBarAllVols,
   OneVolunteer,
-  StateSearchSelectWithClear,
+  VolunteerFilter,
 } from '../components';
 import { Link } from 'react-router-dom';
-import ReactPaginate from 'react-paginate';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import { BiHotel } from 'react-icons/bi';
+import { IoConstructOutline } from 'react-icons/io5';
+import axios from 'axios';
+import { CSVLink } from 'react-csv';
+import { MdDisabledVisible } from 'react-icons/md';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
-  const [data, setData] = useState([]);
-  const [values, setValues] = useState('');
-  const [opened, setOpened] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [perPage] = useState(20);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(1);
-  const [end, setEnd] = useState(20);
+  const [allPoliticalSkills, setAllPoliticalSkills] = useState([]);
+  const [clicked, setClicked] = useState(false);
+  const printRef = useRef();
+  
+  const headers = [
+    { label: 'First name', key: 'firstName' },
+    { label: 'Last name', key: 'lastName' },
+    { label: 'Email', key: 'email' },
+    { label: 'State', key: 'state' },
+    { label: 'Events attended (subtract 1)', key: 'events.length' }
+  ];
+
+  const data = volunteersList;
+
+  const csvReport = {
+    data: data,
+    headers: headers,
+    filename: 'report.csv',
+  };
+
+  const handleDownloadPdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL('image/png', 3.0);
+
+    let imgWidth = 210;
+    let pageHeight = 296;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+
+    const pdf = new jsPDF('p', 'mm');
+    let position = 0;
+
+    pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+    pdf.save('print.pdf');
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    setClicked(!clicked);
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -29,7 +76,7 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setAllVolunteers(res.data);
+        setAllVolunteers(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
@@ -38,96 +85,51 @@ export default function AllVolunteers() {
     axios
       .get('http://localhost:8000/api/v1/volunteer')
       .then((res) => {
-        setVolunteersList(res.data);
+        setVolunteersList(res.data.volunteer);
       })
       .catch((error) => {
         console.log(error);
       });
-    
-    getData();
 
-  }, [offset]);
-
-  const getData = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/volunteer');
-    const data = res.data;
-    const slice = data.slice(offset, offset + perPage)
-    const volData = slice.map((volunteer) => {
-      return <OneVolunteer key={volunteer._id} {...volunteer} />;
-    });
-    setData(volData);
-    setPageCount(Math.ceil(data.length / perPage))
-    if (offset === 0) {
-      setEnd(end);
-      setStart(start);
-    } else {
-      setStart(offset * 20 - 19);
-      setEnd(offset * 20);
-    } 
-  }
-
-  const handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    setOffset(selectedPage + 1)
-  }
-
-  const toggleSearch = (e) => {
-    e.preventDefault();
-
-    setOpened(!opened);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-
-  const updateVolunteer = (id) => {
-    axios
-      .patch(`http://localhost:8000/api/v1/volunteer/${id}`, values)
-      .then((res) => {
-        values(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    // axios
+    //   .get('http://localhost:8000/api/v1/political')
+    //   .then((res) => {
+    //     setAllPoliticalSkills(res.data.politicalSkills);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }, []);
+   
+  // const polSkills = allPoliticalSkills.map((value) => {
+  //   return (
+  //     <div>
+  //       <table classNAme='table'>
+  //         <thead>
+  //           <tr>
+  //             <th>First name</th>
+  //             <th>Last name</th>
+  //             <th>Email</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+            
+  //                 <tr key={value.id}>
+  //                   <td>{value.firstName}</td>
+  //                   <td>{value.lastName}</td>
+  //                   <td>{value.email}</td>
+  //                 </tr>
+                
+              
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //   );
+  // })
 
   return (
     <>
-      <h3 className='r2b-red'>Database: Volunteers | All</h3>
-
-      <button className='btn' onClick={toggleSearch}>
-        {!opened ? 'Search' : 'Close'}
-      </button>
-
-      {opened && (
-        <>
-          <FilterWrapper>
-            <SearchBarAllVols
-              data={volunteersList}
-              searchText={
-                'Search by first name, last name, email, or event category'
-              }
-            />
-          </FilterWrapper>
-
-          <FilterWrapper>
-            <div className='form'>
-              <StateSearchSelectWithClear
-                data={volunteersList}
-                label={'Filter by state'}
-                clearBtn={'show'}
-                type={'volunteers'}
-              />
-            </div>
-          </FilterWrapper>
-        </>
-      )}
-
+      <h3 className='r2b-red'>Database: Volunteers</h3>
       <VolunteersWrapper>
         <div className='actions'>
           <Link to={''}>
@@ -138,33 +140,85 @@ export default function AllVolunteers() {
         </div>
       </VolunteersWrapper>
 
+      <FilterWrapper>
+        <SearchBarAllVols description={volunteersList} />
+      </FilterWrapper>
+
+      <FilterWrapper>
+        <VolunteerFilter description={volunteersList} />
+      </FilterWrapper>
+
       <Wrapper>
-        {end < allVolunteers.length ? (
-          <h4>
-            Viewing {start} - {end} of {allVolunteers.length} records
-          </h4>
-        ) : (
-          <h4>
-            Viewing {start} - {allVolunteers.length} of {allVolunteers.length}{' '}
-            records
-          </h4>
+        <button
+          className='btn btn-success no-margin'
+          onClick={handleDownloadPdf}
+        >
+          Download PDF
+        </button>
+        <CSVLink {...csvReport}>
+          <button className='btn btn-success'>Export as CSV</button>
+        </CSVLink>
+        <button className='btn btn-success no-margin' onClick={handleClick}>
+          {clicked ? 'View As List' : 'View As Table'}
+        </button>
+
+        <h4>All Records</h4>
+        {!clicked && (
+          <div ref={printRef}>
+            <div className='jobs'>
+              {allVolunteers.map((volunteer) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <OneVolunteer
+                        key={volunteer.id}
+                        {...volunteer}
+                        events={volunteer.events.length}
+                        className='border-state'
+                      />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          </div>
         )}
 
-        <div className='jobs'>
-          {data}
-          <ReactPaginate
-            previousLabel={'<< prev'}
-            nextLabel={'next >>'}
-            breakLabel={'...'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-        </div>
+        {clicked && (
+          <div ref={printRef}>
+            
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th>First name</th>
+                  <th>Last name</th>
+                  <th>Email</th>
+                  <th>State</th>
+                  <th>Events attended</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allVolunteers.map((volunteer) => {
+                  return (
+                    <>
+                      <tr key={volunteer.id}>
+                        <td>{volunteer.firstName}</td>
+                        <td>{volunteer.lastName}</td>
+                        <td>{volunteer.email}</td>
+                        <td>{volunteer.state}</td>
+                        {volunteer.events.length >= 1 ? (
+                          <td>{volunteer.events.length - 1}</td>
+                        ) : (
+                            <td>{0}</td>
+                        )}
+                      </tr>
+                    </>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </Wrapper>
     </>
   );

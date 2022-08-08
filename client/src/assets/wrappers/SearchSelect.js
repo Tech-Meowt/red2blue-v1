@@ -6,14 +6,12 @@ const SearchSelectWrapper = styled.section`
   .btn-block {
     height: 35px;
   }
-  .form-row {
-    margin-bottom: 0;
-  }
   .form-center {
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: 2rem;
-    row-gap: 0.5rem;
+  }
+  .form-select {
+    text-align: center;
   }
   h5 {
     font-weight: 700;
@@ -51,6 +49,7 @@ const SearchSelectWrapper = styled.section`
   }
   @media (min-width: 992px) {
     .form-center {
+      display: grid;
       grid-template-columns: 1fr 1fr 1fr;
     }
     .main {

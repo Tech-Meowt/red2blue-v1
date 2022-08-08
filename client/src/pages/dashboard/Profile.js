@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FormRow, Alert, FormRowSelect } from '../../components';
+import { FormRow, Alert } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { Helmet, HelmetProvider } from 'react-helmet-async'
@@ -13,8 +13,11 @@ const Profile = () => {
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
   const [email, setEmail] = useState(user?.email);
+  // eslint-disable-next-line
   const [usersDb, setUsersDb] = useState(user?.usersDb);
+  // eslint-disable-next-line
   const [volunteersDb, setVolunteersDb] = useState(user?.volunteersDb);
+  // eslint-disable-next-line
   const [role, setRole] = useState(user?.role);
 
   const handleSubmit = (e) => {

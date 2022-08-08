@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useReducer, useContext, useEffect } from 'react';
 
 import reducer from './reducer';
@@ -240,6 +241,7 @@ const AppProvider = ({ children }) => {
   const createDbUser = async (newUser, alertText) => {
     dispatch({ type: CREATE_USER_BEGIN });
     try {
+      // eslint-disable-next-line
       const { data } = await axios.post(`/api/v1/auth/register`, newUser);
       dispatch({
         type: CREATE_USER_SUCCESS,
@@ -254,9 +256,11 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // eslint-disable-next-line
   const getAllDbUsers = async () => {
     dispatch({ type: GET_USERS_BEGIN });
     try {
+      // eslint-disable-next-line
       const { data } = await axios.get('/user');
     } catch (error) {}
   };

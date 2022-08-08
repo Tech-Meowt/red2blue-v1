@@ -10,13 +10,13 @@ import SearchContainer from './SearchContainer';
 import SmallSidebar from './SmallSidebar';
 import AllDbUsers from './AllDbUsers';
 import DbUser from './DbUser';
-import Banner from './Banner';
+import BannerWarning from './BannerWarning';
 import AllSandbox from './AllSandbox';
 import OneSandbox from './OneSandbox';
-import SearchBar from './SearchBar';
-import SearchSelect from './SearchSelect';
+import DbUsersSearchBar from './DbUsersSearchBar';
+import DbUsersFilter from './DbUsersFilter';
 import SandboxSearchBar from './SandboxSearchBar';
-import StateSearchSelectWithClear from './StateSearchSelectWithClear';
+import SandboxFilter from './SandboxFilter';
 import HelpBanner from './HelpBanner';
 import HelpPopularArticles from './HelpPopularArticles';
 import HelpArticles from './HelpArticles';
@@ -34,7 +34,7 @@ import SearchBarAllVols from './SearchBarAllVols';
 import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
-import IdleTimer from './IdleTimer';
+import VolunteerFilter from './VolunteerFilter';
 
 export {
   Logo,
@@ -44,18 +44,17 @@ export {
   BigSidebar,
   SmallSidebar,
   FormRowSelect,
-  SearchContainer,
   ChartsContainer,
   Loading,
   AllDbUsers,
   DbUser,
-  Banner,
+  BannerWarning,
   AllSandbox,
   OneSandbox,
-  SearchBar,
-  SearchSelect,
+  DbUsersSearchBar,
+  DbUsersFilter,
   SandboxSearchBar,
-  StateSearchSelectWithClear,
+  SandboxFilter,
   HelpBanner,
   HelpPopularArticles,
   HelpArticles,
@@ -71,7 +70,7 @@ export {
   AllEvents,
   OneEvent,
   EventDetails,
-  IdleTimer,
+  VolunteerFilter,
   ScrollButtonUp,
   ScrollButtonDown,
 };

@@ -1,9 +1,8 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, Alert, EventDetails } from '../components';
+import { EventDetails } from '../components';
 import Modal from 'react-modal';
-import { HiUserGroup } from 'react-icons/hi';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';
 import { BsCalendarDate } from 'react-icons/bs';
@@ -16,6 +15,7 @@ const OneEvent = ({
   eventYear,
   // volunteers,
 }) => {
+  // eslint-disable-next-line
   const initialState = {
     eventName,
     eventType,
@@ -28,9 +28,8 @@ const OneEvent = ({
   const [showAlert, setShowAlert] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [detailClicked, setDetailClicked] = useState(false);
-  const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [deleted, setDeleted] = useState(false);
+  // eslint-disable-next-line
   const [newValues, setNewValues] = useState({
     eventName,
     eventType,
@@ -39,7 +38,6 @@ const OneEvent = ({
     // volunteers,
   });
 
-
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
@@ -47,12 +45,7 @@ const OneEvent = ({
   };
 
   const getIdDetails = (e) => {
-    const id = e.target.name;
-    setDetailClicked(!detailClicked)
-  }
-
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setDetailClicked(!detailClicked);
   };
 
   const openModal = () => {
@@ -63,23 +56,11 @@ const OneEvent = ({
     setModalIsOpen(false);
   };
 
-  const updateEvent = (_id) => {
-    axios
-      .patch(`http://localhost:8000/api/v1/event/${_id}`, values)
-      .then((res) => {
-        newValues(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const deleteHandler = (e) => {
     axios
       .delete(`http://localhost:8000/api/v1/event/${e.target.name}`)
       .then((res) => {
-        setValues(res.data);
+        setNewValues(res.data);
       });
     setShowAlert(true);
     setAlertText('Delete successful!');
@@ -123,7 +104,7 @@ const OneEvent = ({
             <div>
               <BsCalendarDate className='icon' />
               Event Date:{' '}
-              {eventDate != '' ? (
+              {eventDate !== '' ? (
                 <span className='status'>{eventDate}</span>
               ) : (
                 <span className='status'> Date not provided</span>
