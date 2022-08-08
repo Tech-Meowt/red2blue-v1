@@ -28,8 +28,10 @@ const ScrollButtonUp = (props) => {
       ...componentProps,
       targetId: props.targetId,
     });
+    // eslint-disable-next-line
   }, [props.targetId]);
 
+  // eslint-disable-next-line
   const handleOnScroll = () => {
     setIsButtonVisible(window.scrollY > 90);
   };

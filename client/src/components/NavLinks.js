@@ -1,14 +1,13 @@
 import links from '../utils/links';
-import { NavLink } from 'react-router-dom'
-import { Link } from 'react-router-dom';
-import { useAppContext } from '../context/appContext'
+import { NavLink } from 'react-router-dom';
+import { useAppContext } from '../context/appContext';
 import { ImProfile } from 'react-icons/im';
-import { FiHelpCircle } from 'react-icons/fi'
+import { FiHelpCircle } from 'react-icons/fi';
 import { SiCodesandbox } from 'react-icons/si';
 
 const NavLinks = ({ toggleSidebar }) => {
-  const { user } = useAppContext()
-  const role = user.role
+  const { user } = useAppContext();
+  const role = user.role;
 
   return (
     <div className='nav-links'>
@@ -67,6 +66,6 @@ const NavLinks = ({ toggleSidebar }) => {
       </NavLink>
     </div>
   );
-}
+};
 
-export default NavLinks
+export default NavLinks;

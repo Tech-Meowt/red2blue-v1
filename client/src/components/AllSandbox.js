@@ -3,34 +3,13 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import {
-  AllVolunteers,
-  OneSandbox,
-  SandboxSearchBar,
-  StateSearchSelectWithClear,
-} from '../components';
-import { Link, useNavigate } from 'react-router-dom';
-import algoliasearch from 'algoliasearch';
-import {
-  InstantSearch,
-  SearchBox,
-  Hits,
-  Pagination,
-  Stats,
-  RefinementList,
-  ClearRefinements,
-  Configure,
-} from 'react-instantsearch-dom';
+import { OneSandbox, SandboxFilter, SandboxSearchBar } from '../components';
+import { Link } from 'react-router-dom';
 
 export default function AllSandbox() {
   const [allSandbox, setAllSandbox] = useState([]);
   const [sandboxList, setSandboxList] = useState([]);
-  const [values, setValues] = useState('');
-  const searchClient = algoliasearch(
-    process.env.REACT_APP_ALGOLIA_ID,
-    process.env.REACT_APP_SEARCH_API
-  );
-  const index = process.env.REACT_APP_ALGOLIA_SANDBOX_INDEX;
+  const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -54,12 +33,10 @@ export default function AllSandbox() {
       });
   }, []);
 
-
-  const handleChange = (e) => {
+  const toggleSearch = (e) => {
     e.preventDefault();
 
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
+    setOpened(!opened);
   };
 
   return (
@@ -74,58 +51,32 @@ export default function AllSandbox() {
         </div>
       </SandboxWrapper>
 
-      <div className='search-container'>
-        <InstantSearch
-          searchClient={searchClient}
-          indexName={index}
-        >
-          <Configure hitsPerPage={10} />
-          <div className='search-container-child'>
-            <h4 className='title'>🕵️ WHAT ARE YOU LOOKING FOR?</h4>
-            <SearchBox
-              translations={{
-                placeholder: 'Enter first name, last name, or email',
-              }}
-              showLoadingIndicator
-            />
-          </div>
-          <h5 className='r2b-red'>🌎 Filter by state</h5>
-          <RefinementList attribute='state' />
-          <ClearRefinements />
-          <Stats />
-          <Hits hitComponent={Hit} />
-          <Pagination padding={2} showLast={true} />
-        </InstantSearch>
-      </div>
+      <button className='btn space' onClick={toggleSearch}>
+        {!opened ? 'Search' : 'Close'}
+      </button>
+
+      {opened && (
+        <>
+          <FilterWrapper>
+            <SandboxSearchBar data={sandboxList} />
+          </FilterWrapper>
+
+          <FilterWrapper>
+            <h4>Filter by state</h4>
+            <div className='form'>
+              <SandboxFilter data={sandboxList} />
+            </div>
+          </FilterWrapper>
+        </>
+      )}
+      <Wrapper>
+        <h4>All Records</h4>
+        <div className='jobs'>
+          {allSandbox.map((sandbox) => {
+            return <OneSandbox key={sandbox._id} {...sandbox} />;
+          })}
+        </div>
+      </Wrapper>
     </>
   );
 }
-
-const Hit = ({
-  hit,
-  id,
-  updateSandbox,
-  deleteHandler,
-  firstName,
-  lastName,
-  email,
-  state,
-  phone,
-  interests,
-  objectID,
-  getId
-}) => (
-  <OneSandbox
-    firstName={hit.firstName}
-    lastName={hit.lastName}
-    email={hit.email}
-    state={hit.state}
-    phone={hit.phone}
-    interests={hit.interests}
-    id={hit.id}
-    objectID={hit.objectID}
-    deleteHandler={deleteHandler}
-    updateSandbox={updateSandbox}
-    getId={getId}
-  />
-);

@@ -4,7 +4,9 @@ import { Navbar, BigSidebar, SmallSidebar, ScrollButtonUp, ScrollButtonDown } fr
 import { useEffect, useState } from 'react';
 
 const SharedLayout = () => {
+  // eslint-disable-next-line
   const [targetId, setTargetId] = useState('scroll-up');
+  // eslint-disable-next-line
   const [targetIdDown, setTargetIdDown] = useState('scroll-down');
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const SharedLayout = () => {
           </div>
         </div>
       </main>
-      <ScrollButtonDown />
+      <ScrollButtonDown targetIdDown={targetIdDown}/>
       <div id='scroll-down'></div>
     </Wrapper>
   );

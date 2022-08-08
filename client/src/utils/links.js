@@ -1,7 +1,6 @@
 import { FaRegUserCircle } from 'react-icons/fa'
 import { FiDatabase } from 'react-icons/fi'
 import { AiOutlineHome } from 'react-icons/ai';
-import { SiCodesandbox } from 'react-icons/si'
 
 const links = [
   { id: 1, text: 'home', path: '/', icon: <AiOutlineHome /> },

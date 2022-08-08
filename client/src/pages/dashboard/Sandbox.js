@@ -1,14 +1,13 @@
 import sandbox from '../../assets/images/sandbox.jpeg'
 import enter from '../../assets/images/enter-sign.png'
 import { Link } from 'react-router-dom';
-import { Banner, ScrollButtonDown, ScrollButtonUp } from '../../components';
-import { useState, useEffect } from 'react';
+import { BannerWarning } from '../../components';
 
 export default function Sandbox() {
 
   return (
     <>
-      <Banner />
+      <BannerWarning bannerText={'You are in a sandbox environment'}/>
       <div className='sandbox-div'>
         <h3>👋 Welcome to the sandbox!</h3>
         <img src={sandbox} alt='sandbox' className='img sandbox-img' />

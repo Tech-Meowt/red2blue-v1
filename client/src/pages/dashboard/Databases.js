@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import Wrapper from '../../assets/wrappers/Databases';
 import { Link } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { useAppContext } from '../../context/appContext';
 
 const Databases = () => {
   const { user } = useAppContext();
+  // eslint-disable-next-line
   const role = user.role;
 
   return (
@@ -42,7 +42,7 @@ const Databases = () => {
             ) : (
               <div>
                 <Link to={'/databases/volunteers'}>
-                  <h5>Volunteers | All Volunteers</h5>
+                  <h5>Volunteers</h5>
                 </Link>
               </div>
             )}
@@ -50,21 +50,21 @@ const Databases = () => {
             {user.role === 'admin' ? (
               <div>
                 <Link to={'/databases/volunteers'}>
-                  <h5>Volunteers | All Volunteers</h5>
+                  <h5>Volunteers</h5>
                 </Link>
               </div>
             ) : (
               <div>
-                <Link to={'/databases/events'}>
-                  <h5>Events | All Years</h5>
+                <Link to={'/'}>
+                  <h5>Volunteers | Skills</h5>
                 </Link>
               </div>
             )}
 
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/databases/events'}>
-                  <h5>Events | All Years</h5>
+                <Link to={'/'}>
+                  <h5>Volunteers | Skills</h5>
                 </Link>
               </div>
             ) : (
@@ -105,18 +105,6 @@ const Databases = () => {
               <div>
                 <Link to={'/'}>
                   <h5>Events | 2019</h5>
-                </Link>
-              </div>
-            ) : (
-              <Link to={'/'}>
-                <h5>Volunteers | Skills</h5>
-              </Link>
-            )}
-
-            {user.role === 'admin' ? (
-              <div>
-                <Link to={'/'}>
-                  <h5>Volunteers | Skills</h5>
                 </Link>
               </div>
             ) : (

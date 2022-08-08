@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Register, Landing, Error, ProtectedRoute } from './pages';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Register, Landing, Error, ProtectedRoute, ForgotPassword, ResetPassword } from './pages';
 import {
   Profile,
   SharedLayout,
@@ -20,12 +20,10 @@ import {
   Volunteers,
   Events
 } from './pages/dashboard';
-import { IdleTimer } from './components';
 import { useAppContext } from './context/appContext'
 
 function App() {
   const { user, logoutUser } = useAppContext();
-
   useEffect(() => {
     if (user) {
       const interval = setInterval(() => {
@@ -33,11 +31,7 @@ function App() {
       }, 7200000);
       return () => clearInterval(interval);
     }
-
-    window.addEventListener('beforeunload', function (e) {
-      logoutUser();
-    });
-  }, [user]);
+  }, [user, logoutUser]);
   return (
     <BrowserRouter>
       <Routes>
@@ -118,9 +112,10 @@ function App() {
         {/* Unprotected Routes */}
         <Route path='/register' element={<Register />} />
         <Route path='/landing' element={<Landing />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
         <Route path='*' element={<Error />} />
       </Routes>
-      <IdleTimer />
     </BrowserRouter>
   );
 }
