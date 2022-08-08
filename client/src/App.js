@@ -20,7 +20,6 @@ import {
   Volunteers,
   Events
 } from './pages/dashboard';
-import { IdleTimer } from './components';
 import { useAppContext } from './context/appContext'
 
 function App() {
@@ -121,7 +120,6 @@ function App() {
         <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
         <Route path='*' element={<Error />} />
       </Routes>
-      <IdleTimer />
     </BrowserRouter>
   );
 }
