@@ -34,6 +34,7 @@ import SearchBarAllVols from './SearchBarAllVols';
 import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
+import VolunteerFilter from './VolunteerFilter';
 
 export {
   Logo,
@@ -43,7 +44,6 @@ export {
   BigSidebar,
   SmallSidebar,
   FormRowSelect,
-  SearchContainer,
   ChartsContainer,
   Loading,
   AllDbUsers,
@@ -70,6 +70,7 @@ export {
   AllEvents,
   OneEvent,
   EventDetails,
+  VolunteerFilter,
   ScrollButtonUp,
   ScrollButtonDown,
 };

@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
-import axios from 'axios';
 
 const initialState = {
   firstName: '',
@@ -19,7 +18,7 @@ const Register = () => {
   const [values, setValues] = useState(initialState);
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
-  
+
   const sendNewAccountEmail = () => {
     const templateParams = {
       userFirstName: values.firstName,
@@ -134,12 +133,15 @@ const Register = () => {
         <button type='submit' className='btn btn-block' disabled={isLoading}>
           Submit
         </button>
-        <p>
-          {values.isMember ? 'Not a member yet?' : 'Already a member?'}
+        <p className=''>
+          {values.isMember ? "Don't have an account yet?" : 'Already a member?'}
           <button type='button' onClick={toggleMember} className='member-btn'>
             {values.isMember ? 'Register' : 'Login'}
           </button>
         </p>
+        <Link to={'/forgot-password'}>
+          <p className='no-margin r2b-red'>Forgot password?</p>
+        </Link>
       </form>
     </Wrapper>
   );

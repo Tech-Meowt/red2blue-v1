@@ -1,14 +1,12 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { DbUsersSearchBar, DbUser, DbUsersFilter, BannerWarning } from '../components';
-import { SiTeradata } from 'react-icons/si';
+import { DbUsersSearchBar, DbUser, DbUsersFilter } from '../components';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
-  const [values, setValues] = useState('');
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
@@ -39,24 +37,6 @@ export default function AllDbUsers() {
     setOpened(!opened);
   };
 
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const updateUser = (id) => {
-    axios
-      .patch(`http://localhost:8000/api/v1/auth/${id}`, values)
-      .then((res) => {
-        values(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
@@ -68,9 +48,7 @@ export default function AllDbUsers() {
       {opened && (
         <>
           <FilterWrapper>
-            <DbUsersSearchBar
-              data={usersList}
-            />
+            <DbUsersSearchBar data={usersList} />
           </FilterWrapper>
 
           <FilterWrapper>

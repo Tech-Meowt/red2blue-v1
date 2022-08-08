@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 
 
 const SharedLayoutDatabases = () => {
+  // eslint-disable-next-line
   const [targetId, setTargetId] = useState('scroll-up');
+  // eslint-disable-next-line
   const [targetIdDown, setTargetIdDown] = useState('scroll-down');
 
   useEffect(() => {

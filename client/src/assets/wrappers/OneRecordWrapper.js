@@ -110,6 +110,24 @@ const OneRecordWrapper = styled.article`
       grid-template-columns: 1fr 1fr;
     }
   }
+  .content-center-skills {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 0.5rem;
+    @media (min-width: 576px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 992px) {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1120px) {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      row-gap: 0.75rem;
+    }
+  }
+.check {
+  padding-top: 1rem;
+}
   footer {
     margin-top: 1rem;
   }

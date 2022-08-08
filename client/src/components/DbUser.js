@@ -1,11 +1,9 @@
-import { Link } from 'react-router-dom';
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FormRow, Alert } from '../components';
+import { FormRow } from '../components';
 import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
-import { GrUserAdmin } from 'react-icons/gr';
 import { RiAdminLine } from 'react-icons/ri';
 import { AiOutlineCheck } from 'react-icons/ai';
 import Modal from 'react-modal';
@@ -37,7 +35,7 @@ const DbUser = ({
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [deleted, setDeleted] = useState(false);
+  // eslint-disable-next-line
   const [newValues, setNewValues] = useState({
     firstName,
     lastName,
@@ -51,7 +49,7 @@ const DbUser = ({
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [])
+  }, []);
 
   const getId = (e) => {
     const id = e.target.name;
@@ -75,11 +73,20 @@ const DbUser = ({
     axios
       .patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
       .then((res) => {
-        newValues(res.data);
+        setNewValues(res.data);
         console.log(res.data);
-      })
-      .catch((error) => {
+      });
+    setShowAlert(true);
+      setAlertText('Update successful!');
+      setAlertType('success');
+      closeModal(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000).catch((error) => {
         console.log(error);
+         setShowAlert(true);
+         setAlertText('There was an error. Please try again...');
+         setAlertType('danger');
       });
   };
 
@@ -93,7 +100,6 @@ const DbUser = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
@@ -225,6 +231,11 @@ const DbUser = ({
                   <br />
                   <div className='info'>
                     <h3>Edit User</h3>
+                    {showAlert && (
+                      <div className={`alert alert-${alertType}`}>
+                        {alertText}
+                      </div>
+                    )}
                     <p className='instructions'>
                       Update <span className='emphasis'>only</span> the fields
                       that you wish to change.
@@ -234,9 +245,10 @@ const DbUser = ({
                   <button className='btn delete-btn' name={_id} onClick={getId}>
                     Close
                   </button>
-                  <h1></h1>
+                  <h4>{''}</h4>
                   <form
-                    onSubmit={() => {
+                    onSubmit={(e) => {
+                      e.preventDefault();
                       updateUser(_id);
                     }}
                   >
@@ -310,9 +322,7 @@ const DbUser = ({
                           onChange={handleChange}
                         >
                           <option value='true'>Approved</option>
-                          <option value='false'>
-                            Waiting on approval
-                          </option>
+                          <option value='false'>Waiting on approval</option>
                         </select>
                       </div>
 

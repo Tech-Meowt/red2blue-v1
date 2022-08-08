@@ -24,8 +24,10 @@ const ScrollButtonDown = (props) => {
       ...componentProps,
       targetIdDown: props.targetIdDown,
     });
+    // eslint-disable-next-line
   }, [props.targetIdDown]);
 
+  // eslint-disable-next-line
   const handleOnScroll = () => {
     setIsButtonVisible(window.scrollY > 90);
   };

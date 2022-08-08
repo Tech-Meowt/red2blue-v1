@@ -1,6 +1,5 @@
-import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox, FormRow } from '../components';
+import { OneSandbox } from '../components';
 
 const SandboxSearchBar = ({
   placeholder,
@@ -76,16 +75,16 @@ const SandboxSearchBar = ({
           </form>
         </div>
 
-        {filteredData.length == 0 && !noResults && (
+        {filteredData.length === 0 && !noResults && (
           <h5>Found {filteredData.length} records</h5>
         )}
-        {filteredData.length == 1 && (
+        {filteredData.length === 1 && (
           <h5>Found {filteredData.length} record</h5>
         )}
         {filteredData.length > 1 && (
           <h5>Found {filteredData.length} records</h5>
         )}
-        {filteredData.length != 0 &&
+        {filteredData.length !== 0 &&
           filteredData.slice(0, 99).map((value, key) => {
             return (
               <>

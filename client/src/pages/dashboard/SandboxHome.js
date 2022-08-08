@@ -13,7 +13,8 @@ export default function SandboxHome() {
           <title>Sandbox</title>
         </Helmet>
       </HelmetProvider>
-      <BannerWarning bannerText={'You are in a sandbox environment'}/>
+      <BannerWarning bannerText={'You are in a sandbox environment'} />
+      {/* eslint-disable-next-line */}
       <AllSandbox />
     </>
   );

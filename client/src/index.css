@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Roboto+Condensed:wght@400;700&display=swap');
 
 html {
+  background: white;
   font-size: 100%;
 } /*16px*/
 
@@ -148,6 +149,32 @@ select:invalid {
   color: #757575;
 }
 
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+  box-shadow: var(--shadow-2);
+}
+
+.table th {
+  background-color: var(--r2b-blue);
+  color: white;
+}
+
+.table td, .table th
+ {
+  border: 1px solid #ddd;
+  padding: 8px;
+ }
+
+ .table tr:nth-child(even) {
+  background-color: #f2f2f2
+ }
+
+ .table tr:hover {
+  background-color: #ddd;
+ }
+
 .img {
   width: 100%;
   display: block;
@@ -172,12 +199,25 @@ select:invalid {
   margin-top: 1rem !important;
 }
 
+.space-no-bottom {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+
 .space-larger {
   margin-top: 2rem;
 }
 
 .space-largest {
   margin-top: 3rem;
+}
+
+.space-bottom {
+  margin-bottom: 1rem !important;
+}
+
+.space-right {
+  margin-right: 1rem !important;
 }
 
 .border, .border-state {
@@ -223,7 +263,11 @@ select:invalid {
 
 .confirm-btns {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+}
+
+.no-cap {
+  text-transform: none !important;
 }
 
 .btn-block {
@@ -238,6 +282,9 @@ select:invalid {
   color: #480071;
   cursor: pointer;
   border: none;
+}
+.no-margin {
+  margin: 0 !important;
 }
 .details-btn:hover {
   background: #480071;
@@ -269,10 +316,15 @@ select:invalid {
   transition: var(--transition);
   margin: .5rem;
 }
+
 .btn-success:hover, .btn-danger:hover {
   box-shadow: var(--shadow-3);
   transform: translateY(-0.25rem);
   transition: .5s ease-in-out;
+}
+
+.clear {
+  margin: 0 !important;
 }
 
 .height {
@@ -321,9 +373,16 @@ select:invalid {
   letter-spacing: var(--letterSpacing);
 }
 
+.form-select: {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--borderRadius);
+  border: 1px solid black;
+  width: 25%;
+  height: 35px;
+}
+
 .form-input,
 .form-textarea,
-.form-select,
   .ais-SearchBox-input {
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -331,13 +390,13 @@ select:invalid {
   border: 1px solid black;
 }
 .form-input,
-.form-select,
 .btn-block,
 .close-btn,
   .ais-SearchBox-input {
   height: 35px;
   width: 100%;
 }
+
 .form-row {
   margin-bottom: 1rem;
 }
@@ -345,6 +404,11 @@ select:invalid {
 .form-textarea {
   height: 7rem;
 }
+
+.no-bottom-margin {
+  margin-bottom: 0 !important;
+}
+
 .form-alert {
   color: var(--red-dark);
   letter-spacing: var(--letterSpacing);
@@ -361,6 +425,10 @@ select:invalid {
   to {
     transform: rotate(360deg);
   }
+}
+
+.less-filter {
+  margin-bottom: .5rem;
 }
 
 .loading {
@@ -432,6 +500,7 @@ select:invalid {
 
 .ais-RefinementList {
   display: flex;
+  margin: 0 !important;
 }
 
 .ais-RefinementList-list {
@@ -462,6 +531,14 @@ select:invalid {
   width: 100%;
 }
 
+.ais-RangeInput-separator {
+  margin: 0 .5rem;
+}
+
+.ais-RangeInput-submit, .ais-SearchBox-submit {
+  margin: 0 .5rem;
+}
+
 .ais-ClearRefinements-button {
   font-size: 1rem;
   max-width: 25%;
@@ -480,6 +557,22 @@ select:invalid {
 
 .ais-SearchBox-input:focus {
   border: 1px solid var(--r2b-blue);
+}
+
+.filters {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.skills-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.filter-children: {
+  display: flex;
+  flex-direction: column;
 }
 
 input[type=checkbox]:checked {
@@ -536,13 +629,33 @@ input[type=checkbox]:checked {
   transition: var(--transition);
 }
 
+.filter-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.right {
+  padding-right: 1rem;
+}
+
+.left {
+  padding-left: 1rem;
+}
+
 .search-container-child {
   background: var(--r2b-blue-light);
   border-color: transparent;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
   margin-bottom: 1.5rem;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 2.25rem 0;
   transition: var(--transition);
   z-index: 100;
 }
@@ -570,7 +683,8 @@ input[type=checkbox]:checked {
 }
 
 .clear-btn {
-  width: 50%;
+  width: 15%;
+  margin-left: 0;
 }
 
 @media (min-width: 768px) {
