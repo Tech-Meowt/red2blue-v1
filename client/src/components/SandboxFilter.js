@@ -1,7 +1,7 @@
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox } from '../components'
+import { OneSandbox } from '.'
 
 const SandboxFilter = ({
   placeholder,

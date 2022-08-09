@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DbUser } from '../components'
+import { DbUser } from '.'
 
 const DbUsersSearchBar = ({
   placeholder,

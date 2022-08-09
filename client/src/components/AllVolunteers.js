@@ -6,15 +6,12 @@ import {
   SearchBarAllVols,
   OneVolunteer,
   VolunteerFilter,
-} from '../components';
+} from '.';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { BiHotel } from 'react-icons/bi';
-import { IoConstructOutline } from 'react-icons/io5';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
-import { MdDisabledVisible } from 'react-icons/md';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);

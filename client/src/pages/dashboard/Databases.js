@@ -19,28 +19,21 @@ const Databases = () => {
         <div className='main-container'>
           <h3 className='r2b-red'>Access your databases</h3>
           <div className='database-container'>
+              <div>
+                <Link to={'/sandbox/home'}>
+                  <h5>Dummy Data</h5>
+                </Link>
+              </div>
+           
+
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/user-accounts'}>
+                <Link to={'/databases/user-accounts'}>
                   <h5>User Accounts</h5>
                 </Link>
               </div>
             ) : (
               <div>
-                <Link to={'/sandbox/home'}>
-                  <h5>Dummy Data</h5>
-                </Link>
-              </div>
-            )}
-
-            {user.role === 'admin' ? (
-              <div>
-                <Link to={'/sandbox/home'}>
-                  <h5>Dummy Data</h5>
-                </Link>
-              </div>
-            ) : (
-              <div>
                 <Link to={'/databases/volunteers'}>
                   <h5>Volunteers</h5>
                 </Link>
@@ -55,7 +48,7 @@ const Databases = () => {
               </div>
             ) : (
               <div>
-                <Link to={'/'}>
+                <Link to={'/databases/volunteer-skills'}>
                   <h5>Volunteers | Skills</h5>
                 </Link>
               </div>
@@ -63,7 +56,7 @@ const Databases = () => {
 
             {user.role === 'admin' ? (
               <div>
-                <Link to={'/'}>
+                <Link to={'/databases/volunteer-skills'}>
                   <h5>Volunteers | Skills</h5>
                 </Link>
               </div>

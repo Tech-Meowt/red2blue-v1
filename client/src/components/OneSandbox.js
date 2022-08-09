@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '../components';
+import { FormRow, StateSelect } from '.';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineUnorderedList } from 'react-icons/ai';
 import Modal from 'react-modal';

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { DbUsersSearchBar, DbUser, DbUsersFilter } from '../components';
+import { DbUsersSearchBar, DbUser, DbUsersFilter } from '.';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);

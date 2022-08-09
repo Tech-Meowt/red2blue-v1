@@ -31,7 +31,7 @@ const NavLinks = ({ toggleSidebar }) => {
       })}
       {role === 'admin' && (
         <NavLink
-          to='/user-accounts'
+          to='/databases/user-accounts'
           className={({ isActive }) =>
             isActive ? 'nav-link active' : 'nav-link'
           }

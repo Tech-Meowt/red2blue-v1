@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OneSandbox } from '../components';
+import { OneSandbox } from '.';
 
 const SandboxSearchBar = ({
   placeholder,

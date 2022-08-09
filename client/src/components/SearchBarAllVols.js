@@ -1,5 +1,5 @@
 import { useState, useRef , useEffect} from 'react';
-import { OneVolunteer } from '../components';
+import { OneVolunteer } from '.';
 import { CSVLink } from 'react-csv'
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';

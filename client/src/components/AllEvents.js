@@ -1,4 +1,4 @@
-import { OneEvent } from '../components'
+import { OneEvent } from '.'
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import EventsWrapper from '../assets/wrappers/EventsWrapper';

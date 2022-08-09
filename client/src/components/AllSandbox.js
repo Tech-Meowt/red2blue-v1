@@ -3,7 +3,7 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import { OneSandbox, SandboxFilter, SandboxSearchBar } from '../components';
+import { OneSandbox, SandboxFilter, SandboxSearchBar } from '.';
 import { Link } from 'react-router-dom';
 
 export default function AllSandbox() {

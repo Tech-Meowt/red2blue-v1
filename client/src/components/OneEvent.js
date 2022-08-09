@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { EventDetails } from '../components';
+import { EventDetails } from '.';
 import Modal from 'react-modal';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';

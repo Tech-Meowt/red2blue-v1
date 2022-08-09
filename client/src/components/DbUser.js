@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FormRow } from '../components';
+import { FormRow } from '.';
 import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
 import { RiAdminLine } from 'react-icons/ri';

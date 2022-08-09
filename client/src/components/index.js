@@ -35,6 +35,7 @@ import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
 import VolunteerFilter from './VolunteerFilter';
+import AllSkills from './AllSkills';
 
 export {
   Logo,
@@ -71,6 +72,7 @@ export {
   OneEvent,
   EventDetails,
   VolunteerFilter,
+  AllSkills,
   ScrollButtonUp,
   ScrollButtonDown,
 };

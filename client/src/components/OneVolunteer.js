@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '../components';
+import { FormRow, StateSelect } from '.';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
@@ -21,57 +21,9 @@ const OneVolunteer = ({
   zip,
   phone,
   userId,
-  events,
-  // campaignMgmt,
-  // canvassing,
-  // communityOrganizing,
-  // electedOfficialCurr,
-  // electedOfficialPast,
-  // p2pTextingMgmt,
-  // p2pTextingVol,
-  // phonebanking,
-  // pollWorker,
-  // postcardMgmt,
-  // postcardWriting,
-  // txtPhoneScriptEdit,
-  // txtPhoneScriptWrite,
-  // vanVoteBuildExp,
-  // voterReg,
-  actor,
-  artist,
-  boardOfDirectors,
-  dataScience,
-  dbMgmt,
-  editor,
-  professor,
-  trainer,
-  fundraising,
-  graphicDesign,
-  hr,
-  it,
-  legal,
-  linguist,
-  msgComms,
-  musician,
-  newsletterCreateDesign,
-  newsletterWrite,
-  nonprofMgmt,
-  pr,
-  publicSpeak,
-  recruitment,
-  research,
-  otherLanguage,
-  socialMediaContentCreate,
-  socialMediaMgmt,
-  speechWriter,
-  strategicPlanning,
-  videoEditCreate,
-  volMgmt,
-  webDesign,
-  webMgmt,
-  anythingElse,
   politicalSkills,
-  lifeSkills
+  lifeSkills,
+  events,
 }) => {
   const initialState = {
     firstName,
@@ -83,54 +35,6 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    // campaignMgmt,
-    // canvassing,
-    // communityOrganizing,
-    // electedOfficialCurr,
-    // electedOfficialPast,
-    // p2pTextingMgmt,
-    // p2pTextingVol,
-    // phonebanking,
-    // pollWorker,
-    // postcardMgmt,
-    // postcardWriting,
-    // txtPhoneScriptEdit,
-    // txtPhoneScriptWrite,
-    // vanVoteBuildExp,
-    // voterReg,
-    actor,
-    artist,
-    boardOfDirectors,
-    dataScience,
-    dbMgmt,
-    editor,
-    professor,
-    trainer,
-    fundraising,
-    graphicDesign,
-    hr,
-    it,
-    legal,
-    linguist,
-    msgComms,
-    musician,
-    newsletterCreateDesign,
-    newsletterWrite,
-    nonprofMgmt,
-    pr,
-    publicSpeak,
-    recruitment,
-    research,
-    otherLanguage,
-    socialMediaContentCreate,
-    socialMediaMgmt,
-    speechWriter,
-    strategicPlanning,
-    videoEditCreate,
-    volMgmt,
-    webDesign,
-    webMgmt,
-    anythingElse,
     politicalSkills,
     lifeSkills,
   };
@@ -155,6 +59,7 @@ const OneVolunteer = ({
     userId,
     events,
     politicalSkills,
+    lifeSkills
   });
 
   const getId = (e) => {
@@ -163,6 +68,8 @@ const OneVolunteer = ({
     setClicked(true);
     setBasicClicked(true);
   };
+
+  console.log(values)
 
   const basicHide = (e) => {
     setBasicClicked(false);
@@ -419,247 +326,8 @@ const OneVolunteer = ({
                         Hide
                       </button>
                     </div>
-                    <>
-                      <h4 className='space'>Political Skills</h4>
-                      <div className='content-center-skills'>
-                        <div>
-                          ✔️ Campaign Management:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.campaignMgmt}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Canvassing:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.canvassing}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Community Organizing:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.communityOrganizing}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Elected Official (Current):{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.electedOfficialCurr}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Elected Official (Past):{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.electedOfficialPast}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Peer-to-Peer Texting Management:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.p2pTextingMgmt}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.p2pTextingVol}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Phone Banking:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.phonebanking}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Poll Worker:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.pollWorker}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Postcard Planning + Management:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.postcardMgmt}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Postcard Writing:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.postcardWriting}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Peer-to-Peer Texting Volunteer:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.p2pTextingVol}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Texting + Phone Banking Script Editing:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.txtPhoneScriptEdit}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Texting + Phone Banking Script Writing:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.txtPhoneScriptWrite}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ VAN/Votebuilder Experience:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.vanVoteBuildExp}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Voter Registration:{' '}
-                          <p className='status no-margin'>
-                            {politicalSkills.voterReg}
-                          </p>
-                        </div>
-                      </div>
-                    </>
-                    <hr />
-                    <>
-                      <h4 className='space'>Life Skills</h4>
-                      <div className='content-center-skills'>
-                        <div>
-                          Actor/Actress:{' '}
-                          <p className='status no-margin'>{actor}</p>
-                        </div>
-                        <div>
-                          ✔️ Artist:{' '}
-                          <p className='status no-margin'>{artist}</p>
-                        </div>
-                        <div>
-                          ✔️ Board of Directors:{' '}
-                          <p className='status no-margin'>{boardOfDirectors}</p>
-                        </div>
-                        <div>
-                          ✔️ Data Science:{' '}
-                          <p className='status no-margin'>{dataScience}</p>
-                        </div>
-                        <div>
-                          ✔️ Database Management:{' '}
-                          <p className='status no-margin'>{dbMgmt}</p>
-                        </div>
-                        <div>
-                          ✔️ Editor:{' '}
-                          <p className='status no-margin'>{editor}</p>
-                        </div>
-                        <div>
-                          ✔️ Educator: Teacher/Professor:{' '}
-                          <p className='status no-margin'>{professor}</p>
-                        </div>
-                        <div>
-                          ✔️ Educator: Trainer:{' '}
-                          <p className='status no-margin'>{trainer}</p>
-                        </div>
-                        <div>
-                          ✔️ Fundraising:{' '}
-                          <p className='status no-margin'>{fundraising}</p>
-                        </div>
-                        <div>
-                          ✔️ Graphic Design:{' '}
-                          <p className='status no-margin'>{graphicDesign}</p>
-                        </div>
-                        <div>
-                          ✔️ Human Resources:{' '}
-                          <p className='status no-margin'>{hr}</p>
-                        </div>
-                        <div>
-                          ✔️ Information Technology:{' '}
-                          <p className='status no-margin'>{it}</p>
-                        </div>
-                        <div>
-                          ✔️ Legal: Lawyer/Paralegal:{' '}
-                          <p className='status no-margin'>{legal}</p>
-                        </div>
-                        <div>
-                          ✔️ Linguist:{' '}
-                          <p className='status no-margin'>{linguist}</p>
-                        </div>
-                        <div>
-                          ✔️ Messaging/Communications:{' '}
-                          <p className='status no-margin'>{msgComms}</p>
-                        </div>
-                        <div>
-                          ✔️ Musician:{' '}
-                          <p className='status no-margin'>{musician}</p>
-                        </div>
-                        <div>
-                          ✔️ Newsletter Creation + Design:{' '}
-                          <p className='status no-margin'>
-                            {newsletterCreateDesign}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Nonprofit Management:{' '}
-                          <p className='status no-margin'>{nonprofMgmt}</p>
-                        </div>
-                        <div>
-                          ✔️ Public Relations:{' '}
-                          <p className='status no-margin'>{pr}</p>
-                        </div>
-                        <div>
-                          ✔️ Public Speaker:{' '}
-                          <p className='status no-margin'>{publicSpeak}</p>
-                        </div>
-                        <div>
-                          ✔️ Recruitment:{' '}
-                          <p className='status no-margin'>{recruitment}</p>
-                        </div>
-                        <div>
-                          ✔️ Research:{' '}
-                          <p className='status no-margin'>{research}</p>
-                        </div>
-                        <div>
-                          ✔️ Second+ Language:{' '}
-                          <p className='status no-margin'>{otherLanguage}</p>
-                        </div>
-                        <div>
-                          ✔️ Social Media Content Creation:{' '}
-                          <p className='status no-margin'>
-                            {socialMediaContentCreate}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Social Media Management:{' '}
-                          <p className='status no-margin'>{socialMediaMgmt}</p>
-                        </div>
-                        <div>
-                          ✔️ Speech Writer:{' '}
-                          <p className='status no-margin'>{speechWriter}</p>
-                        </div>
-                        <div>
-                          ✔️ Strategic Planning:{' '}
-                          <p className='status no-margin'>
-                            {strategicPlanning}
-                          </p>
-                        </div>
-                        <div>
-                          ✔️ Video Editing/Creating:{' '}
-                          <p className='status no-margin'>{videoEditCreate}</p>
-                        </div>
-                        <div>
-                          ✔️ Volunteer Management:{' '}
-                          <p className='status no-margin'>{volMgmt}</p>
-                        </div>
-                        <div>
-                          ✔️ Website Design:{' '}
-                          <p className='status no-margin'>{webDesign}</p>
-                        </div>
-                        <div>
-                          ✔️ Website Management:{' '}
-                          <p className='status no-margin'>{webMgmt}</p>
-                        </div>
-                        <div>
-                          ✔️ Anything Else:{' '}
-                          <p className='status no-margin'>{anythingElse}</p>
-                        </div>
-                      </div>
-                    </>
+
+                  
                   </footer>
 
                   {showBasicEditForm && (
