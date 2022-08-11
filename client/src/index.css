@@ -156,6 +156,10 @@ select:invalid {
   box-shadow: var(--shadow-2);
 }
 
+.dropdown-filter {
+  display: inline !important;
+}
+
 .table th {
   background-color: var(--r2b-blue);
   color: white;
@@ -232,10 +236,11 @@ select:invalid {
 
 /* buttons */
 
-.btn, .ais-ClearRefinements-button {
+.button {
   cursor: pointer;
   color: white;
   background-color: var(--r2b-blue);
+  font-family: var(--bodyFont);
   border: transparent;
   border-radius: var(--borderRadius);
   letter-spacing: var(--letterSpacing);
@@ -246,7 +251,7 @@ select:invalid {
   display: inline-block;
 }
 
-.btn:hover, .ais-ClearRefinements-button:hover {
+.button:hover, .ais-ClearRefinements-button:hover {
   background: var(--r2b-red);
   color: white;
   box-shadow: var(--shadow-3);

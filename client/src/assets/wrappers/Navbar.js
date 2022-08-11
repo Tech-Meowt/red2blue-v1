@@ -31,7 +31,7 @@ const Wrapper = styled.nav`
     position: relative;
   }
 
-  .btn {
+  .button {
     display: flex;
     align-items: center;
     gap: 0 0.5rem;

@@ -36,6 +36,9 @@ import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
 import VolunteerFilter from './VolunteerFilter';
 import AllSkills from './AllSkills';
+import OnePoliticalSkill from './OnePoliticalSkill';
+import OneLifeSkill from './OneLifeSkill';
+import PoliticalTable from './PoliticalTable';
 
 export {
   Logo,
@@ -73,6 +76,9 @@ export {
   EventDetails,
   VolunteerFilter,
   AllSkills,
+  OnePoliticalSkill,
+  OneLifeSkill,
+  PoliticalTable,
   ScrollButtonUp,
   ScrollButtonDown,
 };

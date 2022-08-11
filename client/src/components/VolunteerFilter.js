@@ -194,7 +194,7 @@ const VolunteerFilter = ({
     <div className='search-container'>
       <h5 className='r2b-red'>Filters</h5>
       <button
-        className='btn btn-danger clear-btn space-bottom'
+        className='button btn-danger clear-btn space-bottom'
         onClick={handleClear}
       >
         Reset Filters
@@ -297,15 +297,15 @@ const VolunteerFilter = ({
         <>
           <div className='space'>
             <button
-              className='btn btn-success no-margin'
+              className='button btn-success no-margin'
               onClick={handleDownloadPdf}
             >
               Download PDF
             </button>
             <CSVLink {...csvReport}>
-              <button className='btn btn-success'>Export as CSV</button>
+              <button className='button btn-success'>Export as CSV</button>
             </CSVLink>
-            <button className='btn btn-success' onClick={handleClick}>
+            <button className='button btn-success' onClick={handleClick}>
               {clicked ? 'View As List' : 'View As Table'}
             </button>
           </div>

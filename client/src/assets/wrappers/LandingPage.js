@@ -18,7 +18,7 @@ const Wrapper = styled.main`
   h1 {
     font-weight: 700;
   }
-  btn {
+  button {
     background-color: var(--r2b-blue);
     border-color: transparent;
     border-width: 1px;

@@ -136,12 +136,12 @@ const OneSandbox = ({
             <div className='actions'>
               {!clicked && (
                 <>
-                  <button className='btn edit-btn' name={id} onClick={getId}>
+                  <button className='button edit-btn' name={id} onClick={getId}>
                     Edit
                   </button>
                   <button
                     type='button'
-                    className='btn delete-btn'
+                    className='button delete-btn'
                     name={id}
                     onClick={openModal}
                   >
@@ -215,7 +215,7 @@ const OneSandbox = ({
                     </p>
                   </div>
 
-                  <button className='btn delete-btn' name={id} onClick={getId}>
+                  <button className='button delete-btn' name={id} onClick={getId}>
                     Close
                   </button>
                   <h1> </h1>
@@ -271,7 +271,7 @@ const OneSandbox = ({
                         handleChange={handleChange}
                       />
                     </div>
-                    <button type='submit' className='btn edit-btn'>
+                    <button type='submit' className='button edit-btn'>
                       Submit
                     </button>
                   </form>

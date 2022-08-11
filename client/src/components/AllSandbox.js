@@ -46,12 +46,12 @@ export default function AllSandbox() {
       <SandboxWrapper>
         <div className='actions'>
           <Link to={'/sandbox/add'}>
-            <button className='btn edit-btn actions'>Add New Record</button>
+            <button className='button edit-btn actions'>Add New Record</button>
           </Link>
         </div>
       </SandboxWrapper>
 
-      <button className='btn space' onClick={toggleSearch}>
+      <button className='button space' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
       </button>
 

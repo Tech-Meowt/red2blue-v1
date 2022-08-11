@@ -130,7 +130,7 @@ export default function AllVolunteers() {
       <VolunteersWrapper>
         <div className='actions'>
           <Link to={''}>
-            <button className='btn edit-btn actions space'>
+            <button className='button edit-btn actions space'>
               Add New Record
             </button>
           </Link>
@@ -147,15 +147,15 @@ export default function AllVolunteers() {
 
       <Wrapper>
         <button
-          className='btn btn-success no-margin'
+          className='button btn-success no-margin'
           onClick={handleDownloadPdf}
         >
           Download PDF
         </button>
         <CSVLink {...csvReport}>
-          <button className='btn btn-success'>Export as CSV</button>
+          <button className='button btn-success'>Export as CSV</button>
         </CSVLink>
-        <button className='btn btn-success no-margin' onClick={handleClick}>
+        <button className='button btn-success no-margin' onClick={handleClick}>
           {clicked ? 'View As List' : 'View As Table'}
         </button>
 
@@ -171,7 +171,6 @@ export default function AllVolunteers() {
                         key={volunteer.id}
                         {...volunteer}
                         events={volunteer.events.length}
-                        className='border-state'
                       />
                     </div>
                   </>

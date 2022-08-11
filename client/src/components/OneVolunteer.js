@@ -21,8 +21,6 @@ const OneVolunteer = ({
   zip,
   phone,
   userId,
-  politicalSkills,
-  lifeSkills,
   events,
 }) => {
   const initialState = {
@@ -35,8 +33,6 @@ const OneVolunteer = ({
     zip,
     phone,
     userId,
-    politicalSkills,
-    lifeSkills,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -58,8 +54,6 @@ const OneVolunteer = ({
     phone,
     userId,
     events,
-    politicalSkills,
-    lifeSkills
   });
 
   const getId = (e) => {
@@ -206,12 +200,12 @@ const OneVolunteer = ({
             <div className='actions'>
               {!clicked && (
                 <>
-                  <button className='btn edit-btn' name={id} onClick={getId}>
+                  <button className='button edit-btn' name={id} onClick={getId}>
                     Details
                   </button>
                   <button
                     type='button'
-                    className='btn delete-btn'
+                    className='button delete-btn'
                     name={id}
                     onClick={openModal}
                   >
@@ -311,7 +305,7 @@ const OneVolunteer = ({
                   <footer>
                     <div className='actions'>
                       <button
-                        className='btn edit-btn'
+                        className='button edit-btn'
                         name={id}
                         onClick={showEditFormBasic}
                       >
@@ -319,7 +313,7 @@ const OneVolunteer = ({
                       </button>
 
                       <button
-                        className='btn delete-btn'
+                        className='button delete-btn'
                         name={id}
                         onClick={basicHide}
                       >
@@ -483,11 +477,11 @@ const OneVolunteer = ({
                             handleChange={handleChange}
                           />
                         </div>
-                        <button type='submit' className='btn edit-btn'>
+                        <button type='submit' className='button edit-btn'>
                           Submit
                         </button>
                         <button
-                          className='btn delete-btn'
+                          className='button delete-btn'
                           onClick={handleBasicCancel}
                         >
                           Cancel

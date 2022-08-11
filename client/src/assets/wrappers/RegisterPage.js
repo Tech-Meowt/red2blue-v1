@@ -21,7 +21,7 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     text-align: center;
   }
-  .btn {
+  .button {
     margin-top: 1rem;
   }
   .member-btn {

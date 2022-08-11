@@ -36,14 +36,14 @@ export default function AllEvents() {
     <>
       <h3 className='r2b-red'>Database: Events | All Years</h3>
 
-      <button className='btn' onClick={toggleSearch}>
+      <button className='button' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
       </button>
 
       <EventsWrapper>
         <div className='actions'>
           <Link to={''}>
-            <button className='btn edit-btn actions space'>
+            <button className='button edit-btn actions space'>
               Add New Record
             </button>
           </Link>

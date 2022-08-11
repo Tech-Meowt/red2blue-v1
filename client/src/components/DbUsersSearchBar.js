@@ -65,7 +65,7 @@ const DbUsersSearchBar = ({
                   onChange={handleFilter}
                 />
                 <button
-                  className='btn btn-block btn-danger clear-btn'
+                  className='button btn-block btn-danger clear-btn'
                   onClick={handleClear}
                 >
                   clear results

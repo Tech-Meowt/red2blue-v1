@@ -41,7 +41,7 @@ export default function AllDbUsers() {
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
-      <button className='btn' onClick={toggleSearch}>
+      <button className='button' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
       </button>
 

@@ -1,7 +1,7 @@
 import Wrapper from '../assets/wrappers/SearchResults';
 import SearchSelectWrapper from '../assets/wrappers/SearchSelect';
 import { useState } from 'react';
-import { OneSandbox } from '.'
+import { OneSandbox } from '../components'
 
 const SandboxFilter = ({
   placeholder,
@@ -120,7 +120,7 @@ const SandboxFilter = ({
               <option value='WY'>WY</option>
             </select>
 
-            <button className='btn btn-block btn-danger clear-btn' onClick={handleClear}>
+            <button className='button btn-block btn-danger clear-btn' onClick={handleClear}>
               clear results
             </button>
           </div>

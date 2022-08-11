@@ -4,7 +4,6 @@ import { CSVLink } from 'react-csv'
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios'
-import { CLEAR_VALUES } from '../context/actions';
 
 const SearchBarAllVols = ({
   placeholder,
@@ -129,7 +128,7 @@ const SearchBarAllVols = ({
                   onChange={handleFilter}
                 />
                 <button
-                  className='btn btn-block btn-danger'
+                  className='button button-block btn-danger'
                   onClick={handleClear}
                 >
                   clear results
@@ -144,13 +143,13 @@ const SearchBarAllVols = ({
         {filteredData.length >= 1 && (
           <>
             <div className='space'>
-              <button className='btn btn-success no-margin' onClick={handleDownloadPdf}>
+              <button className='button btn-success no-margin' onClick={handleDownloadPdf}>
                 Download PDF
               </button>
               <CSVLink {...csvReport}>
-                <button className='btn btn-success'>Export as CSV</button>
+                <button className='button btn-success'>Export as CSV</button>
               </CSVLink>
-              <button className='btn btn-success no-margin' onClick={handleClick}>
+              <button className='button btn-success no-margin' onClick={handleClick}>
                 {clicked ? 'View As List' : 'View As Table'}
               </button>
             </div>

@@ -15,7 +15,7 @@ const Landing = () => {
             seats from red to blue.
           </p>
           <Link to='/register'>
-            <button className='btn'>Login/Register</button>
+            <button className='button'>Login/Register</button>
           </Link>
         </div>
         <img src={main} alt='red 2 blue wording' className='img main-img' />
