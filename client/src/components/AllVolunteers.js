@@ -87,42 +87,9 @@ export default function AllVolunteers() {
       .catch((error) => {
         console.log(error);
       });
-
-    // axios
-    //   .get('http://localhost:8000/api/v1/political')
-    //   .then((res) => {
-    //     setAllPoliticalSkills(res.data.politicalSkills);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, []);
    
-  // const polSkills = allPoliticalSkills.map((value) => {
-  //   return (
-  //     <div>
-  //       <table classNAme='table'>
-  //         <thead>
-  //           <tr>
-  //             <th>First name</th>
-  //             <th>Last name</th>
-  //             <th>Email</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-            
-  //                 <tr key={value.id}>
-  //                   <td>{value.firstName}</td>
-  //                   <td>{value.lastName}</td>
-  //                   <td>{value.email}</td>
-  //                 </tr>
-                
-              
-  //         </tbody>
-  //       </table>
-  //     </div>
-  //   );
-  // })
+
 
   return (
     <>

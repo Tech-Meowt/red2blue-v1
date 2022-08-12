@@ -12,8 +12,6 @@ import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { ImPointRight } from 'react-icons/im';
 import { AiFillCaretDown } from 'react-icons/ai'
 import { SelectColumnFilter } from './Filter'
-import { Container } from 'reactstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function AllSkills() {
   const [allPoliticalSkills, setAllPoliticalSkills] = useState([]);
@@ -21,10 +19,7 @@ export default function AllSkills() {
   const [politicalToggle, setPoliticalToggle] = useState(false);
   const [lifeToggle, setLifeToggle] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [hidden, setHidden] = useState(true);
-  const [filteredData, setFilteredData] = useState([]);
-  const [wordEntered, setWordEntered] = useState('');
-  const [noResults, setNoResults] = useState(true);
+  const [showPolTable, setShowPolTable] = useState(false);
   const printRef = useRef();
 
   const politicalHeaders = [
@@ -138,9 +133,6 @@ export default function AllSkills() {
       {
         Header: 'First name',
         accessor: 'firstName',
-        // disableSortBy: true,
-        // Filter: SelectColumnFilter,
-        // filter: 'equals',
       },
       { Header: 'Last name', accessor: 'lastName' },
       { Header: 'Email', accessor: 'email' },
@@ -280,41 +272,15 @@ export default function AllSkills() {
     setPoliticalToggle(false)
   }
 
-  // const skills = skillOptions.map((option) => {
-  //   console.log(option)
-  // })
-  
-
-  const handleFilter = (e) => {
-//     const searchWord = e.target.value;
-//     setWordEntered(searchWord);
-
-//     const searchOptions = allPoliticalSkills.map((skill, value) => {
-//       return skill, value, console.log(skill.value)
-//     })
-    
-//     const newFilter = allPoliticalSkills.filter((value) => {
-// return value, console.log(value)
-//     })
-
-//     // const newFilter = allPoliticalSkills.filter((value) => {
-//     //   return value.campaignMgmt.toLowerCase().includes(searchWord.toLowerCase())
-//     // })
-
-//     if (searchWord === '') {
-//       setFilteredData([]);
-//     } else {
-//       setFilteredData(newFilter);
-//       setNoResults(false);
-//     }
-  }
-
   return (
     <>
       <h3 className='r2b-red'>Database: Volunteers | Skills</h3>
       <VolunteersWrapper>
         <div className='actions'>
-          <button className='button space-right' onClick={handlePoliticalToggle}>
+          <button
+            className='button space-right'
+            onClick={handlePoliticalToggle}
+          >
             View Political Skills
           </button>
           <button className='button' onClick={handleLifeToggle}>
@@ -323,95 +289,15 @@ export default function AllSkills() {
         </div>
       </VolunteersWrapper>
 
-      <Container style={{ marginTop: 100 }}>
-        <PoliticalTable columns={columns} data={allPoliticalSkills} />
-      </Container>
-
-      {/* <VolunteersWrapper>
-        <div className='actions'>
-          <Link to={''}>
-            <button className='button edit-btn space'>
-              Add New Record
-            </button>
-          </Link>
-        </div>
-      </VolunteersWrapper> */}
-
-      {/* {filteredData.length !== 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Campaign management</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((key) => {
-              return (
-                <>
-                  <tr key={key.id}>
-                    <td>{key.firstName}</td>
-                    <td>{key.lastName}</td>
-                    <td>{key.email}</td>
-                    <td>{key.campaignMgmt}</td>
-                  </tr>
-                </>
-              );
-            })}
-          </tbody>
-        </table>
-      )} */}
-
-      {/* <div ref={printRef}>
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Email</th>
-              <th>
-                Campaign management
-                <span className='left'>
-                  <select
-                    name='wordEntered'
-                    id='wordEntered'
-                    className='form-select'
-                    value={wordEntered}
-                    onChange={handleFilter}
-                  >
-                    <option value='' disabled selected hidden>
-                      Filter
-                    </option>
-                    <option value='Expert'>Expert</option>
-                    <option value='Advanced'>Advanced</option>
-                  </select>
-                </span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {allPoliticalSkills.map((skill) => {
-              return (
-                <>
-                  <tr key={skill.id}>
-                    <td>{skill.firstName}</td>
-                    <td>{skill.lastName}</td>
-                    <td>{skill.email}</td>
-                    <td>{skill.campaignMgmt}</td>
-                  </tr>
-                </>
-              );
-            })}
-          </tbody>
-        </table>
-      </div> */}
-
       {politicalToggle && (
         <>
-          {/* // TODO: search */}
-
           <Wrapper>
+            <h4>🕵️ Need to search for something?</h4>
+            <h5 className='r2b-blue'>
+              👉 Click on 'View As Table' to sort and filter your data
+              <br />
+              👉 You can combine filters to narrow down your results
+            </h5>
             <button
               className='button btn-success no-margin'
               onClick={handleDownloadPdf}
@@ -421,32 +307,47 @@ export default function AllSkills() {
             <CSVLink {...politicalReport}>
               <button className='button btn-success'>Export as CSV</button>
             </CSVLink>
-            <button className='button btn-success no-margin' onClick={handleClick}>
+            <button
+              className='button btn-success no-margin'
+              onClick={handleClick}
+            >
               {clicked ? 'View As List' : 'View As Table'}
             </button>
-            <h4>All Records</h4>
-            <div ref={printRef}>
-              <div className='jobs'>
-                {allPoliticalSkills.map((polSkill) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <OnePoliticalSkill key={polSkill.id} {...polSkill} />
-                      </div>
-                    </>
-                  );
-                })}
+
+            <h4 className='space'>All Records</h4>
+
+            {!clicked ? (
+              <div ref={printRef}>
+                <div className='jobs'>
+                  {allPoliticalSkills.map((polSkill) => {
+                    return (
+                      <>
+                        <div className='border-state'>
+                          <OnePoliticalSkill key={polSkill.id} {...polSkill} />
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div ref={printRef}>
+                <PoliticalTable columns={columns} data={allPoliticalSkills} />
+              </div>
+            )}
           </Wrapper>
         </>
       )}
 
       {lifeToggle && (
         <>
-          {/* // TODO: search */}
-
           <Wrapper>
+            <h4>🕵️ Need to search for something?</h4>
+            <h5 className='r2b-blue'>
+              👉 Click on 'View As Table' to sort and filter your data
+              <br />
+              👉 You can combine filters to narrow down your results
+            </h5>
             <button
               className='button btn-success no-margin'
               onClick={handleDownloadPdf}
@@ -456,7 +357,10 @@ export default function AllSkills() {
             <CSVLink {...lifeReport}>
               <button className='button btn-success'>Export as CSV</button>
             </CSVLink>
-            <button className='button btn-success no-margin' onClick={handleClick}>
+            <button
+              className='button btn-success no-margin'
+              onClick={handleClick}
+            >
               {clicked ? 'View As List' : 'View As Table'}
             </button>
             <h4>All Records</h4>

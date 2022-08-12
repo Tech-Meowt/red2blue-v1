@@ -65,6 +65,7 @@ const Wrapper = styled.nav`
   }
 
   .logo-text {
+    font-family: var(--headingFont);
     display: none;
     margin: 0;
     margin-left: 4rem;
