@@ -18,6 +18,8 @@ const DbUser = ({
   approved,
   isActive,
   role,
+  sandboxDb,
+  skillsDb
 }) => {
   const initialState = {
     firstName,
@@ -28,6 +30,8 @@ const DbUser = ({
     isActive,
     approved,
     role,
+    sandboxDb,
+    skillsDb,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -45,6 +49,8 @@ const DbUser = ({
     volunteersDb,
     isActive,
     role,
+    skillsDb,
+    sandboxDb,
   });
 
   useEffect(() => {
@@ -129,26 +135,40 @@ const DbUser = ({
           <div className='content-center'>
             <div>
               <FiDatabase className='icon' />
-              User Accounts Database:{' '}
-              <span className='status'>{usersDb ? 'access' : 'no access'}</span>
+              Sandbox database:{' '}
+              <span className='status'>{sandboxDb ? 'access' : 'no access'}</span>
             </div>
             <div>
               <FiDatabase className='icon' />
-              Volunteers Database:{' '}
+              User Accounts database:{' '}
+              <span className='status'>
+                {usersDb ? 'access' : 'no access'}
+              </span>
+            </div>
+            <div>
+              <FiDatabase className='icon' />
+              Volunteers database:{' '}
               <span className='status'>
                 {volunteersDb ? 'access' : 'no access'}
               </span>
             </div>
             <div>
+              <FiDatabase className='icon' />
+              Skills database:{' '}
+              <span className='status'>
+                {skillsDb ? 'access' : 'no access'}
+              </span>
+            </div>
+            <div>
               <MdOutlineManageAccounts className='icon' />
-              Account Status:{' '}
+              Account status:{' '}
               <span className='status'>
                 {isActive ? 'active' : 'deactivated'}
               </span>
             </div>
             <div>
               <AiOutlineCheck className='icon' />
-              Approval Status:{' '}
+              Approval status:{' '}
               <span className='status'>
                 {approved ? 'approved' : 'waiting on approval'}
               </span>
@@ -163,7 +183,11 @@ const DbUser = ({
             <div className='actions'>
               {!clicked && (
                 <>
-                  <button className='button edit-btn' name={_id} onClick={getId}>
+                  <button
+                    className='button edit-btn'
+                    name={_id}
+                    onClick={getId}
+                  >
                     Edit
                   </button>
                   <button
@@ -242,7 +266,11 @@ const DbUser = ({
                     </p>
                   </div>
 
-                  <button className='button delete-btn' name={_id} onClick={getId}>
+                  <button
+                    className='button delete-btn'
+                    name={_id}
+                    onClick={getId}
+                  >
                     Close
                   </button>
                   <h4>{''}</h4>
@@ -280,7 +308,7 @@ const DbUser = ({
 
                       <div className='form-row'>
                         <label htmlFor='usersDb' className='form-label'>
-                          User Accounts Database
+                          User Accounts database
                         </label>
                         <select
                           name='usersDb'
@@ -296,7 +324,7 @@ const DbUser = ({
 
                       <div className='form-row'>
                         <label htmlFor='volunteersDb' className='form-label'>
-                          Volunteers Database
+                          Volunteers database
                         </label>
                         <select
                           name='volunteersDb'

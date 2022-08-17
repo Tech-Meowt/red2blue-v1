@@ -37,7 +37,7 @@ const forgotPasswordHandler = async (e) => {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>Forgot Password</title>
+          <title>Reset Password</title>
         </Helmet>
       </HelmetProvider>
       <Wrapper classNAme='full-page'>

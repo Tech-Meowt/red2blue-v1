@@ -1,13 +1,147 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { DbUsersSearchBar, DbUser, DbUsersFilter } from '.';
+import { TableView, DbUser } from '../components';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import { CSVLink } from 'react-csv';
+import { SelectColumnFilter } from './Filter';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
-  const [opened, setOpened] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const [showTable, setShowTable] = useState(false);
+  const printRef = useRef();
+
+  const usersDbHeaders = [
+    { label: 'First name', key: 'firstName' },
+    { label: 'Last name', key: 'lastName' },
+    { label: 'Email', key: 'email' },
+    { label: 'Sandbox database', key: 'sandboxDb' },
+    { label: 'User Accounts database', key: 'usersDb' },
+    { label: `Volunteers database`, key: 'volunteersDb' },
+    { label: 'Skills database', key: 'skillsDb' },
+    { label: 'Account status', key: 'isActive' },
+    { label: 'Approval status', key: 'approved' },
+    { label: 'Role', key: 'role' },
+  ];
+
+  const userData = dbUsers;
+
+  const userReport = {
+    data: userData,
+    headers: usersDbHeaders,
+    filename: 'user_accounts_report.csv',
+  };
+
+  const handleDownloadPdf = async () => {
+    const element = printRef.current;
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL('image/png', 3.0);
+
+    let imgWidth = 210;
+    let pageHeight = 296;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+
+    const pdf = new jsPDF('p', 'mm');
+    let position = 0;
+
+    pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+    pdf.save('user_accounts_report.pdf');
+  };
+
+  const columns = useMemo(
+    () => [
+      { Header: 'First name', accessor: 'firstName' },
+      { Header: 'Last name', accessor: 'lastName' },
+      { Header: 'Email', accessor: 'email' },
+      {
+        Header: 'Sandbox database',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        accessor: (d) => {
+          return d.sandboxDb ? 'access' : 'no access';
+        },
+        id: 'sandboxDb',
+      },
+      {
+        Header: 'User accounts database',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'usersDb',
+        accessor: (d) => {
+          return d.usersDb ? 'access' : 'no access';
+        },
+      },
+      {
+        Header: 'Volunteers database',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'volunteersDb',
+        accessor: (d) => {
+          return d.volunteersDb ? 'access' : 'no access';
+        },
+      },
+      {
+        Header: 'Skills database',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'skillsDb',
+        accessor: (d) => {
+          return d.skillsDb ? 'access' : 'no access';
+        },
+      },
+      {
+        Header: 'Account status',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'isActive',
+        accessor: (d) => {
+          return d.isActive ? 'active' : 'deactivated';
+        },
+      },
+      {
+        Header: 'Approval status',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'approved',
+        accessor: (d) => {
+          return d.usersDb ? 'approved' : 'waiting on approval';
+        },
+      },
+      {
+        Header: 'Role',
+        accessor: 'role',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+    ],
+    []
+  );
+
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    setClicked(!clicked);
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -31,90 +165,51 @@ export default function AllDbUsers() {
       });
   }, []);
 
-  const toggleSearch = (e) => {
-    e.preventDefault();
-
-    setOpened(!opened);
-  };
-
   return (
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
-      <button className='button' onClick={toggleSearch}>
-        {!opened ? 'Search' : 'Close'}
+      <h4>🕵️ Need to search for something?</h4>
+      <h5 className='r2b-blue'>
+        👉 Click on 'View As Table' to sort and filter your data
+        <br />
+        👉 You can combine filters to narrow down your results
+      </h5>
+      <button
+        className='button btn-success no-margin'
+        onClick={handleDownloadPdf}
+      >
+        Download PDF
       </button>
-
-      {opened && (
-        <>
-          <FilterWrapper>
-            <DbUsersSearchBar data={usersList} />
-          </FilterWrapper>
-
-          <FilterWrapper>
-            <h4>Filters</h4>
-            <div className='form'>
-              <DbUsersFilter
-                data={usersList}
-                word={'access'}
-                query={'User Accounts database access'}
-                value1={'access'}
-                value2={'denied'}
-                option1={'access'}
-                option2={'denied'}
-              />
-
-              <DbUsersFilter
-                data={usersList}
-                word={'access'}
-                query={'Volunteers database access'}
-                value1={'access'}
-                value2={'denied'}
-                option1={'access'}
-                option2={'denied'}
-              />
-
-              <DbUsersFilter
-                data={usersList}
-                word={'active'}
-                query={'Account status'}
-                value1={'active'}
-                value2={'deactivated'}
-                option1={'active'}
-                option2={'deactivated'}
-              />
-              <DbUsersFilter
-                data={usersList}
-                word={'approved'}
-                query={'Approval status'}
-                value1={'approved'}
-                value2={'waitingOnApproval'}
-                option1={'approved'}
-                option2={'waiting on approval'}
-              />
-              <DbUsersFilter
-                data={usersList}
-                word={'role'}
-                query={'Role'}
-                value1={'viewer'}
-                value2={'editor'}
-                value3={'admin'}
-                option1={'viewer'}
-                option2={'editor'}
-                option3={'admin'}
-              />
-            </div>
-          </FilterWrapper>
-        </>
-      )}
+      <CSVLink {...userReport}>
+        <button className='button btn-success'>Export as CSV</button>
+      </CSVLink>
+      <button className='button btn-success no-margin' onClick={handleClick}>
+        {clicked ? 'View As List' : 'View As Table'}
+      </button>
 
       <Wrapper>
         <h4>All Records</h4>
-        <div className='jobs'>
-          {dbUsers.map((dbUser) => {
-            return <DbUser key={dbUser._id} {...dbUser} />;
-          })}
-        </div>
+
+        {!clicked ? (
+          <div ref={printRef}>
+            <div className='jobs'>
+              {dbUsers.map((dbUser) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <DbUser key={dbUser._id} {...dbUser} />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div ref={printRef}>
+            <TableView columns={columns} data={dbUsers} />
+          </div>
+        )}
       </Wrapper>
     </>
   );

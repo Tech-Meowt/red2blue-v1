@@ -4,6 +4,7 @@ import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
 import { useNavigate, Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
+import axios from 'axios';
 
 const initialState = {
   firstName: '',
@@ -11,11 +12,13 @@ const initialState = {
   email: '',
   password: '',
   isMember: true,
+  lastLoggedIn: Date.now(),
 };
 
 const Register = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
+  const [lastLoggedIn, setLastLoggedIn] = useState('')
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
 
@@ -53,18 +56,18 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, isMember } = values;
+    const { firstName, lastName, email, password, isMember, lastLoggedIn } = values;
     if (!email || !password) {
       displayAlert();
       return;
     }
-    const currentUser = { firstName, lastName, email, password };
+    const currentUser = { firstName, lastName, email, password, lastLoggedIn };
     if (isMember) {
       setupUser({
         currentUser,
         endPoint: 'login',
         alertText: 'Login successful! Redirecting...',
-      });
+      })
     } else {
       setupUser({
         currentUser,
@@ -140,7 +143,7 @@ const Register = () => {
           </button>
         </p>
         <Link to={'/forgot-password'}>
-          <p className='no-margin r2b-red'>Forgot password?</p>
+          <p className='no-margin r2b-red'>Forgot your password?</p>
         </Link>
       </form>
     </Wrapper>
