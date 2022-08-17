@@ -97,7 +97,7 @@ export default function AddSandbox() {
           </p>
         </div>
         <div className='actions'>
-          <button className='btn delete-btn' onClick={handleCancel}>
+          <button className='button delete-btn' onClick={handleCancel}>
             Cancel
           </button>
           <h1> </h1>
@@ -149,7 +149,7 @@ export default function AddSandbox() {
                 handleChange={handleChange}
               />
             </div>
-            <button type='submit' className='btn edit-btn'>
+            <button type='submit' className='button edit-btn'>
               Submit
             </button>
           </form>

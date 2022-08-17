@@ -130,7 +130,7 @@ const Register = () => {
           value={values.password}
           handleChange={handleChange}
         />
-        <button type='submit' className='btn btn-block' disabled={isLoading}>
+        <button type='submit' className='button btn-block' disabled={isLoading}>
           Submit
         </button>
         <p className=''>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import { OneSandbox, SandboxFilter, SandboxSearchBar } from '../components';
+import { OneSandbox, SandboxFilter, SandboxSearchBar } from '.';
 import { Link } from 'react-router-dom';
 
 export default function AllSandbox() {
@@ -46,12 +46,12 @@ export default function AllSandbox() {
       <SandboxWrapper>
         <div className='actions'>
           <Link to={'/sandbox/add'}>
-            <button className='btn edit-btn actions'>Add New Record</button>
+            <button className='button edit-btn actions'>Add New Record</button>
           </Link>
         </div>
       </SandboxWrapper>
 
-      <button className='btn space' onClick={toggleSearch}>
+      <button className='button space' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
       </button>
 

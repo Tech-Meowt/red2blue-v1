@@ -6,15 +6,12 @@ import {
   SearchBarAllVols,
   OneVolunteer,
   VolunteerFilter,
-} from '../components';
+} from '.';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { BiHotel } from 'react-icons/bi';
-import { IoConstructOutline } from 'react-icons/io5';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
-import { MdDisabledVisible } from 'react-icons/md';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
@@ -90,42 +87,9 @@ export default function AllVolunteers() {
       .catch((error) => {
         console.log(error);
       });
-
-    // axios
-    //   .get('http://localhost:8000/api/v1/political')
-    //   .then((res) => {
-    //     setAllPoliticalSkills(res.data.politicalSkills);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, []);
    
-  // const polSkills = allPoliticalSkills.map((value) => {
-  //   return (
-  //     <div>
-  //       <table classNAme='table'>
-  //         <thead>
-  //           <tr>
-  //             <th>First name</th>
-  //             <th>Last name</th>
-  //             <th>Email</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-            
-  //                 <tr key={value.id}>
-  //                   <td>{value.firstName}</td>
-  //                   <td>{value.lastName}</td>
-  //                   <td>{value.email}</td>
-  //                 </tr>
-                
-              
-  //         </tbody>
-  //       </table>
-  //     </div>
-  //   );
-  // })
+
 
   return (
     <>
@@ -133,7 +97,7 @@ export default function AllVolunteers() {
       <VolunteersWrapper>
         <div className='actions'>
           <Link to={''}>
-            <button className='btn edit-btn actions space'>
+            <button className='button edit-btn actions space'>
               Add New Record
             </button>
           </Link>
@@ -150,15 +114,15 @@ export default function AllVolunteers() {
 
       <Wrapper>
         <button
-          className='btn btn-success no-margin'
+          className='button btn-success no-margin'
           onClick={handleDownloadPdf}
         >
           Download PDF
         </button>
         <CSVLink {...csvReport}>
-          <button className='btn btn-success'>Export as CSV</button>
+          <button className='button btn-success'>Export as CSV</button>
         </CSVLink>
-        <button className='btn btn-success no-margin' onClick={handleClick}>
+        <button className='button btn-success no-margin' onClick={handleClick}>
           {clicked ? 'View As List' : 'View As Table'}
         </button>
 
@@ -174,7 +138,6 @@ export default function AllVolunteers() {
                         key={volunteer.id}
                         {...volunteer}
                         events={volunteer.events.length}
-                        className='border-state'
                       />
                     </div>
                   </>

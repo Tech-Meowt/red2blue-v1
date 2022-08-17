@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OneSandbox } from '../components';
+import { OneSandbox } from '.';
 
 const SandboxSearchBar = ({
   placeholder,
@@ -65,7 +65,7 @@ const SandboxSearchBar = ({
                   onChange={handleFilter}
                 />
                 <button
-                  className='btn btn-block btn-danger'
+                  className='button btn-block btn-danger'
                   onClick={handleClear}
                 >
                   clear results

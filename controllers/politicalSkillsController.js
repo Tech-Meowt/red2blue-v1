@@ -22,7 +22,7 @@ const create = async (req, res) => {
     txtPhoneScriptWrite,
     vanVoteBuildExp,
     voterReg,
-    answers,
+    volunteer,
    volunteerId,
   } = req.body;
 
@@ -47,25 +47,10 @@ const create = async (req, res) => {
       vanVoteBuildExp,
       voterReg,
       volunteerId,
-      answers: {
+      volunteer: {
         connectOrCreate: [
           {
             create: {
-              campaignMgmt: campaignMgmt,
-              canvassing: canvassing,
-              communityOrganizing: communityOrganizing,
-              electedOfficialCurr: electedOfficialCurr,
-              electedOfficialPast: electedOfficialPast,
-              p2pTextingMgmt: p2pTextingMgmt,
-              p2pTextingVol: p2pTextingVol,
-              phonebanking: phonebanking,
-              pollWorker: pollWorker,
-              postcardMgmt: postcardMgmt,
-              postcardWriting: postcardWriting,
-              txtPhoneScriptEdit: txtPhoneScriptEdit,
-              txtPhoneScriptWrite: txtPhoneScriptWrite,
-              vanVoteBuildExp: vanVoteBuildExp,
-              voterReg: voterReg,
               firstName: firstName,
               lastName: lastName,
               email: email,
@@ -78,7 +63,7 @@ const create = async (req, res) => {
       },
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ politicalSkills });
@@ -90,7 +75,7 @@ const getAll = async (req, res) => {
       lastName: 'asc',
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ politicalSkills });
@@ -118,7 +103,7 @@ const updatePoliticalSkill = async (req, res) => {
     txtPhoneScriptWrite,
     vanVoteBuildExp,
     voterReg,
-    answers,
+    volunteer,
     volunteerId,
   } = req.body;
 
@@ -146,25 +131,13 @@ const updatePoliticalSkill = async (req, res) => {
       vanVoteBuildExp,
       voterReg,
       volunteerId,
-      answers: {
+      volunteer: {
         connectOrCreate: [
           {
             create: {
-              campaignMgmt: campaignMgmt,
-              canvassing: canvassing,
-              communityOrganizing: communityOrganizing,
-              electedOfficialCurr: electedOfficialCurr,
-              electedOfficialPast: electedOfficialPast,
-              p2pTextingMgmt: p2pTextingMgmt,
-              p2pTextingVol: p2pTextingVol,
-              phonebanking: phonebanking,
-              pollWorker: pollWorker,
-              postcardMgmt: postcardMgmt,
-              postcardWriting: postcardWriting,
-              txtPhoneScriptEdit: txtPhoneScriptEdit,
-              txtPhoneScriptWrite: txtPhoneScriptWrite,
-              vanVoteBuildExp: vanVoteBuildExp,
-              voterReg: voterReg,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
             },
             where: {
               email: email,
@@ -174,7 +147,7 @@ const updatePoliticalSkill = async (req, res) => {
       },
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ politicalSkills })

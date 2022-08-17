@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FormRow } from '../components';
+import { FormRow } from '.';
 import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineManageAccounts } from 'react-icons/md';
 import { RiAdminLine } from 'react-icons/ri';
@@ -163,12 +163,12 @@ const DbUser = ({
             <div className='actions'>
               {!clicked && (
                 <>
-                  <button className='btn edit-btn' name={_id} onClick={getId}>
+                  <button className='button edit-btn' name={_id} onClick={getId}>
                     Edit
                   </button>
                   <button
                     type='button'
-                    className='btn delete-btn'
+                    className='button delete-btn'
                     name={_id}
                     onClick={openModal}
                   >
@@ -242,7 +242,7 @@ const DbUser = ({
                     </p>
                   </div>
 
-                  <button className='btn delete-btn' name={_id} onClick={getId}>
+                  <button className='button delete-btn' name={_id} onClick={getId}>
                     Close
                   </button>
                   <h4>{''}</h4>
@@ -360,12 +360,12 @@ const DbUser = ({
                       </div>
                     </div>
 
-                    <button type='submit' className='btn edit-btn'>
+                    <button type='submit' className='button edit-btn'>
                       Submit
                     </button>
                     <button
                       type='button'
-                      className='btn delete-btn'
+                      className='button delete-btn'
                       onClick={openModal}
                     >
                       Delete

@@ -40,7 +40,7 @@ const create = async (req, res) => {
     webDesign,
     webMgmt,
     anythingElse,
-    answers,
+    volunteer,
     volunteerId
   } = req.body
 
@@ -83,43 +83,13 @@ const create = async (req, res) => {
       webMgmt,
       anythingElse,
       volunteerId,
-      answers: {
+      volunteer: {
         connectOrCreate: [
           {
             create: {
-              actor: actor,
-              artist: artist,
-              boardOfDirectors: boardOfDirectors,
-              dataScience: dataScience,
-              dbMgmt: dbMgmt,
-              editor: editor,
-              professor: professor,
-              trainer: trainer,
-              fundraising: fundraising,
-              graphicDesign: graphicDesign,
-              hr: hr,
-              it: it,
-              legal: legal,
-              linguist: linguist,
-              msgComms: msgComms,
-              musician: musician,
-              newsletterCreateDesign: newsletterCreateDesign,
-              newsletterWrite: newsletterWrite,
-              nonprofMgmt: nonprofMgmt,
-              pr: pr,
-              publicSpeak: publicSpeak,
-              recruitment: recruitment,
-              research: research,
-              otherLanguage: otherLanguage,
-              socialMediaContentCreate: socialMediaContentCreate,
-              socialMediaMgmt: socialMediaMgmt,
-              speechWriter: speechWriter,
-              strategicPlanning: strategicPlanning,
-              videoEditCreate: videoEditCreate,
-              volMgmt: volMgmt,
-              webDesign: webDesign,
-              webMgmt: webMgmt,
-              anythingElse: anythingElse,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
             },
             where: {
               email: email,
@@ -129,7 +99,7 @@ const create = async (req, res) => {
       },
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ lifeSkills })
@@ -141,7 +111,7 @@ const getAll = async (req, res) => {
       lastName: 'asc',
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ lifeSkills });
@@ -187,8 +157,8 @@ const updateLifeSkill = async (req, res) => {
     webDesign,
     webMgmt,
     anythingElse,
-    answers,
-    volunteerId
+    volunteer,
+    volunteerId,
   } = req.body;
 
   const lifeSkills = await prisma.lifeSkills.update({
@@ -233,43 +203,13 @@ const updateLifeSkill = async (req, res) => {
       webMgmt,
       anythingElse,
       volunteerId,
-      answers: {
+      volunteer: {
         connectOrCreate: [
           {
             create: {
-              actor: actor,
-              artist: artist,
-              boardOfDirectors: boardOfDirectors,
-              dataScience: dataScience,
-              dbMgmt: dbMgmt,
-              editor: editor,
-              professor: professor,
-              trainer: trainer,
-              fundraising: fundraising,
-              graphicDesign: graphicDesign,
-              hr: hr,
-              it: it,
-              legal: legal,
-              linguist: linguist,
-              msgComms: msgComms,
-              musician: musician,
-              newsletterCreateDesign: newsletterCreateDesign,
-              newsletterWrite: newsletterWrite,
-              nonprofMgmt: nonprofMgmt,
-              pr: pr,
-              publicSpeak: publicSpeak,
-              recruitment: recruitment,
-              research: research,
-              otherLanguage: otherLanguage,
-              socialMediaContentCreate: socialMediaContentCreate,
-              socialMediaMgmt: socialMediaMgmt,
-              speechWriter: speechWriter,
-              strategicPlanning: strategicPlanning,
-              videoEditCreate: videoEditCreate,
-              volMgmt: volMgmt,
-              webDesign: webDesign,
-              webMgmt: webMgmt,
-              anythingElse: anythingElse,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
             },
             where: {
               email: email,
@@ -279,7 +219,7 @@ const updateLifeSkill = async (req, res) => {
       },
     },
     include: {
-      answers: true,
+      volunteer: true,
     },
   });
   res.status(200).json({ lifeSkills })

@@ -55,54 +55,6 @@ model Volunteer {
   state                    String?
   zip                      String?
   phone                    String?
-  campaignMgmt             String?
-  canvassing               String?
-  communityOrganizing      String?
-  electedOfficialCurr      String?
-  electedOfficialPast      String?
-  p2pTextingMgmt           String?
-  p2pTextingVol            String?
-  phonebanking             String?
-  pollWorker               String?
-  postcardMgmt             String?
-  postcardWriting          String?
-  txtPhoneScriptEdit       String?
-  txtPhoneScriptWrite      String?
-  vanVoteBuildExp          String?
-  voterReg                 String?
-  actor                    String?
-  artist                   String?
-  boardOfDirectors         String?
-  dataScience              String?
-  dbMgmt                   String?
-  editor                   String?
-  professor                String?
-  trainer                  String?
-  fundraising              String?
-  graphicDesign            String?
-  hr                       String?
-  it                       String?
-  legal                    String?
-  linguist                 String?
-  msgComms                 String?
-  musician                 String?
-  newsletterCreateDesign   String?
-  newsletterWrite          String?
-  nonprofMgmt              String?
-  pr                       String?
-  publicSpeak              String?
-  recruitment              String?
-  research                 String?
-  otherLanguage            String?
-  socialMediaContentCreate String?
-  socialMediaMgmt          String?
-  speechWriter             String?
-  strategicPlanning        String?
-  videoEditCreate          String?
-  volMgmt                  String?
-  webDesign                String?
-  webMgmt                  String?
-  anythingElse             String?
   updatedAt                DateTime                @default(now())
 }
 
@@ -126,7 +78,7 @@ model PoliticalSkills {
   txtPhoneScriptWrite      String? @default("")
   vanVoteBuildExp          String? @default("")
   voterReg                 String? @default("")
-  answers Volunteer[]
+  volunteer Volunteer[]
   volunteerId String?
 }
 
@@ -169,7 +121,7 @@ model LifeSkills {
   webMgmt                  String? @default("")
   anythingElse             String? @default("")
   updatedAt                DateTime                @default(now())
-  answers Volunteer[]
+  volunteer Volunteer[]
   volunteerId String?
 }
 

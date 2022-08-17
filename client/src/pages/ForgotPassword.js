@@ -53,7 +53,7 @@ const forgotPasswordHandler = async (e) => {
             value={email}
             handleChange={(e) => setEmail(e.target.value)}
           />
-          <button type='submit' className='btn btn-block'>
+          <button type='submit' className='button btn-block'>
             Submit
           </button>
         </form>

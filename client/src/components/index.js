@@ -35,6 +35,10 @@ import AllEvents from './AllEvents';
 import OneEvent from './OneEvent';
 import EventDetails from './EventDetails';
 import VolunteerFilter from './VolunteerFilter';
+import AllSkills from './AllSkills';
+import OnePoliticalSkill from './OnePoliticalSkill';
+import OneLifeSkill from './OneLifeSkill';
+import TableView from './TableView';
 
 export {
   Logo,
@@ -71,6 +75,10 @@ export {
   OneEvent,
   EventDetails,
   VolunteerFilter,
+  AllSkills,
+  OnePoliticalSkill,
+  OneLifeSkill,
+  TableView,
   ScrollButtonUp,
   ScrollButtonDown,
 };
