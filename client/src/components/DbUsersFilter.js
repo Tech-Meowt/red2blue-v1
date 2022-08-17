@@ -138,7 +138,7 @@ const DbUsersFilter = ({
                 {query === 'role' && <option value={value3}>{option3}</option>}
               </select>
               <button
-                className='btn btn-block btn-danger clear-btn'
+                className='button btn-block btn-danger clear-btn'
                 onClick={handleClear}
               >
                 clear results

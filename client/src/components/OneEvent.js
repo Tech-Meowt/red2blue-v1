@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { EventDetails } from '../components';
+import { EventDetails } from '.';
 import Modal from 'react-modal';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';
@@ -116,18 +116,18 @@ const OneEvent = ({
               {!detailClicked && (
                 <>
                   <button
-                    className='details-btn btn'
+                    className='details-btn button'
                     name={_id}
                     onClick={getIdDetails}
                   >
                     Details
                   </button>
-                  <button className='btn edit-btn' name={_id} onClick={getId}>
+                  <button className='button edit-btn' name={_id} onClick={getId}>
                     Edit
                   </button>
                   <button
                     type='button'
-                    className='btn delete-btn'
+                    className='button delete-btn'
                     name={_id}
                     onClick={openModal}
                   >

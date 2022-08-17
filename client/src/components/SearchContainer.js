@@ -59,7 +59,7 @@
 //             list={sortOptions}
 //           />
 //           <button
-//             className='btn btn-block btn-danger'
+//             className='button btn-block btn-danger'
 //             disabled={isLoading}
 //             onClick={handleSubmit}
 //           >

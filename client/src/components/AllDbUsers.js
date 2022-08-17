@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { DbUsersSearchBar, DbUser, DbUsersFilter } from '../components';
+import { DbUsersSearchBar, DbUser, DbUsersFilter } from '.';
 
 export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
@@ -41,7 +41,7 @@ export default function AllDbUsers() {
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
-      <button className='btn' onClick={toggleSearch}>
+      <button className='button' onClick={toggleSearch}>
         {!opened ? 'Search' : 'Close'}
       </button>
 

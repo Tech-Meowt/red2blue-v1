@@ -74,7 +74,7 @@ export default function ResetPassword() {
             value={confirmPassword}
             handleChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button type='submit' className='btn btn-block'>
+          <button type='submit' className='button btn-block'>
             Submit
           </button>
         </form>

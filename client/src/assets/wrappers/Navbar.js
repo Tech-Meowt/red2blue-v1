@@ -31,7 +31,7 @@ const Wrapper = styled.nav`
     position: relative;
   }
 
-  .btn {
+  .button {
     display: flex;
     align-items: center;
     gap: 0 0.5rem;
@@ -65,6 +65,7 @@ const Wrapper = styled.nav`
   }
 
   .logo-text {
+    font-family: var(--headingFont);
     display: none;
     margin: 0;
     margin-left: 4rem;

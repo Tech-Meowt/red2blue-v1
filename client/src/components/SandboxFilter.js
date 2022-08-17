@@ -120,7 +120,7 @@ const SandboxFilter = ({
               <option value='WY'>WY</option>
             </select>
 
-            <button className='btn btn-block btn-danger clear-btn' onClick={handleClear}>
+            <button className='button btn-block btn-danger clear-btn' onClick={handleClear}>
               clear results
             </button>
           </div>

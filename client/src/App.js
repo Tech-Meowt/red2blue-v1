@@ -1,6 +1,13 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Register, Landing, Error, ProtectedRoute, ForgotPassword, ResetPassword } from './pages';
+import {
+  Register,
+  Landing,
+  Error,
+  ProtectedRoute,
+  ForgotPassword,
+  ResetPassword,
+} from './pages';
 import {
   Profile,
   SharedLayout,
@@ -18,9 +25,10 @@ import {
   SharedLayoutHelp,
   SharedLayoutSandbox,
   Volunteers,
-  Events
+  Events,
+  Skills,
 } from './pages/dashboard';
-import { useAppContext } from './context/appContext'
+import { useAppContext } from './context/appContext';
 
 function App() {
   const { user, logoutUser } = useAppContext();
@@ -31,8 +39,8 @@ function App() {
       }, 7200000);
       return () => clearInterval(interval);
     }
-  }, [user]);
-  
+  }, [user, logoutUser]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -58,6 +66,8 @@ function App() {
           <Route index element={<Databases />} />
           <Route path='/databases/volunteers' element={<Volunteers />} />
           <Route path='/databases/events' element={<Events />} />
+          <Route path='/databases/user-accounts' element={<UserAccounts />} />
+          <Route path='/databases/volunteer-skills' element={<Skills />} />
         </Route>
         {/* Profile */}
         <Route
@@ -70,17 +80,7 @@ function App() {
         >
           <Route index element={<Profile />} />
         </Route>
-        {/* User Accounts Database */}
-        <Route
-          path='/user-accounts'
-          element={
-            <ProtectedRoute>
-              <SharedLayoutUserAccounts />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<UserAccounts />} />
-        </Route>
+
         {/* Help */}
         <Route
           path='/help'

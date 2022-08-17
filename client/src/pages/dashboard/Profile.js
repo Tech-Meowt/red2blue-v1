@@ -84,14 +84,14 @@ const Profile = () => {
             </div>
             <>
               <button
-                className='edit-btn btn btn-block'
+                className='edit-btn button btn-block'
                 type='submit'
                 disabled={isLoading}
               >
                 {isLoading ? 'Please Wait...' : 'save changes'}
               </button>
               <button
-                className='delete-btn btn'
+                className='delete-btn button'
                 type='submit'
                 disabled={isLoading}
                 onClick={handleCancel}

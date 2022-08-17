@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className='btn-container'>
           <button
             type='button'
-            className='btn'
+            className='button'
             onClick={() => setShowLogout(!showLogout)}
           >
             <FaUserCircle />
