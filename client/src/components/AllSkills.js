@@ -7,7 +7,7 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
-import { OnePoliticalSkill, OneLifeSkill, PoliticalTable } from '../components'
+import { OnePoliticalSkill, OneLifeSkill, TableView } from '../components'
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { ImPointRight } from 'react-icons/im';
 import { AiFillCaretDown } from 'react-icons/ai'
@@ -231,6 +231,249 @@ export default function AllSkills() {
     []
   );
 
+  const lifeSkillColumns = useMemo(
+    () => [
+      {
+        Header: 'First name',
+        accessor: 'firstName',
+      },
+      { Header: 'Last name', accessor: 'lastName' },
+      { Header: 'Email', accessor: 'email' },
+      {
+        Header: 'Actor/Actress',
+        accessor: 'actor',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Artist',
+        accessor: 'artist',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Board of Directors',
+        accessor: 'boardOfDirectors',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Data science',
+        accessor: 'dataScience',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Database management',
+        accessor: 'dbMgmt',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Editor',
+        accessor: 'editor',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Educator | Teacher/Professor',
+        accessor: 'professor',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Educator | Trainer',
+        accessor: 'trainer',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Fundraising',
+        accessor: 'fundraising',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Graphic design',
+        accessor: 'graphicDesign',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Human resources',
+        accessor: 'hr',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Information technology (IT)',
+        accessor: 'it',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Legal | Lawyer/Paralegal',
+        accessor: 'legal',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Linguist',
+        accessor: 'linguist',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Messaging/Communications',
+        accessor: 'msgComms',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Musician',
+        accessor: 'musician',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Newsletter creation + design',
+        accessor: 'newsletterCreateDesign',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Newsletter writing (content)',
+        accessor: 'newsletterWrite',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Nonprofit management',
+        accessor: 'nonprofMgmt',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Public relations',
+        accessor: 'pr',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Public speaker',
+        accessor: 'publicSpeak',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Recruitment',
+        accessor: 'recruitment',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Research',
+        accessor: 'research',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Second (or more) language',
+        accessor: 'otherLanguage',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Social media content creation',
+        accessor: 'socialMediaContentCreate',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Social media management',
+        accessor: 'socialMediaMgmt',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Speech writer',
+        accessor: 'speechWriter',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Strategic planning',
+        accessor: 'strategicPlanning',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Video editing/creation',
+        accessor: 'videoEditCreate',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Volunteer management',
+        accessor: 'volMgmt',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Website design',
+        accessor: 'webDesign',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Website management',
+        accessor: 'webMgmt',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Anything else',
+        accessor: 'anythingElse',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+    ],
+    []
+  );
+
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -332,7 +575,7 @@ export default function AllSkills() {
               </div>
             ) : (
               <div ref={printRef}>
-                <PoliticalTable columns={columns} data={allPoliticalSkills} />
+                <TableView columns={columns} data={allPoliticalSkills} />
               </div>
             )}
           </Wrapper>
@@ -363,7 +606,10 @@ export default function AllSkills() {
             >
               {clicked ? 'View As List' : 'View As Table'}
             </button>
+
             <h4>All Records</h4>
+
+            {!clicked ? (
             <div ref={printRef}>
               <div className='jobs'>
                 {allLifeSkills.map((lifeSkill) => {
@@ -377,6 +623,12 @@ export default function AllSkills() {
                 })}
               </div>
             </div>
+            ) : (
+                <div ref={printRef}>
+                  <TableView columns={lifeSkillColumns} data={allLifeSkills} />
+              </div>
+            )}
+            
           </Wrapper>
         </>
       )}

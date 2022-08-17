@@ -3,7 +3,7 @@ import { useTable, useSortBy, useFilters, usePagination } from 'react-table';
 import { Filter, DefaultColumnFilter } from './Filter'
 import { Table, Row, Col, Button, Input } from 'reactstrap'
 
-const PoliticalTable = ({ columns, data }) => {
+const TableView = ({ columns, data }) => {
   const defaultColumn = useMemo(
     () => ({
       minWidth: 30,
@@ -158,4 +158,4 @@ const PoliticalTable = ({ columns, data }) => {
   );
 }
 
-export default PoliticalTable
+export default TableView

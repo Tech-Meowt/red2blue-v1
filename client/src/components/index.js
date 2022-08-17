@@ -38,7 +38,7 @@ import VolunteerFilter from './VolunteerFilter';
 import AllSkills from './AllSkills';
 import OnePoliticalSkill from './OnePoliticalSkill';
 import OneLifeSkill from './OneLifeSkill';
-import PoliticalTable from './PoliticalTable';
+import TableView from './TableView';
 
 export {
   Logo,
@@ -78,7 +78,7 @@ export {
   AllSkills,
   OnePoliticalSkill,
   OneLifeSkill,
-  PoliticalTable,
+  TableView,
   ScrollButtonUp,
   ScrollButtonDown,
 };
