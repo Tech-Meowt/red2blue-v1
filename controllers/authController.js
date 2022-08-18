@@ -111,11 +111,17 @@ const forgotPassword = async (req, res) => {
 
     // html message
     const message = `
-    <img style='width:250px' src="/red2blue-v1/client/src/assets/images/R2B.jpg" alt="" />
-    <h1>Password Reset Request</h1>
+    <div style='text-align: center;'>
+      <a href="https://www.red2blue.org" style='cursor: pointer;'><img src="https://i.imgur.com/F9jwnec.png" alt='redblue header image' width='250' /></a>
+    </div>
+    <h3>Reset your password</h3>
     <p>Click <a href=${resetUrl}>here</a> to create a new password.</p>
+    <p>You received this email because you requested to reset your password. If this wasn't you—ignore this email.</p>
     <br />
-    <p>If you did not request to reset your password, you can ignore this email.</p>
+    <p>--</p>
+    <p>Cheers,</p>
+    <p>Red2Blue</p>
+    <a href="https://www.red2blue.org" style='cursor: pointer;'><img src="https://i.imgur.com/UqGIhfO.png" alt='redblue small favicon' /></a>
     `;
 
     try {
@@ -123,13 +129,6 @@ const forgotPassword = async (req, res) => {
         to: user.email,
         subject: 'Reset Your Password',
         text: message,
-        attachments: [
-          {
-            filename: 'R2B.jpg',
-            path:  '/client/src/assets/images/R2B.jpg',
-            cid: 'r2bheader',
-          },
-        ],
       });
 
       res.status(200).json({ success: true, data: 'Email sent' });
