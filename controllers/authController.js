@@ -8,8 +8,6 @@ import {
 import prisma from '../lib/prisma.js';
 import crypto from 'crypto';
 import sendEmail from '../lib/sendEmail.js'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 
 // user managed data
 
@@ -106,8 +104,6 @@ const forgotPassword = async (req, res) => {
 
     // create reset url to add to email
     const resetUrl = `https://r2bdb.herokuapp.com/reset-password/${resetToken}`;
-
-    const __dirname = dirname(fileURLToPath(import.meta.url));
 
     // html message
     const message = `
