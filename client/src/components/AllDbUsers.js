@@ -9,57 +9,12 @@ import { CSVLink } from 'react-csv';
 import { SelectColumnFilter } from './Filter';
 import { HashLink as Link } from 'react-router-hash-link';
 
-export default function AllDbUsers({
-  firstName,
-  lastName,
-  email,
-  usersDb,
-  volunteersDb,
-  isActive,
-  approved,
-  role,
-  sandboxDb,
-  skillsDb,
-  _id
-}) {
-  //
-  const initialState = {
-    firstName,
-    lastName,
-    email,
-    usersDb,
-    volunteersDb,
-    isActive,
-    approved,
-    role,
-    sandboxDb,
-    skillsDb,
-  };
+export default function AllDbUsers() {
   const [dbUsers, setDbUsers] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-  const [noResults, setNoResults] = useState(true)
   const printRef = useRef();
-
-  //
-  const [alertText, setAlertText] = useState('');
-  const [alertType, setAlertType] = useState('');
-  const [showAlert, setShowAlert] = useState(false);
-  const [values, setValues] = useState(initialState);
-  const [newValues, setNewValues] = useState({
-    firstName,
-    lastName,
-    email,
-    approved,
-    usersDb,
-    volunteersDb,
-    isActive,
-    role,
-    skillsDb,
-    sandboxDb,
-  });
 
   const usersDbHeaders = [
     { label: 'First name', key: 'firstName' },
@@ -124,6 +79,24 @@ export default function AllDbUsers({
             <Link to={`/databases/user-accounts/#${d._id}`}>
               <button className='button edit-btn' onClick={getId} name={d._id}>
                 Edit
+              </button>
+            </Link>
+          );
+        },
+      },
+      {
+        Header: 'Delete',
+        disableSortBy: true,
+        disableFilters: true,
+        accessor: (d) => {
+          return (
+            <Link to={`/databases/user-accounts/#${d._id}`}>
+              <button
+                className='button delete-btn'
+                onClick={getId}
+                name={d._id}
+              >
+                Delete
               </button>
             </Link>
           );
@@ -209,18 +182,13 @@ export default function AllDbUsers({
     setClicked(!clicked);
   };
 
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
-        setDbUsers(res.data)
+        setDbUsers(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -235,10 +203,6 @@ export default function AllDbUsers({
         console.log(error);
       });
   }, []);
-
-
-    
-
 
   return (
     <>
@@ -265,15 +229,8 @@ export default function AllDbUsers({
 
       <Wrapper>
         <h4>All Records</h4>
-        {showEditForm ? (
-          <>
-            <br />
-          </>
-        ) : (
-          <TableView data={dbUsers} columns={columns} />
-        )}
 
-        {!clicked ? (
+        {!clicked && !showEditForm && (
           <div ref={printRef}>
             <div className='jobs'>
               {dbUsers.map((dbUser) => {
@@ -287,10 +244,33 @@ export default function AllDbUsers({
               })}
             </div>
           </div>
-        ) : (
+        )}
+
+        {clicked && !showEditForm && (
           <div ref={printRef}>
             <TableView columns={columns} data={dbUsers} />
           </div>
+        )}
+
+        {showEditForm && (
+          <>
+            <div ref={printRef}>
+              <TableView columns={columns} data={dbUsers} />
+            </div>
+            <div ref={printRef}>
+              <div className='jobs'>
+                {dbUsers.map((dbUser) => {
+                  return (
+                    <>
+                      <div className='border-state'>
+                        <DbUser key={dbUser._id} {...dbUser} />
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+          </>
         )}
       </Wrapper>
     </>

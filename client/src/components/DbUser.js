@@ -60,7 +60,7 @@ const DbUser = ({
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(!clicked)
+    setClicked(!clicked);
   };
 
   const handleChange = (e) => {
@@ -83,17 +83,17 @@ const DbUser = ({
         console.log(res.data);
       });
     setShowAlert(true);
-      setAlertText('Update successful!');
-      setAlertType('success');
-      closeModal(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000).catch((error) => {
-        console.log(error);
-         setShowAlert(true);
-         setAlertText('There was an error. Please try again...');
-         setAlertType('danger');
-      });
+    setAlertText('Update successful!');
+    setAlertType('success');
+    closeModal(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000).catch((error) => {
+      console.log(error);
+      setShowAlert(true);
+      setAlertText('There was an error. Please try again...');
+      setAlertType('danger');
+    });
   };
 
   const deleteHandler = (e) => {
@@ -136,14 +136,14 @@ const DbUser = ({
             <div>
               <FiDatabase className='icon' />
               Sandbox database:{' '}
-              <span className='status'>{sandboxDb ? 'access' : 'no access'}</span>
+              <span className='status'>
+                {sandboxDb ? 'access' : 'no access'}
+              </span>
             </div>
             <div>
               <FiDatabase className='icon' />
               User Accounts database:{' '}
-              <span className='status'>
-                {usersDb ? 'access' : 'no access'}
-              </span>
+              <span className='status'>{usersDb ? 'access' : 'no access'}</span>
             </div>
             <div>
               <FiDatabase className='icon' />

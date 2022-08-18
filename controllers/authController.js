@@ -36,10 +36,13 @@ const register = async (req, res) => {
     <h4>Instructions:</h4>
     <ol>
     <li>
-    Log in to your account and navigate to the <strong>User Accounts Database</strong>. All unapproved accounts will appear at the top of the page underneath the red banner.
+    Log in to your account and navigate to the <strong>User Accounts Database</strong>.
     </li>
     <li>
-    <strong>Edit</strong> each unapproved account by <strong>clicking on 'View As Table'. Scroll through the table to the 'Approval Status' column and filter by 'waiting on approval'.</strong>.
+    <strong>Edit</strong> each unapproved account by <strong>clicking on 'View As Table'. Scroll through the table to the 'Approval Status' column and filter by 'waiting on approval'. Finally, click on 'Edit'.</strong>.
+    <ul>
+    <li><strong>*Note that the screen will jump to the 'list view'</strong> of the record you want to edit.</li>
+    </ul>
     </li>
     <li>
     <strong>Grant access</strong> to the appropriate databases. <strong>*Note that all users have access to the Sandbox Database.</strong>
@@ -90,6 +93,16 @@ const register = async (req, res) => {
       firstName,
       lastName,
       email,
+      approved,
+      usersDb,
+      volunteersDb,
+      sandboxDb,
+      skillsDb,
+      createdAt,
+      updatedAt,
+      avatarUrl,
+      isActive,
+      role,
       volunteer: {
         connectOrCreate: [
           {
@@ -107,6 +120,9 @@ const register = async (req, res) => {
     },
     include: {
       volunteer: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   });
 
@@ -239,7 +255,7 @@ const sendToken = (user, statusCode, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { email, firstName, lastName, approved, usersDb, volunteersDb, role } =
+  const { email, firstName, lastName, approved, usersDb, volunteersDb, sandboxDb, skillsDb, isActive, role } =
     req.body;
   if (!email || !firstName || !lastName ) {
     throw new BadRequestError('Please provide all values');
@@ -252,6 +268,9 @@ const updateUser = async (req, res) => {
   user.approved = approved;
   user.usersDb = usersDb;
   user.volunteersDb = volunteersDb;
+  user.sandboxDb = sandboxDb;
+  user.skillsDb = skillsDb;
+  user.isActive = isActive;
   user.role = role;
 
   await user.save();
@@ -271,6 +290,8 @@ const updateUser = async (req, res) => {
       approved,
       usersDb,
       volunteersDb,
+      sandboxDb,
+      skillsDb,
     } = req.body
 
     const updatePrisma = await prisma.user.update({
@@ -285,6 +306,8 @@ const updateUser = async (req, res) => {
         approved,
         usersDb,
         volunteersDb,
+        sandboxDb,
+        skillsDb,
       },
     });
     res.status(200).json({ updatePrisma })
@@ -317,11 +340,11 @@ const updateDbUser = async (req, res) => {
       approved,
       usersDb,
       volunteersDb,
-      createdAt,
+      sandboxDb,
+      skillsDb,
       updatedAt,
       avatarUrl,
       isActive,
-      lastLoggedIn,
       role,
     } = req.body
   
@@ -336,13 +359,12 @@ const updateDbUser = async (req, res) => {
       approved,
       usersDb,
       volunteersDb,
-      createdAt,
+      sandboxDb,
+      skillsDb,
       updatedAt,
       avatarUrl,
       isActive,
-      lastLoggedIn,
       role,
-      updatedAt,
       volunteer: {
         update: {
           where: {
@@ -351,9 +373,9 @@ const updateDbUser = async (req, res) => {
           data: {
             firstName: firstName,
             lastName: lastName,
-            email: email
-          }
-        }
+            email: email,
+          },
+        },
       },
     },
     include: {
