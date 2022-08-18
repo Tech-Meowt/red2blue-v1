@@ -19,7 +19,7 @@ const DbUser = ({
   isActive,
   role,
   sandboxDb,
-  skillsDb
+  skillsDb,
 }) => {
   const initialState = {
     firstName,
@@ -60,7 +60,7 @@ const DbUser = ({
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(!clicked);
+    setClicked(!clicked)
   };
 
   const handleChange = (e) => {
@@ -124,7 +124,7 @@ const DbUser = ({
         )}
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
-          <div className='info'>
+          <div className='info' id={_id}>
             <h5>
               {firstName} {lastName}
             </h5>

@@ -53,8 +53,8 @@ const TableView = ({ columns, data }) => {
 
   return (
     <>
-      <div className='overflow-scroll overflow-visible container-sm'>
-        <Table bordered hover striped size='sm' {...getTableProps()}>
+      <div className='overflow-scroll overflow-visible container-xxl'>
+        <Table bordered hover striped size={'sm'} {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>

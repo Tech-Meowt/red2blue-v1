@@ -8,6 +8,8 @@ import {
 import prisma from '../lib/prisma.js';
 import crypto from 'crypto';
 import sendEmail from '../lib/sendEmail.js'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 // user managed data
 
@@ -105,10 +107,13 @@ const forgotPassword = async (req, res) => {
     // create reset url to add to email
     const resetUrl = `https://r2bdb.herokuapp.com/reset-password/${resetToken}`;
 
+    const __dirname = dirname(fileURLToPath(import.meta.url));
+
     // html message
     const message = `
-    <h1>You have requested to reset your password.</h1>
-    <p>Click <a href=${resetUrl}>here</a> to reset your password.</p>
+    <img style='width:250px' src="/red2blue-v1/client/src/assets/images/R2B.jpg" alt="" />
+    <h1>Password Reset Request</h1>
+    <p>Click <a href=${resetUrl}>here</a> to create a new password.</p>
     <br />
     <p>If you did not request to reset your password, you can ignore this email.</p>
     `;
@@ -118,6 +123,13 @@ const forgotPassword = async (req, res) => {
         to: user.email,
         subject: 'Reset Your Password',
         text: message,
+        attachments: [
+          {
+            filename: 'R2B.jpg',
+            path:  '/client/src/assets/images/R2B.jpg',
+            cid: 'r2bheader',
+          },
+        ],
       });
 
       res.status(200).json({ success: true, data: 'Email sent' });
