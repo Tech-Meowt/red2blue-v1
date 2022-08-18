@@ -25,9 +25,65 @@ const register = async (req, res) => {
   }
 
   const user = await User.create({ firstName, lastName, email, password });
-  
+
+  // html message
+  const message = `
+    <div style='text-align: center;'>
+      <a href="https://www.red2blue.org" style='cursor: pointer;'><img src="https://i.imgur.com/F9jwnec.png" alt='redblue header image' width='250' /></a>
+    </div>
+    <h3>Hello Red2Blue Admin,</h3>
+    <p>You've received a new database access request from ${user.firstName} ${user.lastName}.</p>
+    <h4>Instructions:</h4>
+    <ol>
+    <li>
+    Log in to your account and navigate to the <strong>User Accounts Database</strong>. All unapproved accounts will appear at the top of the page underneath the red banner.
+    </li>
+    <li>
+    <strong>Edit</strong> each unapproved account by <strong>clicking on 'View As Table'. Scroll through the table to the 'Approval Status' column and filter by 'waiting on approval'.</strong>.
+    </li>
+    <li>
+    <strong>Grant access</strong> to the appropriate databases. <strong>*Note that all users have access to the Sandbox Database.</strong>
+    </li>
+    <li>
+    Assign the user a <strong>role</strong>.
+    <ul>
+    <li><strong>Admins</strong> can create, view, edit, and delete records.</li>
+    <li><strong>Editors</strong> can only view and edit records.</li>
+    <li><strong>Viewers</strong> can only view records.</li>
+    </ul>
+    </li>
+    <li>Log in to the <strong>Red2Blue Admin Gmail account.</strong></li>
+    <li>Reply to each new account email with the <strong>'Red2Blue Database Access' template</strong> by following the instructions below:
+    <ol>
+    <li>
+    Click on <strong>'Reply'</strong>.
+    </li>
+    <li>Opposite of the 'Send' button at the bottom of the screen, click on the <strong>3 vertical dots</strong>.</li>
+    <li>Click on <strong>'Templates'</strong> and then click on the <strong>'Red2Blue Database Access'</strong> template.</li>
+    </ol>
+    <li><strong>🙌 Your work here is done! The user's email address will be pre-populated for you. All you need to do is click on 'Send'.</strong></li>
+    </ol>
+    <p>--</p>
+    <p>Cheers,</p>
+    <p>The Red2Blue Database Management System</p>
+    <a href="https://www.red2blue.org" style='cursor: pointer;'><img src="https://i.imgur.com/UqGIhfO.png" alt='redblue small favicon' /></a>
+    `;
+
+  try {
+    await sendEmail({
+      to: process.env.FROM_EMAIL,
+      subject: `New Account Request: ${user.firstName} ${user.lastName}`,
+      text: message,
+      replyTo: user.email,
+    });
+
+    // res.status(200).json({ success: true, data: 'Email sent' });
+  } catch (err) {
+    console.log(err);
+  }
+
   // prisma
-  const id = user._id.toString()
+  const id = user._id.toString();
   const userPrisma = await prisma.user.create({
     data: {
       id,
@@ -44,14 +100,14 @@ const register = async (req, res) => {
             },
             where: {
               email: email,
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
     },
     include: {
       volunteer: true,
-    }
+    },
   });
 
   const token = user.createJWT();
@@ -59,7 +115,7 @@ const register = async (req, res) => {
     user: {
       email: user.email,
       firstName: user.firstName,
-      lastName: user.lastName
+      lastName: user.lastName,
     },
     token,
   });

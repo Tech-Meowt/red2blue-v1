@@ -2,15 +2,12 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { TableView, DbUser } from '../components';
+import { TableView, DbUser, BannerWarning } from '../components';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { CSVLink } from 'react-csv';
 import { SelectColumnFilter } from './Filter';
 import { HashLink as Link } from 'react-router-hash-link';
-import { useNavigate } from 'react-router-dom'
-
-
 
 export default function AllDbUsers({
   firstName,
@@ -42,8 +39,9 @@ export default function AllDbUsers({
   const [usersList, setUsersList] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [noResults, setNoResults] = useState(true)
   const printRef = useRef();
-  const navigate = useNavigate();
 
   //
   const [alertText, setAlertText] = useState('');
@@ -222,7 +220,7 @@ export default function AllDbUsers({
     axios
       .get('http://localhost:8000/api/v1/auth/allUsers')
       .then((res) => {
-        setDbUsers(res.data);
+        setDbUsers(res.data)
       })
       .catch((error) => {
         console.log(error);
@@ -237,6 +235,10 @@ export default function AllDbUsers({
         console.log(error);
       });
   }, []);
+
+
+    
+
 
   return (
     <>
