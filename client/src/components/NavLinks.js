@@ -29,19 +29,6 @@ const NavLinks = ({ toggleSidebar }) => {
           </NavLink>
         );
       })}
-      {role === 'admin' && (
-        <NavLink
-          to='/databases/user-accounts'
-          className={({ isActive }) =>
-            isActive ? 'nav-link active' : 'nav-link'
-          }
-        >
-          <span className='icon'>
-            <ImProfile />
-          </span>
-          User Accounts
-        </NavLink>
-      )}
       <NavLink
         to='/help'
         className={({ isActive }) =>

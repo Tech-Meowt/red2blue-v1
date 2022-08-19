@@ -1,16 +1,12 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
-import FilterWrapper from '../assets/wrappers/FilterContainer';
 import Wrapper from '../assets/wrappers/AllDbUsers.js';
-import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
 import { OnePoliticalSkill, OneLifeSkill, TableView } from '../components'
-import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { ImPointRight } from 'react-icons/im';
-import { AiFillCaretDown } from 'react-icons/ai'
 import { SelectColumnFilter } from './Filter'
 
 export default function AllSkills() {
@@ -53,7 +49,7 @@ export default function AllSkills() {
   const politicalReport = {
     data: politicalData,
     headers: politicalHeaders,
-    filename: 'report.csv'
+    filename: 'political_skills_report.csv'
   }
 
   const lifeHeaders = [
@@ -100,7 +96,7 @@ export default function AllSkills() {
   const lifeReport = {
     data: lifeData,
     headers: lifeHeaders,
-    filename: 'report.csv',
+    filename: 'life_skills_report.csv',
   };
 
   const handleDownloadPdf = async () => {
@@ -125,15 +121,12 @@ export default function AllSkills() {
       pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
     }
-    pdf.save('print.pdf');
+    pdf.save('skills_report.pdf');
   };
 
   const columns = useMemo(
     () => [
-      {
-        Header: 'First name',
-        accessor: 'firstName',
-      },
+      { Header: 'First name', accessor: 'firstName'},
       { Header: 'Last name', accessor: 'lastName' },
       { Header: 'Email', accessor: 'email' },
       {
