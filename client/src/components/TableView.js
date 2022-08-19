@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from 'react';
 import { useTable, useSortBy, useFilters, usePagination } from 'react-table';
-import { Filter, DefaultColumnFilter } from './Filter'
-import { Table, Row, Col, Button, Input } from 'reactstrap'
+import { Filter, DefaultColumnFilter } from './Filter';
+import { Table, Row, Col, Button, Input } from 'reactstrap';
 
 const TableView = ({ columns, data }) => {
   const defaultColumn = useMemo(
@@ -32,29 +32,29 @@ const TableView = ({ columns, data }) => {
       columns,
       data,
       defaultColumn: { Filter: DefaultColumnFilter },
-      initialState: { pageIndex: 0, pageSize: 10 }
+      initialState: { pageIndex: 0, pageSize: 10 },
     },
     useFilters,
     useSortBy,
     usePagination
   );
-  
+
   const generateSortingIndicator = (column) => {
     return column.isSorted ? (column.isSortedDesc ? '  🔽' : '  🔼') : '';
   };
 
   const onChangeInSelect = (e) => {
-    setPageSize(Number(e.target.value))
-  }
+    setPageSize(Number(e.target.value));
+  };
 
   const onChangeInInput = (e) => {
-    const page = e.target.value ? Number(e.target.value) - 1 : gotoPage(page)
-  }
+    const page = e.target.value ? Number(e.target.value) - 1 : gotoPage(page);
+  };
 
   return (
     <>
-      <div className='overflow-scroll overflow-visible container-sm'>
-        <Table bordered hover striped size='sm' {...getTableProps()}>
+      <div className='overflow-scroll overflow-visible container-xxl'>
+        <Table bordered hover striped size={'sm'} {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -156,6 +156,6 @@ const TableView = ({ columns, data }) => {
       </div>
     </>
   );
-}
+};
 
-export default TableView
+export default TableView;

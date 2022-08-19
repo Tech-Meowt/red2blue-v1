@@ -3,7 +3,7 @@ import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import { useAppContext } from '../context/appContext';
 import { useNavigate, Link } from 'react-router-dom';
-import emailjs from '@emailjs/browser';
+import axios from 'axios';
 
 const initialState = {
   firstName: '',
@@ -11,38 +11,15 @@ const initialState = {
   email: '',
   password: '',
   isMember: true,
+  lastLoggedIn: Date.now(),
 };
 
 const Register = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
+  const [lastLoggedIn, setLastLoggedIn] = useState('')
   const { user, isLoading, showAlert, displayAlert, setupUser } =
     useAppContext();
-
-  const sendNewAccountEmail = () => {
-    const templateParams = {
-      userFirstName: values.firstName,
-      userLastName: values.lastName,
-      userEmail: values.email,
-    };
-    emailjs
-      .send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID,
-        process.env.REACT_APP_EMAILJS_NEW_ACCOUNT_TEMPLATE_ID,
-        templateParams,
-        process.env.REACT_APP_EMAILJS_API
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          console.log(templateParams);
-        },
-        (error) => {
-          console.log(error.text);
-          console.log(templateParams);
-        }
-      );
-  };
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -53,25 +30,24 @@ const Register = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, isMember } = values;
+    const { firstName, lastName, email, password, isMember, lastLoggedIn } = values;
     if (!email || !password) {
       displayAlert();
       return;
     }
-    const currentUser = { firstName, lastName, email, password };
+    const currentUser = { firstName, lastName, email, password, lastLoggedIn };
     if (isMember) {
       setupUser({
         currentUser,
         endPoint: 'login',
         alertText: 'Login successful! Redirecting...',
-      });
+      })
     } else {
       setupUser({
         currentUser,
         endPoint: 'register',
         alertText: 'User created! Redirecting...',
       });
-      sendNewAccountEmail();
     }
   };
 
@@ -140,7 +116,7 @@ const Register = () => {
           </button>
         </p>
         <Link to={'/forgot-password'}>
-          <p className='no-margin r2b-red'>Forgot password?</p>
+          <p className='no-margin r2b-red'>Forgot your password?</p>
         </Link>
       </form>
     </Wrapper>

@@ -43,10 +43,6 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-    },
     avatarUrl: {
       type: String,
       default: '',
@@ -58,6 +54,14 @@ const UserSchema = new mongoose.Schema(
     volunteersDb: {
       type: Boolean,
       default: false
+    },
+    sandboxDb: {
+      type: Boolean,
+      default: true,
+    },
+    skillsDb: {
+      type: Boolean,
+      default: false,
     },
     isActive: {
       type: Boolean,
