@@ -5,7 +5,6 @@ import {
   UnAuthenticatedError,
   NotFoundError,
 } from '../errors/index.js';
-import prisma from '../lib/prisma.js';
 import crypto from 'crypto';
 import sendEmail from '../lib/sendEmail.js'
 
@@ -84,47 +83,6 @@ const register = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-
-  // prisma
-  const id = user._id.toString();
-  const userPrisma = await prisma.user.create({
-    data: {
-      id,
-      firstName,
-      lastName,
-      email,
-      approved,
-      usersDb,
-      volunteersDb,
-      sandboxDb,
-      skillsDb,
-      createdAt,
-      updatedAt,
-      avatarUrl,
-      isActive,
-      role,
-      volunteer: {
-        connectOrCreate: [
-          {
-            create: {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-            },
-            where: {
-              email: email,
-            },
-          },
-        ],
-      },
-    },
-    include: {
-      volunteer: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
 
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({
@@ -278,40 +236,6 @@ const updateUser = async (req, res) => {
   const token = user.createJWT();
 
   res.status(StatusCodes.OK).json({ user, token });
-
-  const updateUserPrisma = async (req, res) => {
-    const { id } = req.params;
-
-    const {
-      firstName,
-      lastName,
-      email,
-      role,
-      approved,
-      usersDb,
-      volunteersDb,
-      sandboxDb,
-      skillsDb,
-    } = req.body
-
-    const updatePrisma = await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        firstName,
-        lastName,
-        email,
-        role,
-        approved,
-        usersDb,
-        volunteersDb,
-        sandboxDb,
-        skillsDb,
-      },
-    });
-    res.status(200).json({ updatePrisma })
-  }
 };
 
 // admin managed data
@@ -331,58 +255,6 @@ const updateDbUser = async (req, res) => {
       console.log('failed')
       // res.status(422).send('User update failed.');
     });
-  
-    const { id } = req.params;
-    const {
-      firstName,
-      lastName,
-      email,
-      approved,
-      usersDb,
-      volunteersDb,
-      sandboxDb,
-      skillsDb,
-      updatedAt,
-      avatarUrl,
-      isActive,
-      role,
-    } = req.body
-  
-  const adminUpdateUser = await prisma.user.update({
-    where: {
-      id,
-    },
-    data: {
-      firstName,
-      lastName,
-      email,
-      approved,
-      usersDb,
-      volunteersDb,
-      sandboxDb,
-      skillsDb,
-      updatedAt,
-      avatarUrl,
-      isActive,
-      role,
-      volunteer: {
-        update: {
-          where: {
-            email: email,
-          },
-          data: {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-          },
-        },
-      },
-    },
-    include: {
-      volunteer: true,
-    },
-  });
-  
 };
 
 const deleteUser = async (req, res) => {
@@ -402,12 +274,6 @@ const deleteUser = async (req, res) => {
         });
     }
   });
-  const { id } = req.params
-  await prisma.user.delete({
-    where: {
-      id,
-    }
-  })
 };
 
 export {

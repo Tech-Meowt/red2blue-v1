@@ -176,9 +176,7 @@ const OneSandbox = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to{' '}
-                      <span className='r2b-red'>permanently </span>
-                      delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
