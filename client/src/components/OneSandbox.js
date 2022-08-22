@@ -110,7 +110,7 @@ const OneSandbox = ({
         )}
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
-          <div className='info'>
+          <div className='info' id={id}>
             <h5>
               {firstName} {lastName}
             </h5>
@@ -129,7 +129,7 @@ const OneSandbox = ({
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />
-              Interests: <span className='status'>{interests}</span>
+              Interests: <span className='status'>{interests ? `${interests}` : 'None'}</span>
             </div>
           </div>
           <footer>
