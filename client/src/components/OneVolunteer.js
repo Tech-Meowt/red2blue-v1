@@ -20,7 +20,6 @@ const OneVolunteer = ({
   state,
   zip,
   phone,
-  userId,
   events,
 }) => {
   const initialState = {
@@ -32,7 +31,6 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
-    userId,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -52,7 +50,6 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
-    userId,
     events,
   });
 
@@ -63,7 +60,7 @@ const OneVolunteer = ({
     setBasicClicked(true);
   };
 
-  console.log(values)
+  // console.log(values)
 
   const basicHide = (e) => {
     setBasicClicked(false);
@@ -177,15 +174,7 @@ const OneVolunteer = ({
                 <span className='status'> Phone number not provided</span>
               )}
             </div>
-            <div>
-              <FiDatabase className='icon' />
-              Database User:{' '}
-              {userId !== null ? (
-                <span className='status'> Yes</span>
-              ) : (
-                <span className='status'> No</span>
-              )}
-            </div>
+          
             <div>
               <MdOutlineEventAvailable className='icon' />
               Events Attended:{' '}
@@ -240,9 +229,7 @@ const OneVolunteer = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to{' '}
-                      <span className='r2b-red'>permanently </span>
-                      delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
@@ -371,12 +358,7 @@ const OneVolunteer = ({
                         }}
                       >
                         <h3 className='modal-header'>
-                          🚨 Heads up! If you{' '}
-                          <span className='r2b-red'>
-                            did not add a new event
-                          </span>
-                          , make sure to enter{' '}
-                          <span className='r2b-red'>none</span> in the Add New
+                          🚨 Heads up! If you did not add a new event, make sure to enter none in the Add New
                           Event field.
                         </h3>
                         <div className='confirm-btns'>

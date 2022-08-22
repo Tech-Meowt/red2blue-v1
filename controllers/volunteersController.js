@@ -13,7 +13,6 @@ const create = async (req, res) => {
     zip,
     events,
     updatedAt,
-    userId,
     lifeSkillId,
     skillId,
   } = req.body;
@@ -27,7 +26,6 @@ const create = async (req, res) => {
       city,
       state,
       zip,
-      userId,
       lifeSkillId,
       skillId,
       events: {
@@ -87,7 +85,6 @@ const updateVolunteer = async (req, res) => {
     zip,
     events,
     updatedAt,
-    userId,
     lifeSkillId,
     skillId,
   } = req.body;
@@ -104,7 +101,6 @@ const updateVolunteer = async (req, res) => {
       city,
       state,
       zip,
-      userId,
       lifeSkillId,
       skillId,
       events: {

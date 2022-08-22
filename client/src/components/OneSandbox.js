@@ -110,7 +110,7 @@ const OneSandbox = ({
         )}
         <header>
           <div className='main-icon'>{firstName.charAt(0)}</div>
-          <div className='info'>
+          <div className='info' id={id}>
             <h5>
               {firstName} {lastName}
             </h5>
@@ -129,7 +129,7 @@ const OneSandbox = ({
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />
-              Interests: <span className='status'>{interests}</span>
+              Interests: <span className='status'>{interests ? `${interests}` : 'None'}</span>
             </div>
           </div>
           <footer>
@@ -176,9 +176,7 @@ const OneSandbox = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to{' '}
-                      <span className='r2b-red'>permanently </span>
-                      delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button

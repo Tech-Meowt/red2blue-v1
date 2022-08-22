@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { TableView, DbUser, BannerWarning } from '../components';
+import { TableView, DbUser } from '../components';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { CSVLink } from 'react-csv';

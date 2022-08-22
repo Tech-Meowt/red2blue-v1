@@ -20,29 +20,8 @@ model Event {
   volunteers Volunteer[]
 }
 
-model User {
-  id           String      @id
-  email        String      @unique
-  firstName    String
-  lastName     String
-  approved     Boolean     @default(false)
-  usersDb      Boolean     @default(false)
-  volunteersDb Boolean     @default(false)
-  sandboxDb    Boolean     @default(true)
-  skillsDb      Boolean     @default(false)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  avatarUrl    String?     @default("")
-  isActive     Boolean     @default(true)
-  role         String      @default("viewer")
-  volunteer    Volunteer[]
-  volunteerId  String?
-}
-
 model Volunteer {
   id              String           @id @default(uuid())
-  userId          String?
-  dbUser          User?            @relation(fields: [userId], references: [id])
   events          Event[]
   politicalSkills PoliticalSkills? @relation(fields: [skillId], references: [id])
   skillId         String?
