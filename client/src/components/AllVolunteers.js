@@ -179,7 +179,7 @@ export default function AllVolunteers() {
       <h3 className='r2b-red'>Database: Volunteers</h3>
       <VolunteersWrapper>
         <div className='actions'>
-          <Link to={''}>
+          <Link to={'/databases/volunteers/add'}>
             <button className='button edit-btn actions space'>
               Add New Record
             </button>

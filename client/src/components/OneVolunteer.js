@@ -1,14 +1,14 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { FormRow, StateSelect } from '.';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
 import { FiDatabase } from 'react-icons/fi';
-import { MdOutlineEventAvailable } from 'react-icons/md'
-import { IoPersonOutline } from 'react-icons/io5'
-import { BsCheck2All } from 'react-icons/bs'
+import { MdOutlineEventAvailable } from 'react-icons/md';
+import { IoPersonOutline } from 'react-icons/io5';
+import { BsCheck2All } from 'react-icons/bs';
 
 const OneVolunteer = ({
   id,
@@ -31,7 +31,7 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
-    events: 'none'
+    events: 'none',
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -60,8 +60,6 @@ const OneVolunteer = ({
     setClicked(true);
     setDetailsClicked(true);
   };
-
-  // console.log(values)
 
   const detailsHide = (e) => {
     setDetailsClicked(false);
@@ -175,7 +173,7 @@ const OneVolunteer = ({
                 <span className='status'> Phone number not provided</span>
               )}
             </div>
-          
+
             <div>
               <MdOutlineEventAvailable className='icon' />
               Events Attended:{' '}
@@ -230,7 +228,8 @@ const OneVolunteer = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to permanently delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete
+                      this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
@@ -290,6 +289,7 @@ const OneVolunteer = ({
                       </div>
                     </div>
                   </div>
+                  
                   <footer>
                     <div className='actions'>
                       <button
@@ -308,8 +308,6 @@ const OneVolunteer = ({
                         Hide
                       </button>
                     </div>
-
-                  
                   </footer>
 
                   {showDetailsEditForm && (
@@ -319,11 +317,14 @@ const OneVolunteer = ({
                         Update <span className='emphasis'>only</span> the fields
                         that you wish to change.{' '}
                         <span className='r2b-red'>**PLEASE NOTE**</span> If you
-                        are <span className='emphasis'>adding</span> a new
-                        event attended by the volunteer, you{' '}
-                        <span className='emphasis'>must create the event first</span> or the
-                        record <span className='emphasis'>will not update</span>{' '}
-                        in the database.
+                        are <span className='emphasis'>adding</span> a new event
+                        attended by the volunteer, you{' '}
+                        <span className='emphasis'>
+                          must create the event first
+                        </span>{' '}
+                        or the record{' '}
+                        <span className='emphasis'>will not update</span> in the
+                        database.
                       </p>
                       {showAlert && (
                         <div className={`alert alert-${alertType}`}>
@@ -359,7 +360,8 @@ const OneVolunteer = ({
                         }}
                       >
                         <h3 className='modal-header'>
-                          🚨 Heads up! If you added an event that the volunteer attended, make sure that the event was created first.
+                          🚨 Heads up! If you added an event that the volunteer
+                          attended, make sure that the event was created first!
                         </h3>
                         <div className='confirm-btns'>
                           <button
@@ -481,4 +483,4 @@ const OneVolunteer = ({
   );
 };
 
-export default OneVolunteer
+export default OneVolunteer;
