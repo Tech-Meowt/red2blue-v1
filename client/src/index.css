@@ -153,6 +153,15 @@ select:invalid {
   color: #757575;
 }
 
+.sort-icon {
+  font-size: 1.25rem;
+}
+
+.flex-override: {
+  display: flex;
+  flex-direction: row !important;
+}
+
 .dropdown-filter {
   display: inline !important;
 }
@@ -168,7 +177,7 @@ select:invalid {
   text-align: center;
 }
 
-.dog-img, .sandbox-img {
+.dog-img, .sandbox-img, .napoleon-dynamite-img {
   border: 2px solid var(--r2b-blue);
   border-radius: 10px 10px 10px 10px;
   box-shadow: var(--shadow-1);
@@ -311,7 +320,6 @@ select:invalid {
   font-family: var(--headingFont);
   text-align: center;
   height: 50px;
-  vertical-align: middle !important;
 }
 
 .clear {

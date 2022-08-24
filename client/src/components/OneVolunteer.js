@@ -31,13 +31,14 @@ const OneVolunteer = ({
     state,
     zip,
     phone,
+    events: 'none'
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [basicClicked, setBasicClicked] = useState(false);
-  const [showBasicEditForm, setShowBasicEditForm] = useState(false);
+  const [detailsClicked, setDetailsClicked] = useState(false);
+  const [showDetailsEditForm, setShowDetailsEditForm] = useState(false);
   const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   // eslint-disable-next-line
@@ -57,26 +58,26 @@ const OneVolunteer = ({
     const id = e.target.name;
     console.log(id);
     setClicked(true);
-    setBasicClicked(true);
+    setDetailsClicked(true);
   };
 
   // console.log(values)
 
-  const basicHide = (e) => {
-    setBasicClicked(false);
+  const detailsHide = (e) => {
+    setDetailsClicked(false);
     setClicked(false);
   };
 
-  const showEditFormBasic = (e) => {
+  const showEditFormDetails = (e) => {
     e.preventDefault();
 
-    setShowBasicEditForm(true);
+    setShowDetailsEditForm(true);
   };
 
-  const handleBasicCancel = (e) => {
+  const handleDetailsCancel = (e) => {
     e.preventDefault();
 
-    setBasicClicked(false);
+    setDetailsClicked(false);
     setClicked(false);
   };
 
@@ -140,7 +141,7 @@ const OneVolunteer = ({
         )}
         <header>
           <div className='main-icon capitalize'>{firstName.charAt(0)}</div>
-          <div className='info'>
+          <div className='info' id={id}>
             <h5 className='capitalize'>
               {firstName} {lastName}
             </h5>
@@ -249,9 +250,9 @@ const OneVolunteer = ({
                   </Modal>
                 </>
               )}
-              {basicClicked && (
+              {detailsClicked && (
                 <>
-                  <h4 className='space'>Basic Information</h4>
+                  <h4 className='space'>Details</h4>
 
                   <div className='content-center'>
                     <div>
@@ -294,7 +295,7 @@ const OneVolunteer = ({
                       <button
                         className='button edit-btn'
                         name={id}
-                        onClick={showEditFormBasic}
+                        onClick={showEditFormDetails}
                       >
                         Edit
                       </button>
@@ -302,7 +303,7 @@ const OneVolunteer = ({
                       <button
                         className='button delete-btn'
                         name={id}
-                        onClick={basicHide}
+                        onClick={detailsHide}
                       >
                         Hide
                       </button>
@@ -311,16 +312,16 @@ const OneVolunteer = ({
                   
                   </footer>
 
-                  {showBasicEditForm && (
+                  {showDetailsEditForm && (
                     <>
-                      <h3 className='space'>Edit Basic Information</h3>
+                      <h3 className='space'>Edit Record</h3>
                       <p className='instructions'>
                         Update <span className='emphasis'>only</span> the fields
                         that you wish to change.{' '}
                         <span className='r2b-red'>**PLEASE NOTE**</span> If you
-                        are <span className='emphasis'>not</span> adding a new
-                        event, you{' '}
-                        <span className='emphasis'>must enter none</span> or the
+                        are <span className='emphasis'>adding</span> a new
+                        event attended by the volunteer, you{' '}
+                        <span className='emphasis'>must create the event first</span> or the
                         record <span className='emphasis'>will not update</span>{' '}
                         in the database.
                       </p>
@@ -358,8 +359,7 @@ const OneVolunteer = ({
                         }}
                       >
                         <h3 className='modal-header'>
-                          🚨 Heads up! If you did not add a new event, make sure to enter none in the Add New
-                          Event field.
+                          🚨 Heads up! If you added an event that the volunteer attended, make sure that the event was created first.
                         </h3>
                         <div className='confirm-btns'>
                           <button
@@ -464,7 +464,7 @@ const OneVolunteer = ({
                         </button>
                         <button
                           className='button delete-btn'
-                          onClick={handleBasicCancel}
+                          onClick={handleDetailsCancel}
                         >
                           Cancel
                         </button>

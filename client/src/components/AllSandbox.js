@@ -112,8 +112,6 @@ export default function AllSandbox() {
         Header: 'Phone',
         accessor: 'phone',
         disableSortBy: true,
-        Filter: SelectColumnFilter,
-        filter: 'equals',
       },
       {
         Header: 'Interests',

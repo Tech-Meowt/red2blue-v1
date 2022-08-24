@@ -104,7 +104,11 @@ export default function AllDbUsers() {
       },
       { Header: 'First name', accessor: 'firstName' },
       { Header: 'Last name', accessor: 'lastName' },
-      { Header: 'Email', accessor: 'email' },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        disableSortBy: true,
+      },
       {
         Header: 'Sandbox database',
         disableSortBy: true,
@@ -208,7 +212,7 @@ export default function AllDbUsers() {
     <>
       <h3 className='r2b-red'>Database: User Accounts</h3>
 
-      <h4>🕵️ Need to search for something?</h4>
+      <h4 className='space-larger'>🕵️ Need to search for something?</h4>
       <h5 className='r2b-blue'>
         👉 Click on 'View As Table' to sort and filter your data
         <br />
