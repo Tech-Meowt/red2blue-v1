@@ -5,9 +5,10 @@ import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
-import { OnePoliticalSkill, OneLifeSkill, TableView } from '../components'
+import { OnePoliticalSkill, OneLifeSkill, TableView } from '../components';
 import { ImPointRight } from 'react-icons/im';
-import { SelectColumnFilter } from './Filter'
+import { SelectColumnFilter } from './Filter';
+import napoleonDynamite from '../assets/images/napoleon-dynamite.jpeg';
 
 export default function AllSkills() {
   const [allPoliticalSkills, setAllPoliticalSkills] = useState([]);
@@ -16,6 +17,7 @@ export default function AllSkills() {
   const [lifeToggle, setLifeToggle] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [showPolTable, setShowPolTable] = useState(false);
+  const [showNapoleon, setShowNapoleon] = useState(true);
   const printRef = useRef();
 
   const politicalHeaders = [
@@ -44,13 +46,13 @@ export default function AllSkills() {
     { label: 'Voter registration', key: 'voterReg' },
   ];
 
-  const politicalData = allPoliticalSkills
+  const politicalData = allPoliticalSkills;
 
   const politicalReport = {
     data: politicalData,
     headers: politicalHeaders,
-    filename: 'political_skills_report.csv'
-  }
+    filename: 'political_skills_report.csv',
+  };
 
   const lifeHeaders = [
     { label: 'First name', key: 'firstName' },
@@ -126,9 +128,13 @@ export default function AllSkills() {
 
   const columns = useMemo(
     () => [
-      { Header: 'First name', accessor: 'firstName'},
+      { Header: 'First name', accessor: 'firstName' },
       { Header: 'Last name', accessor: 'lastName' },
-      { Header: 'Email', accessor: 'email' },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        disableSortBy: true,
+      },
       {
         Header: 'Canvassing',
         accessor: 'canvassing',
@@ -231,7 +237,11 @@ export default function AllSkills() {
         accessor: 'firstName',
       },
       { Header: 'Last name', accessor: 'lastName' },
-      { Header: 'Email', accessor: 'email' },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        disableSortBy: true,
+      },
       {
         Header: 'Actor/Actress',
         accessor: 'actor',
@@ -473,40 +483,43 @@ export default function AllSkills() {
     setClicked(!clicked);
   };
 
-  
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
-    axios.get('http://localhost:8000/api/v1/political/')
+    axios
+      .get('http://localhost:8000/api/v1/political/')
       .then((res) => {
         setAllPoliticalSkills(res.data.politicalSkills);
       })
       .catch((error) => {
         console.log(error);
       });
-    
-    axios.get('http://localhost:8000/api/v1/life/')
+
+    axios
+      .get('http://localhost:8000/api/v1/life/')
       .then((res) => {
         setAllLifeSkills(res.data.lifeSkills);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [])
+  }, []);
 
   const handlePoliticalToggle = (e) => {
     e.preventDefault();
 
     setPoliticalToggle(true);
-    setLifeToggle(false)
-  }
+    setLifeToggle(false);
+    setShowNapoleon(false)
+  };
 
   const handleLifeToggle = (e) => {
     e.preventDefault();
 
-    setLifeToggle(true)
-    setPoliticalToggle(false)
-  }
+    setLifeToggle(true);
+    setPoliticalToggle(false);
+    setShowNapoleon(false)
+  };
 
   return (
     <>
@@ -523,33 +536,41 @@ export default function AllSkills() {
             View Life Skills
           </button>
         </div>
+        <br />
+        {showNapoleon && (
+          <img
+            src={napoleonDynamite}
+            alt="napoleon dynamite's skills"
+            className='img napoleon-dynamite-img'
+          />
+        )}
       </VolunteersWrapper>
 
       {politicalToggle && (
         <>
-          <Wrapper>
-            <h4>🕵️ Need to search for something?</h4>
-            <h5 className='r2b-blue'>
-              👉 Click on 'View As Table' to sort and filter your data
-              <br />
-              👉 You can combine filters to narrow down your results
-            </h5>
-            <button
-              className='button btn-success no-margin'
-              onClick={handleDownloadPdf}
-            >
-              Download PDF
-            </button>
-            <CSVLink {...politicalReport}>
-              <button className='button btn-success'>Export as CSV</button>
-            </CSVLink>
-            <button
-              className='button btn-success no-margin'
-              onClick={handleClick}
-            >
-              {clicked ? 'View As List' : 'View As Table'}
-            </button>
+          <h4 className='space-larger'>🕵️ Need to search for something?</h4>
+          <h5 className='r2b-blue'>
+            👉 Click on 'View As Table' to sort and filter your data
+            <br />
+            👉 You can combine filters to narrow down your results
+          </h5>
+          <button
+            className='button btn-success no-margin'
+            onClick={handleDownloadPdf}
+          >
+            Download PDF
+          </button>
+          <CSVLink {...politicalReport}>
+            <button className='button btn-success'>Export as CSV</button>
+          </CSVLink>
+          <button
+            className='button btn-success no-margin'
+            onClick={handleClick}
+          >
+            {clicked ? 'View As List' : 'View As Table'}
+          </button>
 
+          <Wrapper>
             <h4 className='space'>All Records</h4>
 
             {!clicked ? (
@@ -577,51 +598,50 @@ export default function AllSkills() {
 
       {lifeToggle && (
         <>
-          <Wrapper>
-            <h4>🕵️ Need to search for something?</h4>
-            <h5 className='r2b-blue'>
-              👉 Click on 'View As Table' to sort and filter your data
-              <br />
-              👉 You can combine filters to narrow down your results
-            </h5>
-            <button
-              className='button btn-success no-margin'
-              onClick={handleDownloadPdf}
-            >
-              Download PDF
-            </button>
-            <CSVLink {...lifeReport}>
-              <button className='button btn-success'>Export as CSV</button>
-            </CSVLink>
-            <button
-              className='button btn-success no-margin'
-              onClick={handleClick}
-            >
-              {clicked ? 'View As List' : 'View As Table'}
-            </button>
+          <h4 className='space-larger'>🕵️ Need to search for something?</h4>
+          <h5 className='r2b-blue'>
+            👉 Click on 'View As Table' to sort and filter your data
+            <br />
+            👉 You can combine filters to narrow down your results
+          </h5>
+          <button
+            className='button btn-success no-margin'
+            onClick={handleDownloadPdf}
+          >
+            Download PDF
+          </button>
+          <CSVLink {...lifeReport}>
+            <button className='button btn-success'>Export as CSV</button>
+          </CSVLink>
+          <button
+            className='button btn-success no-margin'
+            onClick={handleClick}
+          >
+            {clicked ? 'View As List' : 'View As Table'}
+          </button>
 
+          <Wrapper>
             <h4>All Records</h4>
 
             {!clicked ? (
-            <div ref={printRef}>
-              <div className='jobs'>
-                {allLifeSkills.map((lifeSkill) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <OneLifeSkill key={lifeSkill.id} {...lifeSkill} />
-                      </div>
-                    </>
-                  );
-                })}
+              <div ref={printRef}>
+                <div className='jobs'>
+                  {allLifeSkills.map((lifeSkill) => {
+                    return (
+                      <>
+                        <div className='border-state'>
+                          <OneLifeSkill key={lifeSkill.id} {...lifeSkill} />
+                        </div>
+                      </>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
             ) : (
-                <div ref={printRef}>
-                  <TableView columns={lifeSkillColumns} data={allLifeSkills} />
+              <div ref={printRef}>
+                <TableView columns={lifeSkillColumns} data={allLifeSkills} />
               </div>
             )}
-            
           </Wrapper>
         </>
       )}

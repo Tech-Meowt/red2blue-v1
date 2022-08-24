@@ -30,6 +30,7 @@ const OneSandbox = ({
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [values, setValues] = useState(initialState);
@@ -58,7 +59,6 @@ const OneSandbox = ({
       .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
       .then((res) => {
         setNewValues(res.data.sandbox);
-        console.log(res.data.sandbox);
       });
     setShowAlert(true);
     setAlertText('Update successful!');
@@ -91,11 +91,13 @@ const OneSandbox = ({
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
+    setShowDeleteAlert(true)
     closeModal(true);
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
       console.log(error);
+      setShowDeleteAlert(true)
       setShowAlert(true);
       setAlertText('There was an error. Please try again...');
       setAlertType('danger');
@@ -105,7 +107,7 @@ const OneSandbox = ({
   return (
     <>
       <OneRecordWrapper>
-        {showAlert && (
+        {showDeleteAlert && (
           <div className={`alert alert-${alertType}`}>{alertText}</div>
         )}
         <header>
@@ -129,7 +131,10 @@ const OneSandbox = ({
             </div>
             <div>
               <AiOutlineUnorderedList className='icon' />
-              Interests: <span className='status'>{interests ? `${interests}` : 'None'}</span>
+              Interests:{' '}
+              <span className='status'>
+                {interests ? `${interests}` : 'None'}
+              </span>
             </div>
           </div>
           <footer>
@@ -176,7 +181,8 @@ const OneSandbox = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to permanently delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete
+                      this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
@@ -213,7 +219,11 @@ const OneSandbox = ({
                     </p>
                   </div>
 
-                  <button className='button delete-btn' name={id} onClick={getId}>
+                  <button
+                    className='button delete-btn'
+                    name={id}
+                    onClick={getId}
+                  >
                     Close
                   </button>
                   <h1> </h1>

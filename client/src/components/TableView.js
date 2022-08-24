@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy, useFilters, usePagination } from 'react-table';
-import { Filter, DefaultColumnFilter } from './Filter';
+import { Filter, DefaultColumnFilter, ColumnSelector } from './Filter';
 import { Table, Row, Col, Button, Input } from 'reactstrap';
+import { BiSortAlt2 } from 'react-icons/bi'
+import { ImSortAlphaAsc, ImSortAlphaDesc } from 'react-icons/im';
 
 const TableView = ({ columns, data }) => {
   const defaultColumn = useMemo(
@@ -26,6 +28,7 @@ const TableView = ({ columns, data }) => {
     nextPage,
     previousPage,
     setPageSize,
+    allColumns,
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -40,7 +43,14 @@ const TableView = ({ columns, data }) => {
   );
 
   const generateSortingIndicator = (column) => {
-    return column.isSorted ? (column.isSortedDesc ? '  🔽' : '  🔼') : '';
+    // return column.isSorted ? (column.isSortedDesc ? '  🔽' : '  🔼') : '';
+    if (column.isSorted && column.isSortedDesc) {
+      return <span className='r2b-red sort-icon'>{'   '}{<ImSortAlphaDesc />}</span>;
+    } else if (column.isSorted && !column.isSortedDesc) {
+      return <span className='r2b-red sort-icon'>{'   '}{<ImSortAlphaAsc />}</span>;
+    } else if (!column.isSorted && column.Header === 'First name' || column.Header === 'Last name' || column.Header === 'Events' || column.Header === 'State') {
+      return <span className='r2b-red sort-icon'>{<BiSortAlt2 />}</span>;
+    }
   };
 
   const onChangeInSelect = (e) => {
@@ -53,17 +63,15 @@ const TableView = ({ columns, data }) => {
 
   return (
     <>
+      {/* <ColumnSelector columns={allColumns} /> */}
       <div className='overflow-scroll overflow-visible container-xxl'>
         <Table bordered hover striped size={'sm'} {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    <div
-                      {...column.getSortByToggleProps()}
-                      className='header-group'
-                    >
+                  <th {...column.getHeaderProps()} className='header-group'>
+                    <div {...column.getSortByToggleProps()}>
                       {column.render('Header')}
                       {generateSortingIndicator(column)}
                     </div>
@@ -81,9 +89,7 @@ const TableView = ({ columns, data }) => {
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()} className='cells'>
-                        {cell.render('Cell')}
-                      </td>
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                     );
                   })}
                 </tr>
