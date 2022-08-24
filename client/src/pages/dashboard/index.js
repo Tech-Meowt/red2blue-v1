@@ -16,6 +16,7 @@ import SharedLayoutSandbox from './SharedLayoutSandbox';
 import Volunteers from './Volunteers';
 import Events from './Events';
 import Skills from './Skills';
+import AddVolunteer from './AddVolunteer';
 
 export {
   Profile,
@@ -36,4 +37,5 @@ export {
   Volunteers,
   Events,
   Skills,
+  AddVolunteer
 };
