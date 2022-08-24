@@ -1,30 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import VolunteersWrapper from '../assets/wrappers/Volunteers';
-import FilterWrapper from '../assets/wrappers/FilterContainer';
 import Wrapper from '../assets/wrappers/AllDbUsers.js';
-import {
-  SearchBarAllVols,
-  OneVolunteer,
-  VolunteerFilter,
-} from '.';
-import { Link } from 'react-router-dom';
+import { OneVolunteer, TableView } from '../components';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
 import { CSVLink } from 'react-csv';
+import { SelectColumnFilter } from './Filter';
+import { HashLink as Link } from 'react-router-hash-link';
 
 export default function AllVolunteers() {
   const [allVolunteers, setAllVolunteers] = useState([]);
   const [volunteersList, setVolunteersList] = useState([]);
-  const [allPoliticalSkills, setAllPoliticalSkills] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const printRef = useRef();
   
   const headers = [
     { label: 'First name', key: 'firstName' },
     { label: 'Last name', key: 'lastName' },
     { label: 'Email', key: 'email' },
+    { label: 'City', key: 'city' },
     { label: 'State', key: 'state' },
+    { label: 'Phone', key: 'phone' },
     { label: 'Events attended (subtract 1)', key: 'events.length' }
   ];
 
@@ -33,7 +31,7 @@ export default function AllVolunteers() {
   const csvReport = {
     data: data,
     headers: headers,
-    filename: 'report.csv',
+    filename: 'volunteers_report.csv',
   };
 
   const handleDownloadPdf = async () => {
@@ -58,8 +56,93 @@ export default function AllVolunteers() {
       pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
     }
-    pdf.save('print.pdf');
+    pdf.save('volunteers_report.pdf');
   };
+
+  const getId = (e) => {
+    const id = e.target.name;
+    setShowEditForm(!showEditForm);
+    console.log(id);
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Edit',
+        disableSortBy: true,
+        disableFilters: true,
+        accessor: (d) => {
+          return (
+            <Link to={`/databases/volunteers/#${d.id}`}>
+              <button className='button edit-btn' onClick={getId} name={d.id}>
+                Edit
+              </button>
+            </Link>
+          );
+        },
+      },
+      {
+        Header: 'Delete',
+        disableSortBy: true,
+        disableFilters: true,
+        accessor: (d) => {
+          return (
+            <Link to={`/databases/volunteers/#${d.id}`}>
+              <button
+                className='button delete-btn'
+                onClick={getId}
+                name={d.id}
+              >
+                Delete
+              </button>
+            </Link>
+          );
+        },
+      },
+      { Header: 'First name', accessor: 'firstName' },
+      { Header: 'Last name', accessor: 'lastName' },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        disableSortBy: true,
+      },
+      {
+        Header: 'Street',
+        accessor: 'street',
+        disableSortBy: true,
+      },
+      {
+        Header: 'City',
+        accessor: 'city',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'State',
+        accessor: 'state',
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Phone',
+        accessor: 'phone',
+        disableSortBy: true,
+      },
+      {
+        Header: 'Events',
+        id: 'events',
+        accessor: (d) => {
+          if (d.events.length - 1 <= 0) {
+            return '0'
+          } else {
+            return d.events.length - 1
+          }
+        }
+      }
+    ],
+    []
+  );
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -104,30 +187,29 @@ export default function AllVolunteers() {
         </div>
       </VolunteersWrapper>
 
-      <FilterWrapper>
-        <SearchBarAllVols description={volunteersList} />
-      </FilterWrapper>
+      <h4 className='space-larger'>🕵️ Need to search for something?</h4>
+      <h5 className='r2b-blue'>
+        👉 Click on 'View As Table' to sort and filter your data
+        <br />
+        👉 You can combine filters to narrow down your results
+      </h5>
 
-      <FilterWrapper>
-        <VolunteerFilter description={volunteersList} />
-      </FilterWrapper>
+      <button
+        className='button btn-success no-margin'
+        onClick={handleDownloadPdf}
+      >
+        Download PDF
+      </button>
+      <CSVLink {...csvReport}>
+        <button className='button btn-success'>Export as CSV</button>
+      </CSVLink>
+      <button className='button btn-success no-margin' onClick={handleClick}>
+        {clicked ? 'View As List' : 'View As Table'}
+      </button>
 
       <Wrapper>
-        <button
-          className='button btn-success no-margin'
-          onClick={handleDownloadPdf}
-        >
-          Download PDF
-        </button>
-        <CSVLink {...csvReport}>
-          <button className='button btn-success'>Export as CSV</button>
-        </CSVLink>
-        <button className='button btn-success no-margin' onClick={handleClick}>
-          {clicked ? 'View As List' : 'View As Table'}
-        </button>
-
         <h4>All Records</h4>
-        {!clicked && (
+        {!clicked && !showEditForm && (
           <div ref={printRef}>
             <div className='jobs'>
               {allVolunteers.map((volunteer) => {
@@ -147,40 +229,35 @@ export default function AllVolunteers() {
           </div>
         )}
 
-        {clicked && (
+        {clicked && !showEditForm && (
           <div ref={printRef}>
-            
-            <table className='table'>
-              <thead>
-                <tr>
-                  <th>First name</th>
-                  <th>Last name</th>
-                  <th>Email</th>
-                  <th>State</th>
-                  <th>Events attended</th>
-                </tr>
-              </thead>
-              <tbody>
+            <TableView columns={columns} data={allVolunteers} />
+          </div>
+        )}
+
+        {showEditForm && (
+          <>
+            <div ref={printRef}>
+              <TableView columns={columns} data={allVolunteers} />
+            </div>
+            <div ref={printRef}>
+              <div className='jobs'>
                 {allVolunteers.map((volunteer) => {
                   return (
                     <>
-                      <tr key={volunteer.id}>
-                        <td>{volunteer.firstName}</td>
-                        <td>{volunteer.lastName}</td>
-                        <td>{volunteer.email}</td>
-                        <td>{volunteer.state}</td>
-                        {volunteer.events.length >= 1 ? (
-                          <td>{volunteer.events.length - 1}</td>
-                        ) : (
-                            <td>{0}</td>
-                        )}
-                      </tr>
+                      <div className='border-state'>
+                        <OneVolunteer
+                          key={volunteer.id}
+                          {...volunteer}
+                          events={volunteer.events.length}
+                        />
+                      </div>
                     </>
                   );
                 })}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
+          </>
         )}
       </Wrapper>
     </>
