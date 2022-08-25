@@ -37,6 +37,7 @@ import {
   CLEAR_FILTERS,
   CHANGE_PAGE,
   GET_USERS_BEGIN,
+  UNAUTHORIZED,
 } from './actions';
 
 const token = localStorage.getItem('token');
@@ -194,6 +195,18 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
+  const unauthorizedUser = async ({ currentUser, endPoint }) => {
+    dispatch({ type: UNAUTHORIZED });
+    try {
+      const { data } = await axios.get(`/api/v1/auth/${endPoint}`, currentUser)
+
+      const { user, token } = data;
+    } catch (error) {
+      console.log(error)
+      console.log(error.response.data.message)
+    }
+  }
 
   const adminUpdateUser = async () => {
     dispatch({ type: ADMIN_UPDATE_USER_BEGIN });
@@ -403,6 +416,7 @@ const AppProvider = ({ children }) => {
         changePage,
         createDbUser,
         adminUpdateUser,
+        unauthorizedUser,
       }}
     >
       {children}

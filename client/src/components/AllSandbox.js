@@ -38,12 +38,13 @@ export default function AllSandbox() {
     const canvas = await html2canvas(element);
     const data = canvas.toDataURL('image/png', 3.0);
 
-    let imgWidth = 210;
+    let imgWidth = 275;
     let pageHeight = 296;
     let imgHeight = (canvas.height * imgWidth) / canvas.width;
     let heightLeft = imgHeight;
 
-    const pdf = new jsPDF('p', 'mm');
+    // const pdf = new jsPDF('p', 'mm');
+    const pdf = new jsPDF({ orientation: 'landscape' });
     let position = 0;
 
     pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
@@ -187,8 +188,8 @@ export default function AllSandbox() {
         <h4>All Records</h4>
 
         {!clicked && !showEditForm && (
-          <div ref={printRef}>
-            <div className='jobs'>
+          
+            <div className='jobs' ref={printRef}>
               {allSandbox.map((sandbox) => {
                 return (
                   <>
@@ -199,7 +200,7 @@ export default function AllSandbox() {
                 );
               })}
             </div>
-          </div>
+         
         )}
 
         {clicked && !showEditForm && (
@@ -213,8 +214,8 @@ export default function AllSandbox() {
             <div ref={printRef}>
               <TableView columns={columns} data={allSandbox} />
             </div>
-            <div ref={printRef}>
-              <div className='jobs'>
+
+              <div className='jobs' ref={printRef}>
                 {allSandbox.map((sandbox) => {
                   return (
                     <>
@@ -225,7 +226,7 @@ export default function AllSandbox() {
                   );
                 })}
               </div>
-            </div>
+
           </>
         )}
       </Wrapper>

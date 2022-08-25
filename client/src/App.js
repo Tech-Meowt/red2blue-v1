@@ -7,6 +7,7 @@ import {
   ProtectedRoute,
   ForgotPassword,
   ResetPassword,
+  Unauthorized,
 } from './pages';
 import {
   Profile,
@@ -27,12 +28,14 @@ import {
   Volunteers,
   Events,
   Skills,
-  AddVolunteer
+  AddVolunteer,
 } from './pages/dashboard';
 import { useAppContext } from './context/appContext';
 
 function App() {
   const { user, logoutUser } = useAppContext();
+
+  // auto log out after 2 hours
   useEffect(() => {
     if (user) {
       const interval = setInterval(() => {
@@ -66,7 +69,7 @@ function App() {
         >
           <Route index element={<Databases />} />
           <Route path='/databases/volunteers' element={<Volunteers />} />
-          <Route path='/databases/volunteers/add' element={<AddVolunteer />}/>
+          <Route path='/databases/volunteers/add' element={<AddVolunteer />} />
           <Route path='/databases/events' element={<Events />} />
           <Route path='/databases/user-accounts' element={<UserAccounts />} />
           <Route path='/databases/volunteer-skills' element={<Skills />} />
@@ -118,6 +121,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password/:resetToken' element={<ResetPassword />} />
         <Route path='*' element={<Error />} />
+        <Route path='/unauthorized' element={<Unauthorized />} />
       </Routes>
     </BrowserRouter>
   );

@@ -25,9 +25,13 @@ export default function AddVolunteer() {
   // eslint-disable-next-line
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
-  const { displayAlert, showAlert } = useAppContext();
+  const { displayAlert, showAlert, user } = useAppContext();
 
   useEffect(() => {
+    if (!user.usersDb || user.role === 'viewer') {
+      navigate('/unauthorized');
+    }
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, []);
 
@@ -38,14 +42,28 @@ export default function AddVolunteer() {
   const createRecord = (e) => {
     e.preventDefault();
     // eslint-disable-next-line
-    const { firstName, lastName, email, street, city, state, zip, phone, events } = volunteerInfo
+    const {
+      firstName,
+      lastName,
+      email,
+      street,
+      city,
+      state,
+      zip,
+      phone,
+      events,
+    } = volunteerInfo;
 
     if (!firstName || !lastName || !email || !events) {
       displayAlert();
       return;
     }
 
-    axios.post('http://localhost:8000/api/v1/volunteer/addVolunteer', volunteerInfo)
+    axios
+      .post(
+        'http://localhost:8000/api/v1/volunteer/addVolunteer',
+        volunteerInfo
+      )
       .then((res) => {
         setVolunteerInfo({
           firstName: '',
@@ -59,20 +77,20 @@ export default function AddVolunteer() {
           events: '',
         });
         console.log(res.data.message);
-      setAlert(true);
-      setAlertText('Record created! Redirecting...');
-      setAlertType('success');
-      setTimeout(() => {
-        navigate('/databases/volunteers');
-      }, 3000);
+        setAlert(true);
+        setAlertText('Record created! Redirecting...');
+        setAlertType('success');
+        setTimeout(() => {
+          navigate('/databases/volunteers');
+        }, 3000);
       })
       .catch((error) => {
-      console.log(error);
-      setAlert(true);
-      setAlertText('There was an error. Please try again...');
-      setAlertType('danger');
-    })
-  }
+        console.log(error);
+        setAlert(true);
+        setAlertText('There was an error. Please try again...');
+        setAlertType('danger');
+      });
+  };
 
   const handleCancel = (e) => {
     e.preventDefault();
@@ -88,8 +106,8 @@ export default function AddVolunteer() {
       phone: '',
       events: '',
     });
-    navigate('/volunteers')
-  }
+    navigate('/volunteers');
+  };
 
   return (
     <>
