@@ -31,6 +31,7 @@ import {
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
   CHANGE_PAGE,
+  UNAUTHORIZED
 } from './actions';
 
 import { initialState } from './appContext';
@@ -75,6 +76,14 @@ const reducer = (state, action) => {
       alertType: 'danger',
       alertText: action.payload.msg,
     };
+  }
+
+  if (action.type === UNAUTHORIZED) {
+    return {
+      ...state,
+      token: action.payload.token,
+      user: action.payload.user,
+    }
   }
   if (action.type === TOGGLE_SIDEBAR) {
     return {

@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '.';
+import { FormRow, StateSelect } from '../components';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
@@ -9,6 +9,8 @@ import { FiDatabase } from 'react-icons/fi';
 import { MdOutlineEventAvailable } from 'react-icons/md';
 import { IoPersonOutline } from 'react-icons/io5';
 import { BsCheck2All } from 'react-icons/bs';
+import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 
 const OneVolunteer = ({
   id,
@@ -53,6 +55,7 @@ const OneVolunteer = ({
     phone,
     events,
   });
+  const { user } = useAppContext();
 
   const getId = (e) => {
     const id = e.target.name;
@@ -191,14 +194,17 @@ const OneVolunteer = ({
                   <button className='button edit-btn' name={id} onClick={getId}>
                     Details
                   </button>
-                  <button
-                    type='button'
-                    className='button delete-btn'
-                    name={id}
-                    onClick={openModal}
-                  >
-                    Delete
-                  </button>
+                  {user.role === 'admin' && (
+                    <button
+                      type='button'
+                      className='button delete-btn'
+                      name={id}
+                      onClick={openModal}
+                    >
+                      Delete
+                    </button>
+                  )}
+
                   <Modal
                     isOpen={modalIsOpen}
                     style={{
@@ -289,16 +295,18 @@ const OneVolunteer = ({
                       </div>
                     </div>
                   </div>
-                  
+
                   <footer>
                     <div className='actions'>
-                      <button
-                        className='button edit-btn'
-                        name={id}
-                        onClick={showEditFormDetails}
-                      >
-                        Edit
-                      </button>
+                      {user.role !== 'viewer' && (
+                        <button
+                          className='button edit-btn'
+                          name={id}
+                          onClick={showEditFormDetails}
+                        >
+                          Edit
+                        </button>
+                      )}
 
                       <button
                         className='button delete-btn'

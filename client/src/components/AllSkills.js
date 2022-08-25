@@ -106,12 +106,13 @@ export default function AllSkills() {
     const canvas = await html2canvas(element);
     const data = canvas.toDataURL('image/png', 3.0);
 
-    let imgWidth = 210;
+    let imgWidth = 275;
     let pageHeight = 296;
     let imgHeight = (canvas.height * imgWidth) / canvas.width;
     let heightLeft = imgHeight;
 
-    const pdf = new jsPDF('p', 'mm');
+    // const pdf = new jsPDF('p', 'mm');
+    const pdf = new jsPDF({ orientation: 'landscape' });
     let position = 0;
 
     pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
@@ -574,8 +575,8 @@ export default function AllSkills() {
             <h4 className='space'>All Records</h4>
 
             {!clicked ? (
-              <div ref={printRef}>
-                <div className='jobs'>
+      
+                <div className='jobs' ref={printRef}>
                   {allPoliticalSkills.map((polSkill) => {
                     return (
                       <>
@@ -586,7 +587,7 @@ export default function AllSkills() {
                     );
                   })}
                 </div>
-              </div>
+
             ) : (
               <div ref={printRef}>
                 <TableView columns={columns} data={allPoliticalSkills} />
@@ -624,8 +625,8 @@ export default function AllSkills() {
             <h4>All Records</h4>
 
             {!clicked ? (
-              <div ref={printRef}>
-                <div className='jobs'>
+   
+                <div className='jobs' ref={printRef}>
                   {allLifeSkills.map((lifeSkill) => {
                     return (
                       <>
@@ -636,7 +637,7 @@ export default function AllSkills() {
                     );
                   })}
                 </div>
-              </div>
+      
             ) : (
               <div ref={printRef}>
                 <TableView columns={lifeSkillColumns} data={allLifeSkills} />
