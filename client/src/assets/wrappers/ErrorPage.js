@@ -22,6 +22,9 @@ const Wrapper = styled.main`
     text-decoration: underline;
     text-transform: capitalize;
   }
+  .unauthorized {
+    margin: 0 auto;
+  }
 `
 
 export default Wrapper

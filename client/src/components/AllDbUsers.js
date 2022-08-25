@@ -235,8 +235,8 @@ export default function AllDbUsers() {
         <h4>All Records</h4>
 
         {!clicked && !showEditForm && (
-          <div ref={printRef}>
-            <div className='jobs'>
+          
+            <div className='jobs' ref={printRef}>
               {dbUsers.map((dbUser) => {
                 return (
                   <>
@@ -247,7 +247,7 @@ export default function AllDbUsers() {
                 );
               })}
             </div>
-          </div>
+        
         )}
 
         {clicked && !showEditForm && (
@@ -261,8 +261,7 @@ export default function AllDbUsers() {
             <div ref={printRef}>
               <TableView columns={columns} data={dbUsers} />
             </div>
-            <div ref={printRef}>
-              <div className='jobs'>
+              <div className='jobs' ref={printRef}>
                 {dbUsers.map((dbUser) => {
                   return (
                     <>
@@ -273,7 +272,6 @@ export default function AllDbUsers() {
                   );
                 })}
               </div>
-            </div>
           </>
         )}
       </Wrapper>
