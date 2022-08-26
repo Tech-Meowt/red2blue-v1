@@ -563,12 +563,12 @@ export default function AllSkills() {
             <br />
             👉 You can combine filters to narrow down your results
           </h5>
-          <button
+          {/* <button
             className='button btn-success no-margin'
             onClick={handleDownloadPdf}
           >
             Download PDF
-          </button>
+          </button> */}
           <CSVLink {...politicalReport}>
             <button className='button btn-success'>Export as CSV</button>
           </CSVLink>
@@ -613,12 +613,12 @@ export default function AllSkills() {
             <br />
             👉 You can combine filters to narrow down your results
           </h5>
-          <button
+          {/* <button
             className='button btn-success no-margin'
             onClick={handleDownloadPdf}
           >
             Download PDF
-          </button>
+          </button> */}
           <CSVLink {...lifeReport}>
             <button className='button btn-success'>Export as CSV</button>
           </CSVLink>

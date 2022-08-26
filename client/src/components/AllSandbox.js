@@ -171,12 +171,12 @@ export default function AllSandbox() {
         <br />
         👉 You can combine filters to narrow down your results
       </h5>
-      <button
+      {/* <button
         className='button btn-success no-margin'
         onClick={handleDownloadPdf}
       >
         Download PDF
-      </button>
+      </button> */}
       <CSVLink {...sandboxReport}>
         <button className='button btn-success'>Export as CSV</button>
       </CSVLink>

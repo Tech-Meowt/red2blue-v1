@@ -9,3 +9,4 @@ router.route('/:id').patch(updateLifeSkill)
 router.route('/:id').delete(deleteLifeSkill)
 
 export default router;
+
