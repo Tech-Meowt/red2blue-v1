@@ -28,18 +28,19 @@ const create = async (req, res) => {
       zip,
       lifeSkillId,
       skillId,
-      events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
-            where: {
-              eventName: events,
-            },
-          },
-        ],
-      },
+      // events,
+      // events: {
+      //   connectOrCreate: [
+      //     {
+      //       create: {
+      //         eventName: events,
+      //       },
+      //       where: {
+      //         eventName: events,
+      //       },
+      //     },
+      //   ],
+      // },
       // events: {
       //   connectOrCreate:
       //     events.map((event) => ({
@@ -52,9 +53,9 @@ const create = async (req, res) => {
       //       }))
       // },
     },
-    include: {
-      events: true,
-    },
+    // include: {
+    //   events: true,
+    // },
   });
   res.status(200).json({ volunteer });
 };
@@ -64,10 +65,10 @@ const getAll = async (req, res) => {
     orderBy: {
       lastName: 'asc',
     },
-    include: {
-      events: true,
-      // politicalSkills: true,
-    },
+    // include: {
+    //   events: true,
+    //   politicalSkills: true,
+    // },
   });
   res.status(200).json({ volunteer });
 };

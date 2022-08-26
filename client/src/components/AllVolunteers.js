@@ -17,6 +17,7 @@ export default function AllVolunteers() {
   const [showEditForm, setShowEditForm] = useState(false);
   const printRef = useRef();
   const { user } = useAppContext();
+  const [dbUser, setDbUser] = useState([])
   
   const headers = [
     { label: 'First name', key: 'firstName' },
@@ -25,7 +26,7 @@ export default function AllVolunteers() {
     { label: 'City', key: 'city' },
     { label: 'State', key: 'state' },
     { label: 'Phone', key: 'phone' },
-    { label: 'Events attended (subtract 1)', key: 'events.length' }
+    // { label: 'Events attended (subtract 1)', key: 'events.length' }
   ];
 
   const data = volunteersList;
@@ -132,17 +133,17 @@ export default function AllVolunteers() {
         accessor: 'phone',
         disableSortBy: true,
       },
-      {
-        Header: 'Events',
-        id: 'events',
-        accessor: (d) => {
-          if (d.events.length - 1 <= 0) {
-            return '0'
-          } else {
-            return d.events.length - 1
-          }
-        }
-      }
+      // {
+      //   Header: 'Events',
+      //   id: 'events',
+      //   accessor: (d) => {
+      //     if (d.events.length - 1 <= 0) {
+      //       return '0'
+      //     } else {
+      //       return d.events.length - 1
+      //     }
+      //   }
+      // }
     ],
     []
   );
@@ -193,17 +194,17 @@ export default function AllVolunteers() {
         accessor: 'phone',
         disableSortBy: true,
       },
-      {
-        Header: 'Events',
-        id: 'events',
-        accessor: (d) => {
-          if (d.events.length - 1 <= 0) {
-            return '0';
-          } else {
-            return d.events.length - 1;
-          }
-        },
-      },
+      // {
+      //   Header: 'Events',
+      //   id: 'events',
+      //   accessor: (d) => {
+      //     if (d.events.length - 1 <= 0) {
+      //       return '0';
+      //     } else {
+      //       return d.events.length - 1;
+      //     }
+      //   },
+      // },
     ],
     []
   );
@@ -240,17 +241,17 @@ export default function AllVolunteers() {
         accessor: 'phone',
         disableSortBy: true,
       },
-      {
-        Header: 'Events',
-        id: 'events',
-        accessor: (d) => {
-          if (d.events.length - 1 <= 0) {
-            return '0';
-          } else {
-            return d.events.length - 1;
-          }
-        },
-      },
+      // {
+      //   Header: 'Events',
+      //   id: 'events',
+      //   accessor: (d) => {
+      //     if (d.events.length - 1 <= 0) {
+      //       return '0';
+      //     } else {
+      //       return d.events.length - 1;
+      //     }
+      //   },
+      // },
     ],
     []
   );
@@ -262,8 +263,33 @@ export default function AllVolunteers() {
     setClicked(!clicked);
   };
 
+  const findMatches = () => {
+    const userEmail = user.email
+    const volEmail = allVolunteers.email
+
+    axios
+      .get('http://localhost:8000/api/v1/auth/allUsers')
+      .then((res) => {
+        setDbUser(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+    const newFilter = dbUser.filter((value) => {
+  return value.email.toLowerCase().includes(allVolunteers.email.toLowerCase())
+    })
+    
+    if (dbUser.email === allVolunteers.email) {
+      console.log('match found')
+    } else {
+      console.log('no matches found')
+    }
+  };
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    
+findMatches()
 
     axios
       .get('http://localhost:8000/api/v1/volunteer')
@@ -322,16 +348,19 @@ export default function AllVolunteers() {
       <Wrapper>
         <h4>All Records</h4>
         {!clicked && !showEditForm && (
-          
             <div className='jobs' ref={printRef}>
               {allVolunteers.map((volunteer) => {
                 return (
                   <>
                     <div className='border-state'>
-                      <OneVolunteer
+                      {/* <OneVolunteer
                         key={volunteer.id}
                         {...volunteer}
                         events={volunteer.events.length}
+                      /> */}
+                      <OneVolunteer
+                        key={volunteer.id}
+                        {...volunteer}
                       />
                     </div>
                   </>
@@ -375,10 +404,14 @@ export default function AllVolunteers() {
                   return (
                     <>
                       <div className='border-state'>
-                        <OneVolunteer
+                        {/* <OneVolunteer
                           key={volunteer.id}
                           {...volunteer}
                           events={volunteer.events.length}
+                        /> */}
+                        <OneVolunteer
+                          key={volunteer.id}
+                          {...volunteer}
                         />
                       </div>
                     </>

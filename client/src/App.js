@@ -43,7 +43,7 @@ function App() {
       }, 7200000);
       return () => clearInterval(interval);
     }
-  }, [logoutUser]);
+  }, [logoutUser, user]);
 
   return (
     <BrowserRouter>
