@@ -17,8 +17,8 @@ export default function AllVolunteers() {
   const [showEditForm, setShowEditForm] = useState(false);
   const printRef = useRef();
   const { user } = useAppContext();
-  const [dbUser, setDbUser] = useState([])
-  
+  const [dbUser, setDbUser] = useState([]);
+
   const headers = [
     { label: 'First name', key: 'firstName' },
     { label: 'Last name', key: 'lastName' },
@@ -36,7 +36,7 @@ export default function AllVolunteers() {
     headers: headers,
     filename: 'volunteers_report.csv',
   };
-  
+
   const handleDownloadPdf = async () => {
     const element = printRef.current;
     const canvas = await html2canvas(element);
@@ -48,7 +48,7 @@ export default function AllVolunteers() {
     let heightLeft = imgHeight;
 
     // const pdf = new jsPDF('p', 'mm');
-    const pdf = new jsPDF({orientation: 'landscape'});
+    const pdf = new jsPDF({ orientation: 'landscape' });
     let position = 0;
 
     pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
@@ -92,11 +92,7 @@ export default function AllVolunteers() {
         accessor: (d) => {
           return (
             <Link to={`/databases/volunteers/#${d.id}`}>
-              <button
-                className='button delete-btn'
-                onClick={getId}
-                name={d.id}
-              >
+              <button className='button delete-btn' onClick={getId} name={d.id}>
                 Delete
               </button>
             </Link>
@@ -256,40 +252,41 @@ export default function AllVolunteers() {
     []
   );
 
-
   const handleClick = (e) => {
     e.preventDefault();
 
     setClicked(!clicked);
   };
 
-  const findMatches = () => {
-    const userEmail = user.email
-    const volEmail = allVolunteers.email
+  // TODO 
+  // show database access that lives in mongodb on volunteer card
+  // const findMatches = () => {
+  //   axios
+  //     .get('http://localhost:8000/api/v1/auth/allUsers')
+  //     .then((res) => {
+  //       setDbUser(res.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
 
-    axios
-      .get('http://localhost:8000/api/v1/auth/allUsers')
-      .then((res) => {
-        setDbUser(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
-    const newFilter = dbUser.filter((value) => {
-  return value.email.toLowerCase().includes(allVolunteers.email.toLowerCase())
-    })
-    
-    if (dbUser.email === allVolunteers.email) {
-      console.log('match found')
-    } else {
-      console.log('no matches found')
-    }
-  };
+  //   const newFilter = dbUser.filter((value) => {
+  //     return value.email
+  //       .toLowerCase()
+  //       .includes(allVolunteers.email.toLowerCase());
+  //   });
+
+  //   if (dbUser.email === allVolunteers.email) {
+  //     console.log(newFilter);
+  //   } else {
+  //     console.log('no matches found');
+  //   }
+  // };
 
   useEffect(() => {
-    
-findMatches()
+    // TODO
+    // call function to add database access to volunteer card
+    // findMatches();
 
     axios
       .get('http://localhost:8000/api/v1/volunteer')
@@ -309,8 +306,6 @@ findMatches()
         console.log(error);
       });
   }, []);
-   
-
 
   return (
     <>
@@ -348,26 +343,22 @@ findMatches()
       <Wrapper>
         <h4>All Records</h4>
         {!clicked && !showEditForm && (
-            <div className='jobs' ref={printRef}>
-              {allVolunteers.map((volunteer) => {
-                return (
-                  <>
-                    <div className='border-state'>
-                      {/* <OneVolunteer
+          <div className='jobs' ref={printRef}>
+            {allVolunteers.map((volunteer) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    {/* <OneVolunteer
                         key={volunteer.id}
                         {...volunteer}
                         events={volunteer.events.length}
                       /> */}
-                      <OneVolunteer
-                        key={volunteer.id}
-                        {...volunteer}
-                      />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-          
+                    <OneVolunteer key={volunteer.id} {...volunteer} />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         )}
 
         {clicked && !showEditForm && user.role === 'admin' && (
@@ -398,27 +389,23 @@ findMatches()
                 <TableView columns={editorColumns} data={allVolunteers} />
               )}
             </div>
-            
-              <div className='jobs' ref={printRef}>
-                {allVolunteers.map((volunteer) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        {/* <OneVolunteer
+
+            <div className='jobs' ref={printRef}>
+              {allVolunteers.map((volunteer) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      {/* <OneVolunteer
                           key={volunteer.id}
                           {...volunteer}
                           events={volunteer.events.length}
                         /> */}
-                        <OneVolunteer
-                          key={volunteer.id}
-                          {...volunteer}
-                        />
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-          
+                      <OneVolunteer key={volunteer.id} {...volunteer} />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </Wrapper>

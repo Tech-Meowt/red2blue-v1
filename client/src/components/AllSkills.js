@@ -31,6 +31,7 @@ export default function AllSkills() {
     { label: 'Elected official (past)', key: 'electedOfficialPast' },
     { label: 'Peer-to-peer texting management', key: 'p2pTextingMgmt' },
     { label: 'Peer-to-peer texting volunteer', key: 'p2pTextingVol' },
+    { label: 'Phone banking', key: 'phonebanking' },
     { label: 'Poll worker', key: 'pollWorker' },
     { label: 'Postcard planning + management', key: 'postcardMgmt' },
     { label: 'Postcard writing', key: 'postcardWriting' },
@@ -174,6 +175,13 @@ export default function AllSkills() {
       {
         Header: 'Peer-to-peer texting volunteer',
         accessor: 'p2pTextingVol',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+      },
+      {
+        Header: 'Phone banking',
+        accessor: 'phonebanking',
         disableSortBy: true,
         Filter: SelectColumnFilter,
         filter: 'equals',
