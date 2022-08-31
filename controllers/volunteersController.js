@@ -28,29 +28,29 @@ const create = async (req, res) => {
       zip,
       lifeSkillId,
       skillId,
-      events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
-            where: {
-              eventName: events,
-            },
-          },
-        ],
-      },
       // events: {
-      //   connectOrCreate:
-      //     events.map((event) => ({
-      //       where: {
-      //           eventName: event,
-      //       },
+      //   connectOrCreate: [
+      //     {
       //       create: {
-      //         eventName: event
-      //       }
-      //       }))
+      //         eventName: events,
+      //       },
+      //       where: {
+      //         eventName: events,
+      //       },
+      //     },
+      //   ],
       // },
+      events: {
+        connectOrCreate:
+          events.map((event) => ({
+            where: {
+                eventName: event,
+            },
+            create: {
+              eventName: event
+            }
+            }))
+      },
     },
     include: {
       events: true,

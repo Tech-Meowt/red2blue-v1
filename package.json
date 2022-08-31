@@ -23,10 +23,10 @@
   "devDependencies": {
     "concurrently": "^6.4.0",
     "nodemon": "^2.0.15",
-    "prisma": "^4.2.1"
+    "prisma": "^4.3.0"
   },
   "dependencies": {
-    "@prisma/client": "^4.2.1",
+    "@prisma/client": "^4.3.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
