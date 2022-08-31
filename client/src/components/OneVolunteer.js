@@ -154,12 +154,12 @@ const OneVolunteer = ({
             <div>
               <FaRegAddressCard className='icon' />
               Address:{' '}
-              <span className='status capitalize'>
+              <span className='status'>
                 {street !== null ? ` ${street}` : `Street not provided`}
               </span>
               <div className='address'>
                 <p className='status'>
-                  {city !== null ? ` ${city},` : `City not provided—`}
+                  {city !== null ? `${city}` : `City not provided—`}
                   {state !== null ? ` ${state}` : `State not provided`}
                 </p>
                 <p className='status'>
@@ -286,7 +286,7 @@ const OneVolunteer = ({
                       </span>
                       <div className='address'>
                         <p className='status'>
-                          {city !== null ? ` ${city},` : `City not provided—`}
+                          {city !== null ? ` ${city}` : `City not provided—`}
                           {state !== null ? ` ${state}` : `State not provided`}
                         </p>
                         <p className='status'>
