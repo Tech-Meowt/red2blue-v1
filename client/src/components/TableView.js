@@ -48,7 +48,7 @@ const TableView = ({ columns, data }) => {
       return <span className='r2b-red sort-icon'>{'   '}{<ImSortAlphaDesc />}</span>;
     } else if (column.isSorted && !column.isSortedDesc) {
       return <span className='r2b-red sort-icon'>{'   '}{<ImSortAlphaAsc />}</span>;
-    } else if (!column.isSorted && column.Header === 'First name' || column.Header === 'Last name' || column.Header === 'Events' || column.Header === 'State') {
+    } else if (!column.isSorted && column.Header === 'First name' || column.Header === 'Last name' || column.Header === 'Events' || column.Header === 'State' || column.Header === 'Date' || column.Header === 'Year' || column.Header === 'Volunteers') {
       return <span className='r2b-red sort-icon'>{<BiSortAlt2 />}</span>;
     }
   };

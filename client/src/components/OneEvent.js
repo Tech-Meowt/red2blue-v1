@@ -1,33 +1,28 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { EventDetails } from '.';
+import { FormRow, StateSelect } from '../components';
 import Modal from 'react-modal';
+import { useAppContext } from '../context/appContext';
+import { useNavigate } from 'react-router-dom';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';
 import { BsCalendarDate } from 'react-icons/bs';
+import { HiUserGroup } from 'react-icons/hi'
 
-const OneEvent = ({
-  _id,
-  eventName,
-  eventType,
-  eventDate,
-  eventYear,
-  // volunteers,
-}) => {
-  // eslint-disable-next-line
+const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers }) => {
   const initialState = {
     eventName,
     eventType,
     eventDate,
     eventYear,
-    // volunteers,
+    volunteers,
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [detailClicked, setDetailClicked] = useState(false);
+  const [values, setValues] = useState(initialState);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   // eslint-disable-next-line
   const [newValues, setNewValues] = useState({
@@ -35,17 +30,18 @@ const OneEvent = ({
     eventType,
     eventDate,
     eventYear,
-    // volunteers,
+    volunteers,
   });
+  const { user } = useAppContext();
 
   const getId = (e) => {
     const id = e.target.name;
     console.log(id);
-    setClicked(!clicked);
+    setClicked(true);
   };
 
-  const getIdDetails = (e) => {
-    setDetailClicked(!detailClicked);
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const openModal = () => {
@@ -66,7 +62,6 @@ const OneEvent = ({
     setAlertText('Delete successful!');
     setAlertType('success');
     closeModal(true);
-
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
@@ -93,10 +88,10 @@ const OneEvent = ({
         </header>
         <div className='content'>
           <div className='event-content'>
-            {/* <div>
+            <div>
               <HiUserGroup className='icon' />
-              Volunteers: <span className='status'>{volunteers.length}</span>
-            </div> */}
+              Volunteers: <span className='status'>{volunteers}</span>
+            </div>
             <div>
               <BiCategory className='icon' />
               Event Type: <span className='status'>{eventType}</span>
@@ -113,22 +108,12 @@ const OneEvent = ({
           </div>
           <footer>
             <div className='actions'>
-              {!detailClicked && (
+              {!clicked && user.role === 'admin' && (
                 <>
-                  <button
-                    className='details-btn button'
-                    name={_id}
-                    onClick={getIdDetails}
-                  >
-                    Details
-                  </button>
-                  <button className='button edit-btn' name={_id} onClick={getId}>
-                    Edit
-                  </button>
                   <button
                     type='button'
                     className='button delete-btn'
-                    name={_id}
+                    name={id}
                     onClick={openModal}
                   >
                     Delete
@@ -162,7 +147,8 @@ const OneEvent = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to permanently delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete
+                      this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
@@ -174,7 +160,7 @@ const OneEvent = ({
                       <button
                         onClick={deleteHandler}
                         className='btn-danger height'
-                        name={_id}
+                        name={id}
                       >
                         Delete
                       </button>
@@ -182,19 +168,12 @@ const OneEvent = ({
                   </Modal>
                 </>
               )}
-              <EventDetails
-                eventName={eventName}
-                eventType={eventType}
-                eventDate={eventDate}
-                eventYear={eventYear}
-                // volunteers={volunteers}
-              />
             </div>
           </footer>
         </div>
       </OneRecordWrapper>
     </>
   );
-};
+};;
 
 export default OneEvent;
