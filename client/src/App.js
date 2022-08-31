@@ -29,6 +29,7 @@ import {
   Events,
   Skills,
   AddVolunteer,
+  AddEvent,
 } from './pages/dashboard';
 import { useAppContext } from './context/appContext';
 
@@ -71,6 +72,7 @@ function App() {
           <Route path='/databases/volunteers' element={<Volunteers />} />
           <Route path='/databases/volunteers/add' element={<AddVolunteer />} />
           <Route path='/databases/events' element={<Events />} />
+          <Route path='/databases/events/add' element={<AddEvent />} />
           <Route path='/databases/user-accounts' element={<UserAccounts />} />
           <Route path='/databases/volunteer-skills' element={<Skills />} />
         </Route>

@@ -57,12 +57,14 @@ const Databases = () => {
             )}
 
             {/* events—all, yearly—2019-2022 */}
+            {user.eventsDb === true && (
+              <>
             <div>
-              <Link to={'/'}>
-                <h5>Events</h5>
+              <Link to={'/databases/events'}>
+                <h5>Events | All Years</h5>
               </Link>
             </div>
-            <div>
+            {/* <div>
               <Link to={'/'}>
                 <h5>Events | 2022</h5>
               </Link>
@@ -81,7 +83,10 @@ const Databases = () => {
               <Link to={'/'}>
                 <h5>Events | 2019</h5>
               </Link>
-            </div>
+                </div> */}
+                </>
+            )}
+            
           </div>
         </div>
       </Wrapper>

@@ -17,6 +17,7 @@ import Volunteers from './Volunteers';
 import Events from './Events';
 import Skills from './Skills';
 import AddVolunteer from './AddVolunteer';
+import AddEvent from './AddEvent';
 
 export {
   Profile,
@@ -37,5 +38,6 @@ export {
   Volunteers,
   Events,
   Skills,
-  AddVolunteer
+  AddVolunteer,
+  AddEvent,
 };
