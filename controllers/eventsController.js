@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
 
 const create = async (req, res) => {
-  const { eventName, eventDate, eventType, eventYear } = req.body;
+  const { eventName, eventDate, eventType, eventYear, volunteers } = req.body;
 
   const event = await prisma.event.create({
     data: {
@@ -11,13 +11,22 @@ const create = async (req, res) => {
       eventDate,
       eventType,
       eventYear,
+      volunteers,
     },
+    include: {
+      volunteers: true,
+    }
   });
   res.status(200).json({ event });
 };
 
 const getAll = async (req, res) => {
-  const event = await prisma.event.findMany();
+  const event = await prisma.event.findMany({
+    include: {
+      volunteers: true,
+    }
+  });
+  
   res.status(200).json({ event });
 };
 
