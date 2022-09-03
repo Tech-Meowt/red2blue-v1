@@ -148,9 +148,17 @@ const OneLifeSkill = ({
     setModalIsOpen(false);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const updateLifeSkill = (id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/life/${id}`, values)
+      .patch(baseURL + `/api/v1/life/${id}`, values)
       .then((res) => {
         setNewValues(res.data.lifeSkills);
       });
@@ -170,7 +178,7 @@ const OneLifeSkill = ({
 
   const deleteHandler = (e) => {
     axios
-      .delete(`http://localhost:8000/api/v1/life/${e.target.name}`)
+      .delete(baseURL + `/api/v1/life/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
       });

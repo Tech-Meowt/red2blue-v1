@@ -75,9 +75,17 @@ const DbUser = ({
     setModalIsOpen(false);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const updateUser = (_id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/auth/${_id}`, values)
+      .patch(baseURL + `/api/v1/auth/${_id}`, values)
       .then((res) => {
         setNewValues(res.data);
         console.log(res.data);
@@ -98,7 +106,7 @@ const DbUser = ({
 
   const deleteHandler = (e) => {
     axios
-      .delete(`http://localhost:8000/api/v1/auth/${e.target.name}`)
+      .delete(baseURL + `/api/v1/auth/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
       });

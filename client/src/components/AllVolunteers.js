@@ -266,7 +266,7 @@ export default function AllVolunteers() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
-      .get('http://localhost:8000/api/v1/volunteer')
+      .get(baseURL + '/api/v1/volunteer')
       .then((res) => {
         setAllVolunteers(res.data.volunteer);
       })
@@ -275,7 +275,7 @@ export default function AllVolunteers() {
       });
 
     axios
-      .get('http://localhost:8000/api/v1/volunteer')
+      .get(baseURL + '/api/v1/volunteer')
       .then((res) => {
         setVolunteersList(res.data.volunteer);
       })

@@ -54,9 +54,17 @@ const OneSandbox = ({
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const updateSandbox = (id) => {
     axios
-      .patch(`http://localhost:8000/api/v1/sandbox/${id}`, values)
+      .patch(baseURL + `/api/v1/sandbox/${id}`, values)
       .then((res) => {
         setNewValues(res.data.sandbox);
       });
@@ -84,7 +92,7 @@ const OneSandbox = ({
 
   const deleteHandler = (e) => {
     axios
-      .delete(`http://localhost:8000/api/v1/sandbox/${e.target.name}`)
+      .delete(baseURL + `/api/v1/sandbox/${e.target.name}`)
       .then((res) => {
         setValues(res.data);
       });
