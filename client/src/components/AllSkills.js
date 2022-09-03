@@ -484,11 +484,19 @@ export default function AllSkills() {
     setClicked(!clicked);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
-      .get('http://localhost:8000/api/v1/political/')
+      .get(baseURL + '/api/v1/political/')
       .then((res) => {
         setAllPoliticalSkills(res.data.politicalSkills);
       })
@@ -497,7 +505,7 @@ export default function AllSkills() {
       });
 
     axios
-      .get('http://localhost:8000/api/v1/life/')
+      .get(baseURL + '/api/v1/life/')
       .then((res) => {
         setAllLifeSkills(res.data.lifeSkills);
       })

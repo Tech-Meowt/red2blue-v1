@@ -14,6 +14,13 @@ export default function ResetPassword() {
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
 
   const resetPasswordHandler = async (e) => {
     e.preventDefault();
@@ -27,7 +34,7 @@ export default function ResetPassword() {
     }
 
     try {
-      const { data } = await axios.patch(`http://localhost:8000/api/v1/auth/passwordReset/${resetToken}`, { password })
+      const { data } = await axios.patch(baseURL + `/api/v1/auth/passwordReset/${resetToken}`, { password })
       setShowAlert(true);
       setAlertText(`Password updated successfully! Redirecting...`)
       setAlertType('success')

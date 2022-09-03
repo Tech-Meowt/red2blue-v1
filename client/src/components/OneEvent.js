@@ -52,9 +52,17 @@ const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, 
     setModalIsOpen(false);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const deleteHandler = (e) => {
     axios
-      .delete(`http://localhost:8000/api/v1/event/${e.target.name}`)
+      .delete(baseURL + `/api/v1/event/${e.target.name}`)
       .then((res) => {
         setNewValues(res.data);
       });

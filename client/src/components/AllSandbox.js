@@ -131,11 +131,19 @@ export default function AllSandbox() {
     setClicked(!clicked);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
-      .get('http://localhost:8000/api/v1/sandbox')
+      .get(baseURL + '/api/v1/sandbox')
       .then((res) => {
         setAllSandbox(res.data.sandbox);
       })
@@ -144,7 +152,7 @@ export default function AllSandbox() {
       });
 
     axios
-      .get('http://localhost:8000/api/v1/sandbox')
+      .get(baseURL + '/api/v1/sandbox')
       .then((res) => {
         setSandboxList(res.data.sandbox);
       })

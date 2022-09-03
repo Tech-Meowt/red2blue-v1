@@ -199,12 +199,20 @@ export default function AllEvents() {
   //     console.log(vol.firstName)
   //   })
   // })
+  
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
-      .get('http://localhost:8000/api/v1/event')
+      .get(baseURL + '/api/v1/event')
       .then((res) => {
         setAllEvents(res.data.event);
       })
@@ -213,7 +221,7 @@ export default function AllEvents() {
       });
 
     axios
-      .get('http://localhost:8000/api/v1/event')
+      .get(baseURL + '/api/v1/event')
       .then((res) => {
         setEventsList(res.data.event);
       })
