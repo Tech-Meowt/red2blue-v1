@@ -195,6 +195,7 @@ export default function AllEvents() {
   // const volNames = allEvents.map((event) => {
   //   const eventVols = event.volunteers
   //   eventVols.map((vol) => {
+  //     return vol.firstName,
   //     console.log(vol.firstName)
   //   })
   // })
@@ -224,16 +225,17 @@ export default function AllEvents() {
   return (
     <>
       <h3 className='r2b-red'>Database: Events | All Years</h3>
-      <EventsWrapper>
-        <div className='actions'>
-          <Link to={'/databases/events/add'}>
-            <button className='button edit-btn actions space'>
-              Add New Record
-            </button>
-          </Link>
-        </div>
-      </EventsWrapper>
-
+      {user.role !== 'viewer' && (
+        <EventsWrapper>
+          <div className='actions'>
+            <Link to={'/databases/events/add'}>
+              <button className='button edit-btn actions space'>
+                Add New Record
+              </button>
+            </Link>
+          </div>
+        </EventsWrapper>
+      )}
       <h4 className='space-larger'>🕵️ Need to search for something?</h4>
       <h5 className='r2b-blue'>
         👉 Click on 'View As Table' to sort and filter your data
@@ -266,6 +268,8 @@ export default function AllEvents() {
                       key={event.id}
                       {...event}
                       volunteers={event.volunteers.length}
+                      // volFirstName={event.volunteers.map((fName) => fName.firstName)}
+                      // volLastName={event.volunteers.map((lName) => lName.lastName)}
                     />
                   </div>
                 </>

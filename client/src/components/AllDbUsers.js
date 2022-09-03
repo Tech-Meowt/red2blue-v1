@@ -16,6 +16,14 @@ export default function AllDbUsers() {
   const [showEditForm, setShowEditForm] = useState(false);
   const printRef = useRef();
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const usersDbHeaders = [
     { label: 'First name', key: 'firstName' },
     { label: 'Last name', key: 'lastName' },
@@ -190,7 +198,7 @@ export default function AllDbUsers() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
     axios
-      .get('http://localhost:8000/api/v1/auth/allUsers')
+      .get(baseURL + '/api/v1/auth/allUsers')
       .then((res) => {
         setDbUsers(res.data);
       })
@@ -199,7 +207,7 @@ export default function AllDbUsers() {
       });
 
     axios
-      .get('http://localhost:8000/api/v1/auth/allUsers')
+      .get(baseURL + '/api/v1/auth/allUsers')
       .then((res) => {
         setUsersList(res.data);
       })
@@ -207,6 +215,8 @@ export default function AllDbUsers() {
         console.log(error);
       });
   }, []);
+
+  console.log(`your current base url is ${baseURL}`);
 
   return (
     <>

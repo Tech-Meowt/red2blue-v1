@@ -256,7 +256,7 @@ select:invalid {
 
 .back-btn:hover {
   color: var(--r2b-red);
-  /* box-shadow: var(--shadow-3); */
+  box-shadow: var(--shadow-3);
   transform: translateY(-0.25rem);
   transition: .5s ease-in-out;
 }

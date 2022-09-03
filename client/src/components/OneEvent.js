@@ -10,7 +10,7 @@ import { FaBriefcase } from 'react-icons/fa';
 import { BsCalendarDate } from 'react-icons/bs';
 import { HiUserGroup } from 'react-icons/hi'
 
-const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers }) => {
+const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, volFirstName, volLastName }) => {
   const initialState = {
     eventName,
     eventType,
