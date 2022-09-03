@@ -18,6 +18,10 @@ const Profile = () => {
   // eslint-disable-next-line
   const [volunteersDb, setVolunteersDb] = useState(user?.volunteersDb);
   // eslint-disable-next-line
+  const [skillsDb, setSkillsDb] = useState(user?.skillsDb);
+  // eslint-disable-next-line
+  const [eventsDb, setEventsDb] = useState(user?.eventsDb);
+  // eslint-disable-next-line
   const [role, setRole] = useState(user?.role);
 
   const handleSubmit = (e) => {
@@ -26,7 +30,7 @@ const Profile = () => {
       displayAlert();
       return;
     }
-    updateUser({ firstName, lastName, email, usersDb, volunteersDb, role });
+    updateUser({ firstName, lastName, email, usersDb, volunteersDb, skillsDb, eventsDb, role });
   };
 
   const handleCancel = (e) => {
@@ -112,6 +116,6 @@ const Profile = () => {
       </Wrapper>
     </>
   );
-};
+};;;
 
 export default Profile;

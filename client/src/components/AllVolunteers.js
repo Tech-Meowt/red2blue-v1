@@ -289,16 +289,17 @@ export default function AllVolunteers() {
   return (
     <>
       <h3 className='r2b-red'>Database: Volunteers</h3>
-      <VolunteersWrapper>
-        <div className='actions'>
-          <Link to={'/databases/volunteers/add'}>
-            <button className='button edit-btn actions space'>
-              Add New Record
-            </button>
-          </Link>
-        </div>
-      </VolunteersWrapper>
-
+      {user.role !== 'viewer' && (
+        <VolunteersWrapper>
+          <div className='actions'>
+            <Link to={'/databases/volunteers/add'}>
+              <button className='button edit-btn actions space'>
+                Add New Record
+              </button>
+            </Link>
+          </div>
+        </VolunteersWrapper>
+      )}
       <h4 className='space-larger'>🕵️ Need to search for something?</h4>
       <h5 className='r2b-blue'>
         👉 Click on 'View As Table' to sort and filter your data
@@ -322,23 +323,21 @@ export default function AllVolunteers() {
       <Wrapper>
         <h4>All Records</h4>
         {!clicked && !showEditForm && (
-          
-            <div className='jobs' ref={printRef}>
-              {allVolunteers.map((volunteer) => {
-                return (
-                  <>
-                    <div className='border-state'>
-                      <OneVolunteer
-                        key={volunteer.id}
-                        {...volunteer}
-                        events={volunteer.events.length}
-                      />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-          
+          <div className='jobs' ref={printRef}>
+            {allVolunteers.map((volunteer) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    <OneVolunteer
+                      key={volunteer.id}
+                      {...volunteer}
+                      events={volunteer.events.length}
+                    />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         )}
 
         {clicked && !showEditForm && user.role === 'admin' && (
@@ -369,23 +368,22 @@ export default function AllVolunteers() {
                 <TableView columns={editorColumns} data={allVolunteers} />
               )}
             </div>
-            
-              <div className='jobs' ref={printRef}>
-                {allVolunteers.map((volunteer) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <OneVolunteer
-                          key={volunteer.id}
-                          {...volunteer}
-                          events={volunteer.events.length}
-                        />
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-          
+
+            <div className='jobs' ref={printRef}>
+              {allVolunteers.map((volunteer) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <OneVolunteer
+                        key={volunteer.id}
+                        {...volunteer}
+                        events={volunteer.events.length}
+                      />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </Wrapper>
