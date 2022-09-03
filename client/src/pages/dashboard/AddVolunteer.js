@@ -19,7 +19,6 @@ export default function AddVolunteer() {
     phone: '',
     events: 'none',
   });
-
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
   // eslint-disable-next-line
@@ -33,7 +32,7 @@ export default function AddVolunteer() {
     }
 
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, []);
+  }, [navigate, user.role, user.usersDb]);
 
   const handleChange = (e) => {
     setVolunteerInfo((data) => ({ ...data, [e.target.name]: e.target.value }));
@@ -106,7 +105,7 @@ export default function AddVolunteer() {
       phone: '',
       events: '',
     });
-    navigate('/volunteers');
+    navigate('/databases/volunteers');
   };
 
   return (
