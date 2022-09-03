@@ -33,6 +33,14 @@ export default function AddEvent() {
     setEventInfo((data) => ({ ...data, [e.target.name]: e.target.value }));
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   const createRecord = (e) => {
     e.preventDefault();
     // eslint-disable-next-line
@@ -44,7 +52,7 @@ export default function AddEvent() {
     }
 
     axios
-      .post('http://localhost:8000/api/v1/event/addEvent', eventInfo)
+      .post(baseURL + '/api/v1/event/addEvent', eventInfo)
       .then((res) => {
         setEventInfo({
           eventName: '',

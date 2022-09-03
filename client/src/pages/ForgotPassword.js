@@ -12,11 +12,19 @@ export default function ForgotPassword() {
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
 
+let baseURL = '';
+
+if (process.env.NODE_ENV === 'development') {
+  baseURL = 'http://localhost:8000';
+} else {
+  baseURL = 'https://r2bdb.herokuapp.com';
+}
+  
 const forgotPasswordHandler = async (e) => {
   e.preventDefault();
 
   try {
-    const { data } = await axios.post('http://localhost:8000/api/v1/auth/forgotPassword', { email });
+    const { data } = await axios.post(baseURL + '/api/v1/auth/forgotPassword', { email });
     setShowAlert(true);
     setAlertText(`Password reset email sent to ${email}`)
     setAlertType('success');

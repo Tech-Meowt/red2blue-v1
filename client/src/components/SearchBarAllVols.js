@@ -31,9 +31,17 @@ const SearchBarAllVols = ({
   const [allResults, setAllResults] = useState([]);
   const printRef = useRef();
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   useEffect(() => {
     axios
-      .get('http://localhost:8000/api/v1/volunteer')
+      .get(baseURL + '/api/v1/volunteer')
       .then((res) => {
         setAllResults(res.data.volunteer);
       })
