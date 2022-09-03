@@ -262,6 +262,14 @@ export default function AllVolunteers() {
     setClicked(!clicked);
   };
 
+  let baseURL = '';
+
+  if (process.env.NODE_ENV === 'development') {
+    baseURL = 'http://localhost:8000';
+  } else {
+    baseURL = 'https://r2bdb.herokuapp.com';
+  }
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
