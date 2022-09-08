@@ -8,9 +8,18 @@ import { useNavigate } from 'react-router-dom';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';
 import { BsCalendarDate } from 'react-icons/bs';
-import { HiUserGroup } from 'react-icons/hi'
+import { HiUserGroup } from 'react-icons/hi';
 
-const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, volFirstName, volLastName }) => {
+const OneEvent = ({
+  id,
+  eventName,
+  eventType,
+  eventDate,
+  eventYear,
+  volunteers,
+  volFirstName,
+  volLastName,
+}) => {
   const initialState = {
     eventName,
     eventType,
@@ -55,17 +64,15 @@ const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, 
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/event/${e.target.name}`)
-      .then((res) => {
-        setNewValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/event/${e.target.name}`).then((res) => {
+      setNewValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
@@ -182,6 +189,6 @@ const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, 
       </OneRecordWrapper>
     </>
   );
-};;
+};
 
 export default OneEvent;

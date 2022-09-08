@@ -78,18 +78,16 @@ const DbUser = ({
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const updateUser = (_id) => {
-    axios
-      .patch(baseURL + `/api/v1/auth/${_id}`, values)
-      .then((res) => {
-        setNewValues(res.data);
-        console.log(res.data);
-      });
+    axios.patch(baseURL + `/api/v1/auth/${_id}`, values).then((res) => {
+      setNewValues(res.data);
+      console.log(res.data);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -105,11 +103,9 @@ const DbUser = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/auth/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/auth/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
@@ -235,7 +231,8 @@ const DbUser = ({
                     }}
                   >
                     <h3 className='modal-header'>
-                      🚨 Heads up! Are you sure you want to permanently delete this record?
+                      🚨 Heads up! Are you sure you want to permanently delete
+                      this record?
                     </h3>
                     <div className='confirm-btns'>
                       <button
@@ -433,7 +430,8 @@ const DbUser = ({
                       }}
                     >
                       <h3 className='modal-header'>
-                        🚨 Heads up! Are you sure you want to permanently delete this record?
+                        🚨 Heads up! Are you sure you want to permanently delete
+                        this record?
                       </h3>
                       <div className='confirm-btns'>
                         <button

@@ -1,9 +1,9 @@
-import { useState, useRef , useEffect} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { OneVolunteer } from '.';
-import { CSVLink } from 'react-csv'
+import { CSVLink } from 'react-csv';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import axios from 'axios'
+import axios from 'axios';
 
 const SearchBarAllVols = ({
   placeholder,
@@ -34,9 +34,9 @@ const SearchBarAllVols = ({
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   useEffect(() => {
@@ -151,13 +151,19 @@ const SearchBarAllVols = ({
         {filteredData.length >= 1 && (
           <>
             <div className='space'>
-              <button className='button btn-success no-margin' onClick={handleDownloadPdf}>
+              <button
+                className='button btn-success no-margin'
+                onClick={handleDownloadPdf}
+              >
                 Download PDF
               </button>
               <CSVLink {...csvReport}>
                 <button className='button btn-success'>Export as CSV</button>
               </CSVLink>
-              <button className='button btn-success no-margin' onClick={handleClick}>
+              <button
+                className='button btn-success no-margin'
+                onClick={handleClick}
+              >
                 {clicked ? 'View As List' : 'View As Table'}
               </button>
             </div>

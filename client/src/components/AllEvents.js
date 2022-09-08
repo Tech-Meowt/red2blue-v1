@@ -199,13 +199,13 @@ export default function AllEvents() {
   //     console.log(vol.firstName)
   //   })
   // })
-  
+
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   useEffect(() => {

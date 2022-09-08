@@ -41,9 +41,9 @@ export default function AddVolunteer() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const createRecord = (e) => {
@@ -67,10 +67,7 @@ export default function AddVolunteer() {
     }
 
     axios
-      .post(baseURL + 
-        '/api/v1/volunteer/addVolunteer',
-        volunteerInfo
-      )
+      .post(baseURL + '/api/v1/volunteer/addVolunteer', volunteerInfo)
       .then((res) => {
         setVolunteerInfo({
           firstName: '',

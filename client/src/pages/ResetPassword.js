@@ -17,9 +17,9 @@ export default function ResetPassword() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const resetPasswordHandler = async (e) => {
@@ -30,26 +30,29 @@ export default function ResetPassword() {
       setConfirmPassword('');
       setShowAlert(true);
       setAlertText(`Passwords do not match`);
-      setAlertType('danger')
+      setAlertType('danger');
     }
 
     try {
-      const { data } = await axios.patch(baseURL + `/api/v1/auth/passwordReset/${resetToken}`, { password })
+      const { data } = await axios.patch(
+        baseURL + `/api/v1/auth/passwordReset/${resetToken}`,
+        { password }
+      );
       setShowAlert(true);
-      setAlertText(`Password updated successfully! Redirecting...`)
-      setAlertType('success')
+      setAlertText(`Password updated successfully! Redirecting...`);
+      setAlertType('success');
       setTimeout(() => {
         navigate('/');
-      }, 3000)
+      }, 3000);
     } catch (error) {
-      console.log(error.response.data.data)
+      console.log(error.response.data.data);
       setPassword('');
       setConfirmPassword('');
       setShowAlert(true);
       setAlertText('There was an error. Please try again...');
-      setAlertType('danger')
+      setAlertType('danger');
     }
-  }
+  };
 
   return (
     <>

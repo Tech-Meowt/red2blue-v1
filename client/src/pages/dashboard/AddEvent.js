@@ -36,9 +36,9 @@ export default function AddEvent() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const createRecord = (e) => {
@@ -140,7 +140,6 @@ export default function AddEvent() {
                 <option value='' disabled selected hidden>
                   --Select an option--
                 </option>
-
               </select>
             </div>
           </form>

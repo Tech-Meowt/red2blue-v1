@@ -151,17 +151,15 @@ const OneLifeSkill = ({
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const updateLifeSkill = (id) => {
-    axios
-      .patch(baseURL + `/api/v1/life/${id}`, values)
-      .then((res) => {
-        setNewValues(res.data.lifeSkills);
-      });
+    axios.patch(baseURL + `/api/v1/life/${id}`, values).then((res) => {
+      setNewValues(res.data.lifeSkills);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -177,11 +175,9 @@ const OneLifeSkill = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/life/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/life/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
@@ -368,8 +364,7 @@ const OneLifeSkill = ({
             </div>
             <div>
               <ImPointRight className='icon' />
-              Anything else:{' '}
-              <span className='status'>{anythingElse}</span>
+              Anything else: <span className='status'>{anythingElse}</span>
             </div>
           </div>
         </div>

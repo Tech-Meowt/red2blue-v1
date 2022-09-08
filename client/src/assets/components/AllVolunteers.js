@@ -17,7 +17,7 @@ export default function AllVolunteers() {
   const [showEditForm, setShowEditForm] = useState(false);
   const printRef = useRef();
   const { user } = useAppContext();
-  
+
   const headers = [
     { label: 'First name', key: 'firstName' },
     { label: 'Last name', key: 'lastName' },
@@ -25,7 +25,7 @@ export default function AllVolunteers() {
     { label: 'City', key: 'city' },
     { label: 'State', key: 'state' },
     { label: 'Phone', key: 'phone' },
-    { label: 'Events attended (subtract 1)', key: 'events.length' }
+    { label: 'Events attended (subtract 1)', key: 'events.length' },
   ];
 
   const data = volunteersList;
@@ -35,7 +35,7 @@ export default function AllVolunteers() {
     headers: headers,
     filename: 'volunteers_report.csv',
   };
-  
+
   const handleDownloadPdf = async () => {
     const element = printRef.current;
     const canvas = await html2canvas(element);
@@ -47,7 +47,7 @@ export default function AllVolunteers() {
     let heightLeft = imgHeight;
 
     // const pdf = new jsPDF('p', 'mm');
-    const pdf = new jsPDF({orientation: 'landscape'});
+    const pdf = new jsPDF({ orientation: 'landscape' });
     let position = 0;
 
     pdf.addImage(data, 'PNG', 0, position, imgWidth, imgHeight);
@@ -91,11 +91,7 @@ export default function AllVolunteers() {
         accessor: (d) => {
           return (
             <Link to={`/databases/volunteers/#${d.id}`}>
-              <button
-                className='button delete-btn'
-                onClick={getId}
-                name={d.id}
-              >
+              <button className='button delete-btn' onClick={getId} name={d.id}>
                 Delete
               </button>
             </Link>
@@ -137,12 +133,12 @@ export default function AllVolunteers() {
         id: 'events',
         accessor: (d) => {
           if (d.events.length - 1 <= 0) {
-            return '0'
+            return '0';
           } else {
-            return d.events.length - 1
+            return d.events.length - 1;
           }
-        }
-      }
+        },
+      },
     ],
     []
   );
@@ -255,7 +251,6 @@ export default function AllVolunteers() {
     []
   );
 
-
   const handleClick = (e) => {
     e.preventDefault();
 
@@ -265,9 +260,9 @@ export default function AllVolunteers() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   useEffect(() => {
@@ -291,8 +286,6 @@ export default function AllVolunteers() {
         console.log(error);
       });
   }, []);
-   
-
 
   return (
     <>

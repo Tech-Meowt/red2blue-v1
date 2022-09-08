@@ -19,9 +19,9 @@ export default function AllDbUsers() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const usersDbHeaders = [
@@ -245,19 +245,17 @@ export default function AllDbUsers() {
         <h4>All Records</h4>
 
         {!clicked && !showEditForm && (
-          
-            <div className='jobs' ref={printRef}>
-              {dbUsers.map((dbUser) => {
-                return (
-                  <>
-                    <div className='border-state'>
-                      <DbUser key={dbUser._id} {...dbUser} />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-        
+          <div className='jobs' ref={printRef}>
+            {dbUsers.map((dbUser) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    <DbUser key={dbUser._id} {...dbUser} />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         )}
 
         {clicked && !showEditForm && (
@@ -271,17 +269,17 @@ export default function AllDbUsers() {
             <div ref={printRef}>
               <TableView columns={columns} data={dbUsers} />
             </div>
-              <div className='jobs' ref={printRef}>
-                {dbUsers.map((dbUser) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <DbUser key={dbUser._id} {...dbUser} />
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
+            <div className='jobs' ref={printRef}>
+              {dbUsers.map((dbUser) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <DbUser key={dbUser._id} {...dbUser} />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </Wrapper>

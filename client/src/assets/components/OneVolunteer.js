@@ -97,17 +97,15 @@ const OneVolunteer = ({
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   const updateVolunteer = (id) => {
-    axios
-      .patch(baseURL + `/api/v1/volunteer/${id}`, values)
-      .then((res) => {
-        setNewValues(res.data.volunteer);
-      });
+    axios.patch(baseURL + `/api/v1/volunteer/${id}`, values).then((res) => {
+      setNewValues(res.data.volunteer);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -123,11 +121,9 @@ const OneVolunteer = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/volunteer/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/volunteer/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');

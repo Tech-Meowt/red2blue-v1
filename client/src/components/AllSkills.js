@@ -487,9 +487,9 @@ export default function AllSkills() {
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = 'http://localhost:8000';
+    baseURL = process.env.DEV_URL;
   } else {
-    baseURL = 'https://r2bdb.herokuapp.com';
+    baseURL = process.env.PROD_URL;
   }
 
   useEffect(() => {
@@ -519,7 +519,7 @@ export default function AllSkills() {
 
     setPoliticalToggle(true);
     setLifeToggle(false);
-    setShowNapoleon(false)
+    setShowNapoleon(false);
   };
 
   const handleLifeToggle = (e) => {
@@ -527,7 +527,7 @@ export default function AllSkills() {
 
     setLifeToggle(true);
     setPoliticalToggle(false);
-    setShowNapoleon(false)
+    setShowNapoleon(false);
   };
 
   return (
@@ -583,19 +583,17 @@ export default function AllSkills() {
             <h4 className='space'>All Records</h4>
 
             {!clicked ? (
-      
-                <div className='jobs' ref={printRef}>
-                  {allPoliticalSkills.map((polSkill) => {
-                    return (
-                      <>
-                        <div className='border-state'>
-                          <OnePoliticalSkill key={polSkill.id} {...polSkill} />
-                        </div>
-                      </>
-                    );
-                  })}
-                </div>
-
+              <div className='jobs' ref={printRef}>
+                {allPoliticalSkills.map((polSkill) => {
+                  return (
+                    <>
+                      <div className='border-state'>
+                        <OnePoliticalSkill key={polSkill.id} {...polSkill} />
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
             ) : (
               <div ref={printRef}>
                 <TableView columns={columns} data={allPoliticalSkills} />
@@ -633,19 +631,17 @@ export default function AllSkills() {
             <h4>All Records</h4>
 
             {!clicked ? (
-   
-                <div className='jobs' ref={printRef}>
-                  {allLifeSkills.map((lifeSkill) => {
-                    return (
-                      <>
-                        <div className='border-state'>
-                          <OneLifeSkill key={lifeSkill.id} {...lifeSkill} />
-                        </div>
-                      </>
-                    );
-                  })}
-                </div>
-      
+              <div className='jobs' ref={printRef}>
+                {allLifeSkills.map((lifeSkill) => {
+                  return (
+                    <>
+                      <div className='border-state'>
+                        <OneLifeSkill key={lifeSkill.id} {...lifeSkill} />
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
             ) : (
               <div ref={printRef}>
                 <TableView columns={lifeSkillColumns} data={allLifeSkills} />
