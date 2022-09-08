@@ -57,9 +57,9 @@ const OneSandbox = ({
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {
-    baseURL = process.env.DEV_URL;
+    baseURL = 'http://localhost:8000';
   } else {
-    baseURL = process.env.PROD_URL;
+    baseURL = 'https://r2bdb.herokuapp.com';
   }
 
   const updateSandbox = (id) => {
