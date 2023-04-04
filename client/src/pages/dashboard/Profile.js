@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormRow, Alert } from '../../components';
 import { useAppContext } from '../../context/appContext';
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } =
@@ -30,7 +30,16 @@ const Profile = () => {
       displayAlert();
       return;
     }
-    updateUser({ firstName, lastName, email, usersDb, volunteersDb, skillsDb, eventsDb, role });
+    updateUser({
+      firstName,
+      lastName,
+      email,
+      usersDb,
+      volunteersDb,
+      skillsDb,
+      eventsDb,
+      role,
+    });
   };
 
   const handleCancel = (e) => {
@@ -63,16 +72,13 @@ const Profile = () => {
               value={lastName}
               handleChange={(e) => setLastName(e.target.value)}
             />
-            <div className='form-row'>
-              <label htmlFor='email' className='form-label r2b-red'>
-                email*
-              </label>
-              <input
+            <div className='r2b-red'>
+              <FormRow
                 type='email'
+                labelText={'Email*'}
+                name='email'
                 value={email}
                 handleChange={(e) => setEmail(e.target.value)}
-                name='email'
-                className='form-input'
               />
             </div>
             <div className='form-row'>
@@ -82,8 +88,9 @@ const Profile = () => {
               <input
                 type='text'
                 placeholder={role}
+                readOnly
                 name='role'
-                className='form-input no-cursor'
+                className='form-input cursor-not-allowed'
               />
             </div>
             <>
@@ -116,6 +123,6 @@ const Profile = () => {
       </Wrapper>
     </>
   );
-};;;
+};
 
 export default Profile;
