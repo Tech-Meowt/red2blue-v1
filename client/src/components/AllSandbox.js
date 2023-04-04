@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import SandboxWrapper from '../assets/wrappers/Sandbox';
-import { OneSandbox, TableView } from '../components';
+import { OneSandbox, TableView } from '.';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { CSVLink } from 'react-csv';
@@ -22,7 +22,7 @@ export default function AllSandbox() {
     { label: 'Email', key: 'email' },
     { label: 'State', key: 'state' },
     { label: 'Phone', key: 'phone' },
-    { label: 'Interests', key: 'interests' }
+    { label: 'Interests', key: 'interests' },
   ];
 
   const sandboxData = allSandbox;
@@ -30,8 +30,8 @@ export default function AllSandbox() {
   const sandboxReport = {
     data: sandboxData,
     headers: sandboxHeaders,
-    filename: 'sandbox_report.csv'
-  }
+    filename: 'sandbox_report.csv',
+  };
 
   const handleDownloadPdf = async () => {
     const element = printRef.current;
@@ -119,7 +119,7 @@ export default function AllSandbox() {
         id: 'interests',
         accessor: (d) => {
           return d.interests != '' ? `${d.interests}` : 'None';
-        }
+        },
       },
     ],
     []
@@ -196,19 +196,17 @@ export default function AllSandbox() {
         <h4>All Records</h4>
 
         {!clicked && !showEditForm && (
-          
-            <div className='jobs' ref={printRef}>
-              {allSandbox.map((sandbox) => {
-                return (
-                  <>
-                    <div className='border-state'>
-                      <OneSandbox key={sandbox.id} {...sandbox} />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-         
+          <div className='jobs' ref={printRef}>
+            {allSandbox.map((sandbox) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    <OneSandbox key={sandbox.id} {...sandbox} />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         )}
 
         {clicked && !showEditForm && (
@@ -223,18 +221,17 @@ export default function AllSandbox() {
               <TableView columns={columns} data={allSandbox} />
             </div>
 
-              <div className='jobs' ref={printRef}>
-                {allSandbox.map((sandbox) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <OneSandbox key={sandbox._id} {...sandbox} />
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
-
+            <div className='jobs' ref={printRef}>
+              {allSandbox.map((sandbox) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <OneSandbox key={sandbox._id} {...sandbox} />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </Wrapper>

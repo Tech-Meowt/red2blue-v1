@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import EventsWrapper from '../assets/wrappers/EventsWrapper.js';
 import Wrapper from '../assets/wrappers/AllDbUsers.js';
-import { OneEvent, TableView } from '../components';
+import { OneEvent, TableView } from '.';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import axios from 'axios';
@@ -199,7 +199,7 @@ export default function AllEvents() {
   //     console.log(vol.firstName)
   //   })
   // })
-  
+
   let baseURL = '';
 
   if (process.env.NODE_ENV === 'development') {

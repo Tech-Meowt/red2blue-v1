@@ -1,16 +1,25 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '../components';
+import { FormRow, StateSelect } from '.';
 import Modal from 'react-modal';
 import { useAppContext } from '../context/appContext';
 import { useNavigate } from 'react-router-dom';
 import { BiCategory } from 'react-icons/bi';
 import { FaBriefcase } from 'react-icons/fa';
 import { BsCalendarDate } from 'react-icons/bs';
-import { HiUserGroup } from 'react-icons/hi'
+import { HiUserGroup } from 'react-icons/hi';
 
-const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, volFirstName, volLastName }) => {
+const OneEvent = ({
+  id,
+  eventName,
+  eventType,
+  eventDate,
+  eventYear,
+  volunteers,
+  volFirstName,
+  volLastName,
+}) => {
   const initialState = {
     eventName,
     eventType,
@@ -61,11 +70,9 @@ const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, 
   }
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/event/${e.target.name}`)
-      .then((res) => {
-        setNewValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/event/${e.target.name}`).then((res) => {
+      setNewValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
@@ -182,6 +189,6 @@ const OneEvent = ({ id, eventName, eventType, eventDate, eventYear, volunteers, 
       </OneRecordWrapper>
     </>
   );
-};;
+};
 
 export default OneEvent;

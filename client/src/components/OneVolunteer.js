@@ -1,7 +1,7 @@
 import OneRecordWrapper from '../assets/wrappers/OneRecordWrapper';
 import { useState } from 'react';
 import axios from 'axios';
-import { FormRow, StateSelect } from '../components';
+import { FormRow, StateSelect } from '.';
 import Modal from 'react-modal';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { AiOutlinePhone, AiOutlineMail } from 'react-icons/ai';
@@ -103,11 +103,9 @@ const OneVolunteer = ({
   }
 
   const updateVolunteer = (id) => {
-    axios
-      .patch(baseURL + `/api/v1/volunteer/${id}`, values)
-      .then((res) => {
-        setNewValues(res.data.volunteer);
-      });
+    axios.patch(baseURL + `/api/v1/volunteer/${id}`, values).then((res) => {
+      setNewValues(res.data.volunteer);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -123,11 +121,9 @@ const OneVolunteer = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/volunteer/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/volunteer/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');

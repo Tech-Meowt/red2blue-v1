@@ -67,10 +67,7 @@ export default function AddVolunteer() {
     }
 
     axios
-      .post(baseURL + 
-        '/api/v1/volunteer/addVolunteer',
-        volunteerInfo
-      )
+      .post(baseURL + '/api/v1/volunteer/addVolunteer', volunteerInfo)
       .then((res) => {
         setVolunteerInfo({
           firstName: '',

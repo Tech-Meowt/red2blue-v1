@@ -63,11 +63,9 @@ const OneSandbox = ({
   }
 
   const updateSandbox = (id) => {
-    axios
-      .patch(baseURL + `/api/v1/sandbox/${id}`, values)
-      .then((res) => {
-        setNewValues(res.data.sandbox);
-      });
+    axios.patch(baseURL + `/api/v1/sandbox/${id}`, values).then((res) => {
+      setNewValues(res.data.sandbox);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -91,21 +89,19 @@ const OneSandbox = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/sandbox/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/sandbox/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');
-    setShowDeleteAlert(true)
+    setShowDeleteAlert(true);
     closeModal(true);
     setTimeout(() => {
       window.location.reload();
     }, 2000).catch((error) => {
       console.log(error);
-      setShowDeleteAlert(true)
+      setShowDeleteAlert(true);
       setShowAlert(true);
       setAlertText('There was an error. Please try again...');
       setAlertType('danger');

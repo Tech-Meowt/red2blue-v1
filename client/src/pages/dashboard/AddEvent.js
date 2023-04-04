@@ -140,7 +140,6 @@ export default function AddEvent() {
                 <option value='' disabled selected hidden>
                   --Select an option--
                 </option>
-
               </select>
             </div>
           </form>

@@ -77,10 +77,10 @@ const OnePoliticalSkill = ({
   });
 
   const hideAll = (e) => {
-    const id = e.target.name
-    console.log(id)
-    setHidden(!hidden)
-  }
+    const id = e.target.name;
+    console.log(id);
+    setHidden(!hidden);
+  };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -103,11 +103,9 @@ const OnePoliticalSkill = ({
   }
 
   const updatePolSkill = (id) => {
-    axios
-      .patch(baseURL + `/api/v1/political/${id}`, values)
-      .then((res) => {
-        setNewValues(res.data.politicalSkills);
-      });
+    axios.patch(baseURL + `/api/v1/political/${id}`, values).then((res) => {
+      setNewValues(res.data.politicalSkills);
+    });
     setShowAlert(true);
     setAlertText('Update successful!');
     setAlertType('success');
@@ -123,11 +121,9 @@ const OnePoliticalSkill = ({
   };
 
   const deleteHandler = (e) => {
-    axios
-      .delete(baseURL + `/api/v1/political/${e.target.name}`)
-      .then((res) => {
-        setValues(res.data);
-      });
+    axios.delete(baseURL + `/api/v1/political/${e.target.name}`).then((res) => {
+      setValues(res.data);
+    });
     setShowAlert(true);
     setAlertText('Delete successful!');
     setAlertType('success');

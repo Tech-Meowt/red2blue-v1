@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Wrapper from '../assets/wrappers/AllDbUsers';
 import FilterWrapper from '../assets/wrappers/FilterContainer';
-import { TableView, DbUser } from '../components';
+import { TableView, DbUser } from '.';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { CSVLink } from 'react-csv';
@@ -245,19 +245,17 @@ export default function AllDbUsers() {
         <h4>All Records</h4>
 
         {!clicked && !showEditForm && (
-          
-            <div className='jobs' ref={printRef}>
-              {dbUsers.map((dbUser) => {
-                return (
-                  <>
-                    <div className='border-state'>
-                      <DbUser key={dbUser._id} {...dbUser} />
-                    </div>
-                  </>
-                );
-              })}
-            </div>
-        
+          <div className='jobs' ref={printRef}>
+            {dbUsers.map((dbUser) => {
+              return (
+                <>
+                  <div className='border-state'>
+                    <DbUser key={dbUser._id} {...dbUser} />
+                  </div>
+                </>
+              );
+            })}
+          </div>
         )}
 
         {clicked && !showEditForm && (
@@ -271,17 +269,17 @@ export default function AllDbUsers() {
             <div ref={printRef}>
               <TableView columns={columns} data={dbUsers} />
             </div>
-              <div className='jobs' ref={printRef}>
-                {dbUsers.map((dbUser) => {
-                  return (
-                    <>
-                      <div className='border-state'>
-                        <DbUser key={dbUser._id} {...dbUser} />
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
+            <div className='jobs' ref={printRef}>
+              {dbUsers.map((dbUser) => {
+                return (
+                  <>
+                    <div className='border-state'>
+                      <DbUser key={dbUser._id} {...dbUser} />
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </>
         )}
       </Wrapper>

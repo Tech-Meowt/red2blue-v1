@@ -59,9 +59,9 @@ app.use('/api/v1/political', politicalRouter)
 app.use('/api/v1/life', lifeRouter)
 
 // only when ready to deploy
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+// });
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
