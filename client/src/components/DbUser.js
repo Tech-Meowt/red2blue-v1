@@ -20,6 +20,7 @@ const DbUser = ({
   role,
   sandboxDb,
   skillsDb,
+  eventsDb
 }) => {
   const initialState = {
     firstName,
@@ -32,6 +33,7 @@ const DbUser = ({
     role,
     sandboxDb,
     skillsDb,
+    eventsDb
   };
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState('');
@@ -51,6 +53,7 @@ const DbUser = ({
     role,
     skillsDb,
     sandboxDb,
+    eventsDb
   });
 
   useEffect(() => {
@@ -161,6 +164,13 @@ const DbUser = ({
               Skills database:{' '}
               <span className='status'>
                 {skillsDb ? 'access' : 'no access'}
+              </span>
+            </div>
+            <div>
+              <FiDatabase className='icon' />
+              Events database:{' '}
+              <span className='status'>
+                {eventsDb ? 'access' : 'no access'}
               </span>
             </div>
             <div>
@@ -334,6 +344,38 @@ const DbUser = ({
                           id='volunteersDb'
                           className='form-select'
                           value={values.volunteersDb}
+                          onChange={handleChange}
+                        >
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
+                        </select>
+                      </div>
+
+                      <div className='form-row'>
+                        <label htmlFor='skillsDb' className='form-label'>
+                          Skills database
+                        </label>
+                        <select
+                          name='skillsDb'
+                          id='skillsDb'
+                          className='form-select'
+                          value={values.skillsDb}
+                          onChange={handleChange}
+                        >
+                          <option value='true'>Access</option>
+                          <option value='false'>No access</option>
+                        </select>
+                      </div>
+
+                      <div className='form-row'>
+                        <label htmlFor='eventsDb' className='form-label'>
+                          Events database
+                        </label>
+                        <select
+                          name='eventsDb'
+                          id='eventsDb'
+                          className='form-select'
+                          value={values.eventsDb}
                           onChange={handleChange}
                         >
                           <option value='true'>Access</option>

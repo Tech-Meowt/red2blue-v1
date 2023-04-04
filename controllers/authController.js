@@ -78,8 +78,6 @@ const register = async (req, res) => {
       text: message,
       replyTo: user.email,
     });
-
-    // res.status(200).json({ success: true, data: 'Email sent' });
   } catch (err) {
     console.log(err);
   }
@@ -213,7 +211,7 @@ const sendToken = (user, statusCode, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { email, firstName, lastName, approved, usersDb, volunteersDb, sandboxDb, skillsDb, isActive, role } =
+  const { email, firstName, lastName, approved, usersDb, volunteersDb, sandboxDb, skillsDb, isActive, role, eventsDb } =
     req.body;
   if (!email || !firstName || !lastName ) {
     throw new BadRequestError('Please provide all values');
@@ -228,6 +226,7 @@ const updateUser = async (req, res) => {
   user.volunteersDb = volunteersDb;
   user.sandboxDb = sandboxDb;
   user.skillsDb = skillsDb;
+  user.eventsDb = eventsDb;
   user.isActive = isActive;
   user.role = role;
 

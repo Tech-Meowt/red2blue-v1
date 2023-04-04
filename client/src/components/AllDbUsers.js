@@ -30,8 +30,9 @@ export default function AllDbUsers() {
     { label: 'Email', key: 'email' },
     { label: 'Sandbox database', key: 'sandboxDb' },
     { label: 'User Accounts database', key: 'usersDb' },
-    { label: `Volunteers database`, key: 'volunteersDb' },
+    { label: `Volunteer's database`, key: 'volunteersDb' },
     { label: 'Skills database', key: 'skillsDb' },
+    { label: 'Events database', key: 'eventsDb'},
     { label: 'Account status', key: 'isActive' },
     { label: 'Approval status', key: 'approved' },
     { label: 'Role', key: 'role' },
@@ -158,6 +159,16 @@ export default function AllDbUsers() {
         },
       },
       {
+        Header: 'Events database',
+        disableSortBy: true,
+        Filter: SelectColumnFilter,
+        filter: 'equals',
+        id: 'eventsDb',
+        accessor: (d) => {
+          return d.eventsDb ? 'access' : 'no access';
+        },
+      },
+      {
         Header: 'Account status',
         disableSortBy: true,
         Filter: SelectColumnFilter,
@@ -215,8 +226,6 @@ export default function AllDbUsers() {
         console.log(error);
       });
   }, []);
-
-  console.log(`your current base url is ${baseURL}`);
 
   return (
     <>
