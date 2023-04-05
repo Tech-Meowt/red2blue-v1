@@ -10,7 +10,8 @@ import {
 } from '../controllers/eventsController.js';
 
 import {
-  createEvent
+  createEvent,
+  getEvent
 } from '../controllers/eventInfoController.js'
 
 import {
@@ -21,7 +22,8 @@ router.route('/').get(getAll);
 // router.route('/addEvent').post(create);
 router.route('/addEvent').post(createEvent)
 router.route('/addAttendee').post(createAttendee)
-router.route('/:id').get(getOne);
+// router.route('/:id').get(getOne);
+router.route('/:id').get(getEvent);
 router.route('/:id').patch(updateEvent);
 router.route('/:id').delete(deleteEvent);
 

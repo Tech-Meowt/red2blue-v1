@@ -9,7 +9,7 @@ const createAttendee = async (req, res) => {
   const event = await EventInfo.findOne({ _id: eventName })
   const eventId = event._id
   
-  await EventInfo.findByIdAndUpdate(eventId, {$push: { attendees: newAttendee._id }}, {safe: true, upsert: true})
+  await EventInfo.findByIdAndUpdate(eventId, { $push: { attendees: newAttendee._id } }, { safe: true, upsert: true })
 }
 
 export { createAttendee }
