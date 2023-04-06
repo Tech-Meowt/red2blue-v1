@@ -17,9 +17,6 @@ const VolunteersSchema = new mongoose.Schema(
       unique: true,
       required: [true, `Please provide email`]
     },
-    street: {
-      type: String
-    },
     city: {
       type: String
     },
@@ -29,9 +26,6 @@ const VolunteersSchema = new mongoose.Schema(
     zip: {
       type: String
     },
-    phone: {
-      type: String
-    }
   },
   { timestamps: true }
 );

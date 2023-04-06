@@ -5,7 +5,7 @@ import { BadRequestError, NotFoundError } from '../errors/index.js';
 import mongoose from 'mongoose';
 
 const create = async (req, res) => {
-  const { firstName, lastName, email, street, city, state, zip, phone } =
+  const { firstName, lastName, email, city, state, zip } =
     req.body;
 
   const volunteer = await Volunteer.create(req.body);
@@ -84,7 +84,7 @@ const getAll = async (req, res) => {
 };
 
 const updateVolunteer = async (req, res) => {
-  const { firstName, lastName, email, street, city, state, zip, phone } =
+  const { firstName, lastName, email, city, state, zip } =
     req.body;
   
   const volunteer = await Volunteer.findOne({ _id: req.params.id });
@@ -92,11 +92,9 @@ const updateVolunteer = async (req, res) => {
   volunteer.firstName = firstName;
   volunteer.lastName = lastName;
   volunteer.email = email;
-  volunteer.street = street;
   volunteer.city = city;
   volunteer.state = state;
   volunteer.zip = zip;
-  volunteer.phone = phone;
 
   await volunteer.save();
 
