@@ -1,175 +1,210 @@
+import Volunteer from '../models/Volunteers.js';
 import prisma from '../lib/prisma.js';
 import { StatusCodes } from 'http-status-codes';
 import { BadRequestError, NotFoundError } from '../errors/index.js';
+import mongoose from 'mongoose';
 
 const create = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    email,
-    street,
-    city,
-    state,
-    zip,
-    events,
-    updatedAt,
-    lifeSkillId,
-    skillId,
-  } = req.body;
+  const { firstName, lastName, email, street, city, state, zip, phone } =
+    req.body;
 
-  const volunteer = await prisma.volunteer.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-      street,
-      city,
-      state,
-      zip,
-      lifeSkillId,
-      skillId,
-      // events: {
-      //   connectOrCreate: [
-      //     {
-      //       create: {
-      //         eventName: events,
-      //       },
-      //       where: {
-      //         eventName: events,
-      //       },
-      //     },
-      //   ],
-      // },
-      events: {
-        connectOrCreate:
-          events.map((event) => ({
-            where: {
-                eventName: event,
-            },
-            create: {
-              eventName: event
-            }
-            }))
-      },
-    },
-    include: {
-      events: true,
-    },
-  });
-  res.status(200).json({ volunteer });
+  const volunteer = await Volunteer.create(req.body);
+
+  res.status(StatusCodes.CREATED).json({ volunteer });
+  // const {
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   street,
+  //   city,
+  //   state,
+  //   zip,
+  //   events,
+  //   updatedAt,
+  //   lifeSkillId,
+  //   skillId,
+  // } = req.body;
+
+  // const volunteer = await prisma.volunteer.create({
+  //   data: {
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     street,
+  //     city,
+  //     state,
+  //     zip,
+  //     lifeSkillId,
+  //     skillId,
+  //     // events: {
+  //     //   connectOrCreate: [
+  //     //     {
+  //     //       create: {
+  //     //         eventName: events,
+  //     //       },
+  //     //       where: {
+  //     //         eventName: events,
+  //     //       },
+  //     //     },
+  //     //   ],
+  //     // },
+  //     events: {
+  //       connectOrCreate:
+  //         events.map((event) => ({
+  //           where: {
+  //               eventName: event,
+  //           },
+  //           create: {
+  //             eventName: event
+  //           }
+  //           }))
+  //     },
+  //   },
+  //   include: {
+  //     events: true,
+  //   },
+  // });
+  // res.status(200).json({ volunteer });
 };
 
 const getAll = async (req, res) => {
-  const volunteer = await prisma.volunteer.findMany({
-    orderBy: {
-      lastName: 'asc',
-    },
-    include: {
-      events: true,
-      // politicalSkills: true,
-    },
-  });
-  res.status(200).json({ volunteer });
+  const volunteer = await Volunteer.find({}).sort({ updatedAt: 'desc' });
+
+  res.status(StatusCodes.OK).json({ volunteer });
+  // const volunteer = await prisma.volunteer.findMany({
+  //   orderBy: {
+  //     lastName: 'asc',
+  //   },
+  //   include: {
+  //     events: true,
+  //     // politicalSkills: true,
+  //   },
+  // });
+  // res.status(200).json({ volunteer });
 };
 
 const updateVolunteer = async (req, res) => {
-  const { id } = req.params;
+  const { firstName, lastName, email, street, city, state, zip, phone } =
+    req.body;
+  
+  const volunteer = await Volunteer.findOne({ _id: req.params.id });
 
-  const {
-    firstName,
-    lastName,
-    email,
-    street,
-    city,
-    state,
-    zip,
-    events,
-    updatedAt,
-    lifeSkillId,
-    skillId,
-  } = req.body;
+  volunteer.firstName = firstName;
+  volunteer.lastName = lastName;
+  volunteer.email = email;
+  volunteer.street = street;
+  volunteer.city = city;
+  volunteer.state = state;
+  volunteer.zip = zip;
+  volunteer.phone = phone;
 
-  const volunteer = await prisma.volunteer.update({
-    where: {
-      id,
-    },
-    data: {
-      firstName,
-      lastName,
-      email,
-      street,
-      city,
-      state,
-      zip,
-      lifeSkillId,
-      skillId,
-      events: {
-        connectOrCreate: [
-          {
-            create: {
-              eventName: events,
-            },
-            where: {
-              eventName: events,
-            },
-          },
-        ],
-      },
-      // events: {
-      //   connectOrCreate:
-      //     events.map((event) => ({
-      //       where: {
-      //           eventName: event,
-      //       },
-      //       create: {
-      //         eventName: event
-      //       }
-      //       }))
-      // },
-      // politicalSkills: {
-      //   connectOrCreate: [
-      //     {
-      //       create: {
-      //         campaignMgmt: campaignMgmt,
-      //         canvassing: canvassing,
-      //         communityOrganizing: communityOrganizing,
-      //         electedOfficialCurr: electedOfficialCurr,
-      //         electedOfficialPast: electedOfficialPast,
-      //         p2pTextingMgmt: p2pTextingMgmt,
-      //         p2pTextingVol: p2pTextingVol,
-      //         phonebanking: phonebanking,
-      //         pollWorker: pollWorker,
-      //         postcardMgmt: postcardMgmt,
-      //         postcardWriting: postcardWriting,
-      //         txtPhoneScriptEdit: txtPhoneScriptEdit,
-      //         txtPhoneScriptWrite: txtPhoneScriptWrite,
-      //         vanVoteBuildExp: vanVoteBuildExp,
-      //         voterReg: voterReg,
-      //       },
-      //       where: {
-      //         email: email,
-      //       }
-      //     },
-      //   ],
-      // },
-    },
-    include: {
-      events: true,
-      // politicalSkills: true,
-    },
-  });
-  res.status(200).json({ volunteer });
+  await volunteer.save();
+
+  res.status(StatusCodes.OK).json({ volunteer })
+  // const { id } = req.params;
+
+  // const {
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   street,
+  //   city,
+  //   state,
+  //   zip,
+  //   events,
+  //   updatedAt,
+  //   lifeSkillId,
+  //   skillId,
+  // } = req.body;
+
+  // const volunteer = await prisma.volunteer.update({
+  //   where: {
+  //     id,
+  //   },
+  //   data: {
+  //     firstName,
+  //     lastName,
+  //     email,
+  //     street,
+  //     city,
+  //     state,
+  //     zip,
+  //     lifeSkillId,
+  //     skillId,
+  //     events: {
+  //       connectOrCreate: [
+  //         {
+  //           create: {
+  //             eventName: events,
+  //           },
+  //           where: {
+  //             eventName: events,
+  //           },
+  //         },
+  //       ],
+  //     },
+  //     // events: {
+  //     //   connectOrCreate:
+  //     //     events.map((event) => ({
+  //     //       where: {
+  //     //           eventName: event,
+  //     //       },
+  //     //       create: {
+  //     //         eventName: event
+  //     //       }
+  //     //       }))
+  //     // },
+  //     // politicalSkills: {
+  //     //   connectOrCreate: [
+  //     //     {
+  //     //       create: {
+  //     //         campaignMgmt: campaignMgmt,
+  //     //         canvassing: canvassing,
+  //     //         communityOrganizing: communityOrganizing,
+  //     //         electedOfficialCurr: electedOfficialCurr,
+  //     //         electedOfficialPast: electedOfficialPast,
+  //     //         p2pTextingMgmt: p2pTextingMgmt,
+  //     //         p2pTextingVol: p2pTextingVol,
+  //     //         phonebanking: phonebanking,
+  //     //         pollWorker: pollWorker,
+  //     //         postcardMgmt: postcardMgmt,
+  //     //         postcardWriting: postcardWriting,
+  //     //         txtPhoneScriptEdit: txtPhoneScriptEdit,
+  //     //         txtPhoneScriptWrite: txtPhoneScriptWrite,
+  //     //         vanVoteBuildExp: vanVoteBuildExp,
+  //     //         voterReg: voterReg,
+  //     //       },
+  //     //       where: {
+  //     //         email: email,
+  //     //       }
+  //     //     },
+  //     //   ],
+  //     // },
+  //   },
+  //   include: {
+  //     events: true,
+  //     // politicalSkills: true,
+  //   },
+  // });
+  // res.status(200).json({ volunteer });
 };
 
 const deleteVolunteer = async (req, res) => {
-  const { id } = req.params;
+  const { id: volunteerId } = req.params;
 
-  await prisma.volunteer.delete({
-    where: {
-      id,
-    },
-  });
-  res.status(200).json({});
+  const volunteer = await Volunteer.findOne({ _id: volunteerId });
+
+  await volunteer.remove();
+
+  res.status(StatusCodes.OK).json({ msg: `Record deleted `})
+  // const { id } = req.params;
+
+  // await prisma.volunteer.delete({
+  //   where: {
+  //     id,
+  //   },
+  // });
+  // res.status(200).json({});
 };
 
 export { create, getAll, updateVolunteer, deleteVolunteer };

@@ -26,6 +26,7 @@ const getAll = async (req, res) => {
 
 const updateSandbox = async (req, res) => {
   const {
+    _id,
     firstName,
     lastName,
     email,
@@ -34,7 +35,7 @@ const updateSandbox = async (req, res) => {
     favoriteMovie,
   } = req.body;
 
-  const sandbox = await Sandbox.findOne({ _id: req.params.id }, req.body);
+  const sandbox = await Sandbox.findOne({ _id: req.params.id });
 
   sandbox.firstName = firstName;
   sandbox.lastName = lastName;
@@ -52,10 +53,6 @@ const deleteSandbox = async (req, res) => {
   const { id: sandboxId } = req.params;
 
   const sandbox = await Sandbox.findOne({ _id: sandboxId });
-
-  if (!sandbox) {
-    throw new NotFoundError(`No record with id: ${sandboxId}`);
-  }
 
   await sandbox.remove();
 
